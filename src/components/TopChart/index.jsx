@@ -5,7 +5,7 @@ import React from 'react';
  * TODO: add charting library 
  * 
  */
-class Chart extends React.Component {
+class TopChart extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -13,7 +13,9 @@ class Chart extends React.Component {
     render() {
         return (
         <div>
-            chart component
-            </div>)
+            chart component goes here
+        </div>)
     }
 }
+
+export default TopChart;
