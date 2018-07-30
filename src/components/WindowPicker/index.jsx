@@ -15,14 +15,10 @@ class WindowPicker extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            values: [ 'd', 'w', 'm', 'y']
-        }
     }
 
-
     render() {
-        const buttons = this.state.values.map( value => (<Button value={value}/>))
+        const buttons = this.props.picker.values.map( value => (<Button key={value} value={value}/>))
         return (
             <Wrapper>
                 <div className='buttons' >
