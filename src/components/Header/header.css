@@ -1,0 +1,44 @@
+.hero-background {
+    display: block;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: bottom;
+    min-height: 280px;
+    margin: -7px;
+    position: relative;
+  }
+  
+  .container {
+    display: block;
+    margin: auto;
+    max-width: 1140px;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 50px;
+  }
+
+  .hero-content {
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+  }
+  
+  .hero-form {
+    grid-column-start: auto;
+    grid-column-end: span 3;
+  }
+  @media (min-width: 1000px) {
+    .hero-animate {
+      padding: 2em 3em 3em;
+    }
+  }
+  .hero-animate {
+    grid-column-start: auto;
+    grid-column-end: span 3;
+  }
