@@ -8,9 +8,13 @@ export const TopShortsWrapper = styled.div`
     background-color: white;
     border-radius: 20px;
     border: 1px solid black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    vertical-align: middle;
+
+    .graph-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        vertical-align: middle;
+        height: 800px;
+    }
 `;

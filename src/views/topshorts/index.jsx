@@ -2,6 +2,7 @@ import React from 'react';
 import Transition from 'react-transition-group/Transition';
 
 import AppViewWrapper from './../../components/AppViewWrapper';
+import WindowPicker from './../../components/WindowPicker';
 import { TopShortsWrapper } from './style';
 
 class TopShorts extends React.Component {
@@ -12,9 +13,9 @@ class TopShorts extends React.Component {
         <AppViewWrapper>
             <TopShortsWrapper>
                 <div className="picker">
-                picker goes here
+                    <WindowPicker />
                 </div>
-                <div className="graph">
+                <div className="graph-area">
                 graph goes here
                 </div>
                 
