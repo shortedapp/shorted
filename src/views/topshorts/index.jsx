@@ -15,11 +15,15 @@ class TopShorts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            picker: {
+            pickerOptions: {
                 values: ['d', 'w', 'm', 'y'],
-                selected: false
-            }
+            },
+            selectedWindow: false,
         }
+    }
+    handleWindowSeleted(value) {
+        console.log(value)
+        this.setState({selectedWindow: value})
     }
 
     render() {
@@ -27,7 +31,10 @@ class TopShorts extends React.Component {
         <AppViewWrapper>
             <TopShortsWrapper>
                 <PickerWrapper >
-                    <WindowPicker picker={this.state.picker}/>
+                    <WindowPicker
+                        options={this.state.pickerOptions}
+                        handleSelect={(e) => this.handleWindowSeleted(e)}
+                    />
                 </PickerWrapper>
                 <ChartWrapper >
                    <TopChart />

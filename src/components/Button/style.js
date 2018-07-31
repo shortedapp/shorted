@@ -13,3 +13,9 @@ align-items: center; /* align vertical */
 margin: 5px;
 border-radius: 7px;
 `
+export const Button = styled.div`
+`
+export const SelectedButton = styled.div`
+`
+export const HoverButton = styled.div`
+`

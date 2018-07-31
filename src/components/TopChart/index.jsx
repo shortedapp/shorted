@@ -1,4 +1,6 @@
 import React from 'react';
+// import { LineChart } from 'recharts';
+// import data from '../../fixtures'
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions

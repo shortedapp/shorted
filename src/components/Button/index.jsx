@@ -2,7 +2,7 @@ import React from 'react';
 import { Wrapper } from './style';
 
 const Button = (props) => (
-    <Wrapper>
+    <Wrapper onClick={() => props.handleSelect(props.value)}>
         {props.value}
     </Wrapper>
 )
