@@ -1,8 +1,8 @@
 import React from 'react';
-import { Wrapper } from './style';
+import { Wrapper, ButtonWrapper, SelectedButtonWrapper } from './style';
 
 const Button = (props) => (
-    <Wrapper onClick={() => props.handleSelect(props.value)}>
+    <Wrapper selected={props.selected} onClick={() => props.handleSelect(props.value)}>
         {props.value}
     </Wrapper>
 )
