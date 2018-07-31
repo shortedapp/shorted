@@ -10,7 +10,15 @@ import AppViewWrapper from './../../components/AppViewWrapper';
 import WindowPicker from './../../components/WindowPicker';
 import TopChart from './../../components/TopChart';
 
-
+/**
+ * View:TopShorts
+ * Overarching container for the top short view. Showing the top 10 short positions graphically.
+ * TODO:
+ * * add Transitions of components such as window picker, graph and background etc.
+ * * add graph integration via recharts etc.
+ * * add legend component for on-select animation/effect
+ * 
+ */
 class TopShorts extends React.Component {
     constructor(props) {
         super(props);
