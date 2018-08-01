@@ -13,9 +13,22 @@ use google sheets function to fetch stock tick data as follows:
 
 copy the output into the data files in the data/ directory. Once there we can run the JSON generator script which will create JSON fixtures to be used by the React webapp as follows:
 
+## install packages
 
+```bash
+pip install virtualenv
+virtualenv -p `which python3` ./env
+source env/bin/activate
+```
+## run tool
 ```sh
-python3 gen_json.py -f ../data -s ../src/fixtures/topShorts.json
+(env)python3 gen_json.py -f ../data -s ../src/fixtures/topShorts.json
+```
+
+or from npm at the project top level:
+
+```bash
+npm run genFixtures
 ```
 
 where the gen_json.py cli has the following options:

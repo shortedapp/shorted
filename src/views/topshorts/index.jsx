@@ -41,6 +41,7 @@ class TopShorts extends React.Component {
                 <PickerWrapper >
                     <WindowPicker
                         options={this.state.pickerOptions}
+                        selectedOption={this.state.selectedWindow}
                         handleSelect={(e) => this.handleWindowSeleted(e)}
                     />
                 </PickerWrapper>

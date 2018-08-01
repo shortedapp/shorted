@@ -27,7 +27,8 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "genFixtures": "if [ -d cli/sample_data/env ];then cli/sample_data/env/bin/python3 cli/sample_data/gen_json.py -f data/ -s src/fixtures/topShortsFormatted.json; else python3 cli/sample_data/gen_json.py -f data/ -s src/fixtures/topShortsFormatted.json; fi"
   },
   "devDependencies": {
     "babel-plugin-recharts": "^1.1.1",

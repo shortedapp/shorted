@@ -2,6 +2,13 @@ import json
 import argparse
 import os
 
+loading_bar = False
+try:
+    from tqdm import tqdm
+    loading_bar = True
+except:
+    loading_bar = False
+
 def parse_txt(path):
     """
     parse space seperated file into json
@@ -27,7 +34,7 @@ def parse_txt(path):
 
 
 
-
+# TODO:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='process stock data and generate fixtures for sample use')
     parser.add_argument('-f','--folder', dest='folder', help='folder to find parsable files')
@@ -36,9 +43,24 @@ if __name__ == '__main__':
     fixture_dict = {}
     for data_file in os.listdir(args.folder):
         file_path = os.path.join(args.folder, data_file)
-        print("parsing {}".format(file_path))
         fixture_dict[data_file.split('.')[0].upper()] = parse_txt(file_path)
+    output = []
+    if loading_bar:
+        for index, date in tqdm(enumerate(fixture_dict[list(fixture_dict.keys())[0]]['dates'])):
+            item = dict()
+            item['date'] = date
+            for key in fixture_dict.keys():
+                item[key] = fixture_dict[key]['values'][index] if (index < len(fixture_dict[key]['values'])) else None
+            output.append(item)
+    else:
+        for index, date in enumerate(fixture_dict[list(fixture_dict.keys())[0]]['dates']):
+            item = dict()
+            item['date'] = date
+            for key in fixture_dict.keys():
+                item[key] = fixture_dict[key]['values'][index] if (index < len(fixture_dict[key]['values'])) else None
+            output.append(item)
+
     with open(args.save, 'w') as f:
-        json.dump(fixture_dict, f)
-        # print(json.dumps(parse_txt(args.file), sort_keys=True, indent=4))
+        json.dump(output, f)
+    print("sample data successfully generated, found: {}/{}".format(os.getcwd(), args.save))
 
