@@ -32,9 +32,6 @@ def parse_txt(path):
         "values": values,
     }
 
-
-
-# TODO:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='process stock data and generate fixtures for sample use')
     parser.add_argument('-f','--folder', dest='folder', help='folder to find parsable files')
