@@ -8,6 +8,7 @@ export const TopShortsWrapper = styled.div`
     background-color: white;
     border-radius: 20px;
     border: 1px solid black;
+    background-image: ${props => `url(${props.background})`},
 `;
 
 export const PickerWrapper = styled.div`

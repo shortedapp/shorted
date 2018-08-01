@@ -86,7 +86,7 @@ class Header extends React.Component {
   render() {
     const { inside } = this.state;
     return (
-      <div>
+      // <div>
         <Transition
           timeout={duration}
           in={inside}
@@ -111,7 +111,7 @@ class Header extends React.Component {
             )
           }
         </Transition>
-      </div>
+      // </div>
     );
   }
 }
