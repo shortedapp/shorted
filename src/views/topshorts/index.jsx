@@ -60,7 +60,11 @@ class TopShorts extends React.Component {
             <Transition timeout={duration} in={inside}>
             {
                 state => (
-                <AppViewWrapper background={headerBackground}>
+                <AppViewWrapper
+                    background={headerBackground}
+                    opacity={0}
+                    duration={duration}
+                    >
                     <TopShortsWrapper >
                         <PickerWrapper >
                             <WindowPicker

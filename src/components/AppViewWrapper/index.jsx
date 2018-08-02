@@ -11,7 +11,7 @@ import { Wrapper } from './style';
  * @param {*} props
  */
 const AppViewWrapper = (props) => (
-    <Wrapper background={props.background}>
+    <Wrapper {...props}>
         {props.children}
     </Wrapper>
 )
