@@ -1,7 +1,8 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import { 
+import {
     TopShortsWrapper,
+    CentreGraphWrapper,
     PickerWrapper,
     ChartWrapper,
  } from './style';
@@ -11,7 +12,7 @@ import AppViewWrapper from './../../components/AppViewWrapper';
 import WindowPicker from './../../components/WindowPicker';
 import TopChart from './../../components/TopChart';
 
-const duration = 1000;
+const duration = 300;
 
 const defaultStyle = {
   width: 100,
@@ -28,7 +29,12 @@ const transitionStyles = {
 };
 /**
  * View:TopShorts
- * Overarching container for the top short view. Showing the top 10 short positions graphically.
+ * Overarching container for the top short view.
+ * Showing the following key widgets/displays:
+ *  * top 10 short positions graphically.
+ *  * table of top short position changes
+ *  * alerts/anomalies
+ *  * reactive-widget on hover/select of a given graph
  * TODO:
  * * add Transitions of components such as window picker, graph and background etc.
  * * add graph integration via recharts etc.
@@ -65,25 +71,25 @@ class TopShorts extends React.Component {
             <Transition timeout={duration} in={true} appear={true}>
             {
                 state => {
-                    console.log(state)
                     return (
                     <AppViewWrapper
                         background={headerBackground}
                         opacity={transitionStyles[state].opacity}
-                        // opacity={1}
                         duration={duration}
                         >
-                        <TopShortsWrapper >
-                            <PickerWrapper >
-                                <WindowPicker
-                                    options={this.state.pickerOptions}
-                                    selectedOption={this.state.selectedWindow}
-                                    handleSelect={(e) => this.handleWindowSeleted(e)}
-                                />
-                            </PickerWrapper>
-                            <ChartWrapper >
-                            {/* <TopChart /> */}
-                            </ChartWrapper>      
+                        <TopShortsWrapper>
+                            <CentreGraphWrapper >
+                                <PickerWrapper >
+                                    <WindowPicker
+                                        options={this.state.pickerOptions}
+                                        selectedOption={this.state.selectedWindow}
+                                        handleSelect={(e) => this.handleWindowSeleted(e)}
+                                    />
+                                </PickerWrapper>
+                                <ChartWrapper >
+                                    <TopChart />
+                                </ChartWrapper>      
+                            </CentreGraphWrapper>
                         </TopShortsWrapper>
                     </AppViewWrapper>
                     )

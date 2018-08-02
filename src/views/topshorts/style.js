@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const TopShortsWrapper = styled.div`
-    margin-top: 50px;
+export const CentreGraphWrapper = styled.div`
+    margin-top: 300px;
     margin-bottom: 50px;
     width: 900px;
     height: 800px;
@@ -9,7 +9,10 @@ export const TopShortsWrapper = styled.div`
     border-radius: 20px;
     border: 1px solid black;
 `;
-
+export const TopShortsWrapper = styled.div`
+    width: 900px;
+    height: 1200px;
+`
 export const PickerWrapper = styled.div`
 `
 

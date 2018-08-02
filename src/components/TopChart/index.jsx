@@ -11,7 +11,7 @@ import topShorts from '../../fixtures/topShortsFormatted.json';
 class TopChart extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { data: topShorts }
+        this.state = { data: topShorts.slice(0,100) }
         console.log(topShorts)
     }
 
