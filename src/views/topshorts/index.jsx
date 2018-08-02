@@ -11,7 +11,7 @@ import AppViewWrapper from './../../components/AppViewWrapper';
 import WindowPicker from './../../components/WindowPicker';
 import TopChart from './../../components/TopChart';
 
-const duration = 300;
+const duration = 1000;
 
 const defaultStyle = {
   width: 100,
@@ -24,6 +24,7 @@ const defaultStyle = {
 const transitionStyles = {
   entering: { opacity: 0 },
   entered: { opacity: 1 },
+  exited: { opacity: 0}
 };
 /**
  * View:TopShorts
@@ -50,35 +51,43 @@ class TopShorts extends React.Component {
         console.log(value)
         this.setState({selectedWindow: value})
     }
+    componentDidMount() {
+        this.toggleEnterState();
+    }
+    
     toggleEnterState() {
         this.setState({ inside: true });
-      }
+    }
 
     render() {
-        const {inside } = this.state;
+        const { inside } = this.state;
         return (
-            <Transition timeout={duration} in={inside}>
+            <Transition timeout={duration} in={true} appear={true}>
             {
-                state => (
-                <AppViewWrapper
-                    background={headerBackground}
-                    opacity={0}
-                    duration={duration}
-                    >
-                    <TopShortsWrapper >
-                        <PickerWrapper >
-                            <WindowPicker
-                                options={this.state.pickerOptions}
-                                selectedOption={this.state.selectedWindow}
-                                handleSelect={(e) => this.handleWindowSeleted(e)}
-                            />
-                        </PickerWrapper>
-                        <ChartWrapper >
-                        <TopChart />
-                        </ChartWrapper>      
-                    </TopShortsWrapper>
-                </AppViewWrapper>
-                )
+                state => {
+                    console.log(state)
+                    return (
+                    <AppViewWrapper
+                        background={headerBackground}
+                        opacity={transitionStyles[state].opacity}
+                        // opacity={1}
+                        duration={duration}
+                        >
+                        <TopShortsWrapper >
+                            <PickerWrapper >
+                                <WindowPicker
+                                    options={this.state.pickerOptions}
+                                    selectedOption={this.state.selectedWindow}
+                                    handleSelect={(e) => this.handleWindowSeleted(e)}
+                                />
+                            </PickerWrapper>
+                            <ChartWrapper >
+                            {/* <TopChart /> */}
+                            </ChartWrapper>      
+                        </TopShortsWrapper>
+                    </AppViewWrapper>
+                    )
+                }
             }
             </Transition>
             )
