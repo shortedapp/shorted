@@ -10,5 +10,4 @@ transition: ${props => `opacity ${props.duration}ms ease-in-out`};
 background-repeat: no-repeat;
 background-position: bottom;
 background-size: cover;
-
 `

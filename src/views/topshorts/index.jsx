@@ -1,16 +1,9 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import {
-    TopShortsWrapper,
-    CentreGraphWrapper,
-    PickerWrapper,
-    ChartWrapper,
- } from './style';
 import headerBackground from '../../assets/images/header-background.svg';
-
 import AppViewWrapper from './../../components/AppViewWrapper';
-import WindowPicker from './../../components/WindowPicker';
 import TopChart from './../../components/TopChart';
+import { TopShortsWrapper } from './style';
 
 const duration = 300;
 
@@ -53,10 +46,6 @@ class TopShorts extends React.Component {
             inside: false
         }
     }
-    handleWindowSeleted(value) {
-        console.log(value)
-        this.setState({selectedWindow: value})
-    }
     componentDidMount() {
         this.toggleEnterState();
     }
@@ -74,22 +63,11 @@ class TopShorts extends React.Component {
                     return (
                     <AppViewWrapper
                         background={headerBackground}
-                        opacity={transitionStyles[state].opacity}
                         duration={duration}
+                        {...transitionStyles[state]}
                         >
                         <TopShortsWrapper>
-                            <CentreGraphWrapper >
-                                <PickerWrapper >
-                                    <WindowPicker
-                                        options={this.state.pickerOptions}
-                                        selectedOption={this.state.selectedWindow}
-                                        handleSelect={(e) => this.handleWindowSeleted(e)}
-                                    />
-                                </PickerWrapper>
-                                <ChartWrapper >
-                                    <TopChart />
-                                </ChartWrapper>      
-                            </CentreGraphWrapper>
+                            <TopChart />
                         </TopShortsWrapper>
                     </AppViewWrapper>
                     )
