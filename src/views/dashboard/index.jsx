@@ -3,7 +3,7 @@ import Transition from 'react-transition-group/Transition';
 import headerBackground from '../../assets/images/header-background.svg';
 import AppViewWrapper from './../../components/AppViewWrapper';
 import TopChart from './../../components/TopChart';
-import { TopShortsWrapper } from './style';
+import { DashboardWrapper } from './style';
 
 const duration = 300;
 
@@ -35,7 +35,7 @@ const transitionStyles = {
  * 
  */
 
-class TopShorts extends React.Component {
+class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -66,9 +66,9 @@ class TopShorts extends React.Component {
                         duration={duration}
                         {...transitionStyles[state]}
                         >
-                        <TopShortsWrapper>
+                        <DashboardWrapper>
                             <TopChart />
-                        </TopShortsWrapper>
+                        </DashboardWrapper>
                     </AppViewWrapper>
                     )
                 }
@@ -80,4 +80,4 @@ class TopShorts extends React.Component {
 }
 
 
-export default TopShorts;
+export default Dashboard;

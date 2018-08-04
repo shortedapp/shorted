@@ -1,6 +1,6 @@
 import React from 'react';
 import { injectGlobal } from 'styled-components';
-import TopShorts from '../views/topshorts';
+import Dashboard from '../views/dashboard';
 
 injectGlobal`
   body {
@@ -16,7 +16,7 @@ injectGlobal`
  * 
  */
 const IndexPage = () => (
-  <TopShorts />
+  <Dashboard />
 );
 
 export default IndexPage;
