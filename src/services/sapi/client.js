@@ -9,8 +9,14 @@ class ShortedAPI {
      * getTopShorts
      * get the top 10 short positioned stocks time series data from shorted api endpoint
      */
-    getTopShorts(datapoints) {
-        return topShorts.slice(0, datapoints)
+    getTopShorts(period) {
+        const slice_map_hourly = {
+            d: 24,
+            w: 168,
+            m: 720,
+            y: 8760
+        }
+        return topShorts.slice(-1 * slice_map_hourly[period], -1)
     }
     /**
      * getTopShortsList
