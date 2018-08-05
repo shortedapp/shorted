@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 
 export const Wrapper = styled.div`
-min-width: 100px;
 height: 900px;
+grid-area: top-list;
+background: gray;
+display: flex;
+flex-direction: column;
+text-align: center;
+justify-content: center;
 `

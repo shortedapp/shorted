@@ -15,7 +15,10 @@ class TopShortsList extends React.Component {
 
         return (
             <Wrapper>
+            <p>list goes here</p>
             </Wrapper>
         )
     }
 }
+
+export default TopShortsList;

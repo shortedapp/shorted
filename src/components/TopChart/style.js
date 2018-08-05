@@ -7,12 +7,11 @@ export const transitionStyles = {
 };
 
 export const Wrapper = styled.div`
+    grid-area: top-graph;
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;
     transform: ${props => `translateY(${props.Ypos}px)`};
-    margin-top: 150px;
-    margin-bottom: 50px;
     width: 900px;
     height: 800px;
     background-color: white;
