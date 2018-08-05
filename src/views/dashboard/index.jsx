@@ -1,9 +1,14 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import headerBackground from '../../assets/images/header-background.svg';
-import AppViewWrapper from './../../components/AppViewWrapper';
-import TopChart from './../../components/TopChart';
-import { TopShortsWrapper } from './style';
+import AppViewWrapper from '../../components/AppViewWrapper';
+import TopChart from '../../components/TopChart';
+import TopShortsList from '../../components/TopShortsList';
+import NarBar from '../../components/NavBar';
+import Logo from '../../components/Logo';
+import Legend from '../../components/Legend';
+import Alerts from '../../components/Alerts';
+import { DashboardWrapper } from './style';
 
 const duration = 300;
 
@@ -35,7 +40,7 @@ const transitionStyles = {
  * 
  */
 
-class TopShorts extends React.Component {
+class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -66,9 +71,14 @@ class TopShorts extends React.Component {
                         duration={duration}
                         {...transitionStyles[state]}
                         >
-                        <TopShortsWrapper>
+                        <DashboardWrapper>
+                            <Logo />
+                            <NarBar />
+                            <TopShortsList />
                             <TopChart />
-                        </TopShortsWrapper>
+                            <Legend />
+                            <Alerts />
+                        </DashboardWrapper>
                     </AppViewWrapper>
                     )
                 }
@@ -80,4 +90,4 @@ class TopShorts extends React.Component {
 }
 
 
-export default TopShorts;
+export default Dashboard;
