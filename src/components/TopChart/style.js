@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
     max-width: 1200px;
     height: 800px;
     background-color: white;
-    border-radius: 20px;
+    border-radius: 30px;
     border: 1px solid black;
 `
 export const PickerWrapper = styled.div`

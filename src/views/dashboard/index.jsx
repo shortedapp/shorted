@@ -50,7 +50,20 @@ class Dashboard extends React.Component {
                 values: ['d', 'w', 'm', 'y'],
             },
             selectedWindow: false,
-            inside: false
+            inside: false,
+            themes: [
+                {
+                    name: "dark",
+                    textColor: "#ffffff",
+                    backgroundColor: "#000000",
+
+                },
+                {
+                    name: "light",
+                    textColor: "#000000",
+                    backgroundColor: "#ffffff",
+                }
+            ]
         }
     }
     componentDidMount() {
@@ -77,8 +90,10 @@ class Dashboard extends React.Component {
                             <div className="content" >
                                 <TopShortsList />
                                 <TopChart />
-                                <ThemePicker />
-                                <Legend />
+                                <div className="top-right">
+                                    <ThemePicker themes={this.state.themes}/>
+                                    <Legend />
+                                </div>
                                 <Alerts />
                             </div>
                         </DashboardWrapper>
