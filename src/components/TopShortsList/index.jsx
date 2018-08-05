@@ -1,6 +1,8 @@
 import React from 'react';
-
-import { Wrapper } from './style';
+import Transition from 'react-transition-group/Transition';
+import ShortedAPI from '../../services/sapi/client';
+import TopShortsListRow from '../../components/TopShortsListRow';
+import { Wrapper, Header, More, duration, transitionStyles } from './style';
 /**
  * Renders a list of TopShortsListRow components. These rows will display the stock code, stock name, and percentage shorted
  * for the top say 20 stocks. With a "show more" button present at the bottom, taking them to a different view which will me dedicated to showing more short position
@@ -9,14 +11,39 @@ import { Wrapper } from './style';
 class TopShortsList extends React.Component {
     constructor(props) {
         super(props)
+        this.apiClient = new ShortedAPI()
+        this.state = {
+            data: this.apiClient.getTopShortsList(20),
+            inside: false,
+        }
+    }
+    componentDidMount() {
+        this.toggleEnterState();
+    }
+    
+    toggleEnterState() {
+        this.setState({ inside: true });
     }
 
     render() {
-
-        return (
-            <Wrapper>
-            <p>list goes here</p>
-            </Wrapper>
+        const rows = this.state.data.map((row_data) => <TopShortsListRow {...row_data} />)
+        return  (
+            <Transition timeout={duration} in={true} appear={true}>
+            {
+                state => {
+                    return (
+                    <Wrapper
+                        duration={duration}
+                        {...transitionStyles[state]}
+                    >
+                        <Header>Top Short List</Header>
+                        {rows}
+                        <More>show more</More>
+                    </Wrapper>
+                    )
+                }
+            }
+            </Transition>
         )
     }
 }
