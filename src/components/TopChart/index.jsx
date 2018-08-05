@@ -14,12 +14,14 @@ class TopChart extends React.Component {
     constructor(props) {
         super(props);
         this.apiClient = new ShortedAPI()
-        this.state = { 
-            data: this.apiClient.getTopShorts('w'),
+        const fixtures = this.apiClient.getTopShorts('w')
+        this.state = {
+            data: fixtures,
             inside: false,
             pickerOptions: {
                 values: ['d', 'w', 'm', 'y'],
             },
+            dataKeys: fixtures,
             selectedWindow: false,
         }
     }
@@ -36,8 +38,12 @@ class TopChart extends React.Component {
     toggleEnterState() {
         this.setState({ inside: true });
     }
+    handleLineHover(e) {
+        console.log(e)
+    }
 
     render() {
+
         return (
         <Transition timeout={duration} in={true} appear={true}>
             {
@@ -59,10 +65,10 @@ class TopChart extends React.Component {
                             <XAxis dataKey="date"/>
                             <YAxis/>
                             <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-                            <Line dot={false} type="monotone" dataKey="TLS" stroke="#8884d8" />
-                            <Line dot={false} type="monotone" dataKey="CBA" stroke="#82ca9d" />
-                            <Line dot={false} type="monotone" dataKey="ORE" stroke="#ff9800" />
-                            <Line dot={false} type="monotone" dataKey="JBH" stroke="#795548" />
+                            <Line onMouseOver={() => this.handleLineHover("TLS")} dot={false} type="monotone" dataKey="TLS" stroke="#8884d8" />
+                            <Line onMouseOver={() => this.handleLineHover("CBA")} dot={false} type="monotone" dataKey="CBA" stroke="#82ca9d" />
+                            <Line onMouseOver={() => this.handleLineHover("ORE")} dot={false} type="monotone" dataKey="ORE" stroke="#ff9800" />
+                            <Line onMouseOver={() => this.handleLineHover("JBH")} dot={false} type="monotone" dataKey="JBH" stroke="#795548" />
                         </LineChart>
                     </ResponsiveContainer>
                     </Wrapper>)

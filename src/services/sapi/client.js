@@ -1,6 +1,24 @@
 import topShorts from './fixtures/topShortsFormatted.json';
 import topShortsList from './fixtures/topShortsList.json';
-
+/**
+ * ShortedAPI
+ * main class responsible for implementing a given API contract from the shorted.com.au backend systems.
+ * Manages the interaction with available api capabilities including:
+ *  * Authentication
+ *  * Async/parallelised fetch
+ *  * data manipulation
+ *  * analytics
+ *  * error handing and retry interface
+ * 
+ * TODO:
+ *   * implment interaction with backend when available
+ *   * represent more data fetch interactions via fixtures as needed
+ *   * add logging capability in a sharable/maintainable way
+ *   * authentication functions
+ *   
+ * 
+ * 
+ */
 class ShortedAPI {
     constructor() {
 
@@ -16,7 +34,11 @@ class ShortedAPI {
             m: 720,
             y: 8760
         }
+        // console.log(topShorts)
         return topShorts.slice(-1 * slice_map_hourly[period], -1)
+        // return {
+        //     data: topShorts.data.dataslice(-1 * slice_map_hourly[period], -1),
+        //     dataKeys: topShorts.dataKeys }
     }
     /**
      * getTopShortsList
