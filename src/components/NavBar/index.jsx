@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Wrapper } from './style';
+import { Wrapper, NavButton } from './style';
 
 
 /**
@@ -13,13 +13,20 @@ import { Wrapper } from './style';
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { inside: false };
+    this.state = { 
+      routes: [
+        { text: "About", url: "/about" },
+        { text: "Blog", url: "/blog" },
+        { text: "Disclaimer", url: "/disclaimer" }
+      ]
+    };
   }
 
   render() {
+    const buttons = this.state.routes.map( (route) => <NavButton href={route.url}>{route.text}</NavButton>)
     return (
       <Wrapper>
-      <p>navbar goes here</p>
+        {buttons}
       </Wrapper>
     );
   }

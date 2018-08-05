@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-display: flex;
+display: inline-block;
+width: 100%;
 min-height: 280px;
 justify-content: center;
 background-image: ${props => `url(${props.background})`};

@@ -9,5 +9,5 @@ verticle-align: middle;
 flex-direction: column;
 justify-content: center;
 text-align: center;
-grid-area: top-legend;
+grid-area: legend;
 `

@@ -2,7 +2,7 @@ import React from 'react';
 import LogoImage from '../../assets/images/logo.svg'
 import { Wrapper, LogoTextWrapper, LogoImageWrapper } from './style';
 /**
- * Renders a shorted.com.au logo
+ * Renders a shorted.com.au logo and stylised layout
  */
 const LogoSvg = (props) => (
     <svg width="117" height="98" viewBox="0 0 117 98" fill={props.fill} xmlns="http://www.w3.org/2000/svg">

@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
     display: flex;
     float: left;
     grid-area: logo;
+    margin-top: 20px;
 `
 export const LogoTextWrapper = styled.span`
     display: flex;
@@ -16,4 +17,5 @@ export const LogoTextWrapper = styled.span`
     margin-left: 10px;
     color: #e7e6ea;
     font-weight: bold;
+    font-family: Avenir Next,sans-serif;
 `

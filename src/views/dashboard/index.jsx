@@ -8,6 +8,8 @@ import NarBar from '../../components/NavBar';
 import Logo from '../../components/Logo';
 import Legend from '../../components/Legend';
 import Alerts from '../../components/Alerts';
+import Header from '../../components/Header';
+import ThemePicker from '../../components/ThemePicker'
 import { DashboardWrapper } from './style';
 
 const duration = 300;
@@ -48,7 +50,20 @@ class Dashboard extends React.Component {
                 values: ['d', 'w', 'm', 'y'],
             },
             selectedWindow: false,
-            inside: false
+            inside: false,
+            themes: [
+                {
+                    name: "dark",
+                    textColor: "#ffffff",
+                    backgroundColor: "#000000",
+
+                },
+                {
+                    name: "light",
+                    textColor: "#000000",
+                    backgroundColor: "#ffffff",
+                }
+            ]
         }
     }
     componentDidMount() {
@@ -72,12 +87,15 @@ class Dashboard extends React.Component {
                         {...transitionStyles[state]}
                         >
                         <DashboardWrapper>
-                            <Logo />
-                            <NarBar />
-                            <TopShortsList />
-                            <TopChart />
-                            <Legend />
-                            <Alerts />
+                            <div className="content" >
+                                <TopShortsList />
+                                <TopChart />
+                                <div className="top-right">
+                                    <ThemePicker themes={this.state.themes}/>
+                                    <Legend />
+                                </div>
+                                <Alerts />
+                            </div>
                         </DashboardWrapper>
                     </AppViewWrapper>
                     )
