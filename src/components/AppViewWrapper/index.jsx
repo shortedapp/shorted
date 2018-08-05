@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Header from '../../components/Header';
 import { Wrapper } from './style';
 
 
@@ -12,6 +12,7 @@ import { Wrapper } from './style';
  */
 const AppViewWrapper = (props) => (
     <Wrapper {...props}>
+        <Header />
         {props.children}
     </Wrapper>
 )

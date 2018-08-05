@@ -51,7 +51,7 @@ class TopChart extends React.Component {
                             handleSelect={(e) => this.handleWindowSeleted(e)}
                         />
                     </PickerWrapper>
-                    <ResponsiveContainer aspect={4.0/3.0} width='100%'>
+                    <ResponsiveContainer aspect={4.0/3.0} width='100%' height={800}>
                     <LineChart data={this.state.data} margin={{top: 10, right: 70, left: 0, bottom: 60}}>
                         <XAxis dataKey="date"/>
                         <YAxis/>
