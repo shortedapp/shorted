@@ -1,16 +1,22 @@
 import React from 'react';
-import { LineChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid ,Tooltip, Line} from 'recharts';
+import { LineChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid ,Tooltip, Line, Label} from 'recharts';
 import Transition from 'react-transition-group/Transition';
+import ShortedAPI from '../../services/sapi/client';
+import AxisLabel from '../../components/AxisLabel';
 import { duration, transitionStyles, Wrapper, PickerWrapper, colors700 } from './style';
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
- * TODO: add styling to graph currently nothing present
+ * TODO:
+ *   * add more styling to graph currently nothing present
+ *   * add more intelligent x-axis ticks as windowpicker is changed
+ * 
  * 
  */
 class TopChart extends React.Component {
     constructor(props) {
         super(props);
+        this.apiClient = new ShortedAPI()
         this.state = {
             inside: false,
         }
@@ -23,14 +29,16 @@ class TopChart extends React.Component {
     toggleEnterState() {
         this.setState({ inside: true });
     }
-    handleLineHover(e) {
-        console.log(e)
+    handleLineHover(e, key) {
+        console.log(e, key)
+        this.props.onSelectCode(key)
     }
 
     render() {
-        const lines = this.props.datakeys.map( (key, index) => <Line
+        const fixtures = this.apiClient.getTopShorts(this.props.selectedOption)
+        const lines = fixtures.dataKeys.map( (key, index) => <Line
                 key={key}
-                onMouseOver={() => this.handleLineHover(key)}
+                onMouseOver={(e) => this.handleLineHover(e, key)}
                 dot={false}
                 type="monotone"
                 dataKey={key}
@@ -50,11 +58,19 @@ class TopChart extends React.Component {
                         {this.props.picker}
                     </PickerWrapper>
                     <ResponsiveContainer aspect={4.0/3.0} width='100%' height={800}>
-                        <LineChart data={this.props.data} margin={{top: 10, right: 70, left: 0, bottom: 60}}>
-                            <XAxis dataKey="date"/>
-                            <YAxis/>
+                        <LineChart data={fixtures.data} margin={{top: 0, right: 50, left: 10, bottom: 0}}>
+                            <XAxis dataKey="date" tickCount={3} >
+                                <Label value="Time" offset={-20} position="insideBottom" />
+                            </XAxis>
+                            <YAxis label={{
+                                value: 'Shorted (%)',
+                                angle: -90,
+                                position: 'insideLeft',
+                                offset: 10,
+                                }} />
+                            {/* <YAxis label={<Label angle={-90} value="Pages of my website" offset={0} position="insideBottom" />} /> */}
                             <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-                            <Tooltip/>
+                            <Tooltip />
                             {lines}
                         </LineChart>
                     </ResponsiveContainer>

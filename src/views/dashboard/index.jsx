@@ -8,7 +8,6 @@ import Legend from '../../components/Legend';
 import Alerts from '../../components/Alerts';
 import ThemePicker from '../../components/ThemePicker'
 import WindowPicker from './../../components/WindowPicker';
-import ShortedAPI from '../../services/sapi/client';
 import { DashboardWrapper, themes, duration, transitionStyles } from './style';
 
 
@@ -30,28 +29,23 @@ import { DashboardWrapper, themes, duration, transitionStyles } from './style';
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.apiClient = new ShortedAPI()
-        const fixtures = this.apiClient.getTopShorts('w')
         this.state = {
-            graphData: {
-                data: fixtures.data,
-                datakeys: fixtures.datakeys
-            },
             options: {
                 values: ['d', 'w', 'm', 'y'],
             },
-            selectedOption: false,
+            selectedOption: 'w',
+            selectedCode: false,
             inside: false,
         }
     }
     handleOptionSelected(value) {
-        const fixtures = this.apiClient.getTopShorts(value)
         this.setState({
             selectedOption: value,
-            graphData: {
-                data: fixtures.data,
-                datakeys: fixtures.datakeys
-            }
+        })
+    }
+    handleSelectCode(value) {
+        this.setState({
+            selectedCode: value
         })
     }
     componentDidMount() {
@@ -62,8 +56,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { options, selectedOption } = this.state;
-        const { data, datakeys } = this.state.graphData;
+        const { options, selectedOption, selectedCode } = this.state;
         return (
             <Transition timeout={duration} in={true} appear={true}>
             {
@@ -78,18 +71,18 @@ class Dashboard extends React.Component {
                             <div className="content" >
                                 <TopShortsList />
                                 <TopChart
-                                    data={data}
-                                    datakeys={datakeys}
                                     picker={<WindowPicker
                                         options={options}
                                         selectedOption={selectedOption}
                                         onSelect={(value) => this.handleOptionSelected(value)}
                                         />
                                     }
+                                    selectedOption={selectedOption}
+                                    onSelectCode={(value) => this.handleSelectCode(value)}
                                 />
                                 <div className="top-right">
                                     <ThemePicker themes={themes}/>
-                                    <Legend />
+                                    <Legend code={selectedCode}/>
                                 </div>
                                 <Alerts />
                             </div>

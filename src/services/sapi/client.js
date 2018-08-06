@@ -38,7 +38,7 @@ class ShortedAPI {
         // return topShorts.slice(-1 * slice_map_hourly[period], -1)
         return {
             data: topShorts.data.slice(-1 * slice_map_hourly[period], -1),
-            datakeys: topShorts.datakeys
+            dataKeys: topShorts.dataKeys
         }
     }
     /**

@@ -17,6 +17,9 @@ export const Wrapper = styled.div`
     background-color: white;
     border-radius: 30px;
     border: 1px solid black;
+    .recharts-text .recharts-label text {
+      color: red;
+    }
 `
 export const PickerWrapper = styled.div`
 `
