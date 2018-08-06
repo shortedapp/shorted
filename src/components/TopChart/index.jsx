@@ -68,7 +68,6 @@ class TopChart extends React.Component {
                                 position: 'insideLeft',
                                 offset: 10,
                                 }} />
-                            {/* <YAxis label={<Label angle={-90} value="Pages of my website" offset={0} position="insideBottom" />} /> */}
                             <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
                             <Tooltip />
                             {lines}

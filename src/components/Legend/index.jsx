@@ -4,11 +4,18 @@ import { Wrapper } from './style';
 /**
  * Renders a shorted.com.au logo
  */
-const Legend = (props) => (
-    <Wrapper>
-        <p>legend goes here</p>
-        <p>code: {props.code}</p>
-    </Wrapper>
-)
+class Legend extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+    render() {
+        return (
+            <Wrapper>
+                <p>legend goes here</p>
+                <p>code: {this.props.code}</p>
+            </Wrapper>
+        )
+    }
+}
 
 export default Legend;
