@@ -10,7 +10,9 @@ import Legend from '../../components/Legend';
 import Alerts from '../../components/Alerts';
 import Header from '../../components/Header';
 import ThemePicker from '../../components/ThemePicker'
-import { DashboardWrapper } from './style';
+import WindowPicker from './../../components/WindowPicker';
+import ShortedAPI from '../../services/sapi/client';
+import { DashboardWrapper, themes } from './style';
 
 const duration = 300;
 
@@ -45,37 +47,37 @@ const transitionStyles = {
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
+        this.apiClient = new ShortedAPI()
+        const fixtures = this.apiClient.getTopShorts('w')
         this.state = {
-            pickerOptions: {
+            graphData: {
+                data: fixtures.data,
+                datakeys: fixtures.datakeys
+            }
+            options: {
                 values: ['d', 'w', 'm', 'y'],
             },
-            selectedWindow: false,
+            selectedOption: false,
             inside: false,
-            themes: [
-                {
-                    name: "dark",
-                    textColor: "#ffffff",
-                    backgroundColor: "#000000",
-
-                },
-                {
-                    name: "light",
-                    textColor: "#000000",
-                    backgroundColor: "#ffffff",
-                }
-            ]
         }
+    }
+    handleOptionSelected(value) {
+        
+        this.setState({
+            selectedWindow: value,
+            data: fixtures.data
+        })
     }
     componentDidMount() {
         this.toggleEnterState();
     }
-    
     toggleEnterState() {
         this.setState({ inside: true });
     }
 
     render() {
-        const { inside } = this.state;
+        const { inside, options, selectedOption } = this.state;
+        const { data, datakeys } = this.state.graphData;
         return (
             <Transition timeout={duration} in={true} appear={true}>
             {
@@ -89,9 +91,18 @@ class Dashboard extends React.Component {
                         <DashboardWrapper>
                             <div className="content" >
                                 <TopShortsList />
-                                <TopChart />
+                                <TopChart
+                                    data={data}
+                                    datakeys={datakeys}
+                                    picker={<WindowPicker
+                                        options={options}
+                                        selectedOption={selectedOption}
+                                        onSelect={(value) => this.handleOptionSelected(value)}
+                                        />
+                                    }
+                                />
                                 <div className="top-right">
-                                    <ThemePicker themes={this.state.themes}/>
+                                    <ThemePicker themes={themes}/>
                                     <Legend />
                                 </div>
                                 <Alerts />

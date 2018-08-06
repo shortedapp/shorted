@@ -30,3 +30,16 @@ export const DashboardWrapper = styled.div`
     }
     
 `
+
+export const themes = [
+    {
+        name: "dark",
+        textColor: "#ffffff",
+        backgroundColor: "#000000",
+    },
+    {
+        name: "light",
+        textColor: "#000000",
+        backgroundColor: "#ffffff",
+    }
+]

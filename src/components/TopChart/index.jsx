@@ -1,9 +1,8 @@
 import React from 'react';
-import { LineChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid , Line} from 'recharts';
+import { LineChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid ,Tooltip, Line} from 'recharts';
 import Transition from 'react-transition-group/Transition';
-import WindowPicker from './../../components/WindowPicker';
 import ShortedAPI from '../../services/sapi/client';
-import { duration, transitionStyles, Wrapper, PickerWrapper } from './style';
+import { duration, transitionStyles, Wrapper, PickerWrapper, colors700 } from './style';
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
@@ -25,12 +24,7 @@ class TopChart extends React.Component {
             selectedWindow: false,
         }
     }
-    handleWindowSeleted(value) {
-        this.setState({
-            selectedWindow: value,
-            data: this.apiClient.getTopShorts(value)
-        })
-    }
+    
     componentDidMount() {
         this.toggleEnterState();
     }
@@ -43,14 +37,14 @@ class TopChart extends React.Component {
     }
 
     render() {
-        console.log(this.state.datakeys)
-        const lines = this.state.datakeys.map( (key) => <Line
+        const lines = this.state.datakeys.map( (key, index) => <Line
                 key={key}
                 onMouseOver={() => this.handleLineHover(key)}
                 dot={false}
                 type="monotone"
                 dataKey={key}
-                stroke="#8884d8">
+                strokeWidth={3}
+                stroke={colors700[index]}>
                 </Line>)
         return (
         <Transition timeout={duration} in={true} appear={true}>
@@ -62,17 +56,14 @@ class TopChart extends React.Component {
                         {...transitionStyles[state]}
                     >
                     <PickerWrapper >
-                        <WindowPicker
-                            options={this.state.pickerOptions}
-                            selectedOption={this.state.selectedWindow}
-                            handleSelect={(e) => this.handleWindowSeleted(e)}
-                        />
+                        {this.props.picker}
                     </PickerWrapper>
                     <ResponsiveContainer aspect={4.0/3.0} width='100%' height={800}>
                         <LineChart data={this.state.data} margin={{top: 10, right: 70, left: 0, bottom: 60}}>
                             <XAxis dataKey="date"/>
                             <YAxis/>
                             <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+                            <Tooltip/>
                             {lines}
                         </LineChart>
                     </ResponsiveContainer>

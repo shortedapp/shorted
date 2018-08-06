@@ -7,6 +7,7 @@ import { Wrapper } from './style';
 const Legend = (props) => (
     <Wrapper>
         <p>legend goes here</p>
+        <p>code: {props.code}</p>
     </Wrapper>
 )
 

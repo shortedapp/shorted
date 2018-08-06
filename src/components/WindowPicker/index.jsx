@@ -18,13 +18,13 @@ class WindowPicker extends React.Component {
     }
 
     render() {
-        const { options, selectedOption } = this.props;
+        const { options, selectedOption, handleSelect } = this.props;
         console.log('selectedOption:'+selectedOption)
         const buttons = options.values.map( value => (
         <Button key={value} 
                 value={value}
                 selected={ value == selectedOption }
-                handleSelect={this.props.handleSelect}
+                handleSelect={handleSelect}
                 />
         ))
         return (
