@@ -4,31 +4,14 @@ import headerBackground from '../../assets/images/header-background.svg';
 import AppViewWrapper from '../../components/AppViewWrapper';
 import TopChart from '../../components/TopChart';
 import TopShortsList from '../../components/TopShortsList';
-import NarBar from '../../components/NavBar';
-import Logo from '../../components/Logo';
 import Legend from '../../components/Legend';
 import Alerts from '../../components/Alerts';
-import Header from '../../components/Header';
 import ThemePicker from '../../components/ThemePicker'
 import WindowPicker from './../../components/WindowPicker';
 import ShortedAPI from '../../services/sapi/client';
-import { DashboardWrapper, themes } from './style';
+import { DashboardWrapper, themes, duration, transitionStyles } from './style';
 
-const duration = 300;
 
-const defaultStyle = {
-  width: 100,
-  height: 100,
-  backgroundImage: `url(${headerBackground})`,
-  transition: `opacity ${duration}ms ease-in-out`,
-  opacity: 0,
-};
-
-const transitionStyles = {
-  entering: { opacity: 0 },
-  entered: { opacity: 1 },
-  exited: { opacity: 0}
-};
 /**
  * View:TopShorts
  * Overarching container for the top short view.
@@ -53,7 +36,7 @@ class Dashboard extends React.Component {
             graphData: {
                 data: fixtures.data,
                 datakeys: fixtures.datakeys
-            }
+            },
             options: {
                 values: ['d', 'w', 'm', 'y'],
             },
@@ -62,10 +45,13 @@ class Dashboard extends React.Component {
         }
     }
     handleOptionSelected(value) {
-        
+        const fixtures = this.apiClient.getTopShorts(value)
         this.setState({
-            selectedWindow: value,
-            data: fixtures.data
+            selectedOption: value,
+            graphData: {
+                data: fixtures.data,
+                datakeys: fixtures.datakeys
+            }
         })
     }
     componentDidMount() {
@@ -76,7 +62,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { inside, options, selectedOption } = this.state;
+        const { options, selectedOption } = this.state;
         const { data, datakeys } = this.state.graphData;
         return (
             <Transition timeout={duration} in={true} appear={true}>

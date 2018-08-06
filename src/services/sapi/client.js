@@ -21,7 +21,7 @@ import topShortsList from './fixtures/topShortsList.json';
  */
 class ShortedAPI {
     constructor() {
-
+        console.log('constructing stub client')
     }
     /**
      * getTopShorts

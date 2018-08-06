@@ -1,6 +1,5 @@
 import React from 'react';
 import { Wrapper } from './style';
-
 import Button from '../Button';
 
 /**
@@ -13,18 +12,14 @@ import Button from '../Button';
 
 class WindowPicker extends React.Component {
 
-    constructor(props) {
-        super(props)
-    }
-
     render() {
-        const { options, selectedOption, handleSelect } = this.props;
+        const { options, selectedOption, onSelect } = this.props;
         console.log('selectedOption:'+selectedOption)
         const buttons = options.values.map( value => (
         <Button key={value} 
                 value={value}
-                selected={ value == selectedOption }
-                handleSelect={handleSelect}
+                selected={ value === selectedOption }
+                handleSelect={onSelect}
                 />
         ))
         return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import LogoImage from '../../assets/images/logo.svg'
-import { Wrapper, LogoTextWrapper, LogoImageWrapper } from './style';
+// import LogoImage from '../../assets/images/logo.svg'
+import { Wrapper, LogoTextWrapper } from './style';
 /**
  * Renders a shorted.com.au logo and stylised layout
  */
