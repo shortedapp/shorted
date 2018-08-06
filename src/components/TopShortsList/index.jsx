@@ -26,7 +26,7 @@ class TopShortsList extends React.Component {
     }
 
     render() {
-        const rows = this.state.data.map((row_data) => <TopShortsListRow {...row_data} />)
+        const rows = this.state.data.map((row_data) => <TopShortsListRow key={row_data.code} {...row_data} />)
         return  (
             <Transition timeout={duration} in={true} appear={true}>
             {

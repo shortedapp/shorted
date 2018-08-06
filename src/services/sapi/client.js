@@ -35,10 +35,11 @@ class ShortedAPI {
             y: 8760
         }
         // console.log(topShorts)
-        return topShorts.slice(-1 * slice_map_hourly[period], -1)
-        // return {
-        //     data: topShorts.data.dataslice(-1 * slice_map_hourly[period], -1),
-        //     dataKeys: topShorts.dataKeys }
+        // return topShorts.slice(-1 * slice_map_hourly[period], -1)
+        return {
+            data: topShorts.data.slice(-1 * slice_map_hourly[period], -1),
+            datakeys: topShorts.datakeys
+        }
     }
     /**
      * getTopShortsList

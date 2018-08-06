@@ -16,12 +16,12 @@ class TopChart extends React.Component {
         this.apiClient = new ShortedAPI()
         const fixtures = this.apiClient.getTopShorts('w')
         this.state = {
-            data: fixtures,
+            data: fixtures.data,
             inside: false,
             pickerOptions: {
                 values: ['d', 'w', 'm', 'y'],
             },
-            dataKeys: fixtures,
+            datakeys: fixtures.datakeys,
             selectedWindow: false,
         }
     }
@@ -43,7 +43,15 @@ class TopChart extends React.Component {
     }
 
     render() {
-
+        console.log(this.state.datakeys)
+        const lines = this.state.datakeys.map( (key) => <Line
+                key={key}
+                onMouseOver={() => this.handleLineHover(key)}
+                dot={false}
+                type="monotone"
+                dataKey={key}
+                stroke="#8884d8">
+                </Line>)
         return (
         <Transition timeout={duration} in={true} appear={true}>
             {
@@ -65,10 +73,7 @@ class TopChart extends React.Component {
                             <XAxis dataKey="date"/>
                             <YAxis/>
                             <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-                            <Line onMouseOver={() => this.handleLineHover("TLS")} dot={false} type="monotone" dataKey="TLS" stroke="#8884d8" />
-                            <Line onMouseOver={() => this.handleLineHover("CBA")} dot={false} type="monotone" dataKey="CBA" stroke="#82ca9d" />
-                            <Line onMouseOver={() => this.handleLineHover("ORE")} dot={false} type="monotone" dataKey="ORE" stroke="#ff9800" />
-                            <Line onMouseOver={() => this.handleLineHover("JBH")} dot={false} type="monotone" dataKey="JBH" stroke="#795548" />
+                            {lines}
                         </LineChart>
                     </ResponsiveContainer>
                     </Wrapper>)

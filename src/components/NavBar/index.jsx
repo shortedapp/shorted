@@ -23,7 +23,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const buttons = this.state.routes.map( (route) => <NavButton href={route.url}>{route.text}</NavButton>)
+    const buttons = this.state.routes.map( (route) => <NavButton key={route.text} href={route.url}>{route.text}</NavButton>)
     return (
       <Wrapper>
         {buttons}
