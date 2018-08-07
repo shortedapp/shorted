@@ -4,6 +4,7 @@ import LegendCompanyHeader from '../../components/LegendCompanyHeader';
 import LegendCompanyMarketCap from '../../components/LegendCompanyMarketCap';
 import {
     Wrapper,
+    UnselectedWrapper,
     CompanyName,
     CompanyMarketCap } from './style';
 /**
@@ -21,7 +22,7 @@ class Legend extends React.Component {
                     <CompanyName />
                 <LegendCompanyMarketCap />
             </Wrapper>
-            ) : (<Wrapper><p>hover over graph to show profile</p></Wrapper>);
+            ) : (<UnselectedWrapper><p>hover over graph to show profile</p></UnselectedWrapper>);
         return profile
     }
 }

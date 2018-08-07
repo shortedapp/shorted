@@ -17,12 +17,23 @@ export const Wrapper = styled.div`
     background-color: white;
     border-radius: 30px;
     border: 1px solid black;
-    .recharts-text .recharts-label text {
+    .g.recharts-layer.recharts-cartesian-axis.recharts-yAxis.yAxis > text {
+      color: red;
+    }
+    .recharts-text .recharts-label {
       color: red;
     }
 `
 export const PickerWrapper = styled.div`
 `
+export const intervals = {
+  d: 2,  
+  w: 7,
+  m: 40,
+  y: 100
+
+  
+}
 export const colors700 = [
   "#D32F2F",
   "#303F9F",

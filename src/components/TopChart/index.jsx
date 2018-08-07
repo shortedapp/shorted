@@ -3,7 +3,13 @@ import { LineChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid ,Tooltip, L
 import Transition from 'react-transition-group/Transition';
 import ShortedAPI from '../../services/sapi/client';
 import AxisLabel from '../../components/AxisLabel';
-import { duration, transitionStyles, Wrapper, PickerWrapper, colors700 } from './style';
+import {
+    duration,
+    transitionStyles,
+    Wrapper,
+    PickerWrapper,
+    intervals,
+    colors700 } from './style';
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
@@ -21,7 +27,6 @@ class TopChart extends React.Component {
             inside: false,
         }
     }
-    
     componentDidMount() {
         this.toggleEnterState();
     }
@@ -35,7 +40,9 @@ class TopChart extends React.Component {
     }
 
     render() {
-        const fixtures = this.apiClient.getTopShorts(this.props.selectedOption)
+        const { selectedOption } = this.props;
+        const fixtures = this.apiClient.getTopShorts(selectedOption)
+        console.log(fixtures.data.length)
         const lines = fixtures.dataKeys.map( (key, index) => <Line
                 key={key}
                 onMouseOver={(e) => this.handleLineHover(e, key)}
@@ -58,16 +65,20 @@ class TopChart extends React.Component {
                         {this.props.picker}
                     </PickerWrapper>
                     <ResponsiveContainer aspect={4.0/3.0} width='100%' height={800}>
-                        <LineChart data={fixtures.data} margin={{top: 0, right: 50, left: 10, bottom: 0}}>
-                            <XAxis dataKey="date" tickCount={3} >
-                                <Label value="Time" offset={-20} position="insideBottom" />
+                        <LineChart data={fixtures.data} margin={{top: 0, right: 50, left: 10, bottom: 40}}>
+                            <XAxis interval={Math.floor(fixtures.data.length/5)} dataKey="date" fontFamily={'Avenir Next,sans-serif'}>
+                                <Label value="Time" offset={-20} position="insideBottom" fontFamily={'Avenir Next,sans-serif'}/>
                             </XAxis>
-                            <YAxis label={{
-                                value: 'Shorted (%)',
-                                angle: -90,
-                                position: 'insideLeft',
-                                offset: 10,
-                                }} />
+                            <YAxis
+                                label={{
+                                    value: 'Shorted (%)',
+                                    angle: -90,
+                                    position: 'insideLeft',
+                                    offset: 10,
+                                    fontFamily:'Avenir Next,sans-serif'
+                                }}
+                                fontFamily={'Avenir Next,sans-serif'}
+                                />
                             <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
                             <Tooltip />
                             {lines}

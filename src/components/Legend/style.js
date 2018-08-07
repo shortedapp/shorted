@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 
 
-export const PWrapper = styled.div`
-    verticle-align: middle;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+export const Wrapper = styled.div`
+    border-radius: 4px;
     grid-area: legend;
     display: grid;
-    grid-gap: 5px;
+    grid-gap: 10px;
     grid-template-rows: 80px 60px 170px 1fr;
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
@@ -16,6 +13,20 @@ export const PWrapper = styled.div`
         "company-name company-name"
         "company-mc company-mc"
         "todo todo";
+`
+export const UnselectedWrapper = styled.div`
+    grid-area: legend;
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+    justify-content: center;
+    text-align: center;
+    background: white;
+    border-radius: 4px;
+    height: 100%;
+    font-family: Avenir Next,sans-serif;
+    font-size: 30px;
+    font-weight: bold;
 `
 export const CompanyHeader = styled.div`
     display: flex;
