@@ -9,8 +9,9 @@ import { Wrapper, CompanyCode, CompanyLogo } from './style';
  */
 const LegendCompanyHeader = (props) => (
   <Wrapper>
-    <CompanyLogo src={props.image}/>
     <CompanyCode>{props.code}</CompanyCode>
+    <CompanyLogo src={props.image}/>
+
   </Wrapper>
 )
 export default LegendCompanyHeader;

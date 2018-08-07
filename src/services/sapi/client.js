@@ -1,6 +1,15 @@
-import topShorts from './fixtures/topShortsFormatted.json';
-import topShortsList from './fixtures/topShortsList.json';
-import CBAStockSummary from './fixtures/CBAStockSummary.json';
+import topShorts from './fixtures/data/topShortsFormatted.json';
+import topShortsList from './fixtures/data/topShortsList.json';
+import CBAStockSummary from './fixtures/data/CBAStockSummary.json';
+import TLSStockSummary from './fixtures/data/TLSStockSummary.json';
+import JBHStockSummary from './fixtures/data/JBHStockSummary.json';
+import OREStockSummary from './fixtures/data/OREStockSummary.json';
+
+import CBALogo from './fixtures/images/cba-logo.png';
+import TLSLogo from './fixtures/images/tls-logo.png';
+import JBHLogo from './fixtures/images/jbh-logo.png';
+import ORELogo from './fixtures/images/ore-logo.png';
+import StockLogo from './fixtures/images/stockLogo.png';
 /**
  * ShortedAPI
  * main class responsible for implementing a given API contract from the shorted.com.au backend systems.
@@ -73,8 +82,34 @@ class ShortedAPI {
         switch(code) {
             case "CBA":
                 return CBAStockSummary
+            case "TLS":
+                return TLSStockSummary
+            case "ORE":
+                return OREStockSummary
+            case "JBH":
+                return JBHStockSummary
+            default:
+                return false
         }
-
+    }
+    /**
+     * getStockLogo
+     * 
+     * 
+     */
+    getStockLogo(code) {
+        switch(code) {
+            case "CBA":
+                return CBALogo
+            case "TLS":
+                return TLSLogo
+            case "JBH":
+                return JBHLogo
+            case "ORE":
+                return ORELogo
+            default:
+                return StockLogo
+        }
     }
 }
 

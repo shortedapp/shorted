@@ -27,25 +27,34 @@ export const UnselectedWrapper = styled.div`
     font-family: Avenir Next,sans-serif;
     font-size: 30px;
     font-weight: bold;
+    padding-left: 30px;
+    padding-right: 30px;
 `
 export const CompanyHeader = styled.div`
     display: flex;
     flex-direction: column;
     vertical-align: middle;
     justify-content: center;
-    background: gray;
     grid-area: company-header;
 `
 export const CompanyMarketCap = styled.div`
+    grid-area: company-mc;
     display: flex;
     flex-direction: column;
     vertical-align: middle;
-    background: gray;
-    grid-area: company-mc;
+
+
 `
 export const CompanyName = styled.div`
-    display: flex;
-    background: gray;
     grid-area: company-name;
+    display: flex;
+    background: white;
+    font-size: 1.3vh;
+    font-weight: bold;
+    font-family: Avenir Next,sans-serif;
+    text-align: center;
+    flex-direction: column;
+    vertical-align: middle;
+    justify-content: center;
 `
 
