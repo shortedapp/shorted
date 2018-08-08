@@ -5,6 +5,7 @@
         "logo_url": "https://s3..."
     },
     "data": {
+        "PE": 8.940,
         "marketCap": [
             {"date": "01/01/2015", "value": 0.5 },
             {"date": "01/03/2015", "value": 0.5 },

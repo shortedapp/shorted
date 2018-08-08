@@ -6,13 +6,13 @@ export const Wrapper = styled.div`
     grid-area: legend;
     display: grid;
     grid-gap: 10px;
-    grid-template-rows: 80px 60px 170px 1fr;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 60px 60px 60px 170px;
+    grid-template-columns: repeat(4, 1fr);
     grid-template-areas:
-        "company-header company-header"
-        "company-name company-name"
-        "company-mc company-mc"
-        "todo todo";
+        "company-logo company-logo company-code company-code"
+        "company-logo company-logo company-pe company-pe"
+        "company-name company-name company-name company-name"
+        "company-mc company-mc company-mc company-mc";
 `
 export const UnselectedWrapper = styled.div`
     grid-area: legend;

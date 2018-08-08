@@ -1,6 +1,8 @@
 import React from 'react';
 
-import LegendCompanyHeader from '../../components/LegendCompanyHeader';
+import LegendCompanyCode from '../../components/LegendCompanyCode';
+import LegendCompanyLogo from '../../components/LegendCompanyLogo';
+import LegendCompanyPE from '../../components/LegendCompanyPE';
 import LegendCompanyMarketCap from '../../components/LegendCompanyMarketCap';
 import {
     Wrapper,
@@ -18,10 +20,15 @@ class Legend extends React.Component {
     }
     render() {
         const data = this.apiClient.getStockSummary(this.props.code)
+        const logo = this.apiClient.getStockLogo(this.props.code)
+        console.log(data)
+        console.log(logo)
         const profile = this.props.code ? (
             <Wrapper>
-                <LegendCompanyHeader code={this.props.code}/>
-                    <CompanyName>{data.metadata.name}</CompanyName>
+                <LegendCompanyLogo logo={logo} />
+                <LegendCompanyCode code={this.props.code} />
+                <LegendCompanyPE pe={data.data.PE} />
+                <CompanyName>{data.metadata.name}</CompanyName>
                 <LegendCompanyMarketCap data={data.data} />
             </Wrapper>
             ) : (<UnselectedWrapper><p>hover over graph to show profile</p></UnselectedWrapper>);
