@@ -1,5 +1,6 @@
 import topShorts from './fixtures/data/topShortsFormatted.json';
 import topShortsList from './fixtures/data/topShortsList.json';
+import topAlerts from './fixtures/data/topAlerts.json';
 import CBAStockSummary from './fixtures/data/CBAStockSummary.json';
 import TLSStockSummary from './fixtures/data/TLSStockSummary.json';
 import JBHStockSummary from './fixtures/data/JBHStockSummary.json';
@@ -38,24 +39,26 @@ class ShortedAPI {
      * get the top 10 short positioned stocks time series data from shorted api endpoint
      */
     getTopShorts(period) {
-        const slice_map_hourly = {
-            d: 24,
-            w: 168,
-            m: 672,
-            y: 8064,
-            y3: 24192
-        }
-        const slice_map_daily = {
-            d: 8,
-            w: 28,
-            m: 180,
-            y: 365,
-            y3: 1095,
+        const slice_map = {
+            hourly: {
+                d: 24,
+                w: 168,
+                m: 672,
+                y: 8064,
+                y3: 24192
+            },
+            daily: {
+                d: 8,
+                w: 28,
+                m: 180,
+                y: 365,
+                y3: 1095,
+            }
         }
         // console.log(topShorts)
         // return topShorts.slice(-1 * slice_map_hourly[period], -1)
         return {
-            data: topShorts.data.slice(-1 * slice_map_daily[period], -1),
+            data: topShorts.data.slice(-1 * slice_map.daily[period], -1),
             dataKeys: topShorts.dataKeys
         }
     }
@@ -94,7 +97,7 @@ class ShortedAPI {
     }
     /**
      * getStockLogo
-     * 
+     * TODO: implement actual client call
      * 
      */
     getStockLogo(code) {
@@ -110,6 +113,25 @@ class ShortedAPI {
             default:
                 return StockLogo
         }
+    }
+    /**
+     * getTopAlerts
+     * get the latest top alerts.
+     * 
+     * 
+     * 
+     */
+    getTopAlerts() {
+        return topAlerts
+    }
+    /**
+     * getAlerts
+     * get the latest alerts for a specific stock
+     * 
+     * 
+     */
+    getAlerts(code) {
+        return topAlerts.alerts.code
     }
 }
 
