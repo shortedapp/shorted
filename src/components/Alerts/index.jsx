@@ -1,4 +1,5 @@
 import React from 'react';
+import ShortedAPI from '../../services/sapi/client';
 import AlertRow from '../../components/AlertRow';
 import { Wrapper } from './style';
 /**
@@ -7,13 +8,18 @@ import { Wrapper } from './style';
 class Alerts extends React.Component {
     constructor(props) {
         super(props);
+        this.apiClient = new ShortedAPI()
+        this.state = {
+            data: this.apiClient.getTopAlerts()
+        }
     }
 
     render() {
-        const alerts = this.props.map((alert) => <AlertRow>{alert}</AlertRow>)
+        console.log(this.state)
+        const alerts = this.state.data.alerts.map((alert) => <AlertRow key={alert.code} {...alert} />)
         return (
             <Wrapper>
-                <p>alerts goes here</p>
+                {alerts}
             </Wrapper>
         )
     }
