@@ -13,7 +13,6 @@ export const Wrapper = styled.div`
     transition-property: opacity, transform;
     transform: ${props => `translateY(${props.Ypos}px)`};
     max-width: 1200px;
-    height: 800px;
     background-color: white;
     border-radius: 30px;
     border: 1px solid black;

@@ -21,8 +21,6 @@ class Legend extends React.Component {
     render() {
         const data = this.apiClient.getStockSummary(this.props.code)
         const logo = this.apiClient.getStockLogo(this.props.code)
-        console.log(data)
-        console.log(logo)
         const profile = this.props.code ? (
             <Wrapper>
                 <LegendCompanyLogo logo={logo} />

@@ -12,8 +12,7 @@ export const Wrapper = styled.div`
     background: #dadada;
     border-radius: 0 30px 30px 0;
     padding-top: 4px;
-    padding-bottom: 4px
-
+    padding-bottom: 4px;
 `
 
 export const Name = styled.div`

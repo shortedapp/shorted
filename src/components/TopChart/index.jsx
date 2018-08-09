@@ -2,13 +2,11 @@ import React from 'react';
 import { LineChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid ,Tooltip, Line, Label} from 'recharts';
 import Transition from 'react-transition-group/Transition';
 import ShortedAPI from '../../services/sapi/client';
-import AxisLabel from '../../components/AxisLabel';
 import {
     duration,
     transitionStyles,
     Wrapper,
     PickerWrapper,
-    intervals,
     colors700 } from './style';
 /**
  * Chart
@@ -16,6 +14,8 @@ import {
  * TODO:
  *   * add more styling to graph currently nothing present
  *   * add more intelligent x-axis ticks as windowpicker is changed
+ *   * refactor to use victory charts
+ *   * multiple display modes such as candleStick etc.
  * 
  * 
  */
