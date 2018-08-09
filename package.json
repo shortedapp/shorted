@@ -10,14 +10,15 @@
     "gatsby-cli": "^1.1.58",
     "gatsby-plugin-antd": "^1.0.12",
     "gatsby-plugin-react-helmet": "next",
-    "gatsby-plugin-styled-components": "^2.0.11",
+    "gatsby-plugin-styled-components": "^3.0.0-beta.3",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",
     "react-transition-group": "^2.4.0",
     "recharts": "^1.1.0",
-    "styled-components": "^3.3.3"
+    "styled-components": "^3.4.2",
+    "victory": "^30.2.0"
   },
   "keywords": [
     "gatsby"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper } from './style';
+import { Wrapper, Code, Header } from './style';
 
 
 /**
@@ -8,6 +8,9 @@ import { Wrapper } from './style';
  * 
  */
 const LegendCompanyCode = (props) => (
-  <Wrapper>{props.code}</Wrapper>
+  <Wrapper>
+    <Header>Issuer code</Header>
+    <Code>{props.code}</Code>
+  </Wrapper>
 )
 export default LegendCompanyCode;

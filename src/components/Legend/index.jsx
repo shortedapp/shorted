@@ -29,7 +29,7 @@ class Legend extends React.Component {
                 <LegendCompanyCode code={this.props.code} />
                 <LegendCompanyPE pe={data.data.PE} />
                 <CompanyName>{data.metadata.name}</CompanyName>
-                <LegendCompanyMarketCap data={data.data} />
+                <LegendCompanyMarketCap data={data.data.marketCap} />
             </Wrapper>
             ) : (<UnselectedWrapper><p>hover over graph to show profile</p></UnselectedWrapper>);
         return profile

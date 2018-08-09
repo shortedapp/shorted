@@ -1,4 +1,5 @@
 import React from 'react';
+import { VictoryChart, VictoryAxis, VictoryLabel, VictoryContainer, VictoryLine, VictoryTheme } from 'victory';
 import { LineChart, Line, ResponsiveContainer } from 'recharts';
 import { Wrapper } from './style';
 
@@ -13,26 +14,37 @@ class LegendCompanyMarketCap extends React.Component {
     this.state = {
     };
   }
+  getTickValues() {
+    return [
+      new Date(2002, 1, 1),
+      new Date(2017, 1, 1),
+      new Date(2018, 1, 1)
+    ]
+  }
 
   render() {
-    const data = [
-      {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-      {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-      {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-      {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-      {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-      {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-      {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
-    ];
+    // return (
+    //   <Wrapper>
+    //     <ResponsiveContainer width='100%' height={170}>
+    //       <LineChart height={100} data={this.props.data} margin={{top: 30, right: 20, left: 20, bottom: 30}}>
+    //         <Line dot={false} isAnimationActive={false} type='linear' dataKey='value' stroke='#8884d8' strokeWidth={2} />
+    //       </LineChart>
+    //     </ResponsiveContainer>
+    //   </Wrapper>
+    // );
     return (
       <Wrapper>
-        <ResponsiveContainer width='100%' height={170}>
-          <LineChart height={100} data={data} margin={{top: 30, right: 20, left: 20, bottom: 30}}>
-            <Line dot={false} isAnimationActive={false} type='monotone' dataKey='pv' stroke='#8884d8' strokeWidth={2} />
-          </LineChart>
-        </ResponsiveContainer>
+        <VictoryChart height={200}
+          containerComponent={<VictoryContainer responsive={true}/>}
+        >
+          <VictoryLabel x={25} y={24}
+            text="An outlook"
+          />
+          <VictoryLine data={this.props.data} />
+          <VictoryAxis scale={{ x: "time", y: "market cap"}} tickCount={5} tickFormat={ (x) => new Date(x).getFullYear() } />
+        </VictoryChart>
       </Wrapper>
-    );
+    )
   }
 }
 
