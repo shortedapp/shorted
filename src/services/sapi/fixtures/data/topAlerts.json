@@ -3,25 +3,25 @@
             "code": "TLS",
             "name": "TELSTRA CORPORATION LIMITED.",
             "currentPercent": 5.62,
-            "changePercent": 4.5
+            "changedPercent": 4.5
         },
         {
             "code": "CBA",
             "name": "COMMONWEALTH BANK OF AUSTRALIA.",
             "currentPercent": 1.1,
-            "changePercent": -4.5
+            "changedPercent": -4.5
         },
         {
             "code": "JBH",
             "name": "JB HI-FI LIMITED",
             "currentPercent": 19.4,
-            "changePercent": 11
+            "changedPercent": 11
         },
         {
             "code": "ORE",
             "name": "OROCOBRE LIMITED",
             "currentPercent": 3.2,
-            "changePercent": -1.1
+            "changedPercent": -1.1
         }
     ],
     "last_modified": "01/01/2011"
