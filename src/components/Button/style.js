@@ -13,6 +13,6 @@ export const Wrapper = styled.button`
     background: ${ props => props.selected ? `#3d1abd` : `#8361ff`};
     outline:0;
     font-size: 20px;
-    font-family: "Avenir NextSegoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-family: "Avenir Next,Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     font-weight: bold;
 `

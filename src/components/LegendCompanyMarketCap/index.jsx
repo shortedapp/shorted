@@ -1,7 +1,7 @@
 import React from 'react';
-import { VictoryChart, VictoryAxis, VictoryLabel, VictoryContainer, VictoryLine, VictoryTheme } from 'victory';
-import { LineChart, Line, ResponsiveContainer } from 'recharts';
-import { Wrapper } from './style';
+import { VictoryChart, VictoryAxis, VictoryLabel, VictoryContainer, VictoryLine } from 'victory';
+// import { LineChart, Line, ResponsiveContainer } from 'recharts';
+import { Wrapper, Header, Chart } from './style';
 
 
 /**
@@ -34,15 +34,20 @@ class LegendCompanyMarketCap extends React.Component {
     // );
     return (
       <Wrapper>
-        <VictoryChart height={200}
+        <Header>
+          <VictoryLabel
+            text="Market Cap"
+            style={{ fontSize: 20, fontWeight: 'bold', fontFamily: 'Avenir Next,sans-serif' }}
+          />
+        </Header>
+        <Chart>
+        <VictoryChart padding={{ top: 0, left: 40, right: 20, bottom: 50 }} height={200} width={580}
           containerComponent={<VictoryContainer responsive={true}/>}
         >
-          <VictoryLabel x={25} y={24}
-            text="An outlook"
-          />
           <VictoryLine data={this.props.data} />
           <VictoryAxis scale={{ x: "time", y: "market cap"}} tickCount={5} tickFormat={ (x) => new Date(x).getFullYear() } />
         </VictoryChart>
+        </Chart>
       </Wrapper>
     )
   }

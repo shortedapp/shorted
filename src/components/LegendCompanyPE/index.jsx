@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper } from './style';
+import { Wrapper, Header, PE } from './style';
 
 
 /**
@@ -9,7 +9,8 @@ import { Wrapper } from './style';
  */
 const LegendCompanyPE = (props) => (
   <Wrapper>
-    {props.pe}
+    <Header>P/E ratio</Header>
+    <PE>{props.pe}</PE>
   </Wrapper>
 )
 export default LegendCompanyPE;

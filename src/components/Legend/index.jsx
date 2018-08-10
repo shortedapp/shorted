@@ -1,11 +1,13 @@
 import React from 'react';
-
+import Transition from 'react-transition-group/Transition';
 import LegendCompanyCode from '../../components/LegendCompanyCode';
 import LegendCompanyLogo from '../../components/LegendCompanyLogo';
 import LegendCompanyPE from '../../components/LegendCompanyPE';
 import LegendCompanyMarketCap from '../../components/LegendCompanyMarketCap';
 import {
     Wrapper,
+    duration,
+    transitionStyles,
     UnselectedWrapper,
     CompanyName } from './style';
 import ShortedAPI from '../../services/sapi/client';
@@ -17,20 +19,54 @@ class Legend extends React.Component {
     constructor(props) {
         super(props)
         this.apiClient = new ShortedAPI()
+        this.state = {
+            inside: false,
+            code: false,
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        // You don't have to do this check first, but it can help prevent an unneeded render
+        if (nextProps.code !== this.state.code) {
+          this.setState({
+              code: nextProps.code,
+              data: this.apiClient.getStockSummary(nextProps.code),
+              logo: this.apiClient.getStockLogo(nextProps.code)
+
+            });
+
+        }
+      }
+    componentDidMount() {
+        this.toggleEnterState();
+    }
+    
+    toggleEnterState() {
+        this.setState({ inside: true });
     }
     render() {
-        const data = this.apiClient.getStockSummary(this.props.code)
-        const logo = this.apiClient.getStockLogo(this.props.code)
-        const profile = this.props.code ? (
-            <Wrapper>
-                <LegendCompanyLogo logo={logo} />
-                <LegendCompanyCode code={this.props.code} />
-                <LegendCompanyPE pe={data.data.PE} />
-                <CompanyName>{data.metadata.name}</CompanyName>
-                <LegendCompanyMarketCap data={data.data.marketCap} />
-            </Wrapper>
-            ) : (<UnselectedWrapper><p>hover over graph to show profile</p></UnselectedWrapper>);
-        return profile
+        return (<Transition timeout={duration} in={true} appear={true}>
+        {
+            state => {
+                return (this.props.code ? (
+                    <Wrapper
+                        duration={duration}
+                        {...transitionStyles[state]}
+                    >
+                        <LegendCompanyLogo logo={this.state.logo} />
+                        <LegendCompanyCode code={this.state.code} />
+                        <LegendCompanyPE pe={this.state.data.data.PE} />
+                        <CompanyName>{this.state.data.metadata.name}</CompanyName>
+                        <LegendCompanyMarketCap data={this.state.data.data.marketCap} />
+                    </Wrapper>
+                    ) : (<UnselectedWrapper
+                            duration={duration}
+                            {...transitionStyles[state]}
+                        >
+                            <p>hover over graph to show profile</p>
+                        </UnselectedWrapper>))
+            }
+        }
+        </Transition>)
     }
 }
 

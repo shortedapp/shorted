@@ -8,10 +8,10 @@ export const Wrapper = styled.div`
         "code name name name percentage indicator"
         "code name name name percentage indicator";
     margin: 2px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: 7px;
+    margin-right: 7px;
     height: 51px;
-    background: white;
+    background: #e2e2e2;
     padding-top: 4px;
     padding-bottom: 4px;
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import ShortedAPI from '../../services/sapi/client';
 import AlertRow from '../../components/AlertRow';
-import { Wrapper } from './style';
+import { Wrapper, Header } from './style';
 /**
  * Responsible for the rendering/display of "alerts" which represent anomalous changes in short positions for a given stock.
  */
@@ -19,6 +19,7 @@ class Alerts extends React.Component {
         const alerts = this.state.data.alerts.map((alert) => <AlertRow key={alert.code} {...alert} />)
         return (
             <Wrapper>
+                <Header>Alerts & Anomalies</Header>
                 {alerts}
             </Wrapper>
         )
