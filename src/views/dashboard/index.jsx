@@ -3,6 +3,7 @@ import Transition from 'react-transition-group/Transition';
 import headerBackground from '../../assets/images/header-background.svg';
 import AppViewWrapper from '../../components/AppViewWrapper';
 import TopChart from '../../components/TopChart';
+import TopChartVictory from '../../components/TopChartVictory';
 import TopShortsList from '../../components/TopShortsList';
 import Legend from '../../components/Legend';
 import Alerts from '../../components/Alerts';
@@ -70,7 +71,7 @@ class Dashboard extends React.Component {
                         <DashboardWrapper>
                             <div className="content" >
                                 <TopShortsList />
-                                <TopChart
+                                <TopChartVictory
                                     picker={<WindowPicker
                                         options={options}
                                         selectedOption={selectedOption}
