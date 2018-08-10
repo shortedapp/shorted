@@ -30,8 +30,8 @@ class Legend extends React.Component {
           this.setState({
               code: nextProps.code,
               data: this.apiClient.getStockSummary(nextProps.code),
-              logo: this.apiClient.getStockLogo(nextProps.code)
-
+              logo: this.apiClient.getStockLogo(nextProps.code),
+              inside: false
             });
 
         }
