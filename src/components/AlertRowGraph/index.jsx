@@ -40,7 +40,7 @@ class AlertRowGraph extends React.Component {
                 }
             }}
             data={this.props.data} />
-            <VictoryAxis tickFormat={() => ''} />
+            <VictoryAxis tickFormat={() => ''} style={{ axis: {stroke: "none"} }} />
         </VictoryChart>
       </Wrapper>
     )
