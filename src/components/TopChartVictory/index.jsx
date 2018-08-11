@@ -48,7 +48,6 @@ class TopChartVictory extends React.Component {
         console.log(fixtures.data.length)
         const lines = fixtures.dataKeys.map( (key, index) => <VictoryLine
                 key={key}
-                data={fixtures.data.map((row) => ({ x: row.date, y: row[key]}))}
                 data={fixtures.data}
                 x="date"
                 y={key}
@@ -60,7 +59,6 @@ class TopChartVictory extends React.Component {
                         }
                     }]
                 }
-                type="monotone"
                 style={{
                     data: {
                         stroke: colors700[index],
@@ -79,21 +77,33 @@ class TopChartVictory extends React.Component {
                     <PickerWrapper >
                         {this.props.picker}
                     </PickerWrapper>
-                        <VictoryChart padding={{ top: 0, left: 40, right: 20, bottom: 50 }} height={350}
+                        <VictoryChart padding={{ top: 0, left: 40, right: 20, bottom: 50 }} height={310}
                         containerComponent={<VictoryContainer responsive={true}/>}
                         >
                             {lines}
                             <VictoryAxis
                                 scale="time"
+                                label="Time"
                                 standalone={false}
                                 tickCount={5}
                                 style={{
                                     axis: {stroke: "#756f6a"},
-                                    axisLabel: {fontSize: 20, padding: 30},
+                                    axisLabel: {fontSize: 12, padding: 25, fontFamily: 'Avenir Next,sans-serif'},
                                     ticks: {stroke: "grey", size: 5},
-                                    tickLabels: {fontSize: 10, padding: 5}
+                                    tickLabels: {fontSize: 7, padding: 5}
                                 }}
                              />
+                             <VictoryAxis dependentAxis
+                                tickFormat={(t) => `${Math.round(t)}`}
+                                tickLabelComponent={<VictoryLabel textAnchor="middle" />}
+                                domain={[0, 100]}
+                                label="Percentage Shorted"
+                                style={{
+                                    axisLabel: { fontSize: 12, padding: 32, angle: 90, fontFamily: 'Avenir Next,sans-serif'},
+                                    ticks: {stroke: "grey", size: 5},
+                                    tickLabels: {fontSize: 7,  angle: 90, padding: 7 } }} 
+
+                                />
                         </VictoryChart>
                     </Wrapper>)
                 }

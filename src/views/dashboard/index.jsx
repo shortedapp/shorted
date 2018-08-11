@@ -4,6 +4,7 @@ import headerBackground from '../../assets/images/header-background.svg';
 import AppViewWrapper from '../../components/AppViewWrapper';
 import TopChart from '../../components/TopChart';
 import TopChartVictory from '../../components/TopChartVictory';
+import MoversList from '../../components/MoversList';
 import TopShortsList from '../../components/TopShortsList';
 import Legend from '../../components/Legend';
 import Alerts from '../../components/Alerts';
@@ -86,6 +87,7 @@ class Dashboard extends React.Component {
                                     <Legend code={selectedCode}/>
                                 </div>
                                 <Alerts />
+                                <MoversList period={selectedOption} />
                             </div>
                         </DashboardWrapper>
                     </AppViewWrapper>

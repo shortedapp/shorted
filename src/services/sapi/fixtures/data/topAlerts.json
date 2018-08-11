@@ -2,26 +2,26 @@
     "alerts": [{
             "code": "TLS",
             "name": "TELSTRA CORPORATION LIMITED.",
-            "currentPercent": 5.62,
-            "changedPercent": 4.5
+            "current": 5.62,
+            "changed": 4.5
         },
         {
             "code": "CBA",
             "name": "COMMONWEALTH BANK OF AUSTRALIA.",
-            "currentPercent": 1.1,
-            "changedPercent": -4.5
+            "current": 1.1,
+            "changed": -4.5
         },
         {
             "code": "JBH",
             "name": "JB HI-FI LIMITED",
-            "currentPercent": 19.4,
-            "changedPercent": 11
+            "current": 19.4,
+            "changed": 11
         },
         {
             "code": "ORE",
             "name": "OROCOBRE LIMITED",
-            "currentPercent": 3.2,
-            "changedPercent": -1.1
+            "current": 3.2,
+            "changed": -1.1
         }
     ],
     "last_modified": "01/01/2011"

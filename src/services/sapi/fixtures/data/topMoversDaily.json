@@ -1,0 +1,15 @@
+{
+    "data": [
+        { "code": "BHP", "current": 7.66, "change": 5.1 },
+        { "code": "ASN", "current": 5.91, "change": -3.2 },
+        { "code": "TLS", "current": 2.12, "change": 2.7 },
+        { "code": "CSL", "current": 3.04, "change": -1.9 },
+        { "code": "ANZ", "current": 0.00, "change": 1.5 },
+        { "code": "AGL", "current": 15.36, "change": 1.3 },
+        { "code": "MAQ", "current": 5.56, "change": 1.21 },
+        { "code": "ORG", "current": 0.92, "change": -1.1 },
+        { "code": "ORE", "current": 0.89, "change": 1.01 },
+        { "code": "MYX", "current": 5.74, "change": 0.74 }
+    ],
+    "last_modified": "01/01/2018"
+}

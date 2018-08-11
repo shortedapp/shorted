@@ -16,7 +16,8 @@ class NavBar extends React.Component {
       routes: [
         { text: "About", url: "/about" },
         { text: "Blog", url: "/blog" },
-        { text: "Disclaimer", url: "/disclaimer" }
+        { text: "Disclaimer", url: "/disclaimer" },
+        { text: "Contact", url: "/contact" }
       ]
     };
   }

@@ -25,7 +25,7 @@ class TopShortListRow extends React.Component {
             <Wrapper>
                 <Code><div className="code">{this.props.code}</div></Code>
                 <Name>{this.props.name}</Name>
-                <Percent><div className="circle" >{this.props.percent}%</div></Percent>
+                <Percent><div className="circle" >{this.props.current}%</div></Percent>
             </Wrapper>)
     }
 }

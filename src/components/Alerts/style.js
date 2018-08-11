@@ -7,6 +7,8 @@ export const transitionStyles = {
     exited: { opacity: 0}
 };
 export const Wrapper = styled.div`
+    border-radius: 15px;
+    border: 1px solid #eee;
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;

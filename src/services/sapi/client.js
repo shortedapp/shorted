@@ -1,11 +1,22 @@
+// data for topshorts graph
 import topShorts from './fixtures/data/topShortsFormatted.json';
+// data for top shorts list
 import topShortsList from './fixtures/data/topShortsList.json';
+// data for top alerts list
 import topAlerts from './fixtures/data/topAlerts.json';
+// data for top movers list
+import topMoversDaily from './fixtures/data/topMoversDaily.json';
+import topMoversWeekly from './fixtures/data/topMoversWeekly.json';
+import topMoversMonthly from './fixtures/data/topMoversMonthly.json';
+import topMoversYearly from './fixtures/data/topMoversYearly.json';
+
+// legend profile summaries used in legend view
 import CBAStockSummary from './fixtures/data/CBAStockSummary.json';
 import TLSStockSummary from './fixtures/data/TLSStockSummary.json';
 import JBHStockSummary from './fixtures/data/JBHStockSummary.json';
 import OREStockSummary from './fixtures/data/OREStockSummary.json';
 
+// logos
 import CBALogo from './fixtures/images/cba-logo.png';
 import TLSLogo from './fixtures/images/tls-logo.png';
 import JBHLogo from './fixtures/images/jbh-logo.png';
@@ -132,6 +143,22 @@ class ShortedAPI {
      */
     getAlerts(code) {
         return topAlerts.alerts.code
+    }
+    /**
+     * 
+     * @param {String} period (day,week,month, year) 
+     */
+    getMovers(period) {
+        switch(period) {
+            case "d":
+                return topMoversDaily
+            case "w":
+                return topMoversWeekly
+            case "m":
+                return topMoversMonthly
+            case "y":
+                return topMoversYearly
+        }
     }
 }
 

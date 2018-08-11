@@ -14,8 +14,8 @@ export const DashboardWrapper = styled.div`
         grid-template-areas:
             "top-list top-graph top-graph top-right"
             "top-list top-graph top-graph todo"
-            "top-list top-alerts top-alerts todo"
-            "top-list top-alerts top-alerts todo"
+            "top-list top-alerts top-alerts top-movers"
+            "top-list top-alerts top-alerts top-movers"
     }
     .top-right {
         grid-area: top-right;

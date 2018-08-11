@@ -14,18 +14,18 @@ import {
 /**
  * Renders a given row in the alert & anomalies widget.
  */
-const AlertRow = (props) =>  (
+const MoversListRow = (props) =>  (
     <Wrapper>
         <Code><div className="code">{props.code}</div></Code>
         <Name>{props.name}</Name>
         <Percentage>
             <PercentageCurrent>{props.current}%</PercentageCurrent>
-            <PercentageChanged value={props.changed} >{props.changed}%</PercentageChanged>
+            <PercentageChanged value={props.change} >{props.change}%</PercentageChanged>
         </Percentage>
         <IndicatorWrapper>
-        {props.changed > 0 ? <IndicatorUp /> : <IndicatorDown/>}
+        {props.change > 0 ? <IndicatorUp /> : <IndicatorDown/>}
         </IndicatorWrapper>
     </Wrapper>
 )
 
-export default AlertRow;
+export default MoversListRow;
