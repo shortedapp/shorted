@@ -8,13 +8,13 @@ export const transitionStyles = {
   };
 
 export const Wrapper = styled.div`
-  height: 100%;
+  height: 1400px;
   grid-area: top-list;
   background: white;
   display: flex;
   flex-direction: column;
-  border-radius: 55px;
-  border: 1px solid black;
+  border-radius: 15px;
+  border: 1px solid #eee;
   opacity: ${props => props.opacity};
   transition: ${props => `${props.duration}ms ease-in-out`};
   transition-property: opacity, transform;
@@ -37,7 +37,7 @@ export const More = styled.div`
   font-size: 35px;
   font-weight: bold;
   background: #dadada;
-  border-radius: 0 0 60px 60px;
+  border-radius: 0 0 15px 15px;
   margin: 4px;
   justify-content: center;
   font-family: Avenir Next,sans-serif;

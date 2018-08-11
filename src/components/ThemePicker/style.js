@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     background: white;
-    border-radius: 30px;
+    border-radius: 15px;
     display: block;
     float: left;
     verticle-align: middle;

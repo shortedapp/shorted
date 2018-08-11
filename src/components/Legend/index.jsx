@@ -9,7 +9,8 @@ import {
     duration,
     transitionStyles,
     UnselectedWrapper,
-    CompanyName } from './style';
+    CompanyName,
+    CompanySector } from './style';
 import ShortedAPI from '../../services/sapi/client';
 /**
  * Renders a shorted.com.au logo
@@ -56,6 +57,7 @@ class Legend extends React.Component {
                         <LegendCompanyCode code={this.state.code} />
                         <LegendCompanyPE pe={this.state.data.data.PE} />
                         <CompanyName>{this.state.data.metadata.name}</CompanyName>
+                        <CompanySector>{this.state.data.metadata.sector}</CompanySector>
                         <LegendCompanyMarketCap data={this.state.data.data.marketCap} />
                     </Wrapper>
                     ) : (<UnselectedWrapper

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import AlertRowGraph from '../../components/AlertRowGraph';
 import {
     Wrapper,
     Name,
@@ -25,6 +25,7 @@ const AlertRow = (props) =>  (
         <IndicatorWrapper>
         {props.changed > 0 ? <IndicatorUp /> : <IndicatorDown/>}
         </IndicatorWrapper>
+        <AlertRowGraph data={props.recent_history} />
     </Wrapper>
 )
 

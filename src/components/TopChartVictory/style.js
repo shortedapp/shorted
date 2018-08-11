@@ -14,8 +14,8 @@ export const Wrapper = styled.div`
     transform: ${props => `translateY(${props.Ypos}px)`};
     max-width: 1200px;
     background-color: white;
-    border-radius: 30px;
-    border: 1px solid black;
+    border-radius: 15px;
+    border: 1px solid #eee;
     .g.recharts-layer.recharts-cartesian-axis.recharts-yAxis.yAxis > text {
       color: red;
     }

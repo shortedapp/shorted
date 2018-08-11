@@ -7,6 +7,8 @@ import { Wrapper, Header, More, duration, transitionStyles } from './style';
  * Renders a list of TopShortsListRow components. These rows will display the stock code, stock name, and percentage shorted
  * for the top say 20 stocks. With a "show more" button present at the bottom, taking them to a different view which will me dedicated to showing more short position
  * information for more stocks (maybe top 100). Will perhaps a more verbose set of properties and graphics.
+ * TODO: 
+ *  * load profile on select of a specific stock in list
  */
 class TopShortsList extends React.Component {
     constructor(props) {
@@ -15,6 +17,7 @@ class TopShortsList extends React.Component {
         this.state = {
             data: this.apiClient.getTopShortsList(20),
             inside: false,
+            hovered: false,
         }
     }
     componentDidMount() {
@@ -24,15 +27,30 @@ class TopShortsList extends React.Component {
     toggleEnterState() {
         this.setState({ inside: true });
     }
+    handleHover(value) {
+        this.setState({hovered: value})
+    }
+    handleMouseLeave() {
+        this.setState({
+            hovered: false,
+        })
+    }
 
     render() {
-        const rows = this.state.data.map((row_data) => <TopShortsListRow key={row_data.code} {...row_data} />)
+        const rows = this.state.data.map(
+            (row_data) => <TopShortsListRow
+                            isHovered={this.state.hovered == row_data.code}
+                            onHover={() => this.handleHover(row_data.code)}
+                            key={row_data.code}
+                            {...row_data} 
+        />)
         return  (
             <Transition timeout={duration} in={true} appear={true}>
             {
                 state => {
                     return (
                     <Wrapper
+                        onMouseLeave={() => this.handleMouseLeave() }
                         duration={duration}
                         {...transitionStyles[state]}
                     >

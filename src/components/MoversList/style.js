@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
   background: white;
   display: flex;
   flex-direction: column;
-  border-radius: 55px;
+  border-radius: 15px;
   border: 1px solid black;
   opacity: ${props => props.opacity};
   transition: ${props => `${props.duration}ms ease-in-out`};
@@ -37,7 +37,7 @@ export const More = styled.div`
   font-size: 35px;
   font-weight: bold;
   background: #dadada;
-  border-radius: 0 0 60px 60px;
+  border-radius: 0 0 15px 15px;
   margin: 4px;
   justify-content: center;
   font-family: Avenir Next,sans-serif;

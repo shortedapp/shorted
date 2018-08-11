@@ -15,12 +15,13 @@ export const Wrapper = styled.div`
     grid-area: legend;
     display: grid;
     grid-gap: 10px;
-    grid-template-rows: 60px 60px 60px 170px;
+    grid-template-rows: 60px 60px 60px 60px 170px;
     grid-template-columns: repeat(4, 1fr);
     grid-template-areas:
+        "company-name company-name company-name company-name"
         "company-logo company-logo company-code company-code"
         "company-logo company-logo company-pe company-pe"
-        "company-name company-name company-name company-name"
+        "company-sector company-sector company-sector company-sector"
         "company-mc company-mc company-mc company-mc";
 `
 export const UnselectedWrapper = styled.div`
@@ -57,6 +58,18 @@ export const CompanyMarketCap = styled.div`
     vertical-align: middle;
 
 
+`
+export const CompanySector = styled.div`
+    grid-area: company-sector;
+    display: flex;
+    background: white;
+    font-size: 1.3vh;
+    font-weight: bold;
+    font-family: Avenir Next,sans-serif;
+    text-align: center;
+    flex-direction: column;
+    vertical-align: middle;
+    justify-content: center;
 `
 export const CompanyName = styled.div`
     grid-area: company-name;

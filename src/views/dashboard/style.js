@@ -30,7 +30,6 @@ export const DashboardWrapper = styled.div`
             "legend"
             "legend"
     }
-    
 `
 
 export const duration = 300;

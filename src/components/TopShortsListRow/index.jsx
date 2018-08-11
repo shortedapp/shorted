@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
     Wrapper,
+    WrapperHovered,
     Code,
     Name,
     Percent
@@ -18,16 +19,20 @@ import {
  * }
  */
 
-class TopShortListRow extends React.Component {
-
-    render() {
-        return (
-            <Wrapper>
-                <Code><div className="code">{this.props.code}</div></Code>
-                <Name>{this.props.name}</Name>
-                <Percent><div className="circle" >{this.props.current}%</div></Percent>
+const TopShortListRow = (props) => {
+    return (
+        props.isHovered ? (
+            <WrapperHovered {...props} onMouseOver={props.onHover}>
+                <Code><div className="code">{props.code}</div></Code>
+                <Name>{props.name}</Name>
+                <Percent><div className="circle" >{props.current}%</div></Percent>
+            </WrapperHovered>) : (
+            <Wrapper {...props} onMouseOver={props.onHover}>
+                <Code><div className="code">{props.code}</div></Code>
+                <Name>{props.name}</Name>
+                <Percent><div className="circle" >{props.current}%</div></Percent>
             </Wrapper>)
-    }
+    )
 }
 
 export default TopShortListRow;
