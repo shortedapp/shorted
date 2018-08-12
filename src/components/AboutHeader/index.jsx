@@ -40,12 +40,12 @@ class AboutHeader extends React.Component {
               return (
                 <Wrapper duration={duration} {...transitionStyles[state]} >
                   <HeroWrapper>
-                    <img width={"100%"} src={AboutHeaderHero} />
+                    <img alt="shorted-hero" width={"100%"} src={AboutHeaderHero} />
                   </HeroWrapper>
                   <HeroTitleWrapper>
                   <div className="hero-title">
                     <div className="header-1">
-                      Hello, We are
+                      Hello, we are
                     </div>
                     <div className="header-2">
                       Shorted

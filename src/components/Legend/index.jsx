@@ -25,13 +25,13 @@ class Legend extends React.Component {
             code: false,
         }
     }
-    componentWillReceiveProps(nextProps) {
+    componentDidUpdate(prevProps) {
         // You don't have to do this check first, but it can help prevent an unneeded render
-        if (nextProps.code !== this.state.code) {
+        console.log(this.props.code)
+        console.log(prevProps.code)
+        if (prevProps.code !== this.props.code) {
           this.setState({
-              code: nextProps.code,
-              data: this.apiClient.getStockSummary(nextProps.code),
-              logo: this.apiClient.getStockLogo(nextProps.code),
+              code: this.props.code,
               inside: false
             });
 
@@ -45,6 +45,8 @@ class Legend extends React.Component {
         this.setState({ inside: true });
     }
     render() {
+        const data = this.apiClient.getStockSummary(this.props.code)
+        const logo = this.apiClient.getStockLogo(this.props.code)
         return (<Transition timeout={duration} in={true} appear={true}>
         {
             state => {
@@ -53,12 +55,12 @@ class Legend extends React.Component {
                         duration={duration}
                         {...transitionStyles[state]}
                     >
-                        <LegendCompanyLogo logo={this.state.logo} />
-                        <LegendCompanyCode code={this.state.code} />
-                        <LegendCompanyPE pe={this.state.data.data.PE} />
-                        <CompanyName>{this.state.data.metadata.name}</CompanyName>
-                        <CompanySector>{this.state.data.metadata.sector}</CompanySector>
-                        <LegendCompanyMarketCap data={this.state.data.data.marketCap} />
+                        <LegendCompanyLogo logo={logo} />
+                        <LegendCompanyCode code={this.props.code} />
+                        <LegendCompanyPE pe={data.data.PE} />
+                        <CompanyName>{data.metadata.name}</CompanyName>
+                        <CompanySector>{data.metadata.sector}</CompanySector>
+                        <LegendCompanyMarketCap data={data.data.marketCap} />
                     </Wrapper>
                     ) : (<UnselectedWrapper
                             duration={duration}

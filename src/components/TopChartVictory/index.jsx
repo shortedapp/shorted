@@ -82,7 +82,6 @@ class TopChartVictory extends React.Component {
                         >
                             {lines}
                             <VictoryAxis
-                                scale="time"
                                 label="Time"
                                 standalone={false}
                                 tickCount={5}

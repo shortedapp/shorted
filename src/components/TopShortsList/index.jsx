@@ -39,7 +39,7 @@ class TopShortsList extends React.Component {
     render() {
         const rows = this.state.data.map(
             (row_data) => <TopShortsListRow
-                            isHovered={this.state.hovered == row_data.code}
+                            isHovered={this.state.hovered === row_data.code}
                             onHover={() => this.handleHover(row_data.code)}
                             key={row_data.code}
                             {...row_data} 

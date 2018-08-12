@@ -1,14 +1,14 @@
 import React from 'react';
-import Helmet from "react-helmet";
-import { graphql } from 'gatsby'
+// import Helmet from "react-helmet";
+import { graphql } from 'gatsby';
+import StockProfileView from '../views/stockprofile';
+
 
 const StockProfile = ({data, location}) => {
-    console.log(data)
-    console.log(location)
+    // console.log(data)
+    // console.log(location)
     return (
-        <div>
-        {data.stocksYaml.code}
-        </div>
+        <StockProfileView data={data} />
     )
 }
 

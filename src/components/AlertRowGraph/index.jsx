@@ -1,7 +1,7 @@
 import React from 'react';
-import { VictoryChart, VictoryAxis, VictoryArea, VictoryLabel, VictoryContainer, VictoryLine } from 'victory';
+import { VictoryChart, VictoryAxis, VictoryArea, VictoryContainer } from 'victory';
 // import { LineChart, Line, ResponsiveContainer } from 'recharts';
-import { Wrapper, Header, Chart } from './style';
+import { Wrapper } from './style';
 
 
 /**

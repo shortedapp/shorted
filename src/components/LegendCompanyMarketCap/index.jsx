@@ -45,7 +45,7 @@ class LegendCompanyMarketCap extends React.Component {
           containerComponent={<VictoryContainer responsive={true}/>}
         >
           <VictoryLine data={this.props.data} />
-          <VictoryAxis scale={{ x: "time", y: "market cap"}} tickCount={5} tickFormat={ (x) => new Date(x).getFullYear() } />
+          <VictoryAxis tickCount={5} tickFormat={ (x) => new Date(x).getFullYear() } />
         </VictoryChart>
         </Chart>
       </Wrapper>

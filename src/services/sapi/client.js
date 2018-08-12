@@ -158,6 +158,8 @@ class ShortedAPI {
                 return topMoversMonthly
             case "y":
                 return topMoversYearly
+            default:
+                return topMoversMonthly
         }
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import headerBackground from '../../assets/images/header-background.svg';
 import AppViewWrapper from '../../components/AppViewWrapper';
-import TopChart from '../../components/TopChart';
+// import TopChart from '../../components/TopChart';
 import TopChartVictory from '../../components/TopChartVictory';
 import MoversList from '../../components/MoversList';
 import TopShortsList from '../../components/TopShortsList';

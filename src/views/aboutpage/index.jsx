@@ -2,12 +2,9 @@ import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import AppViewWrapper from '../../components/AppViewWrapper';
 import AboutHeader from '../../components/AboutHeader';
-import { themes, duration, transitionStyles } from './style';
+import { duration, transitionStyles } from './style';
 
 class AboutPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         
