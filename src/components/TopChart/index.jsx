@@ -1,30 +1,31 @@
 import React from 'react';
-import { LineChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid , Line} from 'recharts';
+import { LineChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid ,Tooltip, Line, Label} from 'recharts';
 import Transition from 'react-transition-group/Transition';
-import WindowPicker from './../../components/WindowPicker';
 import ShortedAPI from '../../services/sapi/client';
-import { duration, transitionStyles, Wrapper, PickerWrapper } from './style';
+import {
+    duration,
+    transitionStyles,
+    Wrapper,
+    PickerWrapper,
+    colors700 } from './style';
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
- * TODO: add styling to graph currently nothing present
+ * TODO:
+ *   * add more styling to graph currently nothing present
+ *   * add more intelligent x-axis ticks as windowpicker is changed
+ *   * refactor to use victory charts
+ *   * multiple display modes such as candleStick etc.
+ * 
  * 
  */
 class TopChart extends React.Component {
     constructor(props) {
         super(props);
         this.apiClient = new ShortedAPI()
-        this.state = { 
-            data: this.apiClient.getTopShorts(100),
+        this.state = {
             inside: false,
-            pickerOptions: {
-                values: ['d', 'w', 'm', 'y'],
-            },
-            selectedWindow: false,
         }
-    }
-    handleWindowSeleted(value) {
-        this.setState({selectedWindow: value})
     }
     componentDidMount() {
         this.toggleEnterState();
@@ -33,8 +34,24 @@ class TopChart extends React.Component {
     toggleEnterState() {
         this.setState({ inside: true });
     }
+    handleLineHover(e, key) {
+        console.log(e, key)
+        this.props.onSelectCode(key)
+    }
 
     render() {
+        const { selectedOption } = this.props;
+        const fixtures = this.apiClient.getTopShorts(selectedOption)
+        console.log(fixtures.data.length)
+        const lines = fixtures.dataKeys.map( (key, index) => <Line
+                key={key}
+                onMouseOver={(e) => this.handleLineHover(e, key)}
+                dot={false}
+                type="monotone"
+                dataKey={key}
+                strokeWidth={3}
+                stroke={colors700[index]}>
+                </Line>)
         return (
         <Transition timeout={duration} in={true} appear={true}>
             {
@@ -45,22 +62,27 @@ class TopChart extends React.Component {
                         {...transitionStyles[state]}
                     >
                     <PickerWrapper >
-                        <WindowPicker
-                            options={this.state.pickerOptions}
-                            selectedOption={this.state.selectedWindow}
-                            handleSelect={(e) => this.handleWindowSeleted(e)}
-                        />
+                        {this.props.picker}
                     </PickerWrapper>
                     <ResponsiveContainer aspect={4.0/3.0} width='100%' height={800}>
-                    <LineChart data={this.state.data} margin={{top: 10, right: 70, left: 0, bottom: 60}}>
-                        <XAxis dataKey="date"/>
-                        <YAxis/>
-                        <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-                        <Line dot={false} type="monotone" dataKey="TLS" stroke="#8884d8" />
-                        <Line dot={false} type="monotone" dataKey="CBA" stroke="#82ca9d" />
-                        <Line dot={false} type="monotone" dataKey="ORE" stroke="#ff9800" />
-                        <Line dot={false} type="monotone" dataKey="JBH" stroke="#795548" />
-                    </LineChart>
+                        <LineChart data={fixtures.data} margin={{top: 0, right: 50, left: 10, bottom: 40}}>
+                            <XAxis interval={Math.floor(fixtures.data.length/5)} dataKey="date" fontFamily={'Avenir Next,sans-serif'}>
+                                <Label value="Time" offset={-20} position="insideBottom" fontFamily={'Avenir Next,sans-serif'}/>
+                            </XAxis>
+                            <YAxis
+                                label={{
+                                    value: 'Shorted (%)',
+                                    angle: -90,
+                                    position: 'insideLeft',
+                                    offset: 10,
+                                    fontFamily:'Avenir Next,sans-serif'
+                                }}
+                                fontFamily={'Avenir Next,sans-serif'}
+                                />
+                            <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+                            <Tooltip />
+                            {lines}
+                        </LineChart>
                     </ResponsiveContainer>
                     </Wrapper>)
                 }

@@ -1,15 +1,18 @@
 const path = require('path')
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: 'Shorted',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-styled-components',
+    `gatsby-transformer-yaml`,
     {
-      resolve: 'gatsby-plugin-root-import',
+      resolve: `gatsby-source-filesystem`,
       options: {
-        root: path.join(__dirname, 'src')
-      }
+        path: `${__dirname}/data/stocks`,
+        name: 'stocks',
+      },
     }
   ],
   

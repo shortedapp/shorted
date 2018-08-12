@@ -1,6 +1,5 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import styled from 'styled-components';
 import Logo from '../../components/Logo';
 import NavBar from '../../components/NavBar';
 import { duration, transitionStyles, Wrapper } from './style';
@@ -20,7 +19,7 @@ class Header extends React.Component {
       routes: [
         { text: "About", url: "/about" },
         { text: "Blog", url: "/blog" },
-        { text: "Disclaimer", url: "/disclaimer" }
+        { text: "Disclaimer", url: "/disclaimer" },
       ],
       inside: false,
     };

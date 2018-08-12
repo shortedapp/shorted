@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Wrapper, NavButton } from './style';
 
 
@@ -17,13 +16,14 @@ class NavBar extends React.Component {
       routes: [
         { text: "About", url: "/about" },
         { text: "Blog", url: "/blog" },
-        { text: "Disclaimer", url: "/disclaimer" }
+        { text: "Disclaimer", url: "/disclaimer" },
+        { text: "Contact", url: "/contact" }
       ]
     };
   }
 
   render() {
-    const buttons = this.state.routes.map( (route) => <NavButton href={route.url}>{route.text}</NavButton>)
+    const buttons = this.state.routes.map( (route) => <NavButton key={route.text} href={route.url}>{route.text}</NavButton>)
     return (
       <Wrapper>
         {buttons}

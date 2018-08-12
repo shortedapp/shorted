@@ -2,31 +2,17 @@ import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import headerBackground from '../../assets/images/header-background.svg';
 import AppViewWrapper from '../../components/AppViewWrapper';
-import TopChart from '../../components/TopChart';
+// import TopChart from '../../components/TopChart';
+import TopChartVictory from '../../components/TopChartVictory';
+import MoversList from '../../components/MoversList';
 import TopShortsList from '../../components/TopShortsList';
-import NarBar from '../../components/NavBar';
-import Logo from '../../components/Logo';
 import Legend from '../../components/Legend';
 import Alerts from '../../components/Alerts';
-import Header from '../../components/Header';
 import ThemePicker from '../../components/ThemePicker'
-import { DashboardWrapper } from './style';
+import WindowPicker from './../../components/WindowPicker';
+import { DashboardWrapper, themes, duration, transitionStyles } from './style';
 
-const duration = 300;
 
-const defaultStyle = {
-  width: 100,
-  height: 100,
-  backgroundImage: `url(${headerBackground})`,
-  transition: `opacity ${duration}ms ease-in-out`,
-  opacity: 0,
-};
-
-const transitionStyles = {
-  entering: { opacity: 0 },
-  entered: { opacity: 1 },
-  exited: { opacity: 0}
-};
 /**
  * View:TopShorts
  * Overarching container for the top short view.
@@ -46,36 +32,33 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pickerOptions: {
+            options: {
                 values: ['d', 'w', 'm', 'y'],
             },
-            selectedWindow: false,
+            selectedOption: 'w',
+            selectedCode: false,
             inside: false,
-            themes: [
-                {
-                    name: "dark",
-                    textColor: "#ffffff",
-                    backgroundColor: "#000000",
-
-                },
-                {
-                    name: "light",
-                    textColor: "#000000",
-                    backgroundColor: "#ffffff",
-                }
-            ]
         }
+    }
+    handleOptionSelected(value) {
+        this.setState({
+            selectedOption: value,
+        })
+    }
+    handleSelectCode(value) {
+        this.setState({
+            selectedCode: value
+        })
     }
     componentDidMount() {
         this.toggleEnterState();
     }
-    
     toggleEnterState() {
         this.setState({ inside: true });
     }
 
     render() {
-        const { inside } = this.state;
+        const { options, selectedOption, selectedCode } = this.state;
         return (
             <Transition timeout={duration} in={true} appear={true}>
             {
@@ -89,12 +72,22 @@ class Dashboard extends React.Component {
                         <DashboardWrapper>
                             <div className="content" >
                                 <TopShortsList />
-                                <TopChart />
+                                <TopChartVictory
+                                    picker={<WindowPicker
+                                        options={options}
+                                        selectedOption={selectedOption}
+                                        onSelect={(value) => this.handleOptionSelected(value)}
+                                        />
+                                    }
+                                    selectedOption={selectedOption}
+                                    onSelectCode={(value) => this.handleSelectCode(value)}
+                                />
                                 <div className="top-right">
-                                    <ThemePicker themes={this.state.themes}/>
-                                    <Legend />
+                                    <ThemePicker themes={themes}/>
+                                    <Legend code={selectedCode}/>
                                 </div>
                                 <Alerts />
+                                <MoversList period={selectedOption} />
                             </div>
                         </DashboardWrapper>
                     </AppViewWrapper>
