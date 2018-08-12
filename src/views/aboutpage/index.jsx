@@ -1,7 +1,7 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import AppViewWrapper from '../../components/AppViewWrapper';
-import headerBackground from '../../assets/images/header-background.svg';
+import AboutHeader from '../../components/AboutHeader';
 import { themes, duration, transitionStyles } from './style';
 
 class AboutPage extends React.Component {
@@ -17,11 +17,11 @@ class AboutPage extends React.Component {
                 state => {
                     return (
                     <AppViewWrapper
-                        background={headerBackground}
+                        background={null}
                         duration={duration}
                         {...transitionStyles[state]}
                         >
-                        hello
+                        <AboutHeader />
                     </AppViewWrapper>
                         )
                 }
