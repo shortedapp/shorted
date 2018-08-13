@@ -9,16 +9,16 @@ export const StockProfileWrapper = styled.div`
         display: grid;
         max-width: 1900px;
         grid-gap: 20px;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: 400px 400px 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 130px 400px 1fr 1fr;
         grid-template-areas:
-            "top-list top-graph top-graph top-right"
-            "top-list top-graph top-graph todo"
-            "top-list top-alerts top-alerts top-movers"
-            "top-list top-alerts top-alerts top-movers"
+            "profile-header profile-header profile-header"
+            "profile-chart profile-chart profile-side-panel"
+            "profile-chart profile-chart profile-side-panel"
+            "profile-alerts profile-alerts profile-side-panel"
     }
-    .top-right {
-        grid-area: top-right;
+    .profile-side-panel {
+        grid-area: profile-side-panel;
         display: grid;
         grid-gap: 10px;
         grid-template-rows: repeat(4, 80px);

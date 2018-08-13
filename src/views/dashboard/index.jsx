@@ -10,6 +10,7 @@ import Legend from '../../components/Legend';
 import Alerts from '../../components/Alerts';
 import ThemePicker from '../../components/ThemePicker'
 import WindowPicker from './../../components/WindowPicker';
+import ChartOptions from '../../components/ChartOptions';
 import { DashboardWrapper, themes, duration, transitionStyles } from './style';
 
 
@@ -78,6 +79,9 @@ class Dashboard extends React.Component {
                                         selectedOption={selectedOption}
                                         onSelect={(value) => this.handleOptionSelected(value)}
                                         />
+                                    }
+                                    options={
+                                        <ChartOptions />
                                     }
                                     selectedOption={selectedOption}
                                     onSelectCode={(value) => this.handleSelectCode(value)}

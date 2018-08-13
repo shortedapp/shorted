@@ -64,26 +64,28 @@ class TopChart extends React.Component {
                     <PickerWrapper >
                         {this.props.picker}
                     </PickerWrapper>
-                    <ResponsiveContainer aspect={4.0/3.0} width='100%' height={800}>
-                        <LineChart data={fixtures.data} margin={{top: 0, right: 50, left: 10, bottom: 40}}>
-                            <XAxis interval={Math.floor(fixtures.data.length/5)} dataKey="date" fontFamily={'Avenir Next,sans-serif'}>
-                                <Label value="Time" offset={-20} position="insideBottom" fontFamily={'Avenir Next,sans-serif'}/>
-                            </XAxis>
-                            <YAxis
-                                label={{
-                                    value: 'Shorted (%)',
-                                    angle: -90,
-                                    position: 'insideLeft',
-                                    offset: 10,
-                                    fontFamily:'Avenir Next,sans-serif'
-                                }}
-                                fontFamily={'Avenir Next,sans-serif'}
-                                />
-                            <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-                            <Tooltip />
-                            {lines}
-                        </LineChart>
-                    </ResponsiveContainer>
+                    <div className="chart" >
+                        <ResponsiveContainer aspect={4.0/3.0} width='100%' height={800}>
+                            <LineChart data={fixtures.data} margin={{top: 0, right: 50, left: 10, bottom: 40}}>
+                                <XAxis interval={Math.floor(fixtures.data.length/5)} dataKey="date" fontFamily={'Avenir Next,sans-serif'}>
+                                    <Label value="Time" offset={-20} position="insideBottom" fontFamily={'Avenir Next,sans-serif'}/>
+                                </XAxis>
+                                <YAxis
+                                    label={{
+                                        value: 'Shorted (%)',
+                                        angle: -90,
+                                        position: 'insideLeft',
+                                        offset: 10,
+                                        fontFamily:'Avenir Next,sans-serif'
+                                    }}
+                                    fontFamily={'Avenir Next,sans-serif'}
+                                    />
+                                <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+                                <Tooltip />
+                                {lines}
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
                     </Wrapper>)
                 }
             }

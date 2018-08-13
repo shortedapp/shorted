@@ -8,6 +8,12 @@ export const transitionStyles = {
 
 export const Wrapper = styled.div`
     grid-area: top-graph;
+    display: grid;
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "none picker options"
+      "chart chart chart";
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;
@@ -16,14 +22,19 @@ export const Wrapper = styled.div`
     background-color: white;
     border-radius: 15px;
     border: 1px solid #eee;
-    .g.recharts-layer.recharts-cartesian-axis.recharts-yAxis.yAxis > text {
-      color: red;
-    }
-    .recharts-text .recharts-label {
-      color: red;
-    }
+`
+export const ChartWrapper = styled.div`
+  grid-area: chart;
 `
 export const PickerWrapper = styled.div`
+  grid-area: picker;
+`
+export const OptionsWrapper = styled.div`
+  grid-area: options;
+  justify-content: end;
+  margin-right: 10px;
+  margin-top: 10px;
+  display: grid;
 `
 export const intervals = {
   d: 2,  

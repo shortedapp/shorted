@@ -107,6 +107,25 @@ class ShortedAPI {
         }
     }
     /**
+     * getStockProfile
+     * fetches a more verbose/detailed blob of information for a given stock code.
+     * @param {*} code 
+     */
+    getStockProfile(code) {
+        switch(code) {
+            case "CBA":
+                return CBAStockSummary
+            case "TLS":
+                return TLSStockSummary
+            case "ORE":
+                return OREStockSummary
+            case "JBH":
+                return JBHStockSummary
+            default:
+                return false
+        }
+    }
+    /**
      * getStockLogo
      * TODO: implement actual client call
      * 

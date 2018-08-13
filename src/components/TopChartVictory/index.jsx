@@ -7,6 +7,8 @@ import {
     transitionStyles,
     Wrapper,
     PickerWrapper,
+    ChartWrapper,
+    OptionsWrapper,
     colors700 } from './style';
 /**
  * Chart
@@ -77,33 +79,38 @@ class TopChartVictory extends React.Component {
                     <PickerWrapper >
                         {this.props.picker}
                     </PickerWrapper>
-                        <VictoryChart padding={{ top: 0, left: 40, right: 20, bottom: 50 }} height={310}
-                        containerComponent={<VictoryContainer responsive={true}/>}
-                        >
-                            {lines}
-                            <VictoryAxis
-                                label="Time"
-                                standalone={false}
-                                tickCount={5}
-                                style={{
-                                    axis: {stroke: "#756f6a"},
-                                    axisLabel: {fontSize: 12, padding: 25, fontFamily: 'Avenir Next,sans-serif'},
-                                    ticks: {stroke: "grey", size: 5},
-                                    tickLabels: {fontSize: 7, padding: 5}
-                                }}
-                             />
-                             <VictoryAxis dependentAxis
-                                tickFormat={(t) => `${Math.round(t)}`}
-                                tickLabelComponent={<VictoryLabel textAnchor="middle" />}
-                                domain={[0, 100]}
-                                label="Percentage Shorted"
-                                style={{
-                                    axisLabel: { fontSize: 12, padding: 32, angle: 90, fontFamily: 'Avenir Next,sans-serif'},
-                                    ticks: {stroke: "grey", size: 5},
-                                    tickLabels: {fontSize: 7,  angle: 90, padding: 7 } }} 
-
+                    <OptionsWrapper>
+                        {this.props.options}
+                    </OptionsWrapper>
+                        <ChartWrapper >
+                            <VictoryChart padding={{ top: 0, left: 40, right: 20, bottom: 50 }} height={310}
+                            containerComponent={<VictoryContainer responsive={true}/>}
+                            >
+                                {lines}
+                                <VictoryAxis
+                                    label="Time"
+                                    standalone={false}
+                                    tickCount={5}
+                                    style={{
+                                        axis: {stroke: "#756f6a"},
+                                        axisLabel: {fontSize: 12, padding: 25, fontFamily: 'Avenir Next,sans-serif'},
+                                        ticks: {stroke: "grey", size: 5},
+                                        tickLabels: {fontSize: 7, padding: 5}
+                                    }}
                                 />
-                        </VictoryChart>
+                                <VictoryAxis dependentAxis
+                                    tickFormat={(t) => `${Math.round(t)}`}
+                                    tickLabelComponent={<VictoryLabel textAnchor="middle" />}
+                                    domain={[0, 100]}
+                                    label="Percentage Shorted"
+                                    style={{
+                                        axisLabel: { fontSize: 12, padding: 32, angle: 90, fontFamily: 'Avenir Next,sans-serif'},
+                                        ticks: {stroke: "grey", size: 5},
+                                        tickLabels: {fontSize: 7,  angle: 90, padding: 7 } }} 
+
+                                    />
+                            </VictoryChart>
+                        </ChartWrapper >
                     </Wrapper>)
                 }
             }
