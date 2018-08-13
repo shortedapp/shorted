@@ -28,13 +28,14 @@ export const ChartWrapper = styled.div`
 `
 export const PickerWrapper = styled.div`
   grid-area: picker;
+  display: flex;
+  vertical-align: middle;
+  justify-content: center;
 `
 export const OptionsWrapper = styled.div`
   grid-area: options;
-  justify-content: end;
-  margin-right: 10px;
-  margin-top: 10px;
-  display: grid;
+  display: flex;
+  justify-content: flex-end;
 `
 export const intervals = {
   d: 2,  

@@ -4,6 +4,7 @@ import {
     OptionsWrapper,
     OptionWrapper,
     Option,
+    Wrapper
     } from './style';
 
 
@@ -30,11 +31,11 @@ class ChartOptions extends React.Component {
     }
 
     render() {
-        return (<div>
+        return (<Wrapper>
             <Button onClick={() => this.handleSelect()} >   
             </Button>
             <Options open={this.state.open} />
-            </div>
+            </Wrapper>
         )
     }
 }

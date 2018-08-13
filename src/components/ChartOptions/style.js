@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-
+export const Wrapper = styled.div`
+margin: auto;
+`
 export const Button = styled.div`
     background: black;
     width: 30px;
