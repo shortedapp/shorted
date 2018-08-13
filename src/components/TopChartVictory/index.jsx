@@ -40,14 +40,12 @@ class TopChartVictory extends React.Component {
         this.setState({ inside: true });
     }
     handleLineHover(e, key) {
-        console.log(e, key)
         this.props.onSelectCode(key)
     }
 
     render() {
         const { selectedOption } = this.props;
         const fixtures = this.apiClient.getTopShorts(selectedOption)
-        console.log(fixtures.data.length)
         const lines = fixtures.dataKeys.map( (key, index) => <VictoryLine
                 key={key}
                 data={fixtures.data}
@@ -110,7 +108,7 @@ class TopChartVictory extends React.Component {
 
                                     />
                             </VictoryChart>
-                        </ChartWrapper >
+                        </ChartWrapper>
                     </Wrapper>)
                 }
             }

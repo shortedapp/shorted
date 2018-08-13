@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Wrapper,
+    Button,
     OptionsWrapper,
     OptionWrapper,
     Option,
@@ -30,11 +30,11 @@ class ChartOptions extends React.Component {
     }
 
     render() {
-        return (
-            <Wrapper>
-                <div className="cog" onClick={() => this.handleSelect()} ></div>
-                <Options open={this.state.open} />    
-            </Wrapper>
+        return (<div>
+            <Button onClick={() => this.handleSelect()} >   
+            </Button>
+            <Options open={this.state.open} />
+            </div>
         )
     }
 }

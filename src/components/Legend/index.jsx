@@ -27,8 +27,6 @@ class Legend extends React.Component {
     }
     componentDidUpdate(prevProps) {
         // You don't have to do this check first, but it can help prevent an unneeded render
-        console.log(this.props.code)
-        console.log(prevProps.code)
         if (prevProps.code !== this.props.code) {
           this.setState({
               code: this.props.code,

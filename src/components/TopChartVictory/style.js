@@ -9,7 +9,7 @@ export const transitionStyles = {
 export const Wrapper = styled.div`
     grid-area: top-graph;
     display: grid;
-    grid-template-rows: 60px 1fr;
+    grid-template-rows: 60px 850px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
       "none picker options"
