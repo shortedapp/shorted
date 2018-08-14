@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "author": "Ben Ebsworth <ben.ebsworth@gmail.com>",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "0.1.0-11",
     "antd": "^3.8.1",
     "babel-plugin-styled-components": "^1.5.1",
     "gatsby": "next",

@@ -10,8 +10,12 @@ margin-right: 10px;
 display: inline-block;
 position: relative;
 `;
+export const buttonStyle = {
+    fontSize: 30,
+    fill: 'black',
+    color: 'black'
+}
 export const Button = styled.div`
-    background: black;
     width: 30px;
     height: 30px;
     display: inline-block;

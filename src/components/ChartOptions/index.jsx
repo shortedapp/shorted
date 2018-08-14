@@ -1,5 +1,7 @@
 import React from 'react';
-import { Radio } from 'antd';
+import { Radio, Icon, Menu, Dropdown } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 import 'antd/dist/antd.css';
 import {
     Button,
@@ -8,12 +10,11 @@ import {
     OptionHeader,
     Wrapper,
     radioStyle,
+    buttonStyle,
     } from './style';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-
-
 const Options = (props) => (<OptionsWrapper {...props}>
     <OptionHeader>Chart display</OptionHeader>
     <div className="chart-modes">
@@ -31,8 +32,25 @@ class ChartOptions extends React.Component {
         this.state = {
             open: false,
         }
+        this.myRef = React.createRef();
     }
+    handleOutsideClick(e) {
+        console.log('outside click')
+         // ignore clicks on the component itself
+         console.log(this.myRef)
+        if (this.myRef.node.contains(e.target)) {
+            return;
+        }
+      this.handleSelect();
+    }
+
     handleSelect() {
+        if (!this.state.open) {
+            // attach/remove event handler
+            document.addEventListener('click', (e) => this.handleOutsideClick(e), false);
+        } else {
+        document.removeEventListener('click', (e) => this.handleOutsideClick(e), false);
+        }
         this.setState(prevState => ({
             open: !prevState.open
         }))
@@ -42,8 +60,10 @@ class ChartOptions extends React.Component {
     }
 
     render() {
-        return (<Wrapper>
-            <Button onClick={() => this.handleSelect()} >   
+        return (<Wrapper ref={node => { this.node = node; }}>
+            <Button onClick={() => this.handleSelect()} >
+                <Icon type="setting" style={buttonStyle} spin={this.state.open} />
+                {/* <FontAwesomeIcon icon={faCog} size="2x" /> */}
             </Button>
             <Options onOptionsChange={(e,v) => this.handleOptionsChange(e,v)} open={this.state.open} />
             </Wrapper>

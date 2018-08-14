@@ -8,8 +8,9 @@ export const transitionStyles = {
 };
 
 export const HeroButtonWrapper = styled.a`
+    grid-area: hero-button;
     width: 210px;
-    height: 60px;
+    height: 80px;
     display: flex;
     text-decoration:none;
     justify-content: center; /* align horizontal */
@@ -27,6 +28,11 @@ export const HeroButtonWrapper = styled.a`
         -webkit-box-shadow: -3px 4px 7px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: -3px 4px 7px 0px rgba(0,0,0,0.75);
         box-shadow: -3px 4px 7px 0px rgba(0,0,0,0.75);
+        color: #eee;
+        text-decoration: none!important;
+        height: 80px;
+        transition: height 0.66s ease-out;
+        margin-bottom: 5px;
     }
 `
 
@@ -53,14 +59,14 @@ export const HeroTitleWrapper = styled.div`
     grid-area: hero-title;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 600px 140px 100px;
+    grid-template-rows: 3fr 1fr 1fr;
     grid-template-areas:
         "hero-title"
         "hero-description"
+        "todo"
         "hero-button";
-
     .hero-title {
-        margin-top: 450px;
+        margin-top: 50%;
         display: flex;
         flex-direction: column;
         .header-1 {
@@ -90,7 +96,6 @@ export const HeroTitleWrapper = styled.div`
         }
     }
     .hero-description {
-        margin-top: 30px;
         display: flex;
         flex-direction: column;
         grid-area: hero-description;
@@ -99,15 +104,12 @@ export const HeroTitleWrapper = styled.div`
         font-family: Avenir Next,sans-serif;
     }
     .hero-button {
-        gird-area: hero-button;
+        grid-area: hero-button;
         display: flex;
         flex-direction: column;
         justify-content: center;
         vertical-align: middle;
-        margin-top: 50px;
-    }
-    .hero-button:hover {
-        padding-bottom: 5px;
+        height: 70px;
     }
 `
 
