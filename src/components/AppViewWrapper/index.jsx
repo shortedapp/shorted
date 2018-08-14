@@ -1,7 +1,6 @@
-import React from 'react';
-import Header from '../../components/Header';
-import { Wrapper } from './style';
-
+import React from 'react'
+import Header from '../../components/Header'
+import { Wrapper } from './style'
 
 /**
  * AppViewWrapper
@@ -10,11 +9,11 @@ import { Wrapper } from './style';
  * such as backgrounds, borders, transitions, animations etc.
  * @param {*} props
  */
-const AppViewWrapper = (props) => (
-    <Wrapper {...props}>
-        <Header />
-        {props.children}
-    </Wrapper>
+const AppViewWrapper = props => (
+  <Wrapper {...props}>
+    <Header />
+    {props.children}
+  </Wrapper>
 )
 
-export default AppViewWrapper;
+export default AppViewWrapper

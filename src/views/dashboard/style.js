@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-
+import styled from 'styled-components'
 
 export const DashboardWrapper = styled.div`
     display: grid;
@@ -32,23 +31,23 @@ export const DashboardWrapper = styled.div`
     }
 `
 
-export const duration = 300;
+export const duration = 300
 
 export const transitionStyles = {
   entering: { opacity: 0 },
   entered: { opacity: 1 },
-  exited: { opacity: 0}
-};
+  exited: { opacity: 0 }
+}
 
 export const themes = [
-    {
-        name: "dark",
-        textColor: "#ffffff",
-        backgroundColor: "#000000",
-    },
-    {
-        name: "light",
-        textColor: "#000000",
-        backgroundColor: "#ffffff",
-    }
+  {
+    name: 'dark',
+    textColor: '#ffffff',
+    backgroundColor: '#000000'
+  },
+  {
+    name: 'light',
+    textColor: '#000000',
+    backgroundColor: '#ffffff'
+  }
 ]

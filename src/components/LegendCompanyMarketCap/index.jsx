@@ -1,28 +1,28 @@
-import React from 'react';
-import { VictoryChart, VictoryAxis, VictoryLabel, VictoryContainer, VictoryLine } from 'victory';
+import React from 'react'
+import {
+  VictoryChart,
+  VictoryAxis,
+  VictoryLabel,
+  VictoryContainer,
+  VictoryLine
+} from 'victory'
 // import { LineChart, Line, ResponsiveContainer } from 'recharts';
-import { Wrapper, Header, Chart } from './style';
-
+import { Wrapper, Header, Chart } from './style'
 
 /**
  * LegendCompanyMarketCap
- * 
+ *
  */
 class LegendCompanyMarketCap extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
+  constructor (props) {
+    super(props)
+    this.state = {}
   }
-  getTickValues() {
-    return [
-      new Date(2002, 1, 1),
-      new Date(2017, 1, 1),
-      new Date(2018, 1, 1)
-    ]
+  getTickValues () {
+    return [new Date(2002, 1, 1), new Date(2017, 1, 1), new Date(2018, 1, 1)]
   }
 
-  render() {
+  render () {
     // return (
     //   <Wrapper>
     //     <ResponsiveContainer width='100%' height={170}>
@@ -36,21 +36,31 @@ class LegendCompanyMarketCap extends React.Component {
       <Wrapper>
         <Header>
           <VictoryLabel
-            text="Market Cap"
-            style={{ fontSize: 20, fontWeight: 'bold', fontFamily: 'Avenir Next,sans-serif' }}
+            text='Market Cap'
+            style={{
+              fontSize: 20,
+              fontWeight: 'bold',
+              fontFamily: 'Avenir Next,sans-serif'
+            }}
           />
         </Header>
         <Chart>
-        <VictoryChart padding={{ top: 0, left: 40, right: 20, bottom: 50 }} height={200} width={580}
-          containerComponent={<VictoryContainer responsive={true}/>}
-        >
-          <VictoryLine data={this.props.data} />
-          <VictoryAxis tickCount={5} tickFormat={ (x) => new Date(x).getFullYear() } />
-        </VictoryChart>
+          <VictoryChart
+            padding={{ top: 0, left: 40, right: 20, bottom: 50 }}
+            height={200}
+            width={580}
+            containerComponent={<VictoryContainer responsive />}
+          >
+            <VictoryLine data={this.props.data} />
+            <VictoryAxis
+              tickCount={5}
+              tickFormat={x => new Date(x).getFullYear()}
+            />
+          </VictoryChart>
         </Chart>
       </Wrapper>
     )
   }
 }
 
-export default LegendCompanyMarketCap;
+export default LegendCompanyMarketCap

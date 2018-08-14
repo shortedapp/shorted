@@ -1,69 +1,68 @@
-import React from 'react';
-import Transition from 'react-transition-group/Transition';
-import ShortedAPI from '../../services/sapi/client';
-import TopShortsListRow from '../../components/TopShortsListRow';
-import { Wrapper, Header, More, duration, transitionStyles } from './style';
+import React from 'react'
+import Transition from 'react-transition-group/Transition'
+import ShortedAPI from '../../services/sapi/client'
+import TopShortsListRow from '../../components/TopShortsListRow'
+import { Wrapper, Header, More, duration, transitionStyles } from './style'
 /**
  * Renders a list of TopShortsListRow components. These rows will display the stock code, stock name, and percentage shorted
  * for the top say 20 stocks. With a "show more" button present at the bottom, taking them to a different view which will me dedicated to showing more short position
  * information for more stocks (maybe top 100). Will perhaps a more verbose set of properties and graphics.
- * TODO: 
+ * TODO:
  *  * load profile on select of a specific stock in list
  */
 class TopShortsList extends React.Component {
-    constructor(props) {
-        super(props)
-        this.apiClient = new ShortedAPI()
-        this.state = {
-            data: this.apiClient.getTopShortsList(20),
-            inside: false,
-            hovered: false,
-        }
+  constructor (props) {
+    super(props)
+    this.apiClient = new ShortedAPI()
+    this.state = {
+      data: this.apiClient.getTopShortsList(20),
+      inside: false,
+      hovered: false
     }
-    componentDidMount() {
-        this.toggleEnterState();
-    }
-    
-    toggleEnterState() {
-        this.setState({ inside: true });
-    }
-    handleHover(value) {
-        this.setState({hovered: value})
-    }
-    handleMouseLeave() {
-        this.setState({
-            hovered: false,
-        })
-    }
+  }
+  componentDidMount () {
+    this.toggleEnterState()
+  }
 
-    render() {
-        const rows = this.state.data.map(
-            (row_data) => <TopShortsListRow
-                            isHovered={this.state.hovered === row_data.code}
-                            onHover={() => this.handleHover(row_data.code)}
-                            key={row_data.code}
-                            {...row_data} 
-        />)
-        return  (
-            <Transition timeout={duration} in={true} appear={true}>
-            {
-                state => {
-                    return (
-                    <Wrapper
-                        onMouseLeave={() => this.handleMouseLeave() }
-                        duration={duration}
-                        {...transitionStyles[state]}
-                    >
-                        <Header>Top Short List</Header>
-                        {rows}
-                        <More>show more</More>
-                    </Wrapper>
-                    )
-                }
-            }
-            </Transition>
-        )
-    }
+  toggleEnterState () {
+    this.setState({ inside: true })
+  }
+  handleHover (value) {
+    this.setState({ hovered: value })
+  }
+  handleMouseLeave () {
+    this.setState({
+      hovered: false
+    })
+  }
+
+  render () {
+    const rows = this.state.data.map(row_data => (
+      <TopShortsListRow
+        isHovered={this.state.hovered === row_data.code}
+        onHover={() => this.handleHover(row_data.code)}
+        key={row_data.code}
+        {...row_data}
+      />
+    ))
+    return (
+      <Transition timeout={duration} in appear>
+        {state => {
+          return (
+            <Wrapper
+              onMouseLeave={() => this.handleMouseLeave()}
+              duration={duration}
+              {...transitionStyles[state]}
+            >
+              <Header>Top Short List</Header>
+              {rows}
+              <More>show more</More>
+            </Wrapper>
+          )
+        }}
+      </Transition>
+    )
+  }
 }
 
-export default TopShortsList;
+export default TopShortsList
