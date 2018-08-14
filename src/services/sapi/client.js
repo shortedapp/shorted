@@ -15,6 +15,7 @@ import CBAStockSummary from './fixtures/data/CBAStockSummary.json';
 import TLSStockSummary from './fixtures/data/TLSStockSummary.json';
 import JBHStockSummary from './fixtures/data/JBHStockSummary.json';
 import OREStockSummary from './fixtures/data/OREStockSummary.json';
+import SYRStockSummary from './fixtures/data/SYRStockSummary.json';
 
 // logos
 import CBALogo from './fixtures/images/cba-logo.png';
@@ -121,6 +122,8 @@ class ShortedAPI {
                 return OREStockSummary
             case "JBH":
                 return JBHStockSummary
+            case "SYR":
+                return SYRStockSummary
             default:
                 return false
         }

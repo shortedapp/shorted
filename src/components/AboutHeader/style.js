@@ -104,6 +104,7 @@ export const HeroTitleWrapper = styled.div`
         flex-direction: column;
         justify-content: center;
         vertical-align: middle;
+        margin-top: 50px;
     }
     .hero-button:hover {
         padding-bottom: 5px;

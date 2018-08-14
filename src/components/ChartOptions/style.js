@@ -19,7 +19,8 @@ export const Button = styled.div`
 `;
 // dropdown-content
 export const OptionsWrapper = styled.div`
-    display: ${props => props.open ? `block` : `none`};
+    padding: 5px;
+    display: ${props => props.open ? `flex` : `none`};
     position: absolute;
     z-index: 1;
     background: white;
@@ -28,9 +29,16 @@ export const OptionsWrapper = styled.div`
     border: 1px solid #eee;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    display: flex;
     flex-direction: column;
     text-align: center;
+    align-items: center;
+    .chart-modes {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        width: 130px;
+
+    }
 `;
 export const Option = styled.div`
     font-size: 15px;

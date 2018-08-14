@@ -16,12 +16,14 @@ const RadioGroup = Radio.Group;
 
 const Options = (props) => (<OptionsWrapper {...props}>
     <OptionHeader>Chart display</OptionHeader>
-    <RadioGroup onChange={props.onOptionsChange} defaultValue="a" buttonStyle="solid">
-        <RadioButton style={radioStyle} value="a">Normal</RadioButton>
-        <RadioButton style={radioStyle} value="b">CandleStick</RadioButton>
-        <RadioButton style={radioStyle} value="c">Smoothed</RadioButton>
-        <RadioButton style={radioStyle} value="d">Area</RadioButton>
-      </RadioGroup>
+    <div className="chart-modes">
+        <RadioGroup onChange={props.onOptionsChange} defaultValue="a" buttonStyle="solid">
+            <RadioButton style={radioStyle} value="a">Normal</RadioButton>
+            <RadioButton style={radioStyle} value="b">CandleStick</RadioButton>
+            <RadioButton style={radioStyle} value="c">Smoothed</RadioButton>
+            <RadioButton style={radioStyle} value="d">Area</RadioButton>
+        </RadioGroup>
+      </div>
 </OptionsWrapper>)
 class ChartOptions extends React.Component {
     constructor(props) {

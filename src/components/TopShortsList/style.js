@@ -8,7 +8,7 @@ export const transitionStyles = {
   };
 
 export const Wrapper = styled.div`
-  height: 1400px;
+  height: 100%;
   grid-area: top-list;
   background: white;
   display: flex;

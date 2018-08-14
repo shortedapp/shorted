@@ -22,12 +22,12 @@ import {
 const TopShortListRow = (props) => {
     return (
         props.isHovered ? (
-            <WrapperHovered {...props} onMouseOver={props.onHover}>
+            <WrapperHovered {...props} onMouseOver={props.onHover} href={`/${props.code}`}>
                 <Code><div className="code">{props.code}</div></Code>
                 <Name>{props.name}</Name>
                 <Percent><div className="circle" >{props.current}%</div></Percent>
             </WrapperHovered>) : (
-            <Wrapper {...props} onMouseOver={props.onHover}>
+            <Wrapper {...props} onMouseOver={props.onHover} >
                 <Code><div className="code">{props.code}</div></Code>
                 <Name>{props.name}</Name>
                 <Percent><div className="circle" >{props.current}%</div></Percent>
