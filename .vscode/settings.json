@@ -1,4 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "prettier.trailingComma": "all"
+  "prettier.trailingComma": "all",
+  "prettier.eslintIntegration": true,
+  "prettier.semi": true
 }

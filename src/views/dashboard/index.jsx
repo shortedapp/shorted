@@ -37,12 +37,19 @@ class Dashboard extends React.Component {
       },
       selectedOption: 'w',
       selectedCode: false,
-      inside: false
+      inside: false,
+      selectedTheme: false
     }
   }
   handleOptionSelected (value) {
     this.setState({
       selectedOption: value
+    })
+  }
+  handleThemeSelected (value) {
+    console.log(value)
+    this.setState({
+      selectedTheme: value
     })
   }
   handleSelectCode (value) {
@@ -57,7 +64,7 @@ class Dashboard extends React.Component {
     this.setState({ inside: true })
   }
   render () {
-    const { options, selectedOption, selectedCode } = this.state
+    const { options, selectedOption, selectedCode, selectedTheme } = this.state
     return (
       <Transition timeout={duration} in appear>
         {state => {
@@ -83,7 +90,10 @@ class Dashboard extends React.Component {
                     onSelectCode={value => this.handleSelectCode(value)}
                   />
                   <div className='top-right'>
-                    <ThemePicker themes={themes} />
+                    <ThemePicker
+                      selectedTheme={selectedTheme}
+                      onThemeSelect={value => this.handleThemeSelected(value)}
+                      themes={themes} />
                     <Legend code={selectedCode} />
                   </div>
                   <Alerts />

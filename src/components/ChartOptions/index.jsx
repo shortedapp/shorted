@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Radio, Icon, Menu, Dropdown } from 'antd'
+import { Radio, Icon } from 'antd'
 import 'antd/dist/antd.css'
 import {
   Button,
   OptionsWrapper,
-  Option,
   OptionHeader,
   Wrapper,
   radioStyle,
@@ -14,30 +13,27 @@ import {
 
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
-class Options extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-  render () {
-    return (
-      <OptionsWrapper {...this.props}>
-        <OptionHeader>Chart display</OptionHeader>
-        <div className='chart-modes'>
-          <RadioGroup
-            onChange={this.props.onOptionsChange}
-            defaultValue='a'
-            buttonStyle='solid'
-          >
-            <RadioButton style={radioStyle} value='a'>Normal</RadioButton>
-            <RadioButton style={radioStyle} value='b'>CandleStick</RadioButton>
-            <RadioButton style={radioStyle} value='c'>Smoothed</RadioButton>
-            <RadioButton style={radioStyle} value='d'>Area</RadioButton>
-          </RadioGroup>
-        </div>
-      </OptionsWrapper>
-    )
-  }
-}
+
+const Options = props => (
+  <OptionsWrapper {...props}>
+    <OptionHeader>
+      Chart display
+    </OptionHeader>
+    <div className='chart-modes'>
+      <RadioGroup
+        onChange={props.onOptionsChange}
+        defaultValue='a'
+        buttonStyle='solid'
+      >
+        <RadioButton style={radioStyle} value='a'>Normal</RadioButton>
+        <RadioButton style={radioStyle} value='b'>CandleStick</RadioButton>
+        <RadioButton style={radioStyle} value='c'>Smoothed</RadioButton>
+        <RadioButton style={radioStyle} value='d'>Area</RadioButton>
+      </RadioGroup>
+    </div>
+  </OptionsWrapper>
+)
+
 class ChartOptions extends React.Component {
   constructor (props) {
     super(props)
@@ -45,7 +41,7 @@ class ChartOptions extends React.Component {
       open: false
     }
     this.optionsArea = React.createRef()
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this)
   }
   componentDidMount () {
     this.node = ReactDOM.findDOMNode(this)

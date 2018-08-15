@@ -12,7 +12,11 @@ const ThemePicker = props => (
   <Wrapper>
     <Header>Theme</Header>
     <ThemeItems>
-      {props.themes.map(theme => <ThemeItem {...theme} key={theme.name} />)}
+      {props.themes.map(theme => <ThemeItem
+        onClick={() => props.onThemeSelect(theme.name)}
+        selected={props.selectedTheme === theme.name}
+        {...theme}
+        key={theme.name} />)}
     </ThemeItems>
   </Wrapper>
 )
