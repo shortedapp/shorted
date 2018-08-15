@@ -11,13 +11,14 @@ display: inline-block;
 position: relative;
 `;
 export const buttonStyle = {
-    fontSize: 30,
+    fontSize: 37,
     fill: 'black',
     color: 'black'
 }
 export const Button = styled.div`
     width: 30px;
     height: 30px;
+    margin-right: 7px;
     display: inline-block;
     position: relative;
 `;

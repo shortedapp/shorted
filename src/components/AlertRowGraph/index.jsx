@@ -16,7 +16,6 @@ class AlertRowGraph extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    console.log(this.props)
   }
   getTickValues () {
     return [new Date(2002, 1, 1), new Date(2017, 1, 1), new Date(2018, 1, 1)]
