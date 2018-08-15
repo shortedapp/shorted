@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "babel-plugin-recharts": "^1.1.1",
+    "eslint-plugin-prettier": "^2.6.2",
     "gatsby-plugin-root-import": "^1.0.0",
     "prettier": "^1.12.0"
   },

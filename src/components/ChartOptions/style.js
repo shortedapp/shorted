@@ -1,7 +1,6 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-
-//dropdown wrapper
+// dropdown wrapper
 export const Wrapper = styled.div`
 margin-top: auto;
 margin-bottom: auto;
@@ -9,11 +8,11 @@ margin-left: auto;
 margin-right: 10px;
 display: inline-block;
 position: relative;
-`;
+`
 export const buttonStyle = {
-    fontSize: 37,
-    fill: 'black',
-    color: 'black'
+  fontSize: 37,
+  fill: 'black',
+  color: 'black'
 }
 export const Button = styled.div`
     width: 30px;
@@ -21,11 +20,11 @@ export const Button = styled.div`
     margin-right: 7px;
     display: inline-block;
     position: relative;
-`;
+`
 // dropdown-content
 export const OptionsWrapper = styled.div`
     padding: 5px;
-    display: ${props => props.open ? `flex` : `none`};
+    display: ${props => (props.open ? `flex` : `none`)};
     position: absolute;
     z-index: 1;
     background: white;
@@ -44,7 +43,7 @@ export const OptionsWrapper = styled.div`
         width: 130px;
 
     }
-`;
+`
 export const Option = styled.div`
     font-size: 15px;
     font-family: Avenir Next,sans-serif;
@@ -53,7 +52,7 @@ export const Option = styled.div`
     flex-direction: column;
     text-align: center;
 
-`;
+`
 export const OptionHeader = styled.div`
     font-size: 20px;
     font-family: Avenir Next,sans-serif;
@@ -61,14 +60,14 @@ export const OptionHeader = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
-`;
+`
 
 export const OptionWrapper = styled.div`
-`;
+`
 
 export const radioStyle = {
-    display: 'block',
-    height: '30px',
-    lineHeight: '30px',
-    margin: 4
-};
+  display: 'block',
+  height: '30px',
+  lineHeight: '30px',
+  margin: 4
+}

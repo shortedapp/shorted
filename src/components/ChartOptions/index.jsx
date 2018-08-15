@@ -45,16 +45,13 @@ class ChartOptions extends React.Component {
       open: false
     }
     this.optionsArea = React.createRef()
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
   componentDidMount () {
     this.node = ReactDOM.findDOMNode(this)
   }
   onComponentDidUnmount () {
-    document.removeEventListener(
-      'click',
-      e => this.handleOutsideClick(e),
-      false
-    )
+    document.removeEventListener('click', e => this.handleOutsideClick(e))
   }
   handleOutsideClick (e) {
     const chartOptionsArea = ReactDOM.findDOMNode(this)
@@ -68,13 +65,9 @@ class ChartOptions extends React.Component {
   handleSelect () {
     if (!this.state.open) {
       // attach/remove event handler
-      document.addEventListener('click', e => this.handleOutsideClick(e), false)
+      document.addEventListener('click', this.handleOutsideClick, false)
     } else {
-      document.removeEventListener(
-        'click',
-        e => this.handleOutsideClick(e),
-        false
-      )
+      document.removeEventListener('click', this.handleOutsideClick, false)
     }
     this.setState(prevState => ({
       open: !prevState.open
