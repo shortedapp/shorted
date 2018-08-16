@@ -1,6 +1,6 @@
-import React from 'react'
-import { Wrapper } from './style'
-import Button from '../Button'
+import React from 'react';
+import {Wrapper} from './style';
+import Button from '../Button';
 
 /**
  * WindowPicker
@@ -11,9 +11,8 @@ import Button from '../Button'
  */
 
 class WindowPicker extends React.Component {
-  render () {
-    const { options, selectedOption, onSelect } = this.props
-    console.log('selectedOption:' + selectedOption)
+  render() {
+    const {options, selectedOption, onSelect} = this.props;
     const buttons = options.values.map(value => (
       <Button
         key={value}
@@ -21,15 +20,13 @@ class WindowPicker extends React.Component {
         selected={value === selectedOption}
         handleSelect={onSelect}
       />
-    ))
+    ));
     return (
       <Wrapper>
-        <div className='buttons'>
-          {buttons}
-        </div>
+        <div className="buttons">{buttons}</div>
       </Wrapper>
-    )
+    );
   }
 }
 
-export default WindowPicker
+export default WindowPicker;

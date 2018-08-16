@@ -1,8 +1,7 @@
-import React from 'react'
-import Transition from 'react-transition-group/Transition'
-import ShortedAPI from '../../services/sapi/client'
-import TopShortsListRow from '../../components/TopShortsListRow'
-import { Wrapper, Header, More, duration, transitionStyles } from './style'
+import React from 'react';
+import Transition from 'react-transition-group/Transition';
+import TopShortsListRow from '../../components/TopShortsListRow';
+import {Wrapper, Header, More, duration, transitionStyles} from './style';
 /**
  * Renders a list of TopShortsListRow components. These rows will display the stock code, stock name, and percentage shorted
  * for the top say 20 stocks. With a "show more" button present at the bottom, taking them to a different view which will me dedicated to showing more short position
@@ -11,40 +10,38 @@ import { Wrapper, Header, More, duration, transitionStyles } from './style'
  *  * load profile on select of a specific stock in list
  */
 class TopShortsList extends React.Component {
-  constructor (props) {
-    super(props)
-    this.apiClient = new ShortedAPI()
+  constructor(props) {
+    super(props);
     this.state = {
-      data: this.apiClient.getTopShortsList(20),
       inside: false,
-      hovered: false
-    }
+      hovered: false,
+    };
   }
-  componentDidMount () {
-    this.toggleEnterState()
+  componentDidMount() {
+    this.toggleEnterState();
   }
 
-  toggleEnterState () {
-    this.setState({ inside: true })
+  toggleEnterState() {
+    this.setState({inside: true});
   }
-  handleHover (value) {
-    this.setState({ hovered: value })
+  handleHover(value) {
+    this.setState({hovered: value});
   }
-  handleMouseLeave () {
+  handleMouseLeave() {
     this.setState({
-      hovered: false
-    })
+      hovered: false,
+    });
   }
 
-  render () {
-    const rows = this.state.data.map(row_data => (
+  render() {
+    const rows = this.props.data.map(row_data => (
       <TopShortsListRow
         isHovered={this.state.hovered === row_data.code}
         onHover={() => this.handleHover(row_data.code)}
         key={row_data.code}
         {...row_data}
       />
-    ))
+    ));
     return (
       <Transition timeout={duration} in appear>
         {state => {
@@ -52,17 +49,16 @@ class TopShortsList extends React.Component {
             <Wrapper
               onMouseLeave={() => this.handleMouseLeave()}
               duration={duration}
-              {...transitionStyles[state]}
-            >
+              {...transitionStyles[state]}>
               <Header>Top Short List</Header>
               {rows}
               <More>show more</More>
             </Wrapper>
-          )
+          );
         }}
       </Transition>
-    )
+    );
   }
 }
 
-export default TopShortsList
+export default TopShortsList;

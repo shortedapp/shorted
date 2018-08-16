@@ -1,13 +1,12 @@
-import React from 'react'
+import React from 'react';
 import {
   VictoryChart,
   VictoryAxis,
   VictoryLabel,
   VictoryContainer,
-  VictoryLine
-} from 'victory'
-import Transition from 'react-transition-group/Transition'
-import ShortedAPI from '../../services/sapi/client'
+  VictoryLine,
+} from 'victory';
+import Transition from 'react-transition-group/Transition';
 import {
   duration,
   transitionStyles,
@@ -15,8 +14,8 @@ import {
   PickerWrapper,
   ChartWrapper,
   OptionsWrapper,
-  colors700
-} from './style'
+  colors700,
+} from './style';
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
@@ -32,107 +31,100 @@ import {
  *
  */
 class TopChartVictory extends React.Component {
-  constructor (props) {
-    super(props)
-    this.apiClient = new ShortedAPI()
+  constructor(props) {
+    super(props);
     this.state = {
-      inside: false
-    }
+      inside: false,
+    };
   }
-  componentDidMount () {
-    this.toggleEnterState()
-  }
-
-  toggleEnterState () {
-    this.setState({ inside: true })
-  }
-  handleLineHover (e, key) {
-    this.props.onSelectCode(key)
+  componentDidMount() {
+    this.toggleEnterState();
   }
 
-  render () {
-    const { selectedOption } = this.props
-    const fixtures = this.apiClient.getTopShorts(selectedOption)
-    const lines = fixtures.dataKeys.map((key, index) => (
+  toggleEnterState() {
+    this.setState({inside: true});
+  }
+  handleLineHover(e, key) {
+    this.props.onSelectCode(key);
+  }
+
+  render() {
+    const {data} = this.props;
+    const lines = data.dataKeys.map((key, index) => (
       <VictoryLine
         key={key}
-        data={fixtures.data}
-        x='date'
+        data={data.data}
+        x="date"
         y={key}
         events={[
           {
             target: 'parent',
             eventHandlers: {
-              onMouseOver: e => this.handleLineHover(e, key)
-            }
-          }
+              onMouseOver: e => this.handleLineHover(e, key),
+            },
+          },
         ]}
         style={{
           data: {
             stroke: colors700[index],
-            strokeWidth: 2
-          }
+            strokeWidth: 2,
+          },
         }}
       />
-    ))
+    ));
     return (
       <Transition timeout={duration} in appear>
         {state => {
           return (
             <Wrapper duration={duration} {...transitionStyles[state]}>
-              <PickerWrapper>
-                {this.props.picker}
-              </PickerWrapper>
-              <OptionsWrapper>
-                {this.props.options}
-              </OptionsWrapper>
+              <PickerWrapper>{this.props.picker}</PickerWrapper>
+              <OptionsWrapper>{this.props.options}</OptionsWrapper>
               <ChartWrapper>
                 <VictoryChart
-                  padding={{ top: 0, left: 40, right: 20, bottom: 50 }}
+                  padding={{top: 0, left: 40, right: 20, bottom: 50}}
                   height={310}
-                  containerComponent={<VictoryContainer responsive />}
-                >
+                  containerComponent={<VictoryContainer responsive />}>
                   {lines}
                   <VictoryAxis
-                    label='Time'
+                    label="Time"
                     standalone={false}
                     tickCount={5}
                     style={{
-                      axis: { stroke: '#756f6a' },
+                      axis: {stroke: '#756f6a'},
                       axisLabel: {
                         fontSize: 12,
                         padding: 25,
-                        fontFamily: 'Avenir Next,sans-serif'
+                        fontFamily: 'Avenir Next,sans-serif',
                       },
-                      ticks: { stroke: 'grey', size: 5 },
-                      tickLabels: { fontSize: 7, padding: 5 }
+                      ticks: {stroke: 'grey', size: 5},
+                      tickLabels: {fontSize: 7, padding: 5},
                     }}
                   />
                   <VictoryAxis
                     dependentAxis
                     tickFormat={t => `${Math.round(t)}`}
-                    tickLabelComponent={<VictoryLabel textAnchor='middle' />}
+                    tickLabelComponent={<VictoryLabel textAnchor="middle" />}
                     domain={[0, 100]}
-                    label='Percentage Shorted'
+                    label="Percentage Shorted"
                     style={{
                       axisLabel: {
                         fontSize: 12,
                         padding: 32,
                         angle: 90,
-                        fontFamily: 'Avenir Next,sans-serif'
+                        fontFamily: 'Avenir Next,sans-serif',
                       },
-                      ticks: { stroke: 'grey', size: 5 },
-                      tickLabels: { fontSize: 7, angle: 90, padding: 7 }
+                      ticks: {stroke: 'grey', size: 5},
+                      tickLabels: {fontSize: 7, angle: 90, padding: 7},
                     }}
                   />
                 </VictoryChart>
               </ChartWrapper>
             </Wrapper>
-          )
+          );
         }}
       </Transition>
-    )
+    );
   }
 }
 
-export default TopChartVictory
+export default TopChartVictory;

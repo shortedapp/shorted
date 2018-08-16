@@ -8,7 +8,6 @@
     "babel-plugin-styled-components": "^1.5.1",
     "gatsby": "next",
     "gatsby-cli": "^1.1.58",
-    "gatsby-plugin-antd": "^1.0.12",
     "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-styled-components": "^3.0.0-beta.3",
     "gatsby-source-filesystem": "next",

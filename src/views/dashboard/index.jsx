@@ -1,17 +1,18 @@
-import React from 'react'
-import Transition from 'react-transition-group/Transition'
-import headerBackground from '../../assets/images/header-background.svg'
-import AppViewWrapper from '../../components/AppViewWrapper'
+import React from 'react';
+import Transition from 'react-transition-group/Transition';
+import headerBackground from '../../assets/images/header-background.svg';
+import ShortedAPI from '../../services/sapi/client';
+import AppViewWrapper from '../../components/AppViewWrapper';
 // import TopChart from '../../components/TopChart';
-import TopChartVictory from '../../components/TopChartVictory'
-import MoversList from '../../components/MoversList'
-import TopShortsList from '../../components/TopShortsList'
-import Legend from '../../components/Legend'
-import Alerts from '../../components/Alerts'
-import ThemePicker from '../../components/ThemePicker'
-import WindowPicker from './../../components/WindowPicker'
-import ChartOptions from '../../components/ChartOptions'
-import { DashboardWrapper, themes, duration, transitionStyles } from './style'
+import TopChartVictory from '../../components/TopChartVictory';
+import MoversList from '../../components/MoversList';
+import TopShortsList from '../../components/TopShortsList';
+import Legend from '../../components/Legend';
+import Alerts from '../../components/Alerts';
+import ThemePicker from '../../components/ThemePicker';
+import WindowPicker from './../../components/WindowPicker';
+import ChartOptions from '../../components/ChartOptions';
+import {DashboardWrapper, themes, duration, transitionStyles} from './style';
 
 /**
  * View:TopShorts
@@ -25,50 +26,60 @@ import { DashboardWrapper, themes, duration, transitionStyles } from './style'
  * * add Transitions of components such as window picker, graph and background etc.
  * * add graph integration via recharts etc.
  * * add legend component for on-select animation/effect
+ * * refactor data management, should be moved to top level potentially with dumber components
  *
  */
 
 class Dashboard extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
+    this.apiClient = new ShortedAPI();
     this.state = {
       options: {
-        values: ['d', 'w', 'm', 'y']
+        values: ['d', 'w', 'm', 'y'],
       },
       selectedOption: 'w',
       selectedCode: false,
+      selectedChartOption: 'NORMAL',
       inside: false,
-      selectedTheme: false
-    }
+      selectedTheme: false,
+    };
   }
-  handleOptionSelected (value) {
+  handleOptionSelected(value) {
     this.setState({
-      selectedOption: value
-    })
+      selectedOption: value,
+    });
   }
-  handleThemeSelected (value) {
-    console.log(value)
+  handleThemeSelected(value) {
+    console.log(value);
     this.setState({
-      selectedTheme: value
-    })
+      selectedTheme: value,
+    });
   }
-  handleChartOptionChange (value) {
-    console.log('handleChartOptionChange:', value)
-    this.setState({ chartOption: value })
+  handleChartOptionChange(value) {
+    console.log('handleChartOptionChange:', value);
+    this.setState({selectedChartOption: value});
   }
-  handleSelectCode (value) {
+  handleSelectCode(value) {
     this.setState({
-      selectedCode: value
-    })
+      selectedCode: value,
+    });
   }
-  componentDidMount () {
-    this.toggleEnterState()
+  componentDidMount() {
+    this.toggleEnterState();
   }
-  toggleEnterState () {
-    this.setState({ inside: true })
+  toggleEnterState() {
+    this.setState({inside: true});
   }
-  render () {
-    const { options, selectedOption, selectedCode, selectedTheme } = this.state
+  render() {
+    console.log('rendering');
+    const {
+      options,
+      selectedChartOption,
+      selectedOption,
+      selectedCode,
+      selectedTheme,
+    } = this.state;
     return (
       <Transition timeout={duration} in appear>
         {state => {
@@ -76,11 +87,10 @@ class Dashboard extends React.Component {
             <AppViewWrapper
               background={headerBackground}
               duration={duration}
-              {...transitionStyles[state]}
-            >
+              {...transitionStyles[state]}>
               <DashboardWrapper>
-                <div className='content'>
-                  <TopShortsList />
+                <div className="content">
+                  <TopShortsList data={this.apiClient.getTopShortsList(20)} />
                   <TopChartVictory
                     picker={
                       <WindowPicker
@@ -92,13 +102,16 @@ class Dashboard extends React.Component {
                     options={
                       <ChartOptions
                         onChartOptionChange={value =>
-                          this.handleChartOptionChange(value)}
+                          this.handleChartOptionChange(value)
+                        }
                       />
                     }
+                    data={this.apiClient.getTopShorts(selectedOption)}
+                    selectedChartOptions={selectedChartOption}
                     selectedOption={selectedOption}
                     onSelectCode={value => this.handleSelectCode(value)}
                   />
-                  <div className='top-right'>
+                  <div className="top-right">
                     <ThemePicker
                       selectedTheme={selectedTheme}
                       onThemeSelect={value => this.handleThemeSelected(value)}
@@ -106,16 +119,16 @@ class Dashboard extends React.Component {
                     />
                     <Legend code={selectedCode} />
                   </div>
-                  <Alerts />
-                  <MoversList period={selectedOption} />
+                  <Alerts data={this.apiClient.getTopAlerts()} />
+                  <MoversList data={this.apiClient.getMovers(selectedOption)} />
                 </div>
               </DashboardWrapper>
             </AppViewWrapper>
-          )
+          );
         }}
       </Transition>
-    )
+    );
   }
 }
 
-export default Dashboard
+export default Dashboard;
