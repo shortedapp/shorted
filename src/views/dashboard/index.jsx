@@ -52,6 +52,10 @@ class Dashboard extends React.Component {
       selectedTheme: value
     })
   }
+  handleChartOptionChange (value) {
+    console.log('handleChartOptionChange:', value)
+    this.setState({ chartOption: value })
+  }
   handleSelectCode (value) {
     this.setState({
       selectedCode: value
@@ -85,7 +89,12 @@ class Dashboard extends React.Component {
                         onSelect={value => this.handleOptionSelected(value)}
                       />
                     }
-                    options={<ChartOptions />}
+                    options={
+                      <ChartOptions
+                        onChartOptionChange={value =>
+                          this.handleChartOptionChange(value)}
+                      />
+                    }
                     selectedOption={selectedOption}
                     onSelectCode={value => this.handleSelectCode(value)}
                   />
@@ -93,7 +102,8 @@ class Dashboard extends React.Component {
                     <ThemePicker
                       selectedTheme={selectedTheme}
                       onThemeSelect={value => this.handleThemeSelected(value)}
-                      themes={themes} />
+                      themes={themes}
+                    />
                     <Legend code={selectedCode} />
                   </div>
                   <Alerts />

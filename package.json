@@ -34,6 +34,8 @@
     "genFixtures": "if [ -d cli/sample_data/env ];then cli/sample_data/env/bin/python3 cli/sample_data/gen_json.py -f data/ -s src/fixtures/topShortsFormatted.json; else python3 cli/sample_data/gen_json.py -f data/ -s src/fixtures/topShortsFormatted.json; fi"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "babel-plugin-import": "^1.8.0",
     "babel-plugin-recharts": "^1.1.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",

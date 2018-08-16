@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Radio, Icon } from 'antd'
+// TODO: look at how antd style sheets can be inherently added into project without imports, plugin may be doing this
 import 'antd/dist/antd.css'
 import {
   Button,
@@ -21,14 +22,14 @@ const Options = props => (
     </OptionHeader>
     <div className='chart-modes'>
       <RadioGroup
-        onChange={props.onOptionsChange}
+        onChange={(e) => props.onOptionsChange(e.target.value)}
         defaultValue='a'
         buttonStyle='solid'
       >
-        <RadioButton style={radioStyle} value='a'>Normal</RadioButton>
-        <RadioButton style={radioStyle} value='b'>CandleStick</RadioButton>
-        <RadioButton style={radioStyle} value='c'>Smoothed</RadioButton>
-        <RadioButton style={radioStyle} value='d'>Area</RadioButton>
+        <RadioButton style={radioStyle} value='NORMAL'>Normal</RadioButton>
+        <RadioButton style={radioStyle} value='CANDLE'>CandleStick</RadioButton>
+        <RadioButton style={radioStyle} value='SMOOTHED'>Smoothed</RadioButton>
+        <RadioButton style={radioStyle} value='AREA'>Area</RadioButton>
       </RadioGroup>
     </div>
   </OptionsWrapper>
@@ -42,9 +43,6 @@ class ChartOptions extends React.Component {
     }
     this.optionsArea = React.createRef()
     this.handleOutsideClick = this.handleOutsideClick.bind(this)
-  }
-  componentDidMount () {
-    this.node = ReactDOM.findDOMNode(this)
   }
   onComponentDidUnmount () {
     document.removeEventListener('click', e => this.handleOutsideClick(e))
@@ -75,13 +73,12 @@ class ChartOptions extends React.Component {
 
   render () {
     return (
-      <Wrapper ref='chartOptions'>
+      <Wrapper>
         <Button onClick={() => this.handleSelect()}>
           <Icon type='setting' style={buttonStyle} />
         </Button>
         <Options
-          ref={this.optionsArea}
-          onOptionsChange={(e, v) => this.handleOptionsChange(e, v)}
+          onOptionsChange={(v) => this.props.onChartOptionChange(v)}
           open={this.state.open}
         />
       </Wrapper>

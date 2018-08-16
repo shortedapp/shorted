@@ -20,7 +20,7 @@ export const DashboardWrapper = styled.div`
         grid-area: top-right;
         display: grid;
         grid-gap: 10px;
-        grid-template-rows: repeat(4, 80px);
+        grid-template-rows: repeat(4, 85px);
         grid-template-columns: 1fr;
         grid-template-areas:
             "themepicker"

@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
     background: white;
@@ -24,10 +23,10 @@ export const ThemeItemWrapper = styled.div`
     background-color: ${props => props.backgroundColor};
     color: ${props => props.textColor};
     margin: 7px;
-    margin-bottom: ${props => props.selected ? 10 : 7}px;
-    -webkit-box-shadow: ${props => props.selected ? `-3px 4px 7px 0px rgba(0,0,0,0.75)` : `none`};
-    -moz-box-shadow: ${props => props.selected ? `-3px 4px 7px 0px rgba(0,0,0,0.75)` : `none`};
-    box-shadow: ${props => props.selected ? `-3px 4px 7px 0px rgba(0,0,0,0.75)` : `none`};
+    margin-bottom: ${props => (props.selected ? 10 : 7)}px;
+    -webkit-box-shadow: ${props => (props.selected ? `-3px 4px 7px 0px rgba(0,0,0,0.75)` : `none`)};
+    -moz-box-shadow: ${props => (props.selected ? `-3px 4px 7px 0px rgba(0,0,0,0.75)` : `none`)};
+    box-shadow: ${props => (props.selected ? `-3px 4px 7px 0px rgba(0,0,0,0.75)` : `none`)};
     border-radius: 20px;
     border: solid 1px black;
     width: 100px;
