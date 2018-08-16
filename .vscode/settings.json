@@ -2,5 +2,6 @@
   "editor.formatOnSave": true,
   "prettier.trailingComma": "all",
   "prettier.eslintIntegration": true,
-  "prettier.semi": true
+  "prettier.semi": true,
+  "prettier.singleQuote": true
 }
