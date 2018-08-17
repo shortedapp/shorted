@@ -5,6 +5,7 @@ import {
   VictoryLabel,
   VictoryContainer,
   VictoryLine,
+  VictoryArea,
 } from 'victory';
 import Transition from 'react-transition-group/Transition';
 import {
@@ -15,6 +16,7 @@ import {
   ChartWrapper,
   OptionsWrapper,
   colors700,
+  colors300,
 } from './style';
 /**
  * Chart
@@ -49,29 +51,58 @@ class TopChartVictory extends React.Component {
   }
 
   render() {
-    const {data} = this.props;
-    const lines = data.dataKeys.map((key, index) => (
-      <VictoryLine
-        key={key}
-        data={data.data}
-        x="date"
-        y={key}
-        events={[
-          {
-            target: 'parent',
-            eventHandlers: {
-              onMouseOver: e => this.handleLineHover(e, key),
+    const { data, selectedCode } = this.props;
+    var lines = null;
+    if (this.props.mode == 'NORMAL') {
+      lines = data.dataKeys.map((key, index) => (
+        <VictoryLine
+          key={key}
+          data={data.data}
+          x="date"
+          y={key}
+          events={[
+            {
+              target: 'parent',
+              eventHandlers: {
+                onMouseOver: e => this.handleLineHover(e, key),
+              },
             },
-          },
-        ]}
-        style={{
-          data: {
-            stroke: colors700[index],
-            strokeWidth: 2,
-          },
-        }}
-      />
-    ));
+          ]}
+          style={{
+            data: {
+              stroke: colors700[index],
+              strokeOpacity: (key === selectedCode || !selectedCode) ? 1 : 0.2,
+              strokeWidth: 2,
+            },
+          }}
+        />
+      ));
+    } else if (this.props.mode == 'AREA') {
+      lines = data.dataKeys.map((key, index) => (
+        <VictoryArea
+          key={key}
+          data={data.data}
+          x="date"
+          y={key}
+          events={[
+            {
+              target: 'parent',
+              eventHandlers: {
+                onMouseOver: e => this.handleLineHover(e, key),
+              },
+            },
+          ]}
+          style={{
+            data: {
+              stroke: colors700[index],
+              fill: colors700[index],
+              fillOpacity: 0.3,
+              strokeWidth: 2,
+            },
+          }}
+        />
+      ));
+    }
     return (
       <Transition timeout={duration} in appear>
         {state => {

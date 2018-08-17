@@ -20,7 +20,7 @@ const LogoSvg = props => (
   </svg>
 );
 const Logo = props => (
-  <Wrapper>
+  <Wrapper href='/'>
     <LogoSvg fill="none" stroke="#e7e6ea" />
     <LogoTextWrapper>shorted</LogoTextWrapper>
   </Wrapper>

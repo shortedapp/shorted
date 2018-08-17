@@ -3,7 +3,6 @@ import Transition from 'react-transition-group/Transition';
 import headerBackground from '../../assets/images/header-background.svg';
 import ShortedAPI from '../../services/sapi/client';
 import AppViewWrapper from '../../components/AppViewWrapper';
-// import TopChart from '../../components/TopChart';
 import TopChartVictory from '../../components/TopChartVictory';
 import MoversList from '../../components/MoversList';
 import TopShortsList from '../../components/TopShortsList';
@@ -38,16 +37,16 @@ class Dashboard extends React.Component {
       options: {
         values: ['d', 'w', 'm', 'y'],
       },
-      selectedOption: 'w',
+      selectedWindowOption: 'w',
       selectedCode: false,
       selectedChartOption: 'NORMAL',
       inside: false,
       selectedTheme: false,
     };
   }
-  handleOptionSelected(value) {
+  handleWindowOptionSelected(value) {
     this.setState({
-      selectedOption: value,
+      selectedWindowOption: value,
     });
   }
   handleThemeSelected(value) {
@@ -76,7 +75,7 @@ class Dashboard extends React.Component {
     const {
       options,
       selectedChartOption,
-      selectedOption,
+      selectedWindowOption,
       selectedCode,
       selectedTheme,
     } = this.state;
@@ -95,8 +94,8 @@ class Dashboard extends React.Component {
                     picker={
                       <WindowPicker
                         options={options}
-                        selectedOption={selectedOption}
-                        onSelect={value => this.handleOptionSelected(value)}
+                        selectedOption={selectedWindowOption}
+                        onSelect={value => this.handleWindowOptionSelected(value)}
                       />
                     }
                     options={
@@ -106,9 +105,10 @@ class Dashboard extends React.Component {
                         }
                       />
                     }
-                    data={this.apiClient.getTopShorts(selectedOption)}
-                    selectedChartOptions={selectedChartOption}
-                    selectedOption={selectedOption}
+                    data={this.apiClient.getTopShorts(selectedWindowOption)}
+                    mode={selectedChartOption}
+                    selectedWindowOption={selectedWindowOption}
+                    selectedCode={selectedCode}
                     onSelectCode={value => this.handleSelectCode(value)}
                   />
                   <div className="top-right">
@@ -120,7 +120,7 @@ class Dashboard extends React.Component {
                     <Legend code={selectedCode} />
                   </div>
                   <Alerts data={this.apiClient.getTopAlerts()} />
-                  <MoversList data={this.apiClient.getMovers(selectedOption)} />
+                  <MoversList data={this.apiClient.getMovers(selectedWindowOption)} />
                 </div>
               </DashboardWrapper>
             </AppViewWrapper>
