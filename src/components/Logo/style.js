@@ -2,15 +2,14 @@ import styled from 'styled-components';
 
 export const LogoImageWrapper = styled.img`
     fill: #e7e6ea;
-`
+`;
 export const Wrapper = styled.a`
     display: flex;
     float: left;
-    grid-area: logo;
     margin-top: 20px;
-    text-decoration: none!important;
+    text-decoration: none !important;
     color: black;
-`
+`;
 export const LogoTextWrapper = styled.span`
     display: flex;
     flex-direction: column-reverse;
@@ -19,5 +18,5 @@ export const LogoTextWrapper = styled.span`
     margin-left: 10px;
     color: #e7e6ea;
     font-weight: bold;
-    font-family: Avenir Next,sans-serif;
-`
+    font-family: Avenir Next, sans-serif;
+`;
