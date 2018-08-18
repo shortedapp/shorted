@@ -1,7 +1,9 @@
 {
-  "editor.formatOnSave": true,
-  "prettier.trailingComma": "all",
-  "prettier.eslintIntegration": true,
-  "prettier.semi": true,
-  "prettier.singleQuote": true
+    "editor.formatOnSave": true,
+    "prettier.trailingComma": "all",
+    "prettier.eslintIntegration": true,
+    "prettier.semi": true,
+    "prettier.singleQuote": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false
 }

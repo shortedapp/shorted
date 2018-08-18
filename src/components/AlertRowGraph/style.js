@@ -5,11 +5,10 @@ export const Wrapper = styled.div`
     margin: 5px;
     display: flex;
     margin-right: 10px;
-    flex-direction:column;
+    flex-direction: column;
     text-align: center;
     justify-content: center;
-    -webkit-box-shadow: 1px 1px 2px 0px rgba(181,181,181,1);
-    -moz-box-shadow: 1px 1px 2px 0px rgba(181,181,181,1);
-    box-shadow: 1px 1px 2px 0px rgba(181,181,181,1);
-
-`
+    -webkit-box-shadow: 1px 1px 2px 0px rgba(181, 181, 181, 1);
+    -moz-box-shadow: 1px 1px 2px 0px rgba(181, 181, 181, 1);
+    box-shadow: 1px 1px 2px 0px rgba(181, 181, 181, 1);
+`;
