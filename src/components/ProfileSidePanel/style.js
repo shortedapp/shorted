@@ -12,4 +12,4 @@ export const Wrapper = styled.div`
     margin-left: auto;
     background: gray;
     width: 100%;
-`
+`;

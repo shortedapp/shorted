@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import { Wrapper, WrapperHovered, Code, Name, Percent } from './style'
+import {Wrapper, WrapperHovered, Code, Name, Percent} from './style';
 
 /**
  * Renders a specfiic row that is contained within the TopSHortList view. This will show
@@ -14,21 +14,30 @@ import { Wrapper, WrapperHovered, Code, Name, Percent } from './style'
  */
 
 const TopShortListRow = props => {
-  return props.isHovered
-    ? <WrapperHovered
-      {...props}
-      onMouseOver={props.onHover}
-      href={`/${props.code}`}
-      >
-      <Code><div className='code'>{props.code}</div></Code>
-      <Name>{props.name}</Name>
-      <Percent><div className='circle'>{props.current}%</div></Percent>
-    </WrapperHovered>
-    : <Wrapper {...props} onMouseOver={props.onHover}>
-      <Code><div className='code'>{props.code}</div></Code>
-      <Name>{props.name}</Name>
-      <Percent><div className='circle'>{props.current}%</div></Percent>
-    </Wrapper>
-}
+    return props.isHovered ? (
+        <WrapperHovered
+            {...props}
+            onMouseOver={props.onHover}
+            href={`/${props.code}`}>
+            <Code>
+                <div className="code">{props.code}</div>
+            </Code>
+            <Name>{props.name}</Name>
+            <Percent>
+                <div className="circle">{props.current}%</div>
+            </Percent>
+        </WrapperHovered>
+    ) : (
+        <Wrapper {...props} onMouseOver={props.onHover}>
+            <Code>
+                <div className="code">{props.code}</div>
+            </Code>
+            <Name>{props.name}</Name>
+            <Percent>
+                <div className="circle">{props.current}%</div>
+            </Percent>
+        </Wrapper>
+    );
+};
 
-export default TopShortListRow
+export default TopShortListRow;
