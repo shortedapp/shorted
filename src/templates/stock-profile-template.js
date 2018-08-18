@@ -1,15 +1,12 @@
-import React from 'react';
+import React from 'react'
 // import Helmet from "react-helmet";
-import { graphql } from 'gatsby';
-import StockProfileView from '../views/stockprofile';
+import { graphql } from 'gatsby'
+import StockProfileView from '../views/stockprofile'
 
-
-const StockProfile = ({data, location}) => {
-    // console.log(data)
-    // console.log(location)
-    return (
-        <StockProfileView data={data} />
-    )
+const StockProfile = ({ data, location }) => {
+  // console.log(data)
+  // console.log(location)
+  return <StockProfileView data={data} />
 }
 
 export const query = graphql`
@@ -20,4 +17,4 @@ export const query = graphql`
         }
     }`
 
-export default StockProfile;
+export default StockProfile

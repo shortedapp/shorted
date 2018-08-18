@@ -3,11 +3,13 @@ import styled from 'styled-components';
 export const LogoImageWrapper = styled.img`
     fill: #e7e6ea;
 `
-export const Wrapper = styled.div`
+export const Wrapper = styled.a`
     display: flex;
     float: left;
     grid-area: logo;
     margin-top: 20px;
+    text-decoration: none!important;
+    color: black;
 `
 export const LogoTextWrapper = styled.span`
     display: flex;

@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 module.exports = {
   siteMetadata: {
     title: 'Shorted',
@@ -13,7 +13,6 @@ module.exports = {
         path: `${__dirname}/data/stocks`,
         name: 'stocks',
       },
-    }
+    },
   ],
-  
-}
+};

@@ -8,6 +8,15 @@ export const transitionStyles = {
 
 export const Wrapper = styled.div`
     grid-area: top-graph;
+    display: grid;
+    grid-template-rows: 40px 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "none picker options"
+      "chart chart chart";
+    .chart {
+      grid-area: chart;
+    }
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;
@@ -24,6 +33,7 @@ export const Wrapper = styled.div`
     }
 `
 export const PickerWrapper = styled.div`
+    grid-area: picker;
 `
 export const intervals = {
   d: 2,  

@@ -2,15 +2,15 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(2, 1fr);
     grid-template-areas:
-        "code name name name percentage indicator"
-        "code name name name percentage indicator";
+        "code name name name percentage percentage indicator"
+        "code name name name  percentage percentage indicator";
     margin: 2px;
     margin-left: 7px;
     margin-right: 7px;
-    height: 51px;
+    height: 65px;
     background: #e2e2e2;
     padding-top: 4px;
     padding-bottom: 4px;
@@ -89,5 +89,6 @@ export const IndicatorWrapper = styled.div`
     text-align: center;
     vertical-align: middle;
     justify-content: center;
+    margin-right: 10px;
 
 `
