@@ -53,7 +53,7 @@ export const Percentage = styled.div`
 `;
 export const PercentageCurrent = styled.div`
     grid-area: current;
-    font-size: 22px;
+    font-size: 21px;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
 `;

@@ -9,7 +9,7 @@ export const transitionStyles = {
 export const Wrapper = styled.div`
     grid-area: top-graph;
     display: grid;
-    grid-template-rows: 60px 850px;
+    grid-template-rows: 30px 400px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
         'none picker options'
@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
     transform: ${props => `translateY(${props.Ypos}px)`};
     max-width: 1200px;
     background-color: white;
-    border-radius: 15px;
+    border-radius: 5px;
     border: 1px solid #eee;
 `;
 export const ChartWrapper = styled.div`

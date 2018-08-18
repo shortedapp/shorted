@@ -14,8 +14,8 @@ export const Wrapper = styled.div`
     border-radius: 4px;
     grid-area: legend;
     display: grid;
-    grid-gap: 10px;
-    grid-template-rows: 60px 60px 60px 60px 170px;
+    grid-gap: 5px;
+    grid-template-rows: 40px 40px 40px 40px 100px;
     grid-template-columns: repeat(4, 1fr);
     grid-template-areas:
         'company-name company-name company-name company-name'
@@ -39,13 +39,14 @@ export const UnselectedWrapper = styled.div`
     border-radius: 4px;
     height: 100%;
     font-family: Avenir Next, sans-serif;
-    font-size: 30px;
+    font-size: 22px;
     font-weight: bold;
     padding-left: 30px;
     padding-right: 30px;
 `;
 export const CompanyHeader = styled.div`
     display: flex;
+    border-radius: 5px;
     flex-direction: column;
     vertical-align: middle;
     justify-content: center;
@@ -60,6 +61,7 @@ export const CompanyMarketCap = styled.div`
 export const CompanySector = styled.div`
     grid-area: company-sector;
     display: flex;
+    border-radius: 5px;
     background: white;
     font-size: 1.3vh;
     font-weight: bold;
@@ -70,6 +72,7 @@ export const CompanySector = styled.div`
     justify-content: center;
 `;
 export const CompanyName = styled.div`
+    border-radius: 5px;
     grid-area: company-name;
     display: flex;
     background: white;

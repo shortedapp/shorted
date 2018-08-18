@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const duration = 500;
 export const transitionStyles = {
-    entering: { opacity: 0, Ypos: 500},
-    entered: { opacity: 1, Ypos: 0},
-    exited: { opacity: 0}
+    entering: {opacity: 0, Ypos: 500},
+    entered: {opacity: 1, Ypos: 0},
+    exited: {opacity: 0},
 };
 export const Wrapper = styled.div`
-    border-radius: 15px;
+    border-radius: 5px;
     border: 1px solid #eee;
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
@@ -20,10 +20,9 @@ export const Wrapper = styled.div`
     flex-direction: column;
     text-align: center;
     grid-area: top-alerts;
-`
+`;
 export const Header = styled.div`
-    font-size: 30px;
-    font-family: Avenir Next,sans-serif;
+    font-size: 22px;
+    font-family: Avenir Next, sans-serif;
     font-weight: bold;
-
-`
+`;

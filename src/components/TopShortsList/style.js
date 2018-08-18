@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     background: white;
     display: flex;
     flex-direction: column;
-    border-radius: 15px;
+    border-radius: 5px;
     border: 1px solid #eee;
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
