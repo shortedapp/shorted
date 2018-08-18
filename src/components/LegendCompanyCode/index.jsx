@@ -1,5 +1,5 @@
-import React from 'react'
-import { Wrapper, Code, Header } from './style'
+import React from 'react';
+import {Wrapper, Code, Header} from './style';
 
 /**
  * Renders a nicely styled and dynamically scaling header for the legend view which will display the company icon/logo
@@ -7,9 +7,9 @@ import { Wrapper, Code, Header } from './style'
  *
  */
 const LegendCompanyCode = props => (
-  <Wrapper>
-    <Header>Issuer code</Header>
-    <Code>{props.code}</Code>
-  </Wrapper>
-)
-export default LegendCompanyCode
+    <Wrapper>
+        <Header>Issuer code</Header>
+        <Code>{props.code}</Code>
+    </Wrapper>
+);
+export default LegendCompanyCode;

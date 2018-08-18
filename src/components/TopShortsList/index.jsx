@@ -10,55 +10,55 @@ import {Wrapper, Header, More, duration, transitionStyles} from './style';
  *  * load profile on select of a specific stock in list
  */
 class TopShortsList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inside: false,
-      hovered: false,
-    };
-  }
-  componentDidMount() {
-    this.toggleEnterState();
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            inside: false,
+            hovered: false,
+        };
+    }
+    componentDidMount() {
+        this.toggleEnterState();
+    }
 
-  toggleEnterState() {
-    this.setState({inside: true});
-  }
-  handleHover(value) {
-    this.setState({hovered: value});
-  }
-  handleMouseLeave() {
-    this.setState({
-      hovered: false,
-    });
-  }
+    toggleEnterState() {
+        this.setState({inside: true});
+    }
+    handleHover(value) {
+        this.setState({hovered: value});
+    }
+    handleMouseLeave() {
+        this.setState({
+            hovered: false,
+        });
+    }
 
-  render() {
-    const rows = this.props.data.map(row_data => (
-      <TopShortsListRow
-        isHovered={this.state.hovered === row_data.code}
-        onHover={() => this.handleHover(row_data.code)}
-        key={row_data.code}
-        {...row_data}
-      />
-    ));
-    return (
-      <Transition timeout={duration} in appear>
-        {state => {
-          return (
-            <Wrapper
-              onMouseLeave={() => this.handleMouseLeave()}
-              duration={duration}
-              {...transitionStyles[state]}>
-              <Header>Top Short List</Header>
-              {rows}
-              <More>show more</More>
-            </Wrapper>
-          );
-        }}
-      </Transition>
-    );
-  }
+    render() {
+        const rows = this.props.data.map(row_data => (
+            <TopShortsListRow
+                isHovered={this.state.hovered === row_data.code}
+                onHover={() => this.handleHover(row_data.code)}
+                key={row_data.code}
+                {...row_data}
+            />
+        ));
+        return (
+            <Transition timeout={duration} in appear>
+                {state => {
+                    return (
+                        <Wrapper
+                            onMouseLeave={() => this.handleMouseLeave()}
+                            duration={duration}
+                            {...transitionStyles[state]}>
+                            <Header>Top Short List</Header>
+                            {rows}
+                            <More>show more</More>
+                        </Wrapper>
+                    );
+                }}
+            </Transition>
+        );
+    }
 }
 
 export default TopShortsList;

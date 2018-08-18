@@ -12,4 +12,4 @@ export const Wrapper = styled.div`
     background: gray;
     width: 100%;
     height: 300px;
-`
+`;

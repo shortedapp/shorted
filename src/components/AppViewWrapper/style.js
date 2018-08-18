@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
     align-items: center;
     width: 100%;
     flex-direction: column;
-    max-width: ${props => props.maxWidth ? props.maxWidth : 5000}px;
+    max-width: ${props => (props.maxWidth ? props.maxWidth : 5000)}px;
     min-height: 280px;
     justify-content: center;
     background-image: ${props => `url(${props.background})`};
@@ -15,4 +15,4 @@ export const Wrapper = styled.div`
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: cover;
-`
+`;

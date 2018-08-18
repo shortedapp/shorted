@@ -1,5 +1,5 @@
-import React from 'react'
-import { Wrapper } from './style'
+import React from 'react';
+import {Wrapper} from './style';
 
 /**
  * Top Navbar responsible for rendering the basic site-map layout including: blog | about | disclaimer etc
@@ -9,18 +9,14 @@ import { Wrapper } from './style'
  *
  */
 class SearchBar extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
 
-  render () {
-    return (
-      <Wrapper>
-        alerts go here
-      </Wrapper>
-    )
-  }
+    render() {
+        return <Wrapper>alerts go here</Wrapper>;
+    }
 }
 
-export default SearchBar
+export default SearchBar;

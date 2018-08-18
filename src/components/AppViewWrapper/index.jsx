@@ -1,6 +1,6 @@
-import React from 'react'
-import Header from '../../components/Header'
-import { Wrapper } from './style'
+import React from 'react';
+import Header from '../../components/Header';
+import {Wrapper} from './style';
 
 /**
  * AppViewWrapper
@@ -10,10 +10,10 @@ import { Wrapper } from './style'
  * @param {*} props
  */
 const AppViewWrapper = props => (
-  <Wrapper {...props}>
-    <Header />
-    {props.children}
-  </Wrapper>
-)
+    <Wrapper {...props}>
+        <Header />
+        {props.children}
+    </Wrapper>
+);
 
-export default AppViewWrapper
+export default AppViewWrapper;

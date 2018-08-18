@@ -12,39 +12,41 @@ import {duration, transitionStyles, Wrapper} from './style';
  *
  */
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      routes: [
-        {text: 'About', url: '/about'},
-        {text: 'Blog', url: '/blog'},
-        {text: 'Disclaimer', url: '/disclaimer'},
-      ],
-      inside: false,
-    };
-  }
-  componentDidMount() {
-    this.toggleEnterState();
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            routes: [
+                {text: 'About', url: '/about'},
+                {text: 'Blog', url: '/blog'},
+                {text: 'Disclaimer', url: '/disclaimer'},
+            ],
+            inside: false,
+        };
+    }
+    componentDidMount() {
+        this.toggleEnterState();
+    }
 
-  toggleEnterState() {
-    this.setState({inside: true});
-  }
+    toggleEnterState() {
+        this.setState({inside: true});
+    }
 
-  render() {
-    return (
-      <Transition timeout={duration} in appear>
-        {state => {
-          return (
-            <Wrapper duration={duration} {...transitionStyles[state]}>
-              <Logo />
-              <NavBar />
-            </Wrapper>
-          );
-        }}
-      </Transition>
-    );
-  }
+    render() {
+        return (
+            <Transition timeout={duration} in appear>
+                {state => {
+                    return (
+                        <Wrapper
+                            duration={duration}
+                            {...transitionStyles[state]}>
+                            <Logo />
+                            <NavBar />
+                        </Wrapper>
+                    );
+                }}
+            </Transition>
+        );
+    }
 }
 
 export default Header;
