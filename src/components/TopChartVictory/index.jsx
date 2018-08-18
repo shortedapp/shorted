@@ -4,8 +4,10 @@ import {
   VictoryAxis,
   VictoryLabel,
   VictoryContainer,
+  VictoryTooltip,
   VictoryLine,
   VictoryArea,
+  VictoryVoronoiContainer,
 } from 'victory';
 import Transition from 'react-transition-group/Transition';
 import {
@@ -18,6 +20,7 @@ import {
   colors700,
   colors300,
 } from './style';
+import { TopChartTooltip } from './components';
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
@@ -114,7 +117,18 @@ class TopChartVictory extends React.Component {
                 <VictoryChart
                   padding={{top: 0, left: 40, right: 20, bottom: 50}}
                   height={310}
-                  containerComponent={<VictoryContainer responsive />}>
+                  containerComponent={<VictoryVoronoiContainer
+                    labels={(d) => `${d.date} \n stock: ${selectedCode} \n shorted: ${d[selectedCode]}%`}
+                    labelComponent={
+                      <VictoryTooltip flyoutComponent={<TopChartTooltip />} cornerRadius={0} flyoutStyle={{fill: "white"}}/>}
+                  />}
+                  // containerComponent={
+                  //   <VictoryVoronoiContainer voronoiDimension="x"
+                  //     labels={(d) => `y: ${d.y}`}
+                  //     labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{fill: "white"}}/>}
+                  //   />
+                  // }
+                  >
                   {lines}
                   <VictoryAxis
                     label="Time"
@@ -148,6 +162,7 @@ class TopChartVictory extends React.Component {
                       tickLabels: {fontSize: 7, angle: 90, padding: 7},
                     }}
                   />
+                  
                 </VictoryChart>
               </ChartWrapper>
             </Wrapper>

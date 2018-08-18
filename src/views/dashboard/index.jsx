@@ -4,6 +4,7 @@ import headerBackground from '../../assets/images/header-background.svg';
 import ShortedAPI from '../../services/sapi/client';
 import AppViewWrapper from '../../components/AppViewWrapper';
 import TopChartVictory from '../../components/TopChartVictory';
+import TopChart from '../../components/TopChart';
 import MoversList from '../../components/MoversList';
 import TopShortsList from '../../components/TopShortsList';
 import Legend from '../../components/Legend';

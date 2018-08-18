@@ -33,6 +33,7 @@ export const Wrapper = styled.div`
     }
 `
 export const PickerWrapper = styled.div`
+    grid-area: picker;
 `
 export const intervals = {
   d: 2,  

@@ -16,7 +16,8 @@ import {
   transitionStyles,
   Wrapper,
   PickerWrapper,
-  colors700
+  colors700,
+  colors300
 } from './style'
 /**
  * Chart
@@ -50,10 +51,8 @@ class TopChart extends React.Component {
   }
 
   render () {
-    const { selectedOption } = this.props
-    const fixtures = this.apiClient.getTopShorts(selectedOption)
-    console.log(fixtures.data.length)
-    const lines = fixtures.dataKeys.map((key, index) => (
+    const { selectedCode, data } = this.props
+    const lines = data.dataKeys.map((key, index) => (
       <Line
         key={key}
         onMouseOver={e => this.handleLineHover(e, key)}
@@ -62,6 +61,7 @@ class TopChart extends React.Component {
         dataKey={key}
         strokeWidth={3}
         stroke={colors700[index]}
+        strokeOpacity={ selectedCode === key ? 1 : 0.3 }
       />
     ))
     return (
@@ -79,11 +79,11 @@ class TopChart extends React.Component {
                   height={800}
                 >
                   <LineChart
-                    data={fixtures.data}
+                    data={data.data}
                     margin={{ top: 0, right: 50, left: 10, bottom: 40 }}
                   >
                     <XAxis
-                      interval={Math.floor(fixtures.data.length / 5)}
+                      interval={Math.floor(data.data.length / 5)}
                       dataKey='date'
                       fontFamily={'Avenir Next,sans-serif'}
                     >
@@ -105,7 +105,7 @@ class TopChart extends React.Component {
                       fontFamily={'Avenir Next,sans-serif'}
                     />
                     <CartesianGrid stroke='#eee' strokeDasharray='5 5' />
-                    <Tooltip />
+                    {/* <Tooltip /> */}
                     {lines}
                   </LineChart>
                 </ResponsiveContainer>
