@@ -49,6 +49,7 @@ export const CompanyHeader = styled.div`
     flex-direction: column;
     vertical-align: middle;
     justify-content: center;
+    font-size: 0.8vh;
     grid-area: company-header;
 `;
 export const CompanyMarketCap = styled.div`
@@ -61,7 +62,7 @@ export const CompanySector = styled.div`
     grid-area: company-sector;
     display: flex;
     background: white;
-    font-size: 1.3vh;
+    font-size: 1vh;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
     text-align: center;
@@ -73,7 +74,7 @@ export const CompanyName = styled.div`
     grid-area: company-name;
     display: flex;
     background: white;
-    font-size: 1.3vh;
+    font-size: 1vh;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
     text-align: center;

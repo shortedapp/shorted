@@ -6,6 +6,24 @@ export const transitionStyles = {
     exited: {opacity: 0},
 };
 
+export const TooltipWrapper = styled.svg`
+    .header {
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .issuerCode {
+        font-size: 12px;
+    }
+    .value {
+        font-size: 12px;
+    }
+    .tooltip-card {
+        fill: #e1e1e1;
+        stroke: 1px solid #282626;
+        border: 1px solid #282626;
+        border-radius: 30px;
+    }
+`;
 export const Wrapper = styled.div`
     grid-area: top-graph;
     display: grid;
@@ -25,6 +43,7 @@ export const Wrapper = styled.div`
 `;
 export const ChartWrapper = styled.div`
     grid-area: chart;
+    height: 100%;
 `;
 export const PickerWrapper = styled.div`
     grid-area: picker;
