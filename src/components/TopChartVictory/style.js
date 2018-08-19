@@ -36,7 +36,7 @@ export const Wrapper = styled.div`
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;
     transform: ${props => `translateY(${props.Ypos}px)`};
-    max-width: 1200px;
+    max-width: 1600px;
     background-color: white;
     border-radius: 15px;
     border: 1px solid #eee;

@@ -1,159 +1,136 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import headerBackground from '../../assets/images/header-background.svg';
-import ShortedAPI from '../../services/sapi/client';
-import AppViewWrapper from '../../components/AppViewWrapper';
-import TopChartVictory from '../../components/TopChartVictory';
-import TopChart from '../../components/TopChart';
-import MoversList from '../../components/MoversList';
-import TopShortsList from '../../components/TopShortsList';
-import Legend from '../../components/Legend';
-import Alerts from '../../components/Alerts';
-import ThemePicker from '../../components/ThemePicker';
-import WindowPicker from './../../components/WindowPicker';
-import ChartOptions from '../../components/ChartOptions';
-import {DashboardWrapper, themes, duration, transitionStyles} from './style';
+import {Menu, Icon, Switch, Button} from 'antd';
+import 'antd/dist/antd.css';
+import Logo from '../../components/Logo';
+import ThemeSwitch from '../../components/ThemeSwitch';
+import Sectors from '../../views/sectors';
+import Alerts from '../../views/alerts';
+import Seasonality from '../../views/seasonality';
+import Movers from '../../views/movers';
+import Summary from '../../views/summary';
+import {
+    DashboardWrapper,
+    ContentWrapper,
+    DashboardNavbarWrapper,
+    ThemeWrapper,
+    HeaderWrapper,
+    NavBarCollapseButton,
+    themes,
+} from './style';
 
-/**
- * View:TopShorts
- * Overarching container for the top short view.
- * Showing the following key widgets/displays:
- *  * top 10 short positions graphically.
- *  * table of top short position changes
- *  * alerts/anomalies
- *  * reactive-widget on hover/select of a given graph
- * TODO:
- * * add Transitions of components such as window picker, graph and background etc.
- * * add graph integration via recharts etc.
- * * add legend component for on-select animation/effect
- * * refactor data management, should be moved to top level potentially with dumber components
- *
- */
-
+const SubMenu = Menu.SubMenu;
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.apiClient = new ShortedAPI();
         this.state = {
-            options: {
-                values: ['d', 'w', 'm', 'y'],
-            },
-            selectedWindowOption: 'w',
-            selectedCode: false,
-            selectedChartOption: 'NORMAL',
-            inside: false,
-            selectedTheme: false,
+            theme: 'dark',
+            current: 'SUMMARY',
+            collapsed: false,
         };
     }
-    handleWindowOptionSelected(value) {
+    changeTheme = value => {
         this.setState({
-            selectedWindowOption: value,
+            theme: value ? 'dark' : 'light',
         });
-    }
-    handleThemeSelected(value) {
-        console.log(value);
+    };
+    handleClick = e => {
+        console.log('click ', e);
         this.setState({
-            selectedTheme: value,
+            current: e.key,
         });
-    }
-    handleChartOptionChange(value) {
-        console.log('handleChartOptionChange:', value);
-        this.setState({selectedChartOption: value});
-    }
-    handleSelectCode(value) {
+    };
+    toggleCollapsed = () => {
         this.setState({
-            selectedCode: value,
+            collapsed: !this.state.collapsed,
         });
+    };
+    getView(selection, theme) {
+        switch (selection) {
+            case 'SECTORS':
+                return <Sectors theme={themes[theme]} />;
+            case 'MOVERS':
+                return <Movers theme={themes[theme]} />;
+            case 'ALERTS':
+                return <Alerts theme={themes[theme]} />;
+            case 'SEASONALITY':
+                return <Seasonality theme={themes[theme]} />;
+            case 'SUMMARY':
+                return <Summary theme={themes[theme]} />;
+            default:
+                return <Summary theme={themes[theme]} />;
+        }
     }
-    componentDidMount() {
-        this.toggleEnterState();
-    }
-    toggleEnterState() {
-        this.setState({inside: true});
-    }
+
     render() {
-        console.log('rendering');
-        const {
-            options,
-            selectedChartOption,
-            selectedWindowOption,
-            selectedCode,
-            selectedTheme,
-        } = this.state;
+        const {theme} = this.state;
         return (
-            <Transition timeout={duration} in appear>
-                {state => {
-                    return (
-                        <AppViewWrapper
-                            background={headerBackground}
-                            duration={duration}
-                            {...transitionStyles[state]}>
-                            <DashboardWrapper>
-                                <div className="content">
-                                    <TopShortsList
-                                        data={this.apiClient.getTopShortsList(
-                                            20,
-                                        )}
-                                    />
-                                    <TopChartVictory
-                                        picker={
-                                            <WindowPicker
-                                                options={options}
-                                                selectedOption={
-                                                    selectedWindowOption
-                                                }
-                                                onSelect={value =>
-                                                    this.handleWindowOptionSelected(
-                                                        value,
-                                                    )
-                                                }
-                                            />
-                                        }
-                                        options={
-                                            <ChartOptions
-                                                onChartOptionChange={value =>
-                                                    this.handleChartOptionChange(
-                                                        value,
-                                                    )
-                                                }
-                                            />
-                                        }
-                                        data={this.apiClient.getTopShorts(
-                                            selectedWindowOption,
-                                        )}
-                                        mode={selectedChartOption}
-                                        selectedWindowOption={
-                                            selectedWindowOption
-                                        }
-                                        selectedCode={selectedCode}
-                                        onSelectCode={value =>
-                                            this.handleSelectCode(value)
-                                        }
-                                    />
-                                    <div className="top-right">
-                                        <ThemePicker
-                                            selectedTheme={selectedTheme}
-                                            onThemeSelect={value =>
-                                                this.handleThemeSelected(value)
-                                            }
-                                            themes={themes}
-                                        />
-                                        <Legend code={selectedCode} />
-                                    </div>
-                                    <Alerts
-                                        data={this.apiClient.getTopAlerts()}
-                                    />
-                                    <MoversList
-                                        data={this.apiClient.getMovers(
-                                            selectedWindowOption,
-                                        )}
-                                    />
-                                </div>
-                            </DashboardWrapper>
-                        </AppViewWrapper>
-                    );
-                }}
-            </Transition>
+            <DashboardWrapper width={this.state.collapsed ? `80px` : `256px`}>
+                <HeaderWrapper {...themes[theme]} />
+                <Logo
+                    collapsed={this.state.collapsed}
+                    theme={themes[this.state.theme]}
+                />
+                <NavBarCollapseButton
+                    {...themes[this.state.theme]}
+                    width={this.state.collapsed ? `80px` : `256px`}>
+                    <Button
+                        type="primary"
+                        onClick={this.toggleCollapsed}
+                        style={{width: 50}}>
+                        <Icon
+                            type={
+                                this.state.collapsed
+                                    ? 'menu-unfold'
+                                    : 'menu-fold'
+                            }
+                        />
+                    </Button>
+                </NavBarCollapseButton>
+                <ThemeWrapper width={this.state.collapsed ? `80px` : `256px`}>
+                    <ThemeSwitch
+                        theme={themes[this.state.theme]}
+                        checked={this.state.theme}
+                        changeTheme={value => this.changeTheme(value)}
+                    />
+                </ThemeWrapper>
+
+                <DashboardNavbarWrapper
+                    {...themes[this.state.theme]}
+                    width={this.state.collapsed ? `80px` : `256px`}>
+                    <Menu
+                        inlineCollapsed={this.state.collapsed}
+                        theme={this.state.theme}
+                        onClick={this.handleClick}
+                        defaultOpenKeys={['sub1']}
+                        selectedKeys={[this.state.current]}
+                        mode="inline">
+                        <Menu.Item key="SUMMARY">
+                            <Icon type="pie-chart" />
+                            <span>Summary</span>
+                        </Menu.Item>
+                        <Menu.Item key="SECTORS">
+                            <Icon type="desktop" />
+                            <span>Sector Breakdown</span>
+                        </Menu.Item>
+                        <Menu.Item key="SEASONALITY">
+                            <Icon type="inbox" />
+                            <span>Seasonality</span>
+                        </Menu.Item>
+                        <Menu.Item key="ALERTS">
+                            <Icon type="warning" />
+                            <span>Alerts</span>
+                        </Menu.Item>
+                        <Menu.Item key="MOVERS">
+                            <Icon type="line-chart" />
+                            <span>Movers</span>
+                        </Menu.Item>
+                    </Menu>
+                </DashboardNavbarWrapper>
+                <ContentWrapper {...themes[theme]}>
+                    {this.getView(this.state.current, theme)}
+                </ContentWrapper>
+            </DashboardWrapper>
         );
     }
 }

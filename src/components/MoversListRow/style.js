@@ -82,7 +82,10 @@ export const IndicatorDown = styled.div`
 
 export const IndicatorWrapper = styled.div`
     grid-area: indicator;
-    display: flex;
+    @media (min-width: 1650px) {
+        display: flex;
+    }
+    display: none;
     flex-direction: column;
     text-align: center;
     vertical-align: middle;

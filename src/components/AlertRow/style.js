@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: 90px 250px 100px 100px 100px;
+    grid-template-columns: 90px 250px 100px 100px 245px;
     grid-template-rows: repeat(2, 1fr);
     grid-template-areas:
         'code name name percentage indicator graph'
@@ -19,6 +19,9 @@ export const Wrapper = styled.div`
 export const Name = styled.div`
     grid-area: name;
     display: flex;
+    @media (max-width: 1900px) {
+        font-size: 1vw;
+    }
     font-size: 21px;
     flex-direction: column;
     justify-content: center;
@@ -89,7 +92,10 @@ export const IndicatorDown = styled.div`
 
 export const IndicatorWrapper = styled.div`
     grid-area: indicator;
-    display: grid;
+    @media (min-width: 1750px) {
+        display: grid;
+    }
+    display: none;
     flex-direction: column;
     text-align: center;
     vertical-align: middle;

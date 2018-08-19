@@ -1,53 +1,61 @@
 import styled from 'styled-components';
-
+export const themes = {
+    light: {
+        color: 'black',
+        background: 'white',
+        fill: 'white',
+        stroke: 'black',
+        buttonSelected: '#5fa0dd',
+        buttonUnselected: '#7d7d7d',
+    },
+    dark: {
+        color: 'white',
+        background: '#001529',
+        stroke: 'white',
+        buttonSelected: '#1890ff',
+        buttonUnselected: '#001529',
+    },
+};
 export const DashboardWrapper = styled.div`
     display: grid;
-    justify-content: center;
-    .content {
-        margin-top: 30px;
-        display: grid;
-        max-width: 1900px;
-        grid-gap: 20px;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: 400px 400px 1fr 1fr;
-        grid-template-areas:
-            'top-list top-graph top-graph top-right'
-            'top-list top-graph top-graph todo'
-            'top-list top-alerts top-alerts top-movers'
-            'top-list top-alerts top-alerts top-movers';
-    }
-    .top-right {
-        grid-area: top-right;
-        display: grid;
-        grid-gap: 10px;
-        grid-template-rows: repeat(4, 85px);
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            'themepicker'
-            'legend'
-            'legend'
-            'legend'
-            'legend';
-    }
+    grid-template-columns: ${props => props.width} 1fr;
+    grid-template-rows: 100px 70px 80px 50px 1400px;
+    grid-template-areas:
+        'logo header'
+        'collapse content'
+        'theme content'
+        'nav content'
+        'nav content';
 `;
-
-export const duration = 300;
-
-export const transitionStyles = {
-    entering: {opacity: 0},
-    entered: {opacity: 1},
-    exited: {opacity: 0},
-};
-
-export const themes = [
-    {
-        name: 'dark',
-        textColor: '#ffffff',
-        backgroundColor: '#000000',
-    },
-    {
-        name: 'light',
-        textColor: '#000000',
-        backgroundColor: '#ffffff',
-    },
-];
+export const ThemeWrapper = styled.div`
+    width: ${props => props.width};
+    grid-area: theme;
+`;
+export const HeaderWrapper = styled.div`
+    grid-area: header;
+    background: ${props => props.background};
+`;
+export const DashboardNavbarWrapper = styled.div`
+    grid-area: nav;
+    width: ${props => props.width};
+    display: block;
+    background: ${props => props.background};
+`;
+export const NavBarCollapseButton = styled.div`
+    grid-area: collapse;
+    height: 70px;
+    padding-top: 10px;
+    width: ${props => props.width};
+    background: ${props => props.background};
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-content: center;
+    vertical-align: middle;
+    text-align: center;
+`;
+export const ContentWrapper = styled.div`
+    grid-area: content;
+    padding-left: 20px;
+    background: ${props => props.background};
+`;

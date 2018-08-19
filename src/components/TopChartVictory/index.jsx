@@ -3,8 +3,6 @@ import {
     VictoryChart,
     VictoryAxis,
     VictoryLabel,
-    VictoryContainer,
-    VictorySharedEvents,
     VictoryTooltip,
     VictoryLine,
     VictoryArea,
@@ -136,7 +134,7 @@ class TopChartVictory extends React.Component {
                                         right: 20,
                                         bottom: 70,
                                     }}
-                                    height={360}
+                                    width={500}
                                     containerComponent={
                                         <VictoryVoronoiContainer
                                             radius={10}
