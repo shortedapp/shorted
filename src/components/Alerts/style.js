@@ -7,7 +7,7 @@ export const transitionStyles = {
   exited: { opacity: 0 }
 }
 export const Wrapper = styled.div`
-    border-radius: 15px;
+    border-radius: 5px;
     border: 1px solid #eee;
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
@@ -25,7 +25,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     text-align: center;
     grid-area: top-alerts;
-`
+`;
 export const Header = styled.div`
     grid-area: header;
     font-size: 30px;

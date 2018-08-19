@@ -50,8 +50,8 @@ class LegendCompanyMarketCap extends React.Component {
                 </Header>
                 <Chart>
                     <VictoryChart
-                        padding={{top: 0, left: 40, right: 20, bottom: 50}}
-                        height={200}
+                        padding={{top: 0, left: 40, right: 20, bottom: 20}}
+                        height={120}
                         width={580}
                         containerComponent={<VictoryContainer responsive />}>
                         <VictoryLine data={this.props.data} />

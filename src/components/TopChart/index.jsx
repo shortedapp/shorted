@@ -76,7 +76,7 @@ class TopChart extends React.Component {
                                 <ResponsiveContainer
                                     aspect={4.0 / 3.0}
                                     width="100%"
-                                    height={800}>
+                                    height={200}>
                                     <LineChart
                                         data={data.data}
                                         margin={{

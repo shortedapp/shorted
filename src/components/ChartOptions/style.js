@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
     position: relative;
 `;
 export const buttonStyle = {
-    fontSize: 37,
+    fontSize: 25,
     fill: 'black',
     color: 'black',
 };
@@ -18,6 +18,7 @@ export const Button = styled.div`
     width: 30px;
     height: 30px;
     margin-right: 7px;
+    padding-top: 10px;
     display: inline-block;
     position: relative;
 `;
@@ -29,7 +30,7 @@ export const OptionsWrapper = styled.div`
     z-index: 1;
     background: white;
     right: 0;
-    border-radius: 15px;
+    border-radius: 5px;
     border: 1px solid #eee;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);

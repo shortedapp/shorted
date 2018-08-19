@@ -8,12 +8,11 @@ export const transitionStyles = {
 }
 
 export const Wrapper = styled.div`
-    height: 100%;
     grid-area: top-list;
     background: white;
     display: flex;
     flex-direction: column;
-    border-radius: 15px;
+    border-radius: 5px;
     border: 1px solid #eee;
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
@@ -21,20 +20,16 @@ export const Wrapper = styled.div`
     transform: ${props => `translateY(${props.Ypos}px)`};
 `
 export const Header = styled.div`
-    height: 50px;
-    display: flex;
-    flex-direction: column;
+    height: 30px;
     text-align: center;
-    font-size: 35px;
+    font-size: 22px;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
 `
 export const More = styled.div`
-    height: 50px;
-    display: flex;
-    flex-direction: column;
+    height: 30px;
     text-align: center;
-    font-size: 35px;
+    font-size: 22px;
     font-weight: bold;
     background: #dadada;
     border-radius: 0 0 15px 15px;

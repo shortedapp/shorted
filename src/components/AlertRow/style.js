@@ -19,10 +19,14 @@ export const Wrapper = styled.div`
 export const Name = styled.div`
     grid-area: name;
     display: flex;
+<<<<<<< HEAD
     @media (max-width: 1900px) {
         font-size: 1vw;
     }
     font-size: 21px;
+=======
+    font-size: 16px;
+>>>>>>> c7bdcee2a41c031b2e56218b054a714efc1fccb4
     flex-direction: column;
     justify-content: center;
     vertical-align: middle;
@@ -41,7 +45,7 @@ export const Code = styled.div`
         width: 60px;
         height: 45px;
         display: flex;
-        font-size: 25px;
+        font-size: 21px;
 
         font-family: Avenir Next, sans-serif;
         flex-direction: column;
@@ -62,7 +66,7 @@ export const Percentage = styled.div`
 `;
 export const PercentageCurrent = styled.div`
     grid-area: current;
-    font-size: 27px;
+    font-size: 21px;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
 `;
@@ -70,7 +74,7 @@ export const PercentageChanged = styled.div`
     grid-area: changed;
     margin-left: 40px;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
     font-family: Avenir Next, sans-serif;
     color: ${props => (props.value > 0 ? `red` : `green`)};
     padding-bottom: 5px;

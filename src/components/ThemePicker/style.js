@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     background: white;
-    border-radius: 15px;
+    border-radius: 5px;
     display: block;
     float: left;
     vertical-align: middle;
@@ -13,12 +13,12 @@ export const Wrapper = styled.div`
 `;
 export const Header = styled.div`
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
     font-family: Avenir Next, sans-serif;
 `;
 export const ThemeItemWrapper = styled.div`
     font-weight: bold;
-    font-size: 25px;
+    font-size: 16px;
     font-family: Avenir Next, sans-serif;
     background-color: ${props => props.backgroundColor};
     color: ${props => props.textColor};
