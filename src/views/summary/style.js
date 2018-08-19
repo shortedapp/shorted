@@ -5,14 +5,27 @@ export const DashboardWrapper = styled.div`
     background: ${props => props.background};
     .content {
         display: grid;
-        grid-gap: 13px;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: 400px 400px 1fr 1fr;
-        grid-template-areas:
-            'top-list top-graph top-graph top-right'
-            'top-list top-graph top-graph todo'
-            'top-list top-alerts top-alerts top-movers'
-            'top-list top-alerts top-alerts top-movers';
+
+        @media (min-width: 1024px) {
+            grid-gap: 5px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 400px 400px 1fr 1fr;
+            grid-template-areas:
+                'top-graph top-graph top-graph top-right'
+                'top-graph top-graph top-graph todo'
+                'top-list top-alerts top-alerts top-movers'
+                'top-list top-alerts top-alerts top-movers';
+        }
+        @media (min-width: 1280px) {
+            grid-gap: 13px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 400px 400px 1fr 1fr;
+            grid-template-areas:
+                'top-list top-graph top-graph top-right'
+                'top-list top-graph top-graph todo'
+                'top-list top-alerts top-alerts top-movers'
+                'top-list top-alerts top-alerts top-movers';
+        }
     }
     .top-right {
         grid-area: top-right;
