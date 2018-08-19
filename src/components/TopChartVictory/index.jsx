@@ -134,7 +134,7 @@ class TopChartVictory extends React.Component {
                                         right: 20,
                                         bottom: 70,
                                     }}
-                                    width={500}
+                                    
                                     containerComponent={
                                         <VictoryVoronoiContainer
                                             radius={10}

@@ -27,7 +27,7 @@ export const TooltipWrapper = styled.svg`
 export const Wrapper = styled.div`
     grid-area: top-graph;
     display: grid;
-    grid-template-rows: 60px 850px;
+    grid-template-rows: 1fr 20fr;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
         'none picker options'
@@ -44,6 +44,7 @@ export const Wrapper = styled.div`
 export const ChartWrapper = styled.div`
     grid-area: chart;
     height: 100%;
+    width: 100%;
 `;
 export const PickerWrapper = styled.div`
     grid-area: picker;

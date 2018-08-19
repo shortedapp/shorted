@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: 90px 250px 100px 100px 245px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: repeat(2, 1fr);
     grid-template-areas:
         'code name name percentage indicator graph'
@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
     margin: 6px;
     margin-left: 7px;
     margin-right: 7px;
-    height: 80px;
+    height: 130px;
     background: #e2e2e2;
     padding-top: 4px;
     padding-bottom: 4px;
