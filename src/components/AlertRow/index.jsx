@@ -10,6 +10,7 @@ import {
     IndicatorDown,
     PercentageChanged,
     PercentageCurrent,
+    More,
 } from './style';
 
 /**

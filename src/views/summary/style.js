@@ -19,7 +19,7 @@ export const DashboardWrapper = styled.div`
         @media only screen and (min-width: 1280px) {
             grid-gap: 10px;
             grid-template-columns: 2fr 3fr 3fr 2.5fr;
-            grid-template-rows: 15vw 15vw 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
             grid-template-areas:
                 'top-list top-graph top-graph top-right'
                 'top-list top-graph top-graph todo'
