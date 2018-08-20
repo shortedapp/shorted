@@ -143,7 +143,7 @@ class TopChartVictory extends React.Component {
                             <ChartWrapper>
                                 {/* <svg viewBox={"0 0" + " "+ this.state.windowWidth +" " + "350"}  preserveAspectRatio="none"> */}
                                 <VictoryChart
-                                    width={490}
+                                    // width={490}
                                     padding={{
                                         top: 10,
                                         left: 20,
