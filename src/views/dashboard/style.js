@@ -57,5 +57,6 @@ export const NavBarCollapseButton = styled.div`
 export const ContentWrapper = styled.div`
     grid-area: content;
     padding-left: 20px;
+    padding-right: 20px;
     background: ${props => props.background};
 `;
