@@ -39,9 +39,18 @@ class TopChartVictory extends React.Component {
         super(props);
         this.state = {
             inside: false,
+            windowWidth: 1700
         };
+        this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this)
     }
+    componentWillUnmount() {
+        typeof window !== 'undefined' && window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+    handleWindowSizeChange() {
+        typeof window !== 'undefined' && setTimeout(this.setState({ windowWidth: window.innerWidth }));
+    };
     componentDidMount() {
+        typeof window !== 'undefined' && setTimeout(window.addEventListener('resize', this.handleWindowSizeChange));
         this.toggleEnterState();
     }
 
@@ -55,6 +64,7 @@ class TopChartVictory extends React.Component {
     handleLineExit(e, key) {
         console.log('exiting line', key);
     }
+    
 
     render() {
         const {data, selectedCode} = this.props;
@@ -127,7 +137,10 @@ class TopChartVictory extends React.Component {
                                 {this.props.options}
                             </OptionsWrapper>
                             <ChartWrapper>
+                                {/* <svg viewBox={"0 0" + " "+ this.state.windowWidth +" " + "350"}  preserveAspectRatio="none"> */}
                                 <VictoryChart
+                                    width={900}
+                                    height={800}
                                     padding={{
                                         top: 0,
                                         left: 40,
@@ -205,6 +218,7 @@ class TopChartVictory extends React.Component {
                                         }}
                                     />
                                 </VictoryChart>
+                                {/* </svg> */}
                             </ChartWrapper>
                         </Wrapper>
                     );

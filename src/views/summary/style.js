@@ -5,10 +5,10 @@ export const DashboardWrapper = styled.div`
     background: ${props => props.background};
     .content {
         display: grid;
-
-        @media (min-width: 1024px) {
+        
+        @media only screen and (min-width: 1024px) {
             grid-gap: 5px;
-            grid-template-columns: 22vw 22vw 1fr;
+            grid-template-columns: 300px 22vw 22vw 1fr;
             grid-template-rows: 22vw 22vw 1fr 1fr;
             grid-template-areas:
                 'top-graph top-graph top-graph top-graph top-right'
@@ -16,9 +16,9 @@ export const DashboardWrapper = styled.div`
                 'top-alerts top-alerts top-movers top-movers'
                 'top-alerts top-alerts top-movers top-movers';
         }
-        @media (min-width: 1280px) {
-            grid-gap: 13px;
-            grid-template-columns: repeat(4, 1fr);
+        @media only screen and (min-width: 1280px) {
+            grid-gap: 10px;
+            grid-template-columns: 300px 1fr 1fr 400px;
             grid-template-rows: 15vw 15vw 1fr 1fr;
             grid-template-areas:
                 'top-list top-graph top-graph top-right'
@@ -26,6 +26,7 @@ export const DashboardWrapper = styled.div`
                 'top-list top-alerts top-alerts top-movers'
                 'top-list top-alerts top-alerts top-movers';
         }
+        
     }
     .top-right {
         grid-area: top-right;
