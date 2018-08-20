@@ -3,7 +3,11 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
     grid-area: graph;
     margin: 5px;
-    display: flex;
+    max-width: 245px;
+    @media (min-width: 2201px) {
+        display: flex;
+    }
+    display: none;
     margin-right: 10px;
     flex-direction: column;
     text-align: center;

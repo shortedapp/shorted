@@ -3,7 +3,6 @@ import {
     VictoryChart,
     VictoryAxis,
     VictoryLabel,
-    VictoryContainer,
     VictoryTooltip,
     VictoryLine,
     VictoryArea,
@@ -50,24 +49,33 @@ class TopChartVictory extends React.Component {
         this.setState({inside: true});
     }
     handleLineHover(e, key) {
+        console.log('new line slected:', key);
         this.props.onSelectCode(key);
+    }
+    handleLineExit(e, key) {
+        console.log('exiting line', key);
     }
 
     render() {
         const {data, selectedCode} = this.props;
         var lines = null;
-        if (this.props.mode == 'NORMAL') {
+        if (this.props.mode === 'NORMAL') {
             lines = data.dataKeys.map((key, index) => (
                 <VictoryLine
+                    name={key}
                     key={key}
+                    eventKey={key}
+                    // labelComponent={<VictoryTooltip />}
                     data={data.data}
                     x="date"
                     y={key}
                     events={[
                         {
-                            target: 'parent',
+                            childName: key,
+                            target: 'data',
                             eventHandlers: {
                                 onMouseOver: e => this.handleLineHover(e, key),
+                                onMouseOut: e => this.handleLineExit(e, key),
                             },
                         },
                     ]}
@@ -81,7 +89,7 @@ class TopChartVictory extends React.Component {
                     }}
                 />
             ));
-        } else if (this.props.mode == 'AREA') {
+        } else if (this.props.mode === 'AREA') {
             lines = data.dataKeys.map((key, index) => (
                 <VictoryArea
                     key={key}
@@ -124,22 +132,25 @@ class TopChartVictory extends React.Component {
                                         top: 0,
                                         left: 40,
                                         right: 20,
-                                        bottom: 50,
+                                        bottom: 70,
                                     }}
-                                    height={310}
+                                    
                                     containerComponent={
                                         <VictoryVoronoiContainer
-                                            labels={d =>
-                                                `${
-                                                    d.date
-                                                } \n stock: ${selectedCode} \n shorted: ${
-                                                    d[selectedCode]
-                                                }%`
-                                            }
+                                            radius={10}
+                                            padding={10}
+                                            labels={d => ``}
                                             labelComponent={
                                                 <VictoryTooltip
                                                     flyoutComponent={
-                                                        <TopChartTooltip />
+                                                        <TopChartTooltip
+                                                            selectedCode={
+                                                                selectedCode
+                                                            }
+                                                            dataKeys={
+                                                                data.dataKeys
+                                                            }
+                                                        />
                                                     }
                                                     cornerRadius={0}
                                                     flyoutStyle={{
@@ -148,14 +159,7 @@ class TopChartVictory extends React.Component {
                                                 />
                                             }
                                         />
-                                    }
-                                    // containerComponent={
-                                    //   <VictoryVoronoiContainer voronoiDimension="x"
-                                    //     labels={(d) => `y: ${d.y}`}
-                                    //     labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{fill: "white"}}/>}
-                                    //   />
-                                    // }
-                                >
+                                    }>
                                     {lines}
                                     <VictoryAxis
                                         label="Time"

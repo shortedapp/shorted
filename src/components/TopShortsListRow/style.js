@@ -4,8 +4,14 @@ export const Wrapper = styled.a`
     display: grid;
     color: black;
     text-decoration: none !important;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-areas: 'code name name name percentage';
+    @media (min-width: 901px) {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-areas: 'code name name name percentage';
+    }
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: 'code percentage';
+    }
     margin: 4px;
     margin-left: 7px;
     margin-right: 4px;
@@ -53,6 +59,9 @@ export const WrapperHovered = styled.a`
 
 export const Name = styled.div`
     grid-area: name;
+    @media (max-width: 1300px) {
+        display: none;
+    }
     display: flex;
     flex-direction: column;
     justify-content: center;

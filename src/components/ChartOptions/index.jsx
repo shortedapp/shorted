@@ -21,7 +21,7 @@ const Options = props => (
         <div className="chart-modes">
             <RadioGroup
                 onChange={e => props.onOptionsChange(e.target.value)}
-                defaultValue="a"
+                defaultValue="NORMAL"
                 buttonStyle="solid">
                 <RadioButton style={radioStyle} value="NORMAL">
                     Normal

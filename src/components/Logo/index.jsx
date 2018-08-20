@@ -1,13 +1,14 @@
 import React from 'react';
 // import LogoImage from '../../assets/images/logo.svg'
 import {Wrapper, LogoTextWrapper} from './style';
+import {runInThisContext} from 'vm';
 /**
  * Renders a shorted.com.au logo and stylised layout
  */
 const LogoSvg = props => (
     <svg
-        width="117"
-        height="80"
+        width={props.collapsed ? '80' : '117'}
+        height={props.collapsed ? '60' : '80'}
         viewBox="0 0 117 98"
         fill={props.fill}
         xmlns="http://www.w3.org/2000/svg">
@@ -20,9 +21,15 @@ const LogoSvg = props => (
     </svg>
 );
 const Logo = props => (
-    <Wrapper href="/">
-        <LogoSvg fill="none" stroke="#e7e6ea" />
-        <LogoTextWrapper>shorted</LogoTextWrapper>
+    <Wrapper {...props.theme} href="/">
+        <LogoSvg
+            collapsed={props.collapsed}
+            fill="none"
+            stroke={props.theme ? props.theme.stroke : 'gray'}
+        />
+        {props.collapsed ? null : (
+            <LogoTextWrapper {...props.theme}>shorted</LogoTextWrapper>
+        )}
     </Wrapper>
 );
 

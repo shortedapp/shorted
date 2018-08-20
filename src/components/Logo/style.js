@@ -6,9 +6,9 @@ export const LogoImageWrapper = styled.img`
 export const Wrapper = styled.a`
     display: flex;
     float: left;
-    margin-top: 20px;
     text-decoration: none !important;
-    color: black;
+    color: ${props => props.color};
+    background: ${props => props.background};
 `;
 export const LogoTextWrapper = styled.span`
     display: flex;
@@ -16,7 +16,9 @@ export const LogoTextWrapper = styled.span`
     font-size: 30px;
     letter-spacing: 5px;
     margin-left: 10px;
-    color: #e7e6ea;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
+    color: ${props => (props.color ? props.color : 'gray')};
+    background: ${props => props.background};
+    margin-bottom: 10px;
 `;
