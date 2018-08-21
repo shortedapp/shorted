@@ -4,12 +4,13 @@ import ShortedAPI from '../../services/sapi/client';
 import {DashboardWrapper, duration, transitionStyles} from './style';
 
 /**
- * View:Seasonality
- * Shows the sector breakdown view
+ * View:Movers
+ * Shows the movers breakdown. This should represent stocks/sector trends in the market that are moving over short, medium and long term
+ * time windows
+ * Should utilise the advanced getMovers function, which supports specification of window when caluclating relavent windows. Also should
+ * support filtering based of sectors.
  * TODO:
- * * add graph integration via victory etc.
- * * add legend component for on-select animation/effect
- * * refactor data management, should be moved to top level potentially with dumber components
+ * * add MoversListView(List + PieChart + Dynamic Data), 
  *
  */
 

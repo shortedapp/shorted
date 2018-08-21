@@ -1,16 +1,14 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import ShortedAPI from '../../services/sapi/client';
+import List from './components/List';
 import {DashboardWrapper, duration, transitionStyles} from './style';
 
 /**
- * View:Seasonality
- * Shows the sector breakdown view
+ * View:Alerts
+ * Shows Alerts/Anomalies across specific stocks and sectors. As well as other information such as news, tweets etc.
  * TODO:
- * * add graph integration via victory etc.
- * * add legend component for on-select animation/effect
- * * refactor data management, should be moved to top level potentially with dumber components
- *
+ * * Add AlertListView, UserAlertsListView, ManageAlertWidget
  */
 
 class Alerts extends React.Component {
@@ -19,6 +17,8 @@ class Alerts extends React.Component {
         this.apiClient = new ShortedAPI();
         this.state = {
             inside: false,
+            rowSelected: false,
+            rowHovered: false
         };
     }
     componentDidMount() {
@@ -27,13 +27,22 @@ class Alerts extends React.Component {
     toggleEnterState() {
         this.setState({inside: true});
     }
+    handleClick(rowSelected) {
+        this.setState({ rowSelected })
+    }
+    handleHover(rowHovered) {
+        this.setState({ rowHovered })
+    }
     render() {
         return (
             <Transition timeout={duration} in appear>
                 {state => {
                     return (
                         <DashboardWrapper {...this.props.theme}>
-                            Alerts go here
+                           <List
+                                onHover={(row) => this.handleHover(row)}
+                                onSelect={(row) => this.handleClick(row)}
+                                data={this.apiClient.getAlerts()} />
                         </DashboardWrapper>
                     );
                 }}
