@@ -18,7 +18,7 @@ class Alerts extends React.Component {
         this.state = {
             inside: false,
             rowSelected: false,
-            rowHovered: false
+            rowHovered: false,
         };
     }
     componentDidMount() {
@@ -28,10 +28,10 @@ class Alerts extends React.Component {
         this.setState({inside: true});
     }
     handleClick(rowSelected) {
-        this.setState({ rowSelected })
+        this.setState({rowSelected});
     }
     handleHover(rowHovered) {
-        this.setState({ rowHovered })
+        this.setState({rowHovered});
     }
     render() {
         return (
@@ -39,10 +39,11 @@ class Alerts extends React.Component {
                 {state => {
                     return (
                         <DashboardWrapper {...this.props.theme}>
-                           <List
-                                onHover={(row) => this.handleHover(row)}
-                                onSelect={(row) => this.handleClick(row)}
-                                data={this.apiClient.getAlerts()} />
+                            <List
+                                onHover={row => this.handleHover(row)}
+                                onSelect={row => this.handleClick(row)}
+                                data={this.apiClient.getTopAlerts()}
+                            />
                         </DashboardWrapper>
                     );
                 }}

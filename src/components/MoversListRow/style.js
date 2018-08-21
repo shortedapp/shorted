@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: 120px 1fr 1fr;
+    grid-template-columns: 120px 60px 1fr;
     grid-template-rows: repeat(2, 1fr);
     grid-template-areas:
         'code percentage indicator'
@@ -45,7 +45,7 @@ export const Code = styled.div`
 export const Percentage = styled.div`
     grid-area: percentage;
     display: grid;
-    display: inline-block;
+    display: block;
     margin-right: 20px;
     grid-template-rows: repeat(2, 1fr);
     grid-gap: 1px;
