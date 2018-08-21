@@ -192,14 +192,12 @@ class TopChartVictory extends React.Component {
                                     <VictoryAxis
                                         dependentAxis
                                         tickFormat={t => `${Math.round(t)}`}
-                                        tickLabelComponent={
-                                            <VictoryLabel textAnchor="top" />
-                                        }
+                                        tickLabelComponent={<VictoryLabel />}
                                         style={{
                                             ticks: {stroke: 'grey', size: 5},
                                             tickLabels: {
                                                 fontSize: 7,
-                                                padding: 11,
+                                                padding: 4,
                                             },
                                         }}
                                     />
