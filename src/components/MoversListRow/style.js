@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: 120px 60px 1fr;
     grid-template-rows: repeat(2, 1fr);
     grid-template-areas:
-        'code name name name percentage percentage indicator'
-        'code name name name  percentage percentage indicator';
+        'code percentage indicator'
+        'code percentage indicator';
     margin: 2px;
     margin-left: 7px;
     margin-right: 7px;
@@ -45,6 +45,8 @@ export const Code = styled.div`
 export const Percentage = styled.div`
     grid-area: percentage;
     display: grid;
+    display: block;
+    margin-right: 20px;
     grid-template-rows: repeat(2, 1fr);
     grid-gap: 1px;
     grid-template-areas:
@@ -53,12 +55,16 @@ export const Percentage = styled.div`
 `;
 export const PercentageCurrent = styled.div`
     grid-area: current;
+    display: block;
+    float: right;
     font-size: 21px;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
 `;
 export const PercentageChanged = styled.div`
     grid-area: changed;
+    float: right;
+    display: block;
     margin-left: 17px;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;

@@ -154,8 +154,8 @@ class ShortedAPI {
      *
      *
      */
-    getTopAlerts() {
-        return topAlerts;
+    getTopAlerts(total = 5) {
+        return topAlerts.alerts.slice(0, total);
     }
     /**
      * getAlerts

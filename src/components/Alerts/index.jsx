@@ -22,7 +22,7 @@ class Alerts extends React.Component {
     }
 
     render() {
-        const alerts = this.props.data.alerts.map(alert => (
+        const alerts = this.props.data.map(alert => (
             <AlertRow key={alert.code} {...alert} />
         ));
         return (

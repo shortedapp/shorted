@@ -27,10 +27,11 @@ export const TooltipWrapper = styled.svg`
 export const Wrapper = styled.div`
     grid-area: top-graph;
     display: grid;
-    grid-template-rows: 30px 400px;
+    grid-template-rows: 30px 1fr;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
         'none picker options'
+        'chart chart chart'
         'chart chart chart';
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
@@ -43,8 +44,10 @@ export const Wrapper = styled.div`
 `;
 export const ChartWrapper = styled.div`
     grid-area: chart;
-    height: 100%;
-    width: 100%;
+    display: flex;
+    flex: 1 1 auto;
+    height: calc(99%);
+    min-height: 0;
 `;
 export const PickerWrapper = styled.div`
     grid-area: picker;

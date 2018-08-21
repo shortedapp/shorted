@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
     grid-area: graph;
     margin: 5px;
     max-width: 245px;
-    @media (min-width: 2201px) {
+    @media (min-width: 1280px) {
         display: flex;
     }
     display: none;

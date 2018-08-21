@@ -14,17 +14,11 @@ import icon32 from '../../../static/favicon-32x32.png';
 import {StockProfileWrapper, duration, transitionStyles} from './style';
 
 /**
- * View:TopShorts
+ * View:StockProfile
  * Overarching container for the top short view.
- * Showing the following key widgets/displays:
- *  * top 10 short positions graphically.
- *  * table of top short position changes
- *  * alerts/anomalies
- *  * reactive-widget on hover/select of a given graph
+ * Shows a dashboard in a per-stock view mode. This displays contextualised graphs for the given stock and perhaps
+ * a relative comparison to other shorted stocks within the same industry/market segment.
  * TODO:
- * * add Transitions of components such as window picker, graph and background etc.
- * * add graph integration via recharts etc.
- * * add legend component for on-select animation/effect
  *
  */
 

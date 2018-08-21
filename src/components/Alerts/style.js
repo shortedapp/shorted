@@ -48,4 +48,5 @@ export const More = styled.div`
 `
 export const Rows = styled.div`
     grid-area: rows;
+    height: 100%;
 `

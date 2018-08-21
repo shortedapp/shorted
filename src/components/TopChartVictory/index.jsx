@@ -39,14 +39,34 @@ class TopChartVictory extends React.Component {
         super(props);
         this.state = {
             inside: false,
+            windowWidth: 1700,
         };
+        this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
+    }
+    componentWillUnmount() {
+        typeof window !== 'undefined' &&
+            window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+    handleWindowSizeChange() {
+        typeof window !== 'undefined' &&
+            setTimeout(this.setState({windowWidth: window.innerWidth}));
     }
     componentDidMount() {
+        typeof window !== 'undefined' &&
+            setTimeout(
+                window.addEventListener('resize', this.handleWindowSizeChange),
+            );
         this.toggleEnterState();
     }
 
     toggleEnterState() {
         this.setState({inside: true});
+    }
+    handleVoronoiSelect(points, props) {
+        if (points[0]) {
+            console.log('voronio snapped to', points[0].childName)
+            this.props.onSelectCode(points[0].childName)
+        }
     }
     handleLineHover(e, key) {
         console.log('new line slected:', key);
@@ -129,17 +149,17 @@ class TopChartVictory extends React.Component {
                             <ChartWrapper>
                                 <VictoryChart
                                     padding={{
-                                        top: 0,
-                                        left: 40,
-                                        right: 20,
-                                        bottom: 70,
+                                        top: 10,
+                                        left: 20,
+                                        right: 10,
+                                        bottom: 20,
                                     }}
-                                    
                                     containerComponent={
                                         <VictoryVoronoiContainer
                                             radius={10}
                                             padding={10}
                                             labels={d => ``}
+                                            onActivated={(points,props) => this.handleVoronoiSelect(points,props)}
                                             labelComponent={
                                                 <VictoryTooltip
                                                     flyoutComponent={
@@ -162,17 +182,11 @@ class TopChartVictory extends React.Component {
                                     }>
                                     {lines}
                                     <VictoryAxis
-                                        label="Time"
+                                        padding={{bottom: 30}}
                                         standalone={false}
                                         tickCount={5}
                                         style={{
                                             axis: {stroke: '#756f6a'},
-                                            axisLabel: {
-                                                fontSize: 12,
-                                                padding: 25,
-                                                fontFamily:
-                                                    'Avenir Next,sans-serif',
-                                            },
                                             ticks: {stroke: 'grey', size: 5},
                                             tickLabels: {
                                                 fontSize: 7,
@@ -183,24 +197,12 @@ class TopChartVictory extends React.Component {
                                     <VictoryAxis
                                         dependentAxis
                                         tickFormat={t => `${Math.round(t)}`}
-                                        tickLabelComponent={
-                                            <VictoryLabel textAnchor="middle" />
-                                        }
-                                        domain={[0, 100]}
-                                        label="Percentage Shorted"
+                                        tickLabelComponent={<VictoryLabel />}
                                         style={{
-                                            axisLabel: {
-                                                fontSize: 12,
-                                                padding: 32,
-                                                angle: 90,
-                                                fontFamily:
-                                                    'Avenir Next,sans-serif',
-                                            },
                                             ticks: {stroke: 'grey', size: 5},
                                             tickLabels: {
                                                 fontSize: 7,
-                                                angle: 90,
-                                                padding: 7,
+                                                padding: 4,
                                             },
                                         }}
                                     />

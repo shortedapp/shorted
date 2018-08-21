@@ -19,7 +19,7 @@ export const themes = {
 export const DashboardWrapper = styled.div`
     display: grid;
     grid-template-columns: ${props => props.width} 1fr;
-    grid-template-rows: 100px 70px 80px 50px 1400px;
+    grid-template-rows: 100px 70px 80px 50px 1fr;
     grid-template-areas:
         'logo header'
         'collapse content'
@@ -57,5 +57,7 @@ export const NavBarCollapseButton = styled.div`
 export const ContentWrapper = styled.div`
     grid-area: content;
     padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
     background: ${props => props.background};
 `;

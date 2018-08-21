@@ -2,15 +2,25 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-areas:
-        'code name name percentage indicator graph'
-        'code name name percentage indicator graph';
+    @media only screen and (min-width: 1024px) {
+        grid-template-columns: 90px 1fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-areas:
+            'code name name percentage indicator graph'
+            'code name name percentage indicator graph';
+    }
+    @media only screen and (min-width: 1280px) {
+        grid-template-columns: 90px 1fr 70px 1fr 1fr;
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-areas:
+            'code name percentage indicator graph'
+            'code name percentage indicator graph';
+    };
+   
     margin: 6px;
     margin-left: 7px;
     margin-right: 7px;
-    height: 130px;
+    height: 5vw;
     background: #e2e2e2;
     padding-top: 4px;
     padding-bottom: 4px;
@@ -19,14 +29,7 @@ export const Wrapper = styled.div`
 export const Name = styled.div`
     grid-area: name;
     display: flex;
-<<<<<<< HEAD
-    @media (max-width: 1900px) {
-        font-size: 1vw;
-    }
-    font-size: 21px;
-=======
     font-size: 16px;
->>>>>>> c7bdcee2a41c031b2e56218b054a714efc1fccb4
     flex-direction: column;
     justify-content: center;
     vertical-align: middle;
@@ -66,7 +69,7 @@ export const Percentage = styled.div`
 `;
 export const PercentageCurrent = styled.div`
     grid-area: current;
-    font-size: 21px;
+    font-size: 1.9vw;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
 `;
@@ -74,7 +77,7 @@ export const PercentageChanged = styled.div`
     grid-area: changed;
     margin-left: 40px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 1.2vw;
     font-family: Avenir Next, sans-serif;
     color: ${props => (props.value > 0 ? `red` : `green`)};
     padding-bottom: 5px;
@@ -96,7 +99,7 @@ export const IndicatorDown = styled.div`
 
 export const IndicatorWrapper = styled.div`
     grid-area: indicator;
-    @media (min-width: 1750px) {
+    @media (min-width: 1024px) {
         display: grid;
     }
     display: none;
@@ -107,3 +110,4 @@ export const IndicatorWrapper = styled.div`
     margin: auto;
     padding: auto;
 `;
+
