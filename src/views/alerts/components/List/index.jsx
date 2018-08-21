@@ -5,7 +5,7 @@ import Row from '../Row';
 
 const List = props => (
     <Wrapper>
-        {props.data.alerts.map(row => (
+        {props.data.map(row => (
             <Row data={row} />
         ))}
     </Wrapper>

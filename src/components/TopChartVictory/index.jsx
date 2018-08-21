@@ -62,6 +62,12 @@ class TopChartVictory extends React.Component {
     toggleEnterState() {
         this.setState({inside: true});
     }
+    handleVoronoiSelect(points, props) {
+        if (points[0]) {
+            console.log('voronio snapped to', points[0].childName)
+            this.props.onSelectCode(points[0].childName)
+        }
+    }
     handleLineHover(e, key) {
         console.log('new line slected:', key);
         this.props.onSelectCode(key);
@@ -153,6 +159,7 @@ class TopChartVictory extends React.Component {
                                             radius={10}
                                             padding={10}
                                             labels={d => ``}
+                                            onActivated={(points,props) => this.handleVoronoiSelect(points,props)}
                                             labelComponent={
                                                 <VictoryTooltip
                                                     flyoutComponent={
