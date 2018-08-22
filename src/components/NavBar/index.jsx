@@ -1,5 +1,5 @@
 import React from 'react';
-import {Wrapper, NavButton} from './style';
+import {Wrapper, HamburgerWrapper, ButtonsWrapper, NavButton} from './style';
 
 /**
  * Top Navbar responsible for rendering the basic site-map layout including: blog | about | disclaimer etc
@@ -27,7 +27,12 @@ class NavBar extends React.Component {
                 {route.text}
             </NavButton>
         ));
-        return <Wrapper>{buttons}</Wrapper>;
+        return (
+            <Wrapper>
+                <ButtonsWrapper>{buttons}</ButtonsWrapper>
+                <HamburgerWrapper />
+            </Wrapper>
+        );
     }
 }
 
