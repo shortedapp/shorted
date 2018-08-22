@@ -5,8 +5,9 @@ export const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin: 20px auto;
     flex-direction: column;
-    max-width: ${props => (props.maxWidth ? props.maxWidth : 5000)}px;
+    max-width: 1200px;
     min-height: 280px;
     justify-content: center;
     background-image: ${props => `url(${props.background})`};
