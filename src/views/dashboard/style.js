@@ -60,5 +60,5 @@ export const ContentWrapper = styled.div`
     padding-right: 20px;
     padding-bottom: 20px;
     background: ${props => props.background};
-    height: 1200px;
+    height: 100vh;
 `;
