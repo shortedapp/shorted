@@ -1,13 +1,13 @@
 import React from 'react';
 import {Wrapper} from './style';
-
 import Row from '../Row';
+import UnAuthorized from '../../../../components/UnAuthorized';
 
 const List = props => (
     <Wrapper>
-        {props.data.map(row => (
+        {props.data ? props.data.map(row => (
             <Row data={row} />
-        ))}
+        )) : <UnAuthorized />}
     </Wrapper>
 );
 

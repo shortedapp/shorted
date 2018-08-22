@@ -43,8 +43,27 @@ import StockLogo from './fixtures/images/stockLogo.png';
  *
  */
 class ShortedAPI {
-    constructor() {
+    constructor(credentials = false) {
         console.log('constructing stub client');
+        this.credentials = credentials
+        this.authenticated = false
+    }
+    /**
+     * login
+     * generate authentication token for client side requests 
+     */
+    login() {
+        if (this.credentials) {
+            this.authenticated = this.authenticate(this.credentials);
+            return this.authenticated
+        }
+    }
+    authenticate(credentials) {
+        if (credentials) {
+            return true
+        } else {
+            return false
+        }
     }
     /**
      * getTopShorts
@@ -156,6 +175,20 @@ class ShortedAPI {
      */
     getTopAlerts(total = 5) {
         return topAlerts.alerts.slice(0, total);
+    }
+    /**
+     * getUserAlerts()
+     * 
+     * 
+     * 
+     * 
+     */
+    getUserAlerts() {
+        if (this.authenticated) {
+            // get user list here
+        } else {
+            return false
+        }
     }
     /**
      * getAlerts

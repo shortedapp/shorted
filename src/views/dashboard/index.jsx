@@ -3,6 +3,7 @@ import Transition from 'react-transition-group/Transition';
 import {Menu, Icon, Switch, Button} from 'antd';
 import 'antd/dist/antd.css';
 import Logo from '../../components/Logo';
+import ErrorBoundary from '../../components/ErrorBoundary';
 import ThemeSwitch from '../../components/ThemeSwitch';
 import Sectors from '../../views/sectors';
 import Alerts from '../../views/alerts';
@@ -48,17 +49,17 @@ class Dashboard extends React.Component {
     getView(selection, theme) {
         switch (selection) {
             case 'SECTORS':
-                return <Sectors theme={themes[theme]} />;
+                return <ErrorBoundary><Sectors theme={themes[theme]} /></ErrorBoundary>;
             case 'MOVERS':
-                return <Movers theme={themes[theme]} />;
+                return <ErrorBoundary><Movers theme={themes[theme]} /></ErrorBoundary>;
             case 'ALERTS':
-                return <Alerts theme={themes[theme]} />;
+                return <ErrorBoundary><Alerts theme={themes[theme]} /></ErrorBoundary>;
             case 'SEASONALITY':
-                return <Seasonality theme={themes[theme]} />;
+                return <ErrorBoundary><Seasonality theme={themes[theme]} /></ErrorBoundary>;
             case 'SUMMARY':
-                return <Summary theme={themes[theme]} />;
+                return <ErrorBoundary><Summary theme={themes[theme]} /></ErrorBoundary>;
             default:
-                return <Summary theme={themes[theme]} />;
+                return <ErrorBoundary><Summary theme={themes[theme]} /></ErrorBoundary>;
         }
     }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import ShortedAPI from '../../services/sapi/client';
 import List from './components/List';
-import {DashboardWrapper, duration, transitionStyles} from './style';
+import {DashboardWrapper, duration, transitionStyles, Header} from './style';
 
 /**
  * View:Alerts
@@ -39,11 +39,20 @@ class Alerts extends React.Component {
                 {state => {
                     return (
                         <DashboardWrapper {...this.props.theme}>
-                            <List
-                                onHover={row => this.handleHover(row)}
-                                onSelect={row => this.handleClick(row)}
-                                data={this.apiClient.getTopAlerts()}
-                            />
+                        <Header>Market Alerts</Header>
+                        <List
+                            onHover={row => this.handleHover(row)}
+                            onSelect={row => this.handleClick(row)}
+                            data={this.apiClient.getTopAlerts()}
+                        />
+                        <Header>Your Alerts</Header>
+
+                        <List
+                            onHover={row => this.handleHover(row)}
+                            onSelect={row => this.handleClick(row)}
+                            data={this.apiClient.getUserAlerts()}
+                        />
+
                         </DashboardWrapper>
                     );
                 }}

@@ -1,7 +1,7 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import AppViewWrapper from '../../components/AppViewWrapper';
-import AboutHeader from '../../components/AboutHeader';
+import AboutHeader from './components/AboutHeader';
 import {duration, transitionStyles} from './style';
 
 class AboutPage extends React.Component {
