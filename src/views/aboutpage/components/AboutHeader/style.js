@@ -40,11 +40,10 @@ export const HeroButtonWrapper = styled.a`
 export const Wrapper = styled.div`
     display: grid;
     grid-gap: 20px;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 2fr 3fr;
     grid-template-areas: 'hero-title hero-image';
-    margin-right: 100px;
-    margin-left: 100px;
-    margin-top: 250px;
+    margin: 250px 20px;
+    max-width: 1200px;
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;
@@ -53,55 +52,47 @@ export const Wrapper = styled.div`
 
 export const HeroWrapper = styled.div`
     grid-area: hero-image;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
     width: 100%;
 `;
 export const HeroTitleWrapper = styled.div`
     grid-area: hero-title;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 3fr 1fr 1fr;
-    grid-template-areas:
-        'hero-title'
-        'hero-description'
-        'todo'
-        'hero-button';
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Avenir Next, sans-serif;
     .hero-title {
-        margin-top: 50%;
         display: flex;
         flex-direction: column;
         .header-1 {
-            display: flex;
-            flex-direction: column;
             text-align: center;
-            justify-content: center;
-            vertical-align: middle;
-            grid-area: hero-title;
-            float: left;
-            font-size: 70px;
+            font-size: 50px;
             font-weight: bold;
-            font-family: Avenir Next, sans-serif;
+            @media (min-width: 1200px) {
+                font-size: 70px;
+            }
         }
         .header-2 {
-            display: flex;
-            flex-direction: column;
             text-align: center;
-            justify-content: center;
-            vertical-align: middle;
-            grid-area: hero-title;
-            font-size: 75px;
-            font-family: Avenir Next, sans-serif;
+            font-size: 55px;
+            @media (min-width: 1200px) {
+                font-size: 75px;
+            }
             font-weight: bold;
             color: #282fc3;
             float: left;
         }
     }
     .hero-description {
-        display: flex;
-        flex-direction: column;
-        grid-area: hero-description;
         font-weight: 300;
-        font-size: 30px;
-        font-family: Avenir Next, sans-serif;
+        font-size: 20px;
+        @media (min-width: 1200px) {
+            font-size: 30px;
+        }
     }
     .hero-button {
         grid-area: hero-button;
