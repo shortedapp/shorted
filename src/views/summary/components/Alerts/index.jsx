@@ -1,7 +1,6 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import ShortedAPI from '../../services/sapi/client';
-import AlertRow from '../../components/AlertRow';
+import AlertRow from '../AlertRow';
 import {duration, transitionStyles, Wrapper, Header, More, Rows} from './style';
 /**
  * Responsible for the rendering/display of "alerts" which represent anomalous changes in short positions for a given stock.

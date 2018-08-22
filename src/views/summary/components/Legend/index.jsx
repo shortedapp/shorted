@@ -1,9 +1,9 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import LegendCompanyCode from '../../components/LegendCompanyCode';
-import LegendCompanyLogo from '../../components/LegendCompanyLogo';
-import LegendCompanyPE from '../../components/LegendCompanyPE';
-import LegendCompanyMarketCap from '../../components/LegendCompanyMarketCap';
+import LegendCompanyCode from '../LegendCompanyCode';
+import LegendCompanyLogo from '../LegendCompanyLogo';
+import LegendCompanyPE from '../LegendCompanyPE';
+import LegendCompanyMarketCap from '../LegendCompanyMarketCap';
 import {
     Wrapper,
     duration,
@@ -12,7 +12,7 @@ import {
     CompanyName,
     CompanySector,
 } from './style';
-import ShortedAPI from '../../services/sapi/client';
+import ShortedAPI from '../../../../services/sapi/client';
 /**
  * Renders a shorted.com.au logo
  * TODO: add data fetch here, async or prefetch based of top-short positions

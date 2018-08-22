@@ -1,6 +1,6 @@
 import React from 'react';
 import {Wrapper} from './style';
-import Button from '../Button';
+import Button from '../../../../components/Button';
 
 /**
  * WindowPicker

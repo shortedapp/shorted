@@ -6,11 +6,11 @@ import ShortedAPI from '../../services/sapi/client';
 
 import headerBackground from '../../assets/images/header-background.svg';
 import AppViewWrapper from '../../components/AppViewWrapper';
-import ProfileChart from '../../components/ProfileChart';
-import ProfileSidePanel from '../../components/ProfileSidePanel';
-import ProfileHeader from '../../components/ProfileHeader';
-import ProfileAlerts from '../../components/ProfileAlerts';
-import icon32 from '../../../static/favicon-32x32.png';
+import ProfileChart from './components/ProfileChart';
+import ProfileSidePanel from './components/ProfileSidePanel';
+import ProfileHeader from './components/ProfileHeader';
+import ProfileAlerts from './components/ProfileAlerts';
+import icon32 from './../../../static/favicon-32x32.png';
 import {StockProfileWrapper, duration, transitionStyles} from './style';
 
 /**

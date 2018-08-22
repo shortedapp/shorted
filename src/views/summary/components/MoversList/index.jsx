@@ -1,7 +1,6 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import ShortedAPI from '../../services/sapi/client';
-import MoversListRow from '../../components/MoversListRow';
+import MoversListRow from '../MoversListRow';
 import {Wrapper, Header, More, duration, transitionStyles} from './style';
 /**
  * Renders a list of TopShortsListRow components. These rows will display the stock code, stock name, and percentage shorted

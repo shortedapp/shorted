@@ -1,6 +1,6 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import AboutHeaderHero from '../../assets/images/about-main.svg';
+import AboutHeaderHero from '../../../../assets/images/about-main.svg';
 import {
     HeroWrapper,
     HeroButtonWrapper,

@@ -1,18 +1,14 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import headerBackground from '../../assets/images/header-background.svg';
 import ShortedAPI from '../../services/sapi/client';
-import AppViewWrapper from '../../components/AppViewWrapper';
-import TopChartVictory from '../../components/TopChartVictory';
-import MoversList from '../../components/MoversList';
-import TopShortsList from '../../components/TopShortsList';
-import Legend from '../../components/Legend';
-import Alerts from '../../components/Alerts';
-import ThemePicker from '../../components/ThemePicker';
-import WindowPicker from './../../components/WindowPicker';
-import ChartOptions from '../../components/ChartOptions';
+import TopChartVictory from './components/TopChartVictory';
+import MoversList from './components/MoversList';
+import TopShortsList from './components/TopShortsList';
+import Legend from './components/Legend';
+import Alerts from './components/Alerts';
+import WindowPicker from '././components/WindowPicker';
+import ChartOptions from './components/ChartOptions';
 import {DashboardWrapper, themes, duration, transitionStyles} from './style';
-import {runInThisContext} from 'vm';
 
 /**
  * View:TopShorts

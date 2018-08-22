@@ -16,6 +16,11 @@ export const DashboardWrapper = styled.div`
             'top-list top-alerts top-alerts top-movers';
     }
 `;
+export const Header = styled.div`
+    font-family: Avenir Next, sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+`
 
 export const duration = 300;
 
