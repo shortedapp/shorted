@@ -2,6 +2,7 @@ import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import {Menu, Icon, Switch, Button} from 'antd';
 import 'antd/dist/antd.css';
+import { ThemeContext } from '../../theme-context';
 import Logo from '../../components/Logo';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import ThemeSwitch from '../../components/ThemeSwitch';
@@ -89,11 +90,12 @@ class Dashboard extends React.Component {
                     </Button>
                 </NavBarCollapseButton>
                 <ThemeWrapper width={this.state.collapsed ? `80px` : `256px`}>
-                    <ThemeSwitch
-                        theme={themes[this.state.theme]}
-                        checked={this.state.theme}
-                        changeTheme={value => this.changeTheme(value)}
-                    />
+                    
+                        <ThemeSwitch
+                            theme={themes[this.state.theme]}
+                            checked={this.state.theme}
+                            changeTheme={value => this.changeTheme(value)}
+                        />
                 </ThemeWrapper>
 
                 <DashboardNavbarWrapper
@@ -129,7 +131,9 @@ class Dashboard extends React.Component {
                     </Menu>
                 </DashboardNavbarWrapper>
                 <ContentWrapper {...themes[theme]}>
-                    {this.getView(this.state.current, theme)}
+                    <ThemeContext.Provider value={themes[this.state.theme]}>
+                        {this.getView(this.state.current, theme)}
+                    </ThemeContext.Provider>
                 </ContentWrapper>
             </DashboardWrapper>
         );

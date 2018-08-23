@@ -1,6 +1,5 @@
 import React from 'react';
 import {TooltipWrapper} from './style';
-import {Sector} from 'recharts';
 
 export class TopChartTooltip extends React.Component {
     render() {
