@@ -67,7 +67,7 @@ class Dashboard extends React.Component {
     render() {
         const {theme} = this.state;
         return (
-            <DashboardWrapper width={this.state.collapsed ? `80px` : `256px`}>
+            <DashboardWrapper width={this.state.collapsed ? `80px` : `200px`}>
                 <HeaderWrapper {...themes[theme]} />
                 <Logo
                     collapsed={this.state.collapsed}
@@ -75,7 +75,7 @@ class Dashboard extends React.Component {
                 />
                 <NavBarCollapseButton
                     {...themes[this.state.theme]}
-                    width={this.state.collapsed ? `80px` : `256px`}>
+                    width={this.state.collapsed ? `80px` : `200px`}>
                     <Button
                         type="primary"
                         onClick={this.toggleCollapsed}
@@ -89,7 +89,7 @@ class Dashboard extends React.Component {
                         />
                     </Button>
                 </NavBarCollapseButton>
-                <ThemeWrapper width={this.state.collapsed ? `80px` : `256px`}>
+                <ThemeWrapper width={this.state.collapsed ? `80px` : `200px`}>
                     
                         <ThemeSwitch
                             theme={themes[this.state.theme]}
@@ -100,7 +100,7 @@ class Dashboard extends React.Component {
 
                 <DashboardNavbarWrapper
                     {...themes[this.state.theme]}
-                    width={this.state.collapsed ? `80px` : `256px`}>
+                    width={this.state.collapsed ? `80px` : `200px`}>
                     <Menu
                         inlineCollapsed={this.state.collapsed}
                         theme={this.state.theme}

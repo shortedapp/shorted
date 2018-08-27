@@ -2,6 +2,7 @@ import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import ShortedAPI from '../../services/sapi/client';
 import List from './components/List';
+import ListHeader from './components/ListHeader';
 import {DashboardWrapper, duration, transitionStyles, Header} from './style';
 
 /**
@@ -40,6 +41,7 @@ class Alerts extends React.Component {
                     return (
                         <DashboardWrapper {...this.props.theme}>
                         <Header>Market Alerts</Header>
+                        <ListHeader />
                         <List
                             onHover={row => this.handleHover(row)}
                             onSelect={row => this.handleClick(row)}
