@@ -4,12 +4,10 @@ export const Wrapper = styled.div`
     grid-area: graph;
     background: transparent;
     border-radius: 5px;
-    display: grid;
-    grid-template-rows: 20px 120px;
-    grid-template-areas:
-        'header'
-        'chart';
-`;
+    display: flex;
+    height: 130px;
+
+`
 export const Header = styled.div`
     grid-area: header;
     padding-top: 3px;
@@ -24,5 +22,5 @@ export const Chart = styled.div`
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    height: 150px;
+    height: 120px;
 `;

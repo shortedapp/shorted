@@ -4,7 +4,11 @@ import {
     VictoryAxis,
     VictoryLabel,
     VictoryContainer,
+    VictoryGroup,
+    VictoryVoronoiContainer,
+    VictoryTooltip,
     VictoryLine,
+    VictoryScatter,
 } from 'victory';
 import { ThemeContext } from '../../../../theme-context';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
@@ -28,31 +32,49 @@ class BasicGraph extends React.Component {
     }
 
     render() {
-        
+        const spark_data = this.props.data.map((value) => value.y)
+        const minValue = Math.min(...spark_data)
+        const maxValue = Math.max(...spark_data)
         if (this.props.victory) {
             return (
             <ThemeContext.Consumer>
                 {theme => (
                 <Wrapper>
                     <Chart>
-                        {/* <VictoryChart
-                            padding={{top: 0, left: 40, right: 20, bottom: 40}}
-                            height={100}
+                        <VictoryGroup
+                            padding={{top: 0, left: 40, right: 20, bottom: 0}}
+                            height={90}
                             width={580}
-                            containerComponent={<VictoryContainer responsive />}> */}
+                            containerComponent={
+                                <VictoryVoronoiContainer
+                                    voronoiDimension="x"
+                                    radius={5}
+                                    padding={5}
+                                 
+                                />
+                              }
+                            >
                             <VictoryLine
-                                height={100}
-                                width={580}
-                                padding={{top: 0, left: 40, right: 20, bottom: 40}}
+                                labelComponent={<VictoryTooltip />}
+                                labels={(d) => d.y}
+                                padding={{top: 0, left: 40, right: 20, bottom:0}}
                                 data={this.props.data}
                                 style={{
                                     data: {
-                                        stroke: theme.stroke,
+                                        stroke: this.props.changeDirection ? theme.upStroke : theme.downStroke,
                                         strokeWidth: 3,
                                     },
                                 }}
                             />
-                        {/* </VictoryChart> */}
+                            <VictoryScatter
+                                labelComponent={<VictoryTooltip />}
+                                data={this.props.data}
+                                size={(datum) => (datum.y === minValue || datum.y === maxValue) ? 5 : 0}
+                                style={{ data: {
+                                    fill: this.props.changeDirection ? theme.upStroke : theme.downStroke
+                                }}}
+                            />
+                        </VictoryGroup>
                     </Chart>
                 </Wrapper>)}
             </ThemeContext.Consumer>)

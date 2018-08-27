@@ -34,7 +34,11 @@ const Row = props => (
             <IndicatorWrapper>
                 {props.changed > 0 ? <IndicatorUp /> : <IndicatorDown />}
             </IndicatorWrapper>
-            <BasicGraph victory data={props.recent_history} />
+            <BasicGraph
+                victory
+                changeDirection={props.changed > 0}
+                theme={theme}
+                data={props.recent_history} />
         </Wrapper>)}}
     </ThemeContext.Consumer>
 );

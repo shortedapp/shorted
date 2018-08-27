@@ -2,7 +2,7 @@ import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import {Menu, Icon, Switch, Button} from 'antd';
 import 'antd/dist/antd.css';
-import { ThemeContext } from '../../theme-context';
+import { ThemeContext, themes } from '../../theme-context';
 import Logo from '../../components/Logo';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import ThemeSwitch from '../../components/ThemeSwitch';
@@ -18,7 +18,6 @@ import {
     ThemeWrapper,
     HeaderWrapper,
     NavBarCollapseButton,
-    themes,
 } from './style';
 
 const SubMenu = Menu.SubMenu;
@@ -130,8 +129,8 @@ class Dashboard extends React.Component {
                         </Menu.Item>
                     </Menu>
                 </DashboardNavbarWrapper>
-                <ContentWrapper {...themes[theme]}>
-                    <ThemeContext.Provider value={themes[this.state.theme]}>
+                <ContentWrapper {...themes[this.state.theme].style}>
+                    <ThemeContext.Provider value={themes[this.state.theme].style}>
                         {this.getView(this.state.current, theme)}
                     </ThemeContext.Provider>
                 </ContentWrapper>
