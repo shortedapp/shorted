@@ -61,17 +61,18 @@ class BasicGraph extends React.Component {
                                 data={this.props.data}
                                 style={{
                                     data: {
-                                        stroke: this.props.changeDirection ? theme.upStroke : theme.downStroke,
+                                        stroke: this.props.changeDirection ? theme.downStroke : theme.upStroke,
                                         strokeWidth: 3,
                                     },
                                 }}
                             />
                             <VictoryScatter
                                 labelComponent={<VictoryTooltip />}
+                                labels={(d) => d.y}
                                 data={this.props.data}
                                 size={(datum) => (datum.y === minValue || datum.y === maxValue) ? 5 : 0}
                                 style={{ data: {
-                                    fill: this.props.changeDirection ? theme.upStroke : theme.downStroke
+                                    fill: this.props.changeDirection ?  theme.downStroke : theme.upStroke
                                 }}}
                             />
                         </VictoryGroup>

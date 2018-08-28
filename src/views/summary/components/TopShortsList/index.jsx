@@ -34,8 +34,10 @@ class TopShortsList extends React.Component {
     }
 
     render() {
+        const { theme } = this.props;
         const rows = this.props.data.map(row_data => (
             <TopShortsListRow
+                theme={theme}
                 isHovered={this.state.hovered === row_data.code}
                 onHover={() => this.handleHover(row_data.code)}
                 key={row_data.code}
@@ -47,12 +49,13 @@ class TopShortsList extends React.Component {
                 {state => {
                     return (
                         <Wrapper
+                            {...theme}
                             onMouseLeave={() => this.handleMouseLeave()}
                             duration={duration}
                             {...transitionStyles[state]}>
-                            <Header>Top Short List</Header>
+                            <Header {...theme} >Top Short List</Header>
                             {rows}
-                            <More>show more</More>
+                            <More {...theme} >show more</More>
                         </Wrapper>
                     );
                 }}

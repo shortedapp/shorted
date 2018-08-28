@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
     margin: 6px;
     margin-left: 7px;
     margin-right: 7px;
-    height: 140px;
+    height: 50px;
     background: #e2e2e2;
     background: ${props => props.background};
     padding-top: 4px;

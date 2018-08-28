@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const Wrapper = styled.a`
     display: grid;
-    color: black;
+    color: ${props => props.textColor};
+    background: ${props => props.widgetRowBackgroundColor};
     text-decoration: none !important;
     @media (min-width: 901px) {
         grid-template-columns: repeat(5, 1fr);
@@ -16,7 +17,6 @@ export const Wrapper = styled.a`
     margin-left: 7px;
     margin-right: 4px;
     height: 50px;
-    background: #dadada;
     border-radius: 0 30px 30px 0;
     padding-top: 3px;
     padding-bottom: 4px;
@@ -28,10 +28,11 @@ export const Wrapper = styled.a`
         text-decoration: none !important;
         color: black;
     }
-`;
+`
 export const WrapperHovered = styled.a`
     display: grid;
-    color: black;
+    color: ${props => props.textColor};
+    background: ${props => props.widgetRowBackgroundColor};
     text-decoration: none !important;
     z-index: 10;
     grid-template-columns: repeat(5, 1fr);
@@ -40,7 +41,6 @@ export const WrapperHovered = styled.a`
     margin-left: 7px;
     margin-right: 4px;
     height: 50px;
-    background: #dadada;
     border-radius: 0 30px 30px 0;
     padding-top: 4px;
     padding-bottom: 4px;
@@ -55,7 +55,7 @@ export const WrapperHovered = styled.a`
         text-decoration: none !important;
         color: black;
     }
-`;
+`
 
 export const Name = styled.div`
     grid-area: name;
@@ -67,7 +67,7 @@ export const Name = styled.div`
     justify-content: center;
     vertical-align: middle;
     font-size: 14px;
-`;
+`
 
 export const Code = styled.div`
     grid-area: code;
@@ -86,7 +86,7 @@ export const Code = styled.div`
         font-size: 21px;
         font-weight: bold;
     }
-`;
+`
 
 export const Percent = styled.div`
     grid-area: percentage;
@@ -110,4 +110,4 @@ export const Percent = styled.div`
         font-size: 10px;
         font-weight: 400;
     }
-`;
+`

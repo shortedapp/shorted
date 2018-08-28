@@ -14,9 +14,10 @@ import {Wrapper, WrapperHovered, Code, Name, Percent} from './style';
  */
 
 const TopShortListRow = props => {
+    const { theme }  = props;
     return props.isHovered ? (
         <WrapperHovered
-            {...props}
+            {...theme}
             onMouseOver={props.onHover}
             href={`/${props.code}`}>
             <Code>
@@ -28,7 +29,9 @@ const TopShortListRow = props => {
             </Percent>
         </WrapperHovered>
     ) : (
-        <Wrapper {...props} onMouseOver={props.onHover}>
+        <Wrapper
+            {...theme}
+            onMouseOver={props.onHover}>
             <Code>
                 <div className="code">{props.code}</div>
             </Code>
