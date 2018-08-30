@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
     margin-right: 7px;
     height: 140px;
     background: #e2e2e2;
-    background: ${props => props.background};
+    background: ${props => props.widgetRowBackgroundColor};
     padding-top: 4px;
     padding-bottom: 4px;
 `;
@@ -30,7 +30,7 @@ export const Wrapper = styled.div`
 export const Name = styled.div`
     grid-area: name;
     display: flex;
-    font-size: 16px;
+    font-size: 30px;
     flex-direction: column;
     justify-content: center;
     vertical-align: middle;
@@ -70,12 +70,15 @@ export const Percentage = styled.div`
 `;
 export const PercentageCurrent = styled.div`
     grid-area: current;
+    align-self: flex-end;
+    text-align: right;
     font-size: 1.9vw;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
 `;
 export const PercentageChanged = styled.div`
     grid-area: changed;
+    text-align: right;
     margin-left: 40px;
     font-weight: bold;
     font-size: 1.2vw;

@@ -14,15 +14,15 @@ import {
  */
 const ListHeader = props => (
     <ThemeContext.Consumer>
-        { theme => { console.log(theme); return (
-       
-        <Wrapper {...theme} >
-            <Code>Code</Code>
-            <Name>Name</Name>
-            <Percentage>Change</Percentage>
-            <IndicatorWrapper></IndicatorWrapper>
-            <MarketCap>Market Cap</MarketCap>
-        </Wrapper>)}}
+        { theme =>
+            <Wrapper {...theme} >
+                <Code>Code</Code>
+                <Name>Name</Name>
+                <Percentage>Change</Percentage>
+                <IndicatorWrapper></IndicatorWrapper>
+                <MarketCap>Market Cap</MarketCap>
+            </Wrapper>
+        }
     </ThemeContext.Consumer>
 );
 

@@ -38,7 +38,7 @@ export const Wrapper = styled.div`
     transition-property: opacity, transform;
     transform: ${props => `translateY(${props.Ypos}px)`};
     max-width: 1600px;
-    background-color: white;
+    background-color: ${props => props.graphBackground};
     border-radius: 5px;
     border: 1px solid #eee;
 `;

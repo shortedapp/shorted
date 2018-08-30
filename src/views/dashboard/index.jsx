@@ -64,16 +64,18 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const {theme} = this.state;
+        
         return (
+            <ThemeContext.Consumer>
+            { theme =>
             <DashboardWrapper width={this.state.collapsed ? `80px` : `200px`}>
-                <HeaderWrapper {...themes[theme]} />
+                <HeaderWrapper {...theme} />
                 <Logo
                     collapsed={this.state.collapsed}
-                    theme={themes[this.state.theme]}
+                    theme={theme}
                 />
                 <NavBarCollapseButton
-                    {...themes[this.state.theme]}
+                    {...theme}
                     width={this.state.collapsed ? `80px` : `200px`}>
                     <Button
                         type="primary"
@@ -91,16 +93,20 @@ class Dashboard extends React.Component {
                 <ThemeWrapper width={this.state.collapsed ? `80px` : `200px`}>
                     
                         <ThemeSwitch
-                            theme={themes[this.state.theme]}
+                            theme={theme}
                             checked={this.state.theme}
                             changeTheme={value => this.changeTheme(value)}
                         />
                 </ThemeWrapper>
 
                 <DashboardNavbarWrapper
-                    {...themes[this.state.theme]}
+                    {...theme}
                     width={this.state.collapsed ? `80px` : `200px`}>
                     <Menu
+                        className="menu"
+                        style={{
+                            background: theme.background
+                        }}
                         inlineCollapsed={this.state.collapsed}
                         theme={this.state.theme}
                         onClick={this.handleClick}
@@ -130,11 +136,12 @@ class Dashboard extends React.Component {
                     </Menu>
                 </DashboardNavbarWrapper>
                 <ContentWrapper {...themes[this.state.theme].style}>
-                    <ThemeContext.Provider value={themes[this.state.theme].style}>
+                    <ThemeContext.Provider value={theme}>
                         {this.getView(this.state.current, theme)}
                     </ThemeContext.Provider>
                 </ContentWrapper>
-            </DashboardWrapper>
+            </DashboardWrapper>}
+            </ThemeContext.Consumer>
         );
     }
 }

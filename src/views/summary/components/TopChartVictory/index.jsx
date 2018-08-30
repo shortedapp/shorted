@@ -9,6 +9,7 @@ import {
     VictoryVoronoiContainer,
 } from 'victory';
 import Transition from 'react-transition-group/Transition';
+import { ThemeContext } from '../../../../theme-context';
 import {
     duration,
     transitionStyles,
@@ -136,10 +137,13 @@ class TopChartVictory extends React.Component {
             ));
         }
         return (
+            <ThemeContext.Consumer>
+            { theme =>
             <Transition timeout={duration} in appear>
                 {state => {
                     return (
                         <Wrapper
+                            {...theme}
                             duration={duration}
                             {...transitionStyles[state]}>
                             <PickerWrapper>{this.props.picker}</PickerWrapper>
@@ -212,6 +216,8 @@ class TopChartVictory extends React.Component {
                     );
                 }}
             </Transition>
+            }
+            </ThemeContext.Consumer>
         );
     }
 }

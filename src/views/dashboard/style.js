@@ -39,7 +39,10 @@ export const DashboardNavbarWrapper = styled.div`
     grid-area: nav;
     width: ${props => props.width};
     display: block;
-    background: ${props => props.background};
+    background: ${props => props.background} !important;
+    .menu {
+        background: ${props => props.background} !important;
+    }
 `;
 export const NavBarCollapseButton = styled.div`
     grid-area: collapse;
