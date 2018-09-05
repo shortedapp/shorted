@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    grid-area: graph;
     background: transparent;
     border-radius: 5px;
     display: flex;
@@ -23,4 +22,5 @@ export const Chart = styled.div`
     justify-content: center;
     text-align: center;
     height: 120px;
+    width: 300px;
 `;

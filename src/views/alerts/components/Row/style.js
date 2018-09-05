@@ -114,4 +114,6 @@ export const IndicatorWrapper = styled.div`
     margin: auto;
     padding: auto;
 `;
-
+export const GraphWrapper = styled.div`
+    grid-area: graph;
+`

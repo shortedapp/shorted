@@ -8,12 +8,12 @@ export const transitionStyles = {
 }
 export const Wrapper = styled.div`
     border-radius: 5px;
-    border: 1px solid #eee;
+    border: 1px solid ${props => props.widgetBorderColor};
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;
     transform: ${props => `translateY(${props.Ypos}px)`};
-    background: white;
+    background: ${props => props.widgetBackgroundColor};
     display: grid;
     grid-template-rows: 60px 1fr 60px;
     grid-template-areas:

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ThemeContext } from '../../../../theme-context';
 import {Wrapper, Code, Header} from './style';
 
 /**
@@ -7,9 +8,13 @@ import {Wrapper, Code, Header} from './style';
  *
  */
 const LegendCompanyCode = props => (
-    <Wrapper>
-        <Header>Issuer code</Header>
-        <Code>{props.code}</Code>
-    </Wrapper>
+    <ThemeContext.Consumer>
+        { theme => (
+            <Wrapper {...theme} >
+                <Header {...theme} >Issuer code</Header>
+                <Code {...theme} >{props.code}</Code>
+            </Wrapper>)
+        }
+    </ThemeContext.Consumer>
 );
 export default LegendCompanyCode;

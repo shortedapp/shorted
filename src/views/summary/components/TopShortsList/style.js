@@ -9,11 +9,11 @@ export const transitionStyles = {
 
 export const Wrapper = styled.div`
     grid-area: top-list;
-    background: ${props => props.widgetBackground};
+    background: ${props => props.widgetBackgroundColor};
     display: flex;
     flex-direction: column;
     border-radius: 5px;
-    border: 1px solid ${props => props.widgetBorder};
+    border: 1px solid ${props => props.widgetBorderColor};
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;

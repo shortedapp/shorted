@@ -190,11 +190,12 @@ class TopChartVictory extends React.Component {
                                         standalone={false}
                                         tickCount={5}
                                         style={{
-                                            axis: {stroke: '#756f6a'},
-                                            ticks: {stroke: 'grey', size: 5},
+                                            axis: {stroke: theme.axisColor},
+                                            ticks: {stroke: theme.axisColor, size: 5},
                                             tickLabels: {
                                                 fontSize: 7,
                                                 padding: 5,
+                                                fill: theme.axisColor,
                                             },
                                         }}
                                     />
@@ -203,10 +204,11 @@ class TopChartVictory extends React.Component {
                                         tickFormat={t => `${Math.round(t)}`}
                                         tickLabelComponent={<VictoryLabel />}
                                         style={{
-                                            ticks: {stroke: 'grey', size: 5},
+                                            ticks: {stroke: theme.axisColor, size: 5},
                                             tickLabels: {
                                                 fontSize: 7,
                                                 padding: 4,
+                                                fill: theme.axisColor,
                                             },
                                         }}
                                     />

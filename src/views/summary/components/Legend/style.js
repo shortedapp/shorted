@@ -7,6 +7,8 @@ export const transitionStyles = {
     exited: {opacity: 0},
 };
 export const Wrapper = styled.div`
+    background: transparent;
+    color: ${props => props.textColor};
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;
@@ -25,6 +27,8 @@ export const Wrapper = styled.div`
         'company-mc company-mc company-mc company-mc';
 `;
 export const UnselectedWrapper = styled.div`
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;
@@ -35,7 +39,6 @@ export const UnselectedWrapper = styled.div`
     vertical-align: middle;
     justify-content: center;
     text-align: center;
-    background: white;
     border-radius: 4px;
     height: 100%;
     font-family: Avenir Next, sans-serif;
@@ -45,6 +48,8 @@ export const UnselectedWrapper = styled.div`
     padding-right: 30px;
 `;
 export const CompanyHeader = styled.div`
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
     display: flex;
     border-radius: 5px;
     flex-direction: column;
@@ -58,12 +63,15 @@ export const CompanyMarketCap = styled.div`
     display: flex;
     flex-direction: column;
     vertical-align: middle;
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
 `;
 export const CompanySector = styled.div`
     grid-area: company-sector;
     display: flex;
     border-radius: 5px;
-    background: white;
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
     font-size: 1vh;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
@@ -76,7 +84,8 @@ export const CompanyName = styled.div`
     border-radius: 5px;
     grid-area: company-name;
     display: flex;
-    background: white;
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
     font-size: 1vh;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;

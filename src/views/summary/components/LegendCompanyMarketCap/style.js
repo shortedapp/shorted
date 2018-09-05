@@ -3,7 +3,8 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
     grid-area: company-mc;
     border-radius: 5px;
-    background: white;
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
     display: grid;
     height: 140px;
     grid-template-rows: 20px 120px;

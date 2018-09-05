@@ -7,11 +7,14 @@ export const Wrapper = styled.div`
     text-align: center;
     vertical-align: middle;
     justify-content: center;
-    background: white;
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
     grid-area: company-pe;
 `;
 
 export const PE = styled.div`
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
     flex-direction: column;
     justify-content: center;
     vertical-align: middle;
@@ -21,6 +24,8 @@ export const PE = styled.div`
     font-family: Avenir Next, sans-serif;
 `;
 export const Header = styled.div`
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
     flex-direction: column;
     justify-content: center;
     vertical-align: middle;

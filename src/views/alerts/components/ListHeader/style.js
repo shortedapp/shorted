@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
     background: ${props => props.background};
     padding-top: 4px;
     padding-bottom: 4px;
-    font-size: 25px
+    font-size: 25px;
 `;
 export const MarketCap = styled.div`
     grid-area: graph;
@@ -28,6 +28,7 @@ export const MarketCap = styled.div`
     align-self: center;
     flex-direction: column;
     text-align: center;
+    width: 300px;
 `
 export const Name = styled.div`
     grid-area: name;

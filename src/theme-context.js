@@ -11,32 +11,34 @@ export const themes = {
       widgetBorder: 'white',
       widgetBackgroundColor: 'white',
       widgetRowBackgroundColor: 'white',
-      graphBackground: '#071d31',
+      graphBackground: '#e7e7e7',
       fill: 'white',
       stroke: 'black',
       upStroke: 'green',
       downStroke: 'red',
       buttonSelected: '#5fa0dd',
-      buttonUnselected: '#7d7d7d'
+      buttonUnselected: '#7d7d7d',
+      axisColor: 'black'
     }
   },
   dark: {
-    name: 'light',
+    name: 'dark',
     style: {
       color: 'white',
       textTitleColor: 'white',
       textSubTitleColor: 'white',
       textColor: 'white',
       background: '#161616',
-      widgetBorder: '#0e2d4a',
-      widgetBackgroundColor: '#233c52',
-      widgetRowBackgroundColor: '#1b3043',
-      graphBackground: '#071d31',
+      widgetBorderColor: '#1C1C1C',
+      widgetBackgroundColor: '#1F1F1F',
+      widgetRowBackgroundColor: '#646464',
+      graphBackground: '#1F1F1F',
       stroke: 'white',
       upStroke: 'green',
       downStroke: 'red',
       buttonSelected: '#1890ff',
-      buttonUnselected: '#001529'
+      buttonUnselected: '#001529',
+      axisColor: 'white'
     }
   }
 }

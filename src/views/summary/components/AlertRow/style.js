@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
     margin-left: 7px;
     margin-right: 7px;
     height: 5vw;
-    background: #e2e2e2;
+    background: ${props => props.widgetRowBackgroundColor};
     padding-top: 4px;
     padding-bottom: 4px;
 `;

@@ -100,8 +100,8 @@ export const Percent = styled.div`
     .circle {
         background: #f98080;
         height: 40px;
-        width: 40px;
-        border-radius: 50px;
+        width: 70px;
+        border-radius: 0px 50px 50px 0px;
         display: flex;
         flex-direction: column;
         justify-content: center;

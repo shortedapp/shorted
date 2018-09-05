@@ -30,6 +30,7 @@ export const DashboardWrapper = styled.div`
 export const ThemeWrapper = styled.div`
     width: ${props => props.width};
     grid-area: theme;
+    color: ${props => props.textColor};
     background: ${props => props.background};
 `;
 export const HeaderWrapper = styled.div`

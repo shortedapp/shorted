@@ -1,4 +1,5 @@
 import React from 'react';
+import { ThemeContext } from '../../../../theme-context';
 import {Wrapper, Header, PE} from './style';
 
 /**
@@ -7,9 +8,13 @@ import {Wrapper, Header, PE} from './style';
  *
  */
 const LegendCompanyPE = props => (
-    <Wrapper>
-        <Header>P/E ratio</Header>
-        <PE>{props.pe}</PE>
-    </Wrapper>
+    <ThemeContext.Consumer>
+        { theme => (
+        <Wrapper {...theme} >
+            <Header {...theme} >P/E ratio</Header>
+            <PE {...theme} >{props.pe}</PE>
+        </Wrapper>
+        )}
+    </ThemeContext.Consumer>
 );
 export default LegendCompanyPE;

@@ -6,6 +6,7 @@ import {
     VictoryContainer,
     VictoryLine,
 } from 'victory';
+import { ThemeContext } from '../../../../theme-context';
 // import { LineChart, Line, ResponsiveContainer } from 'recharts';
 import {Wrapper, Header, Chart} from './style';
 
@@ -37,31 +38,51 @@ class LegendCompanyMarketCap extends React.Component {
         //   </Wrapper>
         // );
         return (
-            <Wrapper>
-                <Header>
-                    <VictoryLabel
-                        text="Market Cap"
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 'bold',
-                            fontFamily: 'Avenir Next,sans-serif',
-                        }}
-                    />
-                </Header>
-                <Chart>
-                    <VictoryChart
-                        padding={{top: 0, left: 40, right: 20, bottom: 20}}
-                        height={120}
-                        width={580}
-                        containerComponent={<VictoryContainer responsive />}>
-                        <VictoryLine data={this.props.data} />
-                        <VictoryAxis
-                            tickCount={5}
-                            tickFormat={x => new Date(x).getFullYear()}
-                        />
-                    </VictoryChart>
-                </Chart>
-            </Wrapper>
+            <ThemeContext.Consumer>
+                { theme => (
+                    <Wrapper {...theme} >
+                        <Header>
+                            <VictoryLabel
+                                text="Market Cap"
+                                style={{
+                                    fontSize: 20,
+                                    fontWeight: 'bold',
+                                    fontFamily: 'Avenir Next,sans-serif',
+                                }}
+                            />
+                        </Header>
+                        <Chart>
+                            <VictoryChart
+                                padding={{top: 0, left: 40, right: 20, bottom: 20}}
+                                height={120}
+                                width={580}
+                                containerComponent={<VictoryContainer responsive />}>
+                                <VictoryLine 
+                                    style={{
+                                        data: {
+                                            stroke: theme.textColor
+                                        }
+                                    }}
+                                    data={this.props.data}
+                                />
+                                <VictoryAxis
+                                    style={{
+                                        axis: {stroke: theme.axisColor},
+                                        ticks: {stroke: theme.axisColor, size: 5},
+                                        tickLabels: {
+                                            fontSize: 7,
+                                            padding: 5,
+                                            fill: theme.axisColor,
+                                        },
+                                    }}
+                                    tickCount={5}
+                                    tickFormat={x => new Date(x).getFullYear()}
+                                />
+                            </VictoryChart>
+                        </Chart>
+                    </Wrapper>)
+                }
+            </ThemeContext.Consumer>
         );
     }
 }

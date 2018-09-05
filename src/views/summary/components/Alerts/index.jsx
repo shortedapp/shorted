@@ -1,6 +1,7 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import AlertRow from '../AlertRow';
+import { ThemeContext } from '../../../../theme-context';
 import {duration, transitionStyles, Wrapper, Header, More, Rows} from './style';
 /**
  * Responsible for the rendering/display of "alerts" which represent anomalous changes in short positions for a given stock.
@@ -25,21 +26,26 @@ class Alerts extends React.Component {
             <AlertRow key={alert.code} {...alert} />
         ));
         return (
-            <Transition timeout={duration} in appear>
-                {state => {
-                    return (
-                        <Wrapper
-                            duration={duration}
-                            {...transitionStyles[state]}>
-                            <Header>Alerts & Anomalies</Header>
-                            <Rows>
-                            {alerts}
-                            </Rows>
-                            <More>Show More </More>
-                        </Wrapper>
-                    );
-                }}
-            </Transition>
+            <ThemeContext.Consumer>
+                { theme => (
+                    <Transition timeout={duration} in appear>
+                        {state => {
+                            return (
+                                <Wrapper
+                                    {...theme}
+                                    duration={duration}
+                                    {...transitionStyles[state]}>
+                                    <Header {...theme} >Alerts & Anomalies</Header>
+                                    <Rows>
+                                    {alerts}
+                                    </Rows>
+                                    <More>Show More </More>
+                                </Wrapper>
+                            );
+                        }}
+                    </Transition>)
+                }
+            </ThemeContext.Consumer>
         );
     }
 }
