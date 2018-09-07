@@ -57,16 +57,22 @@ export const WrapperHovered = styled.a`
     }
 `
 
-export const Name = styled.div`
+export const Name = styled.span`
     grid-area: name;
     @media (max-width: 1300px) {
         display: none;
     }
     display: flex;
+    flex-wrap: wrap;
+    flex: 1;
     flex-direction: column;
     justify-content: center;
     vertical-align: middle;
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 30px;
 `
 
 export const Code = styled.div`
@@ -101,13 +107,13 @@ export const Percent = styled.div`
         background: #f98080;
         height: 40px;
         width: 70px;
-        border-radius: 0px 50px 50px 0px;
+        border-radius: 10px 50px 50px 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         vertical-align: middle;
         text-align: center;
-        font-size: 10px;
+        font-size: 16px;
         font-weight: 400;
     }
 `
