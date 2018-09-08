@@ -25,6 +25,8 @@ export const TooltipWrapper = styled.svg`
     }
 `;
 export const Wrapper = styled.div`
+    position: relative;
+    z-index: 1;
     grid-area: top-graph;
     display: grid;
     grid-template-rows: 40px 1fr;

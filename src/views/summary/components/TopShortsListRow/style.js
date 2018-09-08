@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.a`
     display: grid;
+    z-index: 0;
+    position: relative;
     color: ${props => props.textColor};
     background: ${props => props.widgetRowBackgroundColor};
     text-decoration: none !important;
@@ -16,11 +18,8 @@ export const Wrapper = styled.a`
     margin: 4px;
     margin-left: 7px;
     margin-right: 4px;
-    height: 50px;
+    height: 100%;
     border-radius: 0 30px 30px 0;
-    padding-top: 3px;
-    padding-bottom: 4px;
-    margin-bottom: 4px;
     &:hover,
     &:visited,
     &:link,
@@ -32,6 +31,7 @@ export const Wrapper = styled.a`
 `;
 export const WrapperHovered = styled.a`
     display: grid;
+    position: relative;
     color: ${props => props.textColor};
     background: ${props => props.widgetRowBackgroundColor};
     text-decoration: none !important;
@@ -39,13 +39,10 @@ export const WrapperHovered = styled.a`
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas: 'code name name name percentage';
     margin: 4px;
-    margin-left: 7px;
-    margin-right: 4px;
-    height: 50px;
+    height: 100%;
     border-radius: 0 30px 30px 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    margin-bottom: 6px;
+    transform: scale(1.05);
+    transition-duration: 0.1s;
     -webkit-box-shadow: -3px 4px 7px 0px rgba(0, 0, 0, 0.25);
     -moz-box-shadow: -3px 4px 7px 0px rgba(0, 0, 0, 0.25);
     box-shadow: -3px 4px 7px 0px rgba(0, 0, 0, 0.25);
