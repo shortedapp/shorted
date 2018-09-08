@@ -1,5 +1,35 @@
 import styled from 'styled-components';
 
+export const WrapperHeader = styled.div`
+    display: grid;
+    color: ${props => props.textColor};
+    background: ${props => props.widgetRowBackgroundColor};
+    @media (min-width: 901px) {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-areas: 'code name name name percentage';
+    }
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: 'code percentage';
+    }
+    margin: 7px;
+    height: 40px;
+    margin-bottom: 20px;
+    align-items: center;
+    .code {
+        grid-area: code;
+        margin-left: 10px;
+    }
+    .company-name {
+        grid-area: name;
+        text-align: center;
+        margin-right: 30px;
+    }
+    .percentage {
+        grid-area: percentage;
+        text-align: center;
+    }
+`;
 export const Wrapper = styled.a`
     display: grid;
     z-index: 0;
@@ -16,8 +46,6 @@ export const Wrapper = styled.a`
         grid-template-areas: 'code percentage';
     }
     margin: 4px;
-    margin-left: 7px;
-    margin-right: 4px;
     height: 100%;
     border-radius: 0 30px 30px 0;
     &:hover,
@@ -25,7 +53,7 @@ export const Wrapper = styled.a`
     &:link,
     &:active {
         text-decoration: none !important;
-        color: black;
+        color: ${props => props.textColor};
     }
     align-items: center;
 `;
@@ -51,7 +79,7 @@ export const WrapperHovered = styled.a`
     &:link,
     &:active {
         text-decoration: none !important;
-        color: black;
+        color: ${props => props.textColor};
     }
     align-items: center;
 `;
@@ -100,7 +128,7 @@ export const Code = styled.div`
 export const Percent = styled.div`
     grid-area: percentage;
     margin-left: auto;
-    padding-right: 5px;
+    padding-right: 8px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -108,7 +136,7 @@ export const Percent = styled.div`
 
     .circle {
         background: #f98080;
-        height: 40px;
+        height: 45px;
         width: 70px;
         border-radius: 10px 50px 50px 10px;
         display: flex;

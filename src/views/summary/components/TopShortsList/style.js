@@ -33,8 +33,8 @@ export const More = styled.div`
     text-align: center;
     font-size: 22px;
     font-weight: bold;
-    background: #dadada;
-    border-radius: 0 0 15px 15px;
+    background: ${props => props.widgetRowBackgroundColor};
+    border-radius: 0 0 5px 5px;
     margin: 4px;
     justify-content: center;
     font-family: Avenir Next, sans-serif;

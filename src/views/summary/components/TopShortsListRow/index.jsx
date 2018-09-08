@@ -1,6 +1,13 @@
 import React from 'react';
 
-import {Wrapper, WrapperHovered, Code, Name, Percent} from './style';
+import {
+    Wrapper,
+    WrapperHeader,
+    WrapperHovered,
+    Code,
+    Name,
+    Percent,
+} from './style';
 
 /**
  * Renders a specfiic row that is contained within the TopSHortList view. This will show
@@ -14,8 +21,15 @@ import {Wrapper, WrapperHovered, Code, Name, Percent} from './style';
  */
 
 const TopShortListRow = props => {
-    const { theme }  = props;
-    return props.isHovered ? (
+    const {theme} = props;
+    const headerView = (
+        <WrapperHeader>
+            <div className="code">code</div>
+            <div className="company-name">company name</div>
+            <div className="percentage">%</div>
+        </WrapperHeader>
+    );
+    const rowView = props.isHovered ? (
         <WrapperHovered
             {...theme}
             onMouseOver={props.onHover}
@@ -29,18 +43,21 @@ const TopShortListRow = props => {
             </Percent>
         </WrapperHovered>
     ) : (
-        <Wrapper
-            {...theme}
-            onMouseOver={props.onHover}>
+        <Wrapper {...theme} onMouseOver={props.onHover}>
             <Code>
                 <div className="code">{props.code}</div>
             </Code>
             <Name>{props.name}</Name>
             <Percent>
-                <div className="circle">{props.current}%</div>
+                <div className="circle">{props.current}</div>
             </Percent>
         </Wrapper>
     );
+    if (props.header) {
+        return headerView;
+    } else {
+        return rowView;
+    }
 };
 
 export default TopShortListRow;
