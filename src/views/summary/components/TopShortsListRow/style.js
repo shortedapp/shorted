@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Wrapper = styled.a`
     display: grid;
@@ -28,7 +28,8 @@ export const Wrapper = styled.a`
         text-decoration: none !important;
         color: black;
     }
-`
+    align-items: center;
+`;
 export const WrapperHovered = styled.a`
     display: grid;
     color: ${props => props.textColor};
@@ -55,25 +56,30 @@ export const WrapperHovered = styled.a`
         text-decoration: none !important;
         color: black;
     }
-`
+    align-items: center;
+`;
 
-export const Name = styled.span`
+export const Name = styled.div`
     grid-area: name;
     @media (max-width: 1300px) {
         display: none;
     }
-    display: flex;
+    display: inline-block;
+    vertical-align: middle;
     flex-wrap: wrap;
     flex: 1;
     flex-direction: column;
     justify-content: center;
     vertical-align: middle;
     font-size: 14px;
+    text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    min-width: 0;
     margin-right: 30px;
-`
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+`;
 
 export const Code = styled.div`
     grid-area: code;
@@ -92,7 +98,7 @@ export const Code = styled.div`
         font-size: 21px;
         font-weight: bold;
     }
-`
+`;
 
 export const Percent = styled.div`
     grid-area: percentage;
@@ -116,4 +122,4 @@ export const Percent = styled.div`
         font-size: 16px;
         font-weight: 400;
     }
-`
+`;
