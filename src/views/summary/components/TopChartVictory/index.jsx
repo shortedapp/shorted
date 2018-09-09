@@ -9,6 +9,7 @@ import {
     VictoryVoronoiContainer,
 } from 'victory';
 import Transition from 'react-transition-group/Transition';
+import {ThemeContext} from '../../../../theme-context';
 import {
     duration,
     transitionStyles,
@@ -64,8 +65,8 @@ class TopChartVictory extends React.Component {
     }
     handleVoronoiSelect(points, props) {
         if (points[0]) {
-            console.log('voronio snapped to', points[0].childName)
-            this.props.onSelectCode(points[0].childName)
+            console.log('voronio snapped to', points[0].childName);
+            this.props.onSelectCode(points[0].childName);
         }
     }
     handleLineHover(e, key) {
@@ -136,82 +137,114 @@ class TopChartVictory extends React.Component {
             ));
         }
         return (
-            <Transition timeout={duration} in appear>
-                {state => {
-                    return (
-                        <Wrapper
-                            duration={duration}
-                            {...transitionStyles[state]}>
-                            <PickerWrapper>{this.props.picker}</PickerWrapper>
-                            <OptionsWrapper>
-                                {this.props.options}
-                            </OptionsWrapper>
-                            <ChartWrapper>
-                                <VictoryChart
-                                    padding={{
-                                        top: 10,
-                                        left: 20,
-                                        right: 10,
-                                        bottom: 20,
-                                    }}
-                                    containerComponent={
-                                        <VictoryVoronoiContainer
-                                            radius={10}
-                                            padding={10}
-                                            labels={d => ``}
-                                            onActivated={(points,props) => this.handleVoronoiSelect(points,props)}
-                                            labelComponent={
-                                                <VictoryTooltip
-                                                    flyoutComponent={
-                                                        <TopChartTooltip
-                                                            selectedCode={
-                                                                selectedCode
+            <ThemeContext.Consumer>
+                {theme => (
+                    <Transition timeout={duration} in appear>
+                        {state => {
+                            return (
+                                <Wrapper
+                                    {...theme}
+                                    duration={duration}
+                                    {...transitionStyles[state]}>
+                                    <PickerWrapper>
+                                        {this.props.picker}
+                                    </PickerWrapper>
+                                    <OptionsWrapper>
+                                        {this.props.options}
+                                    </OptionsWrapper>
+                                    <ChartWrapper>
+                                        <VictoryChart
+                                            padding={{
+                                                top: 10,
+                                                left: 20,
+                                                right: 10,
+                                                bottom: 20,
+                                            }}
+                                            containerComponent={
+                                                <VictoryVoronoiContainer
+                                                    radius={10}
+                                                    padding={10}
+                                                    labels={d => ``}
+                                                    onActivated={(
+                                                        points,
+                                                        props,
+                                                    ) =>
+                                                        this.handleVoronoiSelect(
+                                                            points,
+                                                            props,
+                                                        )
+                                                    }
+                                                    labelComponent={
+                                                        <VictoryTooltip
+                                                            flyoutComponent={
+                                                                <TopChartTooltip
+                                                                    selectedCode={
+                                                                        selectedCode
+                                                                    }
+                                                                    dataKeys={
+                                                                        data.dataKeys
+                                                                    }
+                                                                />
                                                             }
-                                                            dataKeys={
-                                                                data.dataKeys
-                                                            }
+                                                            cornerRadius={0}
+                                                            flyoutStyle={{
+                                                                fill: 'white',
+                                                            }}
                                                         />
                                                     }
-                                                    cornerRadius={0}
-                                                    flyoutStyle={{
-                                                        fill: 'white',
-                                                    }}
                                                 />
-                                            }
-                                        />
-                                    }>
-                                    {lines}
-                                    <VictoryAxis
-                                        padding={{bottom: 30}}
-                                        standalone={false}
-                                        tickCount={5}
-                                        style={{
-                                            axis: {stroke: '#756f6a'},
-                                            ticks: {stroke: 'grey', size: 5},
-                                            tickLabels: {
-                                                fontSize: 7,
-                                                padding: 5,
-                                            },
-                                        }}
-                                    />
-                                    <VictoryAxis
-                                        dependentAxis
-                                        tickFormat={t => `${Math.round(t)}`}
-                                        tickLabelComponent={<VictoryLabel />}
-                                        style={{
-                                            ticks: {stroke: 'grey', size: 5},
-                                            tickLabels: {
-                                                fontSize: 7,
-                                                padding: 4,
-                                            },
-                                        }}
-                                    />
-                                </VictoryChart>
-                            </ChartWrapper>
-                        </Wrapper>
-                    );
-                }}
-            </Transition>
+                                            }>
+                                            {lines}
+                                            <VictoryAxis
+                                                padding={{bottom: 30}}
+                                                standalone={false}
+                                                tickCount={5}
+                                                style={{
+                                                    axis: {
+                                                        stroke: theme.axisColor,
+                                                    },
+                                                    ticks: {
+                                                        stroke: theme.axisColor,
+                                                        size: 5,
+                                                    },
+                                                    tickLabels: {
+                                                        fontSize: 7,
+                                                        padding: 5,
+                                                        fill: theme.axisColor,
+                                                    },
+                                                }}
+                                            />
+                                            <VictoryAxis
+                                                dependentAxis
+                                                tickFormat={t =>
+                                                    `${Math.round(t)}`
+                                                }
+                                                tickLabelComponent={
+                                                    <VictoryLabel />
+                                                }
+                                                style={{
+                                                    axis: {
+                                                        stroke: theme.axisColor,
+                                                    },
+                                                    ticks: {
+                                                        stroke: theme.axisColor,
+                                                        size: 5,
+                                                    },
+                                                    tickLabels: {
+                                                        fontSize: 7,
+                                                        padding: 4,
+                                                        fill: theme.axisColor,
+                                                    },
+                                                }}
+                                            />
+                                        </VictoryChart>
+                                    </ChartWrapper>
+                                </Wrapper>
+                            );
+                        }}
+                    </Transition>
+                )}
+            </ThemeContext.Consumer>
         );
     }
 }

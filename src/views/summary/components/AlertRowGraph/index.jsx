@@ -1,12 +1,14 @@
 import React from 'react';
 import {
-    VictoryChart,
-    VictoryAxis,
-    VictoryArea,
-    VictoryContainer,
+    VictoryGroup,
+    VictoryVoronoiContainer,
+    VictoryTooltip,
+    VictoryLine,
+    VictoryScatter,
 } from 'victory';
+import {ThemeContext} from '../../../../theme-context';
 // import { LineChart, Line, ResponsiveContainer } from 'recharts';
-import {Wrapper} from './style';
+import {Wrapper, Header, Chart} from './style';
 
 /**
  * LegendCompanyMarketCap
@@ -26,33 +28,64 @@ class AlertRowGraph extends React.Component {
     }
 
     render() {
+        const spark_data = this.props.data.map(value => value.y);
+        const minValue = Math.min(...spark_data);
+        const maxValue = Math.max(...spark_data);
         return (
-            <Wrapper>
-                <VictoryChart
-                    padding={{top: 0, left: 0, right: 0, bottom: 0}}
-                    // height={100}
-                    width={850}
-                    // style={{parent: {maxWidth: 245}}}
-                    // containerComponent={<VictoryContainer responsive />}
-                    >
-                    <VictoryArea
-                        interpolation="natural"
-                        style={{
-                            data: {
-                                fill: '#c0caff',
-                                strokeWidth: 2,
-                                fillOpacity: '0.4',
-                                stroke: '#8396ff',
-                            },
-                        }}
-                        data={this.props.data}
-                    />
-                    <VictoryAxis
-                        tickFormat={() => ''}
-                        style={{axis: {stroke: 'none'}}}
-                    />
-                </VictoryChart>
-            </Wrapper>
+            <ThemeContext.Consumer>
+                {theme => (
+                    <Chart>
+                        <VictoryGroup
+                            padding={{top: 10, left: 40, right: 20, bottom: 10}}
+                            height={70}
+                            width={200}
+                            containerComponent={
+                                <VictoryVoronoiContainer
+                                    voronoiDimension="x"
+                                    radius={5}
+                                    padding={5}
+                                />
+                            }>
+                            <VictoryLine
+                                labelComponent={<VictoryTooltip />}
+                                labels={d => d.y}
+                                padding={{
+                                    top: 0,
+                                    left: 40,
+                                    right: 20,
+                                    bottom: 0,
+                                }}
+                                data={this.props.data}
+                                style={{
+                                    data: {
+                                        stroke: this.props.changeDirection
+                                            ? theme.downStroke
+                                            : theme.upStroke,
+                                        strokeWidth: 3,
+                                    },
+                                }}
+                            />
+                            <VictoryScatter
+                                labelComponent={<VictoryTooltip />}
+                                labels={d => d.y}
+                                data={this.props.data}
+                                size={datum =>
+                                    datum.y === minValue || datum.y === maxValue
+                                        ? 5
+                                        : 0
+                                }
+                                style={{
+                                    data: {
+                                        fill: this.props.changeDirection
+                                            ? theme.downStroke
+                                            : theme.upStroke,
+                                    },
+                                }}
+                            />
+                        </VictoryGroup>
+                    </Chart>
+                )}
+            </ThemeContext.Consumer>
         );
     }
 }

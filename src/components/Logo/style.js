@@ -21,4 +21,5 @@ export const LogoTextWrapper = styled.span`
     color: ${props => (props.color ? props.color : 'gray')};
     background: ${props => props.background};
     margin-bottom: 10px;
+    align-self: center;
 `;

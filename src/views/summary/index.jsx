@@ -8,7 +8,8 @@ import Legend from './components/Legend';
 import Alerts from './components/Alerts';
 import WindowPicker from '././components/WindowPicker';
 import ChartOptions from './components/ChartOptions';
-import {DashboardWrapper, themes, duration, transitionStyles} from './style';
+import { ThemeContext } from '../../theme-context';
+import {DashboardWrapper, duration, transitionStyles} from './style';
 
 /**
  * View:TopShorts
@@ -66,19 +67,21 @@ class Summary extends React.Component {
             selectedWindowOption,
             selectedCode,
         } = this.state;
-        return (
+        return (<ThemeContext.Consumer>
+            {theme => (
             <Transition timeout={duration} in appear>
                 {state => {
                     return (
                         <DashboardWrapper {...this.props.theme}>
                             <div className="content">
                                 <TopShortsList
+                                    theme={theme}
                                     data={this.apiClient.getTopShortsList(20)}
                                 />
                                 <TopChartVictory
                                     picker={
                                         <WindowPicker
-                                            theme={this.props.theme}
+                                            theme={theme}
                                             options={options}
                                             selectedOption={
                                                 selectedWindowOption
@@ -116,7 +119,7 @@ class Summary extends React.Component {
                                     />
                                 </div>
                                 <Alerts
-                                    theme={this.props.theme}
+                                    theme={theme}
                                     data={this.apiClient.getTopAlerts()}
                                 />
                                 <MoversList
@@ -129,7 +132,8 @@ class Summary extends React.Component {
                         </DashboardWrapper>
                     );
                 }}
-            </Transition>
+            </Transition>)}
+            </ThemeContext.Consumer>
         );
     }
 }

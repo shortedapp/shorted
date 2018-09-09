@@ -25,9 +25,11 @@ export const TooltipWrapper = styled.svg`
     }
 `;
 export const Wrapper = styled.div`
+    position: relative;
+    z-index: 1;
     grid-area: top-graph;
     display: grid;
-    grid-template-rows: 30px 1fr;
+    grid-template-rows: 40px 1fr;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
         'none picker options'
@@ -38,9 +40,9 @@ export const Wrapper = styled.div`
     transition-property: opacity, transform;
     transform: ${props => `translateY(${props.Ypos}px)`};
     max-width: 1600px;
-    background-color: white;
+    background-color: ${props => props.graphBackground};
     border-radius: 5px;
-    border: 1px solid #eee;
+    border: 1px solid ${props => props.widgetBorderColor};
 `;
 export const ChartWrapper = styled.div`
     grid-area: chart;

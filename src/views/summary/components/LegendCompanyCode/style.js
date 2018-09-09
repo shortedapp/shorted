@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    background: white;
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     grid-area: company-code;
     border-radius: 5px;
     display: flex;
@@ -12,6 +14,8 @@ export const Wrapper = styled.div`
 `;
 
 export const Code = styled.div`
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
     flex-direction: column;
     justify-content: center;
     vertical-align: middle;
@@ -21,6 +25,8 @@ export const Code = styled.div`
     font-family: Avenir Next, sans-serif;
 `;
 export const Header = styled.div`
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
     flex-direction: column;
     justify-content: center;
     vertical-align: middle;

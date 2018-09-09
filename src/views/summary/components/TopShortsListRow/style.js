@@ -1,8 +1,45 @@
 import styled from 'styled-components';
 
+export const WrapperHeader = styled.div`
+    display: grid;
+    color: ${props => props.textColor};
+    background: ${props => props.widgetRowBackgroundColor};
+    @media (min-width: 901px) {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-areas: 'code name name name percentage';
+    }
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: 'code percentage';
+    }
+    margin: 4px;
+    height: 40px;
+    margin-bottom: 0px;
+    align-items: center;
+    .code {
+        grid-area: code;
+        text-align: center;
+        width: 60px;
+    }
+    .company-name {
+        grid-area: name;
+        text-align: center;
+        margin-right: 30px;
+    }
+    .percentage {
+        grid-area: percentage;
+        width: 70px;
+        padding-right: 14px;
+        text-align: center;
+    }
+`;
 export const Wrapper = styled.a`
     display: grid;
-    color: black;
+    z-index: 0;
+    position: relative;
+    color: ${props => props.textColor};
+    background: ${props => props.widgetRowBackgroundColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     text-decoration: none !important;
     @media (min-width: 901px) {
         grid-template-columns: repeat(5, 1fr);
@@ -13,38 +50,32 @@ export const Wrapper = styled.a`
         grid-template-areas: 'code percentage';
     }
     margin: 4px;
-    margin-left: 7px;
-    margin-right: 4px;
-    height: 50px;
-    background: #dadada;
+    height: 100%;
     border-radius: 0 30px 30px 0;
-    padding-top: 3px;
-    padding-bottom: 4px;
-    margin-bottom: 4px;
     &:hover,
     &:visited,
     &:link,
     &:active {
         text-decoration: none !important;
-        color: black;
+        color: ${props => props.textColor};
     }
+    align-items: center;
 `;
 export const WrapperHovered = styled.a`
     display: grid;
-    color: black;
+    position: relative;
+    color: ${props => props.textColor};
+    background: ${props => props.widgetRowBackgroundColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     text-decoration: none !important;
     z-index: 10;
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas: 'code name name name percentage';
     margin: 4px;
-    margin-left: 7px;
-    margin-right: 4px;
-    height: 50px;
-    background: #dadada;
+    height: 100%;
     border-radius: 0 30px 30px 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    margin-bottom: 6px;
+    transform: scale(1.05);
+    transition-duration: 0.1s;
     -webkit-box-shadow: -3px 4px 7px 0px rgba(0, 0, 0, 0.25);
     -moz-box-shadow: -3px 4px 7px 0px rgba(0, 0, 0, 0.25);
     box-shadow: -3px 4px 7px 0px rgba(0, 0, 0, 0.25);
@@ -53,8 +84,9 @@ export const WrapperHovered = styled.a`
     &:link,
     &:active {
         text-decoration: none !important;
-        color: black;
+        color: ${props => props.textColor};
     }
+    align-items: center;
 `;
 
 export const Name = styled.div`
@@ -62,11 +94,21 @@ export const Name = styled.div`
     @media (max-width: 1300px) {
         display: none;
     }
-    display: flex;
+    display: inline-block;
+    vertical-align: middle;
+    flex-wrap: wrap;
+    flex: 1;
     flex-direction: column;
     justify-content: center;
     vertical-align: middle;
     font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    min-width: 0;
+    margin-right: 30px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 `;
 
 export const Code = styled.div`
@@ -91,7 +133,7 @@ export const Code = styled.div`
 export const Percent = styled.div`
     grid-area: percentage;
     margin-left: auto;
-    padding-right: 5px;
+    padding-right: 8px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -99,15 +141,16 @@ export const Percent = styled.div`
 
     .circle {
         background: #f98080;
-        height: 40px;
-        width: 40px;
-        border-radius: 50px;
+        height: 100%;
+        padding: 4px;
+        width: 70px;
+        border-radius: 10px 50px 50px 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         vertical-align: middle;
         text-align: center;
-        font-size: 10px;
+        font-size: 16px;
         font-weight: 400;
     }
 `;

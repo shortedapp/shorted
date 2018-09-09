@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
     vertical-align: middle;
     align-self: center;
     justify-self: center;
+    background: transparent;
     .buttons {
         display: flex;
         align-self: center;

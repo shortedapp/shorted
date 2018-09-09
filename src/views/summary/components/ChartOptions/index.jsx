@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import {Radio, Icon} from 'antd';
 // TODO: look at how antd style sheets can be inherently added into project without imports, plugin may be doing this
 import 'antd/dist/antd.css';
+
+import { ThemeContext } from '../../../../theme-context';
 import {
     Button,
     OptionsWrapper,
@@ -16,8 +18,10 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 const Options = props => (
+    <ThemeContext.Consumer>
+                { theme => (
     <OptionsWrapper {...props}>
-        <OptionHeader>Chart display</OptionHeader>
+        <OptionHeader {...theme} >Chart display</OptionHeader>
         <div className="chart-modes">
             <RadioGroup
                 onChange={e => props.onOptionsChange(e.target.value)}
@@ -37,7 +41,8 @@ const Options = props => (
                 </RadioButton>
             </RadioGroup>
         </div>
-    </OptionsWrapper>
+    </OptionsWrapper>)}
+    </ThemeContext.Consumer>
 );
 
 class ChartOptions extends React.Component {
@@ -82,15 +87,19 @@ class ChartOptions extends React.Component {
 
     render() {
         return (
-            <Wrapper>
-                <Button onClick={() => this.handleSelect()}>
-                    <Icon type="setting" style={buttonStyle} />
-                </Button>
-                <Options
-                    onOptionsChange={v => this.props.onChartOptionChange(v)}
-                    open={this.state.open}
-                />
-            </Wrapper>
+            <ThemeContext.Consumer>
+                { theme => (
+                <Wrapper>
+                    <Button onClick={() => this.handleSelect()}>
+                        <Icon type="setting" style={{fontSize: 30, fill: theme.color, color: theme.color}} />
+                    </Button>
+                    <Options
+                        onOptionsChange={v => this.props.onChartOptionChange(v)}
+                        open={this.state.open}
+                    />
+                </Wrapper>)
+                }
+            </ThemeContext.Consumer>
         );
     }
 }

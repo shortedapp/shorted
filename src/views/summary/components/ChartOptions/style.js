@@ -54,6 +54,7 @@ export const Option = styled.div`
 `;
 export const OptionHeader = styled.div`
     font-size: 20px;
+    color: black;
     font-family: Avenir Next, sans-serif;
     font-weight: bold;
     display: flex;
