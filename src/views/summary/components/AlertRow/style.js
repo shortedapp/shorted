@@ -8,7 +8,7 @@ export const HeaderWrapper = styled.div`
         grid-template-areas: 'code name name percentage indicator graph';
     }
     @media only screen and (min-width: 1280px) {
-        grid-template-columns: 90px 1fr 200px 120px 1fr;
+        grid-template-columns: 90px 1fr 83px 79px 1fr;
         grid-template-rows: 1fr;
         grid-template-areas: 'code name percentage indicator graph';
     }
@@ -44,14 +44,14 @@ export const Wrapper = styled.div`
     background: ${props => props.widgetRowBackgroundColor};
     border: 1px solid ${props => props.widgetRowBorderColor};
     @media only screen and (min-width: 1024px) {
-        grid-template-columns: 90px 1fr 200px 120px 1fr;
+        grid-template-columns: 90px 1fr 83px 79px 1fr;
         grid-template-rows: repeat(2, 1fr);
         grid-template-areas:
             'code name name percentage indicator graph'
             'code name name percentage indicator graph';
     }
     @media only screen and (min-width: 1280px) {
-        grid-template-columns: 90px 1fr 200px 120px 1fr;
+        grid-template-columns: 90px 1fr 83px 79px 1fr;
         grid-template-rows: repeat(2, 1fr);
         grid-template-areas:
             'code name percentage indicator graph'
@@ -70,14 +70,14 @@ export const WrapperHovered = styled.div`
     border: 1px solid ${props => props.widgetRowBorderColor};
     transform: scale(1.03);
     @media only screen and (min-width: 1024px) {
-        grid-template-columns: 90px 1fr 200px 120px 1fr;
+        grid-template-columns: 90px 1fr 83px 79px 1fr;
         grid-template-rows: repeat(2, 1fr);
         grid-template-areas:
             'code name name percentage indicator graph'
             'code name name percentage indicator graph';
     }
     @media only screen and (min-width: 1280px) {
-        grid-template-columns: 90px 1fr 200px 120px 1fr;
+        grid-template-columns: 90px 1fr 83px 79px 1fr;
         grid-template-rows: repeat(2, 1fr);
         grid-template-areas:
             'code name percentage indicator graph'
@@ -162,14 +162,14 @@ export const PercentageChanged = styled.div`
     padding-bottom: 5px;
 `;
 export const IndicatorUp = styled.div`
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
-    border-bottom: 30px solid red;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid red;
 `;
 export const IndicatorDown = styled.div`
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
-    border-top: 30px solid green;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid green;
 `;
 
 export const IndicatorWrapper = styled.div`
