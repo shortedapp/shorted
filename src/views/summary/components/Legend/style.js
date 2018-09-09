@@ -50,6 +50,7 @@ export const UnselectedWrapper = styled.div`
 export const CompanyHeader = styled.div`
     background: ${props => props.widgetBackgroundColor};
     color: ${props => props.textColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     display: flex;
     border-radius: 5px;
     flex-direction: column;
@@ -60,11 +61,12 @@ export const CompanyHeader = styled.div`
 `;
 export const CompanyMarketCap = styled.div`
     grid-area: company-mc;
+    background: ${props => props.widgetBackgroundColor};
+    color: ${props => props.textColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     display: flex;
     flex-direction: column;
     vertical-align: middle;
-    background: ${props => props.widgetBackgroundColor};
-    color: ${props => props.textColor};
 `;
 export const CompanySector = styled.div`
     grid-area: company-sector;
@@ -72,6 +74,7 @@ export const CompanySector = styled.div`
     border-radius: 5px;
     background: ${props => props.widgetBackgroundColor};
     color: ${props => props.textColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     font-size: 1vh;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
@@ -86,6 +89,7 @@ export const CompanyName = styled.div`
     display: flex;
     background: ${props => props.widgetBackgroundColor};
     color: ${props => props.textColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     font-size: 1vh;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;

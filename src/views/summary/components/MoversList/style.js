@@ -10,19 +10,20 @@ export const transitionStyles = {
 export const Wrapper = styled.div`
     height: 100%;
     grid-area: top-movers;
-    background: white;
+    background: ${props => props.widgetBackgroundColor};
+    border: 1px solid ${props => props.widgetBorderColor};
     display: flex;
     flex-direction: column;
     border-radius: 5px;
-    border: 1px solid #eee;
     opacity: ${props => props.opacity};
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;
     transform: ${props => `translateY(${props.Ypos}px)`};
 `;
 export const Header = styled.div`
-    height: 50px;
+    margin-top: 10px;
     display: flex;
+    height: 33px;
     flex-direction: column;
     text-align: center;
     font-size: 22px;
@@ -30,15 +31,19 @@ export const Header = styled.div`
     font-family: Avenir Next, sans-serif;
 `;
 export const More = styled.div`
-    height: 42px;
-    display: flex;
-    flex-direction: column;
+    height: 50px;
     text-align: center;
     font-size: 22px;
     font-weight: bold;
-    background: #dadada;
-    border-radius: 0 0 15px 15px;
-    margin: 4px;
+    background: ${props => props.widgetRowBackgroundColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
+    border-radius: 0 0 5px 5px;
+    margin: 2px;
+    margin-left: 7px;
+    margin-right: 7px;
     justify-content: center;
     font-family: Avenir Next, sans-serif;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 `;

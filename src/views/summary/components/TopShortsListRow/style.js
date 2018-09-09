@@ -12,13 +12,14 @@ export const WrapperHeader = styled.div`
         grid-template-columns: repeat(2, 1fr);
         grid-template-areas: 'code percentage';
     }
-    margin: 7px;
+    margin: 4px;
     height: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     align-items: center;
     .code {
         grid-area: code;
-        margin-left: 10px;
+        text-align: center;
+        width: 60px;
     }
     .company-name {
         grid-area: name;
@@ -27,6 +28,8 @@ export const WrapperHeader = styled.div`
     }
     .percentage {
         grid-area: percentage;
+        width: 70px;
+        padding-right: 14px;
         text-align: center;
     }
 `;
@@ -36,6 +39,7 @@ export const Wrapper = styled.a`
     position: relative;
     color: ${props => props.textColor};
     background: ${props => props.widgetRowBackgroundColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     text-decoration: none !important;
     @media (min-width: 901px) {
         grid-template-columns: repeat(5, 1fr);
@@ -62,6 +66,7 @@ export const WrapperHovered = styled.a`
     position: relative;
     color: ${props => props.textColor};
     background: ${props => props.widgetRowBackgroundColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     text-decoration: none !important;
     z-index: 10;
     grid-template-columns: repeat(5, 1fr);
@@ -136,7 +141,8 @@ export const Percent = styled.div`
 
     .circle {
         background: #f98080;
-        height: 45px;
+        height: 100%;
+        padding: 4px;
         width: 70px;
         border-radius: 10px 50px 50px 10px;
         display: flex;

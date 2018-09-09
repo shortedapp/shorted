@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
     border-radius: 5px;
     background: ${props => props.widgetBackgroundColor};
     color: ${props => props.textColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     display: grid;
     height: 140px;
     grid-template-rows: 20px 120px;
@@ -14,7 +15,7 @@ export const Wrapper = styled.div`
 `;
 export const Header = styled.div`
     grid-area: header;
-    padding-top: 3px;
+    padding-top: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;

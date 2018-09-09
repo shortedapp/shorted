@@ -21,7 +21,6 @@ export const Wrapper = styled.div`
 `;
 export const Header = styled.div`
     margin-top: 10px;
-    margin-bottom: 10px;
     height: 30px;
     text-align: center;
     font-size: 22px;
@@ -29,13 +28,17 @@ export const Header = styled.div`
     font-family: Avenir Next, sans-serif;
 `;
 export const More = styled.div`
-    height: 30px;
+    height: 50px;
     text-align: center;
     font-size: 22px;
     font-weight: bold;
     background: ${props => props.widgetRowBackgroundColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     border-radius: 0 0 5px 5px;
     margin: 4px;
     justify-content: center;
     font-family: Avenir Next, sans-serif;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 `;

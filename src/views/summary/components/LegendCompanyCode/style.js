@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
     background: ${props => props.widgetBackgroundColor};
     color: ${props => props.textColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     grid-area: company-code;
     border-radius: 5px;
     display: flex;

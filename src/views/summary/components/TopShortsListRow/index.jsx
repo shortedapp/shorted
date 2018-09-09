@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {ThemeContext} from '../../../../theme-context';
 import {
     Wrapper,
     WrapperHeader,
@@ -21,37 +21,46 @@ import {
  */
 
 const TopShortListRow = props => {
-    const {theme} = props;
     const headerView = (
-        <WrapperHeader>
-            <div className="code">code</div>
-            <div className="company-name">company name</div>
-            <div className="percentage">%</div>
-        </WrapperHeader>
+        <ThemeContext.Consumer>
+            {theme => (
+                <WrapperHeader>
+                    <div className="code">code</div>
+                    <div className="company-name">company name</div>
+                    <div className="percentage">%</div>
+                </WrapperHeader>
+            )}
+        </ThemeContext.Consumer>
     );
-    const rowView = props.isHovered ? (
-        <WrapperHovered
-            {...theme}
-            onMouseOver={props.onHover}
-            href={`/${props.code}`}>
-            <Code>
-                <div className="code">{props.code}</div>
-            </Code>
-            <Name>{props.name}</Name>
-            <Percent>
-                <div className="circle">{props.current}%</div>
-            </Percent>
-        </WrapperHovered>
-    ) : (
-        <Wrapper {...theme} onMouseOver={props.onHover}>
-            <Code>
-                <div className="code">{props.code}</div>
-            </Code>
-            <Name>{props.name}</Name>
-            <Percent>
-                <div className="circle">{props.current}</div>
-            </Percent>
-        </Wrapper>
+    const rowView = (
+        <ThemeContext.Consumer>
+            {theme =>
+                props.isHovered ? (
+                    <WrapperHovered
+                        {...theme}
+                        onMouseOver={props.onHover}
+                        href={`/${props.code}`}>
+                        <Code>
+                            <div className="code">{props.code}</div>
+                        </Code>
+                        <Name>{props.name}</Name>
+                        <Percent>
+                            <div className="circle">{props.current}</div>
+                        </Percent>
+                    </WrapperHovered>
+                ) : (
+                    <Wrapper {...theme} onMouseOver={props.onHover}>
+                        <Code>
+                            <div className="code">{props.code}</div>
+                        </Code>
+                        <Name>{props.name}</Name>
+                        <Percent>
+                            <div className="circle">{props.current}</div>
+                        </Percent>
+                    </Wrapper>
+                )
+            }
+        </ThemeContext.Consumer>
     );
     if (props.header) {
         return headerView;

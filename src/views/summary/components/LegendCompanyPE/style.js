@@ -2,13 +2,14 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     display: flex;
-    border-radius: 5px;
+    border-radius: 3px;
     flex-direction: column;
     text-align: center;
     vertical-align: middle;
     justify-content: center;
     background: ${props => props.widgetBackgroundColor};
     color: ${props => props.textColor};
+    border: 1px solid ${props => props.widgetRowBorderColor};
     grid-area: company-pe;
 `;
 

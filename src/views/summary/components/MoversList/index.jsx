@@ -1,5 +1,6 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
+import {ThemeContext} from '../../../../theme-context';
 import MoversListRow from '../MoversListRow';
 import {Wrapper, Header, More, duration, transitionStyles} from './style';
 /**
@@ -12,6 +13,7 @@ class MoversList extends React.Component {
         super(props);
         this.state = {
             inside: false,
+            selected: false,
         };
     }
     componentDidMount() {
@@ -21,27 +23,48 @@ class MoversList extends React.Component {
     toggleEnterState() {
         this.setState({inside: true});
     }
+    handleRowSelect(value) {
+        this.setState({selected: value});
+    }
+    handleMouseLeave() {
+        this.setState({
+            selected: false,
+        });
+    }
 
     render() {
         const rows = this.props.data.data
             .slice(0, 5)
             .map(row_data => (
-                <MoversListRow key={row_data.code} {...row_data} />
+                <MoversListRow
+                    handleSelect={() => this.handleRowSelect(row_data.code)}
+                    selectedRow={this.state.selected}
+                    row
+                    key={row_data.code}
+                    {...row_data}
+                />
             ));
         return (
-            <Transition timeout={duration} in appear>
-                {state => {
-                    return (
-                        <Wrapper
-                            duration={duration}
-                            {...transitionStyles[state]}>
-                            <Header>Top Movers</Header>
-                            {rows}
-                            <More>show more</More>
-                        </Wrapper>
-                    );
-                }}
-            </Transition>
+            <ThemeContext.Consumer>
+                {theme => (
+                    <Transition timeout={duration} in appear>
+                        {state => {
+                            return (
+                                <Wrapper
+                                    onMouseLeave={() => this.handleMouseLeave()}
+                                    {...theme}
+                                    duration={duration}
+                                    {...transitionStyles[state]}>
+                                    <Header>Top Movers</Header>
+                                    <MoversListRow header key={'row-header'} />
+                                    {rows}
+                                    <More {...theme}>show more</More>
+                                </Wrapper>
+                            );
+                        }}
+                    </Transition>
+                )}
+            </ThemeContext.Consumer>
         );
     }
 }

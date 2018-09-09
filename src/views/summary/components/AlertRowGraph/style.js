@@ -1,18 +1,26 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    grid-area: graph;
-    margin: 5px;
-    max-width: 245px;
-    @media (min-width: 1280px) {
-        display: flex;
-    }
-    display: none;
-    margin-right: 10px;
+    background: transparent;
+    border-radius: 5px;
+    display: flex;
+    height: 120px;
     flex-direction: column;
-    text-align: center;
     justify-content: center;
-    -webkit-box-shadow: 1px 1px 2px 0px rgba(181, 181, 181, 1);
-    -moz-box-shadow: 1px 1px 2px 0px rgba(181, 181, 181, 1);
-    box-shadow: 1px 1px 2px 0px rgba(181, 181, 181, 1);
+    text-align: center;
+`;
+export const Header = styled.div`
+    grid-area: header;
+    padding-top: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+`;
+export const Chart = styled.div`
+    grid-area: chart;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 `;
