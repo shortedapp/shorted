@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import {ThemeContext, themes} from '../../theme-context';
 import Logo from '../../components/Logo';
 import ErrorBoundary from '../../components/ErrorBoundary';
+import SearchBar from '../../components/SearchBar';
 import ThemeSwitch from '../../components/ThemeSwitch';
 import Sectors from '../../views/sectors';
 import Alerts from '../../views/alerts';
@@ -97,7 +98,9 @@ class Dashboard extends React.Component {
                     console.log(theme);return (
                     <DashboardWrapper
                         width={this.state.collapsed ? `80px` : `200px`}>
-                        <HeaderWrapper {...theme} />
+                        <HeaderWrapper {...theme}>
+                        <SearchBar />
+                        </HeaderWrapper>
                         <Logo
                             collapsed={this.state.collapsed}
                             theme={theme}

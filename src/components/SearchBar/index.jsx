@@ -15,7 +15,7 @@ class SearchBar extends React.Component {
     }
 
     render() {
-        return <Wrapper>search bar goes here</Wrapper>;
+        return <Wrapper><input /></Wrapper>;
     }
 }
 

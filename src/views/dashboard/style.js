@@ -21,7 +21,7 @@ export const DashboardWrapper = styled.div`
     grid-template-columns: ${props => props.width} 1fr;
     grid-template-rows: 100px 70px 80px 50px 1fr;
     grid-template-areas:
-        'logo header'
+        'logo top-nav'
         'collapse content'
         'theme content'
         'nav content'
@@ -34,7 +34,7 @@ export const ThemeWrapper = styled.div`
     background: ${props => props.background};
 `;
 export const HeaderWrapper = styled.div`
-    grid-area: header;
+    grid-area: top-nav;
     background: ${props => props.background};
 `;
 export const DashboardNavbarWrapper = styled.div`

@@ -18,8 +18,7 @@ import {
  */
 const Row = props => (
     <ThemeContext.Consumer>
-        { theme => { console.log(theme); return (
-       
+        { theme =>(
         <Wrapper {...theme} >
             <Code>
                 <div className="code">{props.code}</div>
@@ -39,7 +38,7 @@ const Row = props => (
                 changeDirection={props.changed > 0}
                 theme={theme}
                 data={props.recent_history} />
-        </Wrapper>)}}
+        </Wrapper>)}
     </ThemeContext.Consumer>
 );
 

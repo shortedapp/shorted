@@ -1,7 +1,7 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import ShortedAPI from '../../services/sapi/client';
-import {DashboardWrapper, themes, duration, transitionStyles} from './style';
+import {SectorsWrapper, themes, duration, transitionStyles} from './style';
 
 /**
  * View:Sectors
@@ -32,9 +32,9 @@ class Sectors extends React.Component {
             <Transition timeout={duration} in appear>
                 {state => {
                     return (
-                        <DashboardWrapper {...this.props.theme}>
+                        <SectorsWrapper {...this.props.theme}>
                             Sector breakdown goes here
-                        </DashboardWrapper>
+                        </SectorsWrapper>
                     );
                 }}
             </Transition>

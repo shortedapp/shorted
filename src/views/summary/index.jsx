@@ -9,7 +9,7 @@ import Alerts from './components/Alerts';
 import WindowPicker from '././components/WindowPicker';
 import ChartOptions from './components/ChartOptions';
 import { ThemeContext } from '../../theme-context';
-import {DashboardWrapper, duration, transitionStyles} from './style';
+import {SummaryWrapper, duration, transitionStyles} from './style';
 
 /**
  * View:TopShorts
@@ -72,7 +72,7 @@ class Summary extends React.Component {
             <Transition timeout={duration} in appear>
                 {state => {
                     return (
-                        <DashboardWrapper {...this.props.theme}>
+                        <SummaryWrapper {...this.props.theme}>
                             <div className="content">
                                 <TopShortsList
                                     theme={theme}
@@ -129,7 +129,7 @@ class Summary extends React.Component {
                                     )}
                                 />
                             </div>
-                        </DashboardWrapper>
+                        </SummaryWrapper>
                     );
                 }}
             </Transition>)}

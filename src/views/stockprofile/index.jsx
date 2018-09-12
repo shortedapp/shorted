@@ -11,7 +11,7 @@ import ProfileSidePanel from './components/ProfileSidePanel';
 import ProfileHeader from './components/ProfileHeader';
 import ProfileAlerts from './components/ProfileAlerts';
 import icon32 from './../../../static/favicon-32x32.png';
-import {StockProfileWrapper, duration, transitionStyles} from './style';
+import {ProfileWrapper, duration, transitionStyles} from './style';
 
 /**
  * View:StockProfile
@@ -59,10 +59,7 @@ class StockProfileView extends React.Component {
             <Transition timeout={duration} in appear>
                 {state => {
                     return (
-                        <AppViewWrapper
-                            background={headerBackground}
-                            duration={duration}
-                            {...transitionStyles[state]}>
+                        <ProfileWrapper>
                             <Helmet
                                 key="profiler-header"
                                 titleTemplate=" Shorted · %s"
@@ -128,7 +125,7 @@ class StockProfileView extends React.Component {
                                     <ProfileSidePanel />
                                 </div>
                             </StockProfileWrapper>
-                        </AppViewWrapper>
+                        </ProfileWrapper>
                     );
                 }}
             </Transition>

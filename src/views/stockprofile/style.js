@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StockProfileWrapper = styled.div`
+export const ProfileWrapper = styled.div`
     display: grid;
     justify-content: center;
     .content {
