@@ -1,9 +1,16 @@
 import React from 'react';
-import {Wrapper} from './style';
+import {
+    SearchBarWrapper,
+    CustomInput,
+    PrimaryColumn,
+    SecondaryColumn,
+    Wrapper } from './style';
 
 /**
- * Top Navbar responsible for rendering the basic site-map layout including: blog | about | disclaimer etc
- * Will also manage the implementation of the navbar collapse on mobile devices i.e transition to burger and burger animation on open/close etc.
+ * SearchBar
+ * THis component is responsible for the rendering of the searchbar view at the top of the header bar. It provides a dropdown list of items
+ * matching the elastically searched results entering into the search bar
+ * interacts with elastisearch for querying
  * TODO:
  * * handle mobile compaction of navbar component
  *
@@ -11,11 +18,28 @@ import {Wrapper} from './style';
 class SearchBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            value: 'Search...',
+        };
+    }
+    onChange(e,v) {
+        console.log(e,v)
     }
 
     render() {
-        return <Wrapper><input /></Wrapper>;
+        return <SearchBarWrapper>
+            <PrimaryColumn>
+                <CustomInput
+                    type="text"
+                    placeholder="City"
+                    onChange={(e,v) => this.props.onChange(e,v)}
+                    value={this.props.value} />
+            </PrimaryColumn>
+            <SecondaryColumn>
+                <button label="GO" primary/>
+            </SecondaryColumn>
+            
+            </SearchBarWrapper>;
     }
 }
 

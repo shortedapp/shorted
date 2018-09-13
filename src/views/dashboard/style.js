@@ -18,6 +18,7 @@ export const themes = {
 };
 export const DashboardWrapper = styled.div`
     display: grid;
+    background: ${props => props.background};
     grid-template-columns: ${props => props.width} 1fr;
     grid-template-rows: 100px 70px 80px 50px 1fr;
     grid-template-areas:
@@ -36,6 +37,8 @@ export const ThemeWrapper = styled.div`
 export const HeaderWrapper = styled.div`
     grid-area: top-nav;
     background: ${props => props.background};
+    align-self: center;
+    margin-left: 30px;
 `;
 export const DashboardNavbarWrapper = styled.div`
     grid-area: nav;

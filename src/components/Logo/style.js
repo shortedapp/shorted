@@ -20,6 +20,5 @@ export const LogoTextWrapper = styled.span`
     font-family: Avenir Next, sans-serif;
     color: ${props => (props.color ? props.color : 'gray')};
     background: ${props => props.background};
-    margin-bottom: 10px;
     align-self: center;
 `;

@@ -97,6 +97,7 @@ class Dashboard extends React.Component {
                 {theme => {
                     console.log(theme);return (
                     <DashboardWrapper
+                        {...theme}
                         width={this.state.collapsed ? `80px` : `200px`}>
                         <HeaderWrapper {...theme}>
                         <SearchBar />
