@@ -32,3 +32,17 @@ export const PrimaryColumn = styled.div`
 export const SecondaryColumn = styled.div`
     flex: 1;
 `
+export const Button = styled.button`
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    margin: 5px;
+    border-radius: 2px;
+    outline: 0;
+    font-size: 12px;
+    font-family: 'Avenir Next,Segoe UI', Helvetica, Arial, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-weight: bold;
+`

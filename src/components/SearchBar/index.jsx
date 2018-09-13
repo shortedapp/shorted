@@ -4,6 +4,7 @@ import {
     CustomInput,
     PrimaryColumn,
     SecondaryColumn,
+    Button,
     Wrapper } from './style';
 
 /**
@@ -31,12 +32,12 @@ class SearchBar extends React.Component {
             <PrimaryColumn>
                 <CustomInput
                     type="text"
-                    placeholder="City"
+                    placeholder="Company"
                     onChange={(e,v) => this.props.onChange(e,v)}
                     value={this.props.value} />
             </PrimaryColumn>
             <SecondaryColumn>
-                <button label="GO" primary/>
+                <Button label="GO" primary/>
             </SecondaryColumn>
             
             </SearchBarWrapper>;
