@@ -40,6 +40,9 @@ export const HeaderWrapper = styled.div`
     align-self: center;
     margin-left: 30px;
 `;
+export const SearchBarWrapper = styled.div`
+    font-size: 16px;
+`;
 export const DashboardNavbarWrapper = styled.div`
     grid-area: nav;
     width: ${props => props.width};
