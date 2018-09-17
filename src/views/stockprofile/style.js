@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ProfileWrapper = styled.div`
     display: grid;
+    grid-area: content;
     justify-content: center;
     .content {
         margin-top: 30px;
@@ -30,7 +31,21 @@ export const ProfileWrapper = styled.div`
             'legend';
     }
 `;
+export const ProfileViewWrapper = styled.div`
+display: grid;
+background: ${props => props.background};
+grid-template-rows: 100px 1fr;
+grid-template-areas:
+        'logo top-nav'
+        'content content';
+`;
 
+export const ProfileViewHeader = styled.div`
+    grid-area: top-nav;
+`;
+export const LogoWrapper = styled.div`
+    grid-area: logo;
+`
 export const duration = 300;
 
 export const transitionStyles = {
