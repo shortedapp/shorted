@@ -9,6 +9,8 @@ import {
     SecondaryColumn,
     Button,
     Wrapper,
+    transitionStyles,
+    duration,
 } from './style';
 
 /**
@@ -68,18 +70,26 @@ class SearchBar extends React.Component {
                             onClick={() => this.onClick()}
                         />
                     </SearchBarIconWrapper>
-                    {this.state.focused ? (
-                        <CustomInput
-                            autoFocus
-                            {...this.state}
-                            type="text"
-                            placeholder={this.state.focused ? 'Company' : ''}
-                            onFocus={() => this.onFocus()}
-                            onBlur={() => this.onBlur()}
-                            onChange={(e, v) => this.onChange(e, v)}
-                            value={this.state.value}
-                        />
-                    ) : null}
+                    <Transition
+                        in={this.state.focused}
+                        timeout={duration}
+                        unmountOnExit>
+                        {state => (
+                            <CustomInput
+                                autoFocus
+                                duration={duration}
+                                {...transitionStyles[state]}
+                                type="text"
+                                placeholder={
+                                    this.state.focused ? 'Company' : ''
+                                }
+                                onFocus={() => this.onFocus()}
+                                onBlur={() => this.onBlur()}
+                                onChange={(e, v) => this.onChange(e, v)}
+                                value={this.state.value}
+                            />
+                        )}
+                    </Transition>
                 </PrimaryColumn>
             </SearchBarWrapper>
         );

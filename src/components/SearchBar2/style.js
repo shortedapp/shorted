@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+export const duration = 100;
+
+export const transitionStyles = {
+    entering: {opacity: 0, width: 0},
+    entered: {opacity: 1, width: 310},
+    exited: {opacity: 0, width: 0},
+};
 // export const Wrapper = styled.div`
 //     grid-area: navbar;
 //     input[type=text] {
@@ -18,10 +25,11 @@ export const CustomInput = styled.input`
     border-radius: ${props => (props.focused ? 15 : 15)}px;
     padding: 0.5em;
     margin-right: 50px;
-    opacity: ${props => (props.focused ? 1 : 0)};
-    visibility: ${props => (props.focused ? `visible` : `hidden`)};
     display: block;
-    width: ${props => (props.focused ? `100%` : `0px`)};
+    width: ${props => props.width}px;
+    opacity: ${props => props.opacity};
+    transition: ${props => `${props.duration}ms ease-in`};
+    transition-property: width, opacity, transform;
     /* transition: opacity 250ms 500ms, visibility 250ms 500ms; */
     outline: none;
     border: none;
