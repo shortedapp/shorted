@@ -1,15 +1,14 @@
 import React from 'react';
-// import LogoImage from '../../assets/images/logo.svg'
 import {Wrapper, LogoTextWrapper} from './style';
-import {runInThisContext} from 'vm';
 /**
- * Renders a shorted.com.au logo and stylised layout
+ * Renders a shorted.com.au logo and stylised layout, has the ability to collapse when presented in a collapsable
+ * menu layout
  */
 const LogoSvg = props => (
     <svg
         width={props.collapsed ? '80' : '117'}
-        height={props.collapsed ? '60' : '80'}
-        viewBox="0 0 117 98"
+        height={props.collapsed ? '60' : '98'}
+        viewBox={props.collapsed ? "0 0 120 100" : "0 0 117 98"}
         fill={props.fill}
         xmlns="http://www.w3.org/2000/svg">
         <path

@@ -2,7 +2,10 @@ import styled from 'styled-components';
 
 export const ProfileWrapper = styled.div`
     display: grid;
+    grid-area: content;
     justify-content: center;
+    max-width: 1200px;
+    text-align: center;
     .content {
         margin-top: 30px;
         display: grid;
@@ -30,7 +33,23 @@ export const ProfileWrapper = styled.div`
             'legend';
     }
 `;
+export const ProfileViewWrapper = styled.div`
+display: grid;
+justify-content: center;
+background: ${props => props.background};
+grid-template-rows: 100px 1fr;
+grid-template-areas:
+        'logo top-nav'
+        'content content';
+`;
 
+export const ProfileViewHeader = styled.div`
+    grid-area: top-nav;
+`;
+export const LogoWrapper = styled.div`
+    grid-area: logo;
+    max-width: 100px;
+`
 export const duration = 300;
 
 export const transitionStyles = {
