@@ -42,7 +42,7 @@ export const SearchBarWrapper = styled.div`
     display: flex;
     height: 50px;
     align-items: stretch;
-    background: white;
+    background: ${props => (props.focused ? props.searchIconColorFocused : props.searchIconColorUnfocused)};
     border-radius: ${props => (props.focused ? 15 : 50)}px;
     width: ${props => (props.focused ? 360 : 50)}px;
     transition-duration: 0.5s;
@@ -51,9 +51,9 @@ export const SearchBarIconWrapper = styled.div`
     position: absolute;
     border-radius: 50px;
     display: grid;
-    background: ${props => (props.focused ? `purple` : `white`)};
+    background: ${props => (props.focused ? props.searchIconBackgroundFocused : props.searchIconBackgroundUnfocused)};
     align-items: center;
-    width: ${props => (props.focused ? 40 : 50)}px;
+    width: ${props => (props.focused ? 40 : 40)}px;
     height: 40px;
     align-self: center;
     margin-left: ${props => (props.focused ? 315 : 0)}px;
@@ -64,8 +64,7 @@ export const PrimaryColumn = styled.div`
     flex: 2;
     width: 100%;
     display: flex;
-    border-radius: 50px;
-    background: white;
+    background: transparent;
 `;
 export const SecondaryColumn = styled.div`
     flex: 1;

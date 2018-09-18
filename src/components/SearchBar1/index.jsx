@@ -83,13 +83,6 @@ class SearchBar extends React.Component {
                             onClick={() => this.onClick()}
                         />
                     </SearchBarIconWrapper>
-                    {/* <Transition
-                        in={this.state.focused}
-                        timeout={1000}
-                        unmountOnExit>
-                        {state => ( */}
-
-                    {/* )} }</Transition> */}
                 </PrimaryColumn>
             </SearchBarWrapper>
         );

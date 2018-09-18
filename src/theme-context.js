@@ -20,6 +20,10 @@ export const themes = {
             buttonSelected: '#5fa0dd',
             buttonUnselected: '#7d7d7d',
             axisColor: 'black',
+            searchIconColorUnfocused: 'white',
+            searchIconBackgroundUnfocused: 'black',
+            searchIconColorFocused: 'white',
+            searchIconBackgroundFocused: 'black'
         },
     },
     dark: {
@@ -42,6 +46,10 @@ export const themes = {
             buttonSelected: '#1890ff',
             buttonUnselected: '#001529',
             axisColor: 'white',
+            searchIconColorUnfocused: 'black',
+            searchIconBackgroundUnfocused: 'white',
+            searchIconColorFocused: 'white',
+            searchIconBackgroundFocused: 'black'
         },
     },
 };

@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import {ThemeContext, themes} from '../../theme-context';
 import Logo from '../../components/Logo';
 import ErrorBoundary from '../../components/ErrorBoundary';
-import SearchBar from '../../components/SearchBar2';
+import SearchBar from '../../components/SearchBar3';
 import ThemeSwitch from '../../components/ThemeSwitch';
 import Sectors from '../../views/sectors';
 import Alerts from '../../views/alerts';

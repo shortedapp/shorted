@@ -1,11 +1,17 @@
 import React from 'react';
+import Transition from 'react-transition-group/Transition';
+import {Icon} from 'antd';
 import {
     SearchBarWrapper,
+    SearchBarIconWrapper,
     CustomInput,
     PrimaryColumn,
     SecondaryColumn,
     Button,
-    Wrapper } from './style';
+    Wrapper,
+    transitionStyles,
+    duration,
+} from './style';
 
 /**
  * SearchBar
@@ -20,27 +26,73 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 'Search...',
+            value: '',
+            focused: false,
         };
     }
-    onChange(e,v) {
-        console.log(e,v)
+    onChange(e, v) {
+        console.log(e, v);
+        console.log(e.target.value);
+        this.setState({value: e.target.value});
+    }
+    onFocus() {
+        console.log('focused');
+        // this.setState(prevState => ({
+        //     focused: !prevState.focused,
+        // }));
+    }
+    onClick() {
+        console.log('search clicked');
+        this.setState({focused: true});
+        // this.onFocus();
+    }
+    onBlur() {
+        console.log('unfocused');
+        if (this.state.value !== '') {
+            this.setState({focused: true});
+        } else {
+            this.setState(prevState => ({
+                focused: !prevState.focused,
+            }));
+        }
     }
 
     render() {
-        return <SearchBarWrapper>
-            <PrimaryColumn>
-                <CustomInput
-                    type="text"
-                    placeholder="Company"
-                    onChange={(e,v) => this.props.onChange(e,v)}
-                    value={this.props.value} />
-            </PrimaryColumn>
-            <SecondaryColumn>
-                <Button label="GO" primary/>
-            </SecondaryColumn>
-            
-            </SearchBarWrapper>;
+        console.log(this.state.focused);
+        return (
+            <SearchBarWrapper {...this.state}>
+                <PrimaryColumn>
+                    <SearchBarIconWrapper {...this.state}>
+                        <Icon
+                            style={{fontSize: '25px'}}
+                            type="search"
+                            theme="filled"
+                            onClick={() => this.onClick()}
+                        />
+                    </SearchBarIconWrapper>
+                    <Transition
+                        in={this.state.focused}
+                        timeout={duration}
+                        unmountOnExit>
+                        {state => (
+                            <CustomInput
+                                autoFocus
+                                duration={duration}
+                                {...transitionStyles[state]}
+                                type="text"
+                                placeholder={
+                                    this.state.focused ? 'Company' : ''
+                                }
+                                onFocus={() => this.onFocus()}
+                                onBlur={() => this.onBlur()}
+                                onChange={(e, v) => this.onChange(e, v)}
+                                value={this.state.value}
+                            />
+                        )}
+                    </Transition>
+                </PrimaryColumn>
+            </SearchBarWrapper>
+        );
     }
 }
 

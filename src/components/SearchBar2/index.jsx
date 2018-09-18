@@ -1,17 +1,20 @@
-import React from 'react';
-import Transition from 'react-transition-group/Transition';
-import {Icon} from 'antd';
+import React from 'react'
+import Transition from 'react-transition-group/Transition'
+import { Icon } from 'antd'
+
+import { ThemeContext } from '../../theme-context'
+
 import {
-    SearchBarWrapper,
-    SearchBarIconWrapper,
-    CustomInput,
-    PrimaryColumn,
-    SecondaryColumn,
-    Button,
-    Wrapper,
-    transitionStyles,
-    duration,
-} from './style';
+  SearchBarWrapper,
+  SearchBarIconWrapper,
+  CustomInput,
+  PrimaryColumn,
+  SecondaryColumn,
+  Button,
+  Wrapper,
+  transitionStyles,
+  duration
+} from './style'
 
 /**
  * SearchBar
@@ -23,77 +26,79 @@ import {
  *
  */
 class SearchBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: '',
-            focused: false,
-        };
+  constructor (props) {
+    super(props)
+    this.state = {
+      value: '',
+      focused: false
     }
-    onChange(e, v) {
-        console.log(e, v);
-        console.log(e.target.value);
-        this.setState({value: e.target.value});
+  }
+  onChange (e, v) {
+    console.log(e, v)
+    console.log(e.target.value)
+    this.setState({ value: e.target.value })
+  }
+  onFocus () {
+    console.log('focused')
+    // this.setState(prevState => ({
+    //     focused: !prevState.focused,
+    // }));
+  }
+  onClick () {
+    console.log('search clicked')
+    this.setState({ focused: true })
+    // this.onFocus();
+  }
+  onBlur () {
+    console.log('unfocused')
+    if (this.state.value !== '') {
+      this.setState({ focused: true })
+    } else {
+      this.setState(prevState => ({
+        focused: !prevState.focused
+      }))
     }
-    onFocus() {
-        console.log('focused');
-        // this.setState(prevState => ({
-        //     focused: !prevState.focused,
-        // }));
-    }
-    onClick() {
-        console.log('search clicked');
-        this.setState({focused: true});
-        // this.onFocus();
-    }
-    onBlur() {
-        console.log('unfocused');
-        if (this.state.value !== '') {
-            this.setState({focused: true});
-        } else {
-            this.setState(prevState => ({
-                focused: !prevState.focused,
-            }));
-        }
-    }
+  }
 
-    render() {
-        console.log(this.state.focused);
-        return (
-            <SearchBarWrapper {...this.state}>
-                <PrimaryColumn>
-                    <SearchBarIconWrapper {...this.state}>
-                        <Icon
-                            style={{fontSize: '25px'}}
-                            type="search"
-                            theme="filled"
-                            onClick={() => this.onClick()}
-                        />
-                    </SearchBarIconWrapper>
-                    <Transition
-                        in={this.state.focused}
-                        timeout={duration}
-                        unmountOnExit>
-                        {state => (
-                            <CustomInput
-                                autoFocus
-                                duration={duration}
-                                {...transitionStyles[state]}
-                                type="text"
-                                placeholder={
-                                    this.state.focused ? 'Company' : ''
-                                }
-                                onFocus={() => this.onFocus()}
-                                onBlur={() => this.onBlur()}
-                                onChange={(e, v) => this.onChange(e, v)}
-                                value={this.state.value}
-                            />
-                        )}
-                    </Transition>
-                </PrimaryColumn>
-            </SearchBarWrapper>
-        );
-    }
+  render () {
+    console.log(this.state.focused)
+    return (
+      <ThemeContext.Consumer>
+        {theme => (
+          <SearchBarWrapper {...theme} {...this.state}>
+              <SearchBarIconWrapper {...theme} {...this.state}>
+                <Icon
+                  fill={this.state.focused ? theme.searchIconColorFocused : theme.searchIconColorUnfocused}
+                  style={{ fontSize: '25px', color: this.state.focused ? theme.searchIconColorFocused : theme.searchIconColorUnfocused }}
+                  type='search'
+                  theme='filled'
+                  onClick={() => this.onClick()}
+                />
+              </SearchBarIconWrapper>
+              <Transition
+                in={this.state.focused}
+                timeout={duration}
+                unmountOnExit
+              >
+                {state => (
+                  <CustomInput
+                    autoFocus
+                    duration={duration}
+                    {...transitionStyles[state]}
+                    type='text'
+                    placeholder={this.state.focused ? 'Company' : ''}
+                    onFocus={() => this.onFocus()}
+                    onBlur={() => this.onBlur()}
+                    onChange={(e, v) => this.onChange(e, v)}
+                    value={this.state.value}
+                  />
+                )}
+              </Transition>
+          </SearchBarWrapper>
+        )}
+      </ThemeContext.Consumer>
+    )
+  }
 }
 
-export default SearchBar;
+export default SearchBar
