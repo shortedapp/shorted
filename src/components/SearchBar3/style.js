@@ -28,27 +28,49 @@ export const CustomInput = styled.input`
         outline: none;
     }
 `;
+export const DropDown = styled.div`
+    position: absolute;
+    margin-top: 46px;
+    background: white;
+`;
 
 export const SearchBarWrapper = styled.div`
     display: flex;
     height: 50px;
     align-items: stretch;
+<<<<<<< HEAD
     border: 2px solid ${props => (props.focused ? `#1890ff` : `gray`)};
     background: ${props => (props.focused ? `white` : `white`)};
     border-radius: ${props => (props.focused ? 15 : 50)}px;
     width: ${props => (props.focused ? 400 : 50)}px;
     transition-duration: 250ms;
+=======
+    background: ${props => (props.focused ? props.searchBarBackgroundFocused : props.searchBarBackgroundUnfocused)};
+    border: 2px solid ${props => (props.focused ? props.searchBarBorderFocused : props.searchBarBorderUnfocused)};
+    border-radius: ${props => (props.focused ? 15 : 50)}px;
+    width: 420px;
+    transition-duration: 0.5s;
+>>>>>>> f4df34efdaaa8348176d3ce83d1d538e298082aa
 `;
 export const SearchBarIconWrapper = styled.div`
     position: absolute;
     border-radius: 50px;
     display: grid;
+<<<<<<< HEAD
     background: ${props => (props.focused ? `#e6e6e6` : `#e6e6e6`)};
     align-items: center;
     width: ${props => (props.focused ? 40 : 50)}px;
     height: ${props => (props.focused ? 40 : 50)}px;
     align-self: center;
     margin-left: ${props => (props.focused ? 10 : 0)}px;
+=======
+    background: ${props => (props.focused ? props.searchIconBackgroundFocused : props.searchIconBackgroundUnfocused)};
+    align-items: center;
+    width: ${props => (props.focused ? 40 : 45)}px;
+    height: ${props => (props.focused ? 40 : 45)}px;
+    align-self: center;
+    margin-left: 10px;
+>>>>>>> f4df34efdaaa8348176d3ce83d1d538e298082aa
     transition-duration: 150ms;
 `;
 

@@ -10,5 +10,6 @@ export const Wrapper = styled.div`
     float: right;
     margin-left: auto;
     background: gray;
-    width: 800px;
+    width: 100%;
+    height: 100%;
 `;
