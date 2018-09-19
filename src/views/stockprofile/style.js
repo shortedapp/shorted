@@ -9,10 +9,11 @@ export const ProfileWrapper = styled.div`
     .content {
         margin-top: 30px;
         display: grid;
-        max-width: 1900px;
         grid-gap: 20px;
+        width: 1300px;
+        height: 1200px;
         grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: 130px 400px 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
         grid-template-areas:
             'profile-header profile-header profile-header'
             'profile-chart profile-chart profile-side-panel'

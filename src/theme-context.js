@@ -20,10 +20,14 @@ export const themes = {
             buttonSelected: '#5fa0dd',
             buttonUnselected: '#7d7d7d',
             axisColor: 'black',
-            searchIconColorUnfocused: 'white',
-            searchIconBackgroundUnfocused: 'black',
+            searchIconColorUnfocused: 'black',
+            searchIconBackgroundUnfocused: '#d9d9d9',
             searchIconColorFocused: 'white',
-            searchIconBackgroundFocused: 'black'
+            searchIconBackgroundFocused: 'black',
+            searchBarBackgroundFocused: 'white',
+            searchBarBackgroundUnfocused: '#d9d9d9',
+            searchBarBorderUnfocused: 'gray',
+            searchBarBorderFocused: '#1890ff'
         },
     },
     dark: {
@@ -47,9 +51,13 @@ export const themes = {
             buttonUnselected: '#001529',
             axisColor: 'white',
             searchIconColorUnfocused: 'black',
-            searchIconBackgroundUnfocused: 'white',
+            searchIconBackgroundUnfocused: '#d9d9d9',
             searchIconColorFocused: 'white',
-            searchIconBackgroundFocused: 'black'
+            searchIconBackgroundFocused: 'black',
+            searchBarBackgroundFocused: 'white',
+            searchBarBackgroundUnfocused: '#d9d9d9',
+            searchBarBorderUnfocused: 'gray',
+            searchBarBorderFocused: '#1890ff'
         },
     },
 };

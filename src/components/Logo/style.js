@@ -13,12 +13,11 @@ export const Wrapper = styled.a`
 export const LogoTextWrapper = styled.span`
     display: flex;
     flex-direction: column-reverse;
-    font-size: 30px;
+    font-size: 25px;
     letter-spacing: 5px;
-    margin-left: 10px;
+    margin-left: 5px;
     font-weight: bold;
     font-family: Avenir Next, sans-serif;
     color: ${props => (props.color ? props.color : 'gray')};
     background: ${props => props.background};
-    align-self: center;
 `;
