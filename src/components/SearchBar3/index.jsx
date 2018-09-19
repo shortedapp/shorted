@@ -77,6 +77,7 @@ class SearchBar extends React.Component {
                         {state => (
                             <CustomInput
                                 autoFocus
+                                {...this.state}
                                 duration={duration}
                                 {...transitionStyles[state]}
                                 type="text"

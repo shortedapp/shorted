@@ -7,28 +7,18 @@ export const transitionStyles = {
     entered: {opacity: 1, width: 310},
     exited: {opacity: 0, width: 0},
 };
-// export const Wrapper = styled.div`
-//     grid-area: navbar;
-//     input[type=text] {
-//         width: 130px;
-//         -webkit-transition: width 0.4s ease-in-out;
-//         transition: width 0.4s ease-in-out;
-//     }
-//     input[type=text]:focus {
-//         width: 100%;
-//     }
-// `;
+
 export const CustomInput = styled.input`
     font-size: 1em;
     text-align: left;
     height: 50px;
     border-radius: ${props => (props.focused ? 15 : 15)}px;
-    background: ${props => (props.focused ? `gray` : `white`)};
+    background: transparent;
     padding: 0.5em;
     margin-right: 0px;
-    margin-left: 45px;
+    margin-left: 55px;
     display: block;
-    width: 300px;
+    width: ${props => (props.focused ? `100%` : `50px`)};
     transition: ${props => `${props.duration}ms ease-in`};
     transition-property: width, opacity, transform;
     /* transition: opacity 250ms 500ms, visibility 250ms 500ms; */
@@ -43,22 +33,23 @@ export const SearchBarWrapper = styled.div`
     display: flex;
     height: 50px;
     align-items: stretch;
-    background: ${props => (props.focused ? `gray` : `white`)};
+    border: 2px solid ${props => (props.focused ? `#1890ff` : `gray`)};
+    background: ${props => (props.focused ? `white` : `white`)};
     border-radius: ${props => (props.focused ? 15 : 50)}px;
-    width: 360px;
-    transition-duration: 0.5s;
+    width: ${props => (props.focused ? 400 : 50)}px;
+    transition-duration: 250ms;
 `;
 export const SearchBarIconWrapper = styled.div`
     position: absolute;
     border-radius: 50px;
     display: grid;
-    background: ${props => (props.focused ? `purple` : `white`)};
+    background: ${props => (props.focused ? `#e6e6e6` : `#e6e6e6`)};
     align-items: center;
     width: ${props => (props.focused ? 40 : 50)}px;
-    height: 40px;
+    height: ${props => (props.focused ? 40 : 50)}px;
     align-self: center;
-    margin-left: 10px;
-    transition-duration: 0.5s;
+    margin-left: ${props => (props.focused ? 10 : 0)}px;
+    transition-duration: 150ms;
 `;
 
 export const PrimaryColumn = styled.div`
@@ -66,7 +57,7 @@ export const PrimaryColumn = styled.div`
     width: 100%;
     display: flex;
     border-radius: 50px;
-    background: white;
+    background: transparent;
 `;
 export const SecondaryColumn = styled.div`
     flex: 1;
