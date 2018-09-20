@@ -14,11 +14,13 @@ export const CustomInput = styled.input`
     height: 50px;
     border-radius: ${props => (props.focused ? 15 : 15)}px;
     background: transparent;
+    position: absolute;
+    z-index: 20;
     padding: 0.5em;
     margin-right: 0px;
     margin-left: 55px;
     display: block;
-    width: ${props => (props.focused ? `100%` : `50px`)};
+    width: ${props => (props.focused ? `100%` : `100%`)};
     transition: ${props => `${props.duration}ms ease-in`};
     transition-property: width, opacity, transform;
     /* transition: opacity 250ms 500ms, visibility 250ms 500ms; */
@@ -30,48 +32,55 @@ export const CustomInput = styled.input`
 `;
 export const DropDown = styled.div`
     position: absolute;
-    margin-top: 46px;
     background: white;
+    z-index: 2;
+    height: 200px;
+    width: 101%;
+    border: 1px solid ${props => props.searchResultsDropdownBoarder};
+    -webkit-box-shadow: 4px 4px 20px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 4px 20px -4px rgba(0,0,0,0.75);
+    box-shadow: 4px 4px 20px -4px rgba(0,0,0,0.75);
+    border-radius: 5px;
+    margin-left: -2px;
+    margin-top: -4px;
+    display: grid;
+    grid-template-rows: 47px 1fr;
+    grid-template-areas:
+        'searchbar'
+        'results';
 `;
+
+export const Results = styled.div`
+    grid-area: results;
+    margin-left: 10px;
+`
 
 export const SearchBarWrapper = styled.div`
     display: flex;
     height: 50px;
     align-items: stretch;
-<<<<<<< HEAD
-    border: 2px solid ${props => (props.focused ? `#1890ff` : `gray`)};
-    background: ${props => (props.focused ? `white` : `white`)};
-    border-radius: ${props => (props.focused ? 15 : 50)}px;
-    width: ${props => (props.focused ? 400 : 50)}px;
-    transition-duration: 250ms;
-=======
     background: ${props => (props.focused ? props.searchBarBackgroundFocused : props.searchBarBackgroundUnfocused)};
     border: 2px solid ${props => (props.focused ? props.searchBarBorderFocused : props.searchBarBorderUnfocused)};
     border-radius: ${props => (props.focused ? 15 : 50)}px;
     width: 420px;
     transition-duration: 0.5s;
->>>>>>> f4df34efdaaa8348176d3ce83d1d538e298082aa
+    position: absolute;
+    top: 30px;
+    z-index: 20;
 `;
+
 export const SearchBarIconWrapper = styled.div`
     position: absolute;
     border-radius: 50px;
     display: grid;
-<<<<<<< HEAD
-    background: ${props => (props.focused ? `#e6e6e6` : `#e6e6e6`)};
-    align-items: center;
-    width: ${props => (props.focused ? 40 : 50)}px;
-    height: ${props => (props.focused ? 40 : 50)}px;
-    align-self: center;
-    margin-left: ${props => (props.focused ? 10 : 0)}px;
-=======
     background: ${props => (props.focused ? props.searchIconBackgroundFocused : props.searchIconBackgroundUnfocused)};
     align-items: center;
     width: ${props => (props.focused ? 40 : 45)}px;
     height: ${props => (props.focused ? 40 : 45)}px;
     align-self: center;
     margin-left: 10px;
->>>>>>> f4df34efdaaa8348176d3ce83d1d538e298082aa
     transition-duration: 150ms;
+    z-index: 20;
 `;
 
 export const PrimaryColumn = styled.div`

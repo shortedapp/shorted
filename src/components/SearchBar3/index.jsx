@@ -1,5 +1,9 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Transition from 'react-transition-group/Transition'
+
+import { search } from 'src/services/elasticsearch/client';
+
 import { ThemeContext } from '../../theme-context'
 import { Icon } from 'antd'
 import {
@@ -8,9 +12,7 @@ import {
   CustomInput,
   PrimaryColumn,
   DropDown,
-  SecondaryColumn,
-  Button,
-  Wrapper,
+  Results,
   transitionStyles,
   duration
 } from './style'
@@ -31,7 +33,31 @@ class SearchBar extends React.Component {
       value: '',
       focused: false
     }
+    this.handleOutsideClick = this.handleOutsideClick.bind(this)
   }
+  handleOutsideClick (e) {
+    const searchBar = ReactDOM.findDOMNode(this)
+    // chartOptionsArea = this.node
+    if (searchBar.contains(e.target)) {
+      console.log('click inside')
+      return
+    }
+    console.log('click outside')
+    this.handleSelect()
+  }
+  handleSelect () {
+   
+    if (!this.state.focused) {
+      // attach/remove event handler
+      document.addEventListener('click', this.handleOutsideClick, false)
+    } else {
+      document.removeEventListener('click', this.handleOutsideClick, false)
+    }
+    this.setState(prevState => ({
+      focused: !prevState.focused
+    }))
+  }
+
   onChange (e, v) {
     console.log(e, v)
     console.log(e.target.value)
@@ -48,10 +74,11 @@ class SearchBar extends React.Component {
     this.setState({ focused: true })
     // this.onFocus();
   }
+
   onBlur () {
     console.log('unfocused')
     if (this.state.value !== '') {
-      this.setState({ focused: true })
+      this.setState({ focused: false })
     } else {
       this.setState(prevState => ({
         focused: !prevState.focused
@@ -59,53 +86,13 @@ class SearchBar extends React.Component {
     }
   }
 
-<<<<<<< HEAD
-    render() {
-        console.log(this.state.focused);
-        return (
-            <SearchBarWrapper {...this.state}>
-                <PrimaryColumn>
-                    <SearchBarIconWrapper {...this.state}>
-                        <Icon
-                            style={{fontSize: '25px'}}
-                            type="search"
-                            theme="filled"
-                            onClick={() => this.onClick()}
-                        />
-                    </SearchBarIconWrapper>
-                    <Transition
-                        in={this.state.focused}
-                        timeout={duration}
-                        unmountOnExit>
-                        {state => (
-                            <CustomInput
-                                autoFocus
-                                {...this.state}
-                                duration={duration}
-                                {...transitionStyles[state]}
-                                type="text"
-                                placeholder={
-                                    this.state.focused ? 'Company' : ''
-                                }
-                                onFocus={() => this.onFocus()}
-                                onBlur={() => this.onBlur()}
-                                onChange={(e, v) => this.onChange(e, v)}
-                                value={this.state.value}
-                            />
-                        )}
-                    </Transition>
-                </PrimaryColumn>
-            </SearchBarWrapper>
-        );
-    }
-=======
   render () {
     console.log(this.state.focused)
     return (
       <ThemeContext.Consumer>
         {theme => (
           <SearchBarWrapper
-            onClick={() => this.onClick()}
+            onClick={() => this.handleSelect()}
             {...theme}
             {...this.state}
           >
@@ -125,7 +112,7 @@ class SearchBar extends React.Component {
                   }}
                   type='search'
                   theme='filled'
-                  onClick={() => this.onClick()}
+                  onClick={() => this.handleSelect()}
                 />
               </SearchBarIconWrapper>
               <Transition
@@ -142,23 +129,26 @@ class SearchBar extends React.Component {
                     type='text'
                     placeholder={this.state.focused ? 'Company' : ''}
                     onFocus={() => this.onFocus()}
-                    onBlur={() => this.onBlur()}
+                    // onBlur={() => this.onBlur()}
                     onChange={(e, v) => this.onChange(e, v)}
                     value={this.state.value}
                   />
                 )}
               </Transition>
-              { this.state.value ? (<DropDown>
-                  Dropdown content goes here
-              </DropDown>) : null}
-              
+              {this.state.value && this.state.focused
+                ? <DropDown {...theme} >
+                  <Results>
+                    results go here
+                  </Results>
+                  </DropDown>
+                : null}
+
             </PrimaryColumn>
           </SearchBarWrapper>
         )}
       </ThemeContext.Consumer>
     )
   }
->>>>>>> f4df34efdaaa8348176d3ce83d1d538e298082aa
 }
 
 export default SearchBar

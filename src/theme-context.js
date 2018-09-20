@@ -27,7 +27,8 @@ export const themes = {
             searchBarBackgroundFocused: 'white',
             searchBarBackgroundUnfocused: '#d9d9d9',
             searchBarBorderUnfocused: 'gray',
-            searchBarBorderFocused: '#1890ff'
+            searchBarBorderFocused: '#1890ff',
+            searchResultsDropdownBoarder: 'gray'
         },
     },
     dark: {
@@ -57,7 +58,8 @@ export const themes = {
             searchBarBackgroundFocused: 'white',
             searchBarBackgroundUnfocused: '#d9d9d9',
             searchBarBorderUnfocused: 'gray',
-            searchBarBorderFocused: '#1890ff'
+            searchBarBorderFocused: '#1890ff',
+            searchResultsDropdownBoarder: 'gray'
         },
     },
 };
