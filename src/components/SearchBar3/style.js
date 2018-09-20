@@ -91,7 +91,7 @@ export const SearchBarClearIconWrapper = styled.div`
     align-self: center;
     margin-left: 385px;
     transition-duration: 150ms;
-    z-index: 20;
+    z-index: 22;
 `;
 
 export const PrimaryColumn = styled.div`

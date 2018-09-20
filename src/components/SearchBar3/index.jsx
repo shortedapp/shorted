@@ -35,10 +35,10 @@ class SearchBar extends React.Component {
       focused: false
     }
     this.handleOutsideClick = this.handleOutsideClick.bind(this)
+    this.escFunction = this.escFunction.bind(this)
   }
   handleOutsideClick (e) {
     const searchBar = ReactDOM.findDOMNode(this)
-    // chartOptionsArea = this.node
     console.log(searchBar)
     console.log(e.target)
     if (searchBar.contains(e.target)) {
@@ -46,12 +46,28 @@ class SearchBar extends React.Component {
       this.setState(prevState => ({
         focused: true
       }))
-      return
+      return false
     }
     console.log('click outside')
-    this.handleSelect()
+    this.handleSelect(e)
+    this.setState(prevState => ({
+      focused: false
+    }))
   }
-  handleSelect () {
+  escFunction (event) {
+    if (event.keyCode === 27) {
+      this.setState(prevState => ({
+        focused: false
+      }))
+    }
+  }
+  componentDidMount () {
+    document.addEventListener('keydown', this.escFunction, false)
+  }
+  componentWillUnmount () {
+    document.removeEventListener('keydown', this.escFunction, false)
+  }
+  handleSelect (e) {
     if (!this.state.focused) {
       // attach/remove event handler
       document.addEventListener('click', this.handleOutsideClick, false)
@@ -59,12 +75,15 @@ class SearchBar extends React.Component {
         focused: true
       }))
     } else {
-      document.removeEventListener('click', this.handleOutsideClick, false)
-      this.setState(prevState => ({
-        focused: false
-      }))
+      const searchBar = ReactDOM.findDOMNode(this)
+      if (searchBar.contains(e.target)) {
+        this.setState(prevState => ({
+          focused: true
+        }))
+      } else {
+        document.removeEventListener('click', this.handleOutsideClick, false)
+      }
     }
-    
   }
 
   onChange (e, v) {
@@ -83,8 +102,9 @@ class SearchBar extends React.Component {
     this.setState({ focused: true })
     // this.onFocus();
   }
-  handleclear () {
+  handleClear () {
     console.log('clearing input')
+    this.setState({ value: '' })
   }
   onBlur () {
     console.log('unfocused')
@@ -103,7 +123,7 @@ class SearchBar extends React.Component {
       <ThemeContext.Consumer>
         {theme => (
           <SearchBarWrapper
-            onClick={() => this.handleSelect()}
+            onClick={e => this.handleSelect(e)}
             {...theme}
             {...this.state}
           >
@@ -123,21 +143,20 @@ class SearchBar extends React.Component {
                   }}
                   type='search'
                   theme='filled'
-                
                 />
               </SearchBarIconWrapper>
-              <SearchBarClearIconWrapper>
-                  {this.state.value != '' ? 
+              <SearchBarClearIconWrapper onClick={() => this.handleClear()}>
                 <Icon
                   fill={theme.searchClearIconColor}
                   style={{
                     fontSize: '25px',
+                    visibility: this.state.value != '' ? 'visible' : 'hidden',
                     color: theme.searchClearIconColor
                   }}
                   type='close'
                   theme='filled'
-                  onClick={() => this.handleClear()}
-                /> : null}
+                />
+
               </SearchBarClearIconWrapper>
               <Transition
                 in={this.state.focused}
