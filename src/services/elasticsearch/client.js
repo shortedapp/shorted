@@ -28,7 +28,7 @@ throw error;
  * @return {[type]}              response from elasticsearch
  */
 export function search(searchString) {
-    const path = `${elasticsearchConfig.indexNames}/_search`;
+    const path = `${elasticsearchConfig.index}/_search`;
     const session = axios.create({
       baseURL: elasticsearchConfig.hostname,
       auth: elasticsearchConfig.authentication,

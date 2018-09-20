@@ -17,8 +17,8 @@ export const CustomInput = styled.input`
     position: absolute;
     z-index: 20;
     padding: 0.5em;
-    margin-right: 0px;
-    margin-left: 55px;
+    padding-right: 45px;
+    padding-left: 55px;
     display: block;
     width: ${props => (props.focused ? `100%` : `100%`)};
     transition: ${props => `${props.duration}ms ease-in`};
@@ -79,6 +79,17 @@ export const SearchBarIconWrapper = styled.div`
     height: ${props => (props.focused ? 40 : 45)}px;
     align-self: center;
     margin-left: 10px;
+    transition-duration: 150ms;
+    z-index: 22;
+`;
+export const SearchBarClearIconWrapper = styled.div`
+    position: absolute;
+    border-radius: 50px;
+    display: grid;
+    background: ${props => (props.focused ? props.searchClearIconBackgroundFocused : props.searchClearIconBackgroundUnfocused)};
+    align-items: center;
+    align-self: center;
+    margin-left: 385px;
     transition-duration: 150ms;
     z-index: 20;
 `;

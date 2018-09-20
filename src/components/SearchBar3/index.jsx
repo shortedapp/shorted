@@ -2,13 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Transition from 'react-transition-group/Transition'
 
-import { search } from 'src/services/elasticsearch/client';
+import { search } from 'src/services/elasticsearch/client'
 
 import { ThemeContext } from '../../theme-context'
 import { Icon } from 'antd'
 import {
   SearchBarWrapper,
   SearchBarIconWrapper,
+  SearchBarClearIconWrapper,
   CustomInput,
   PrimaryColumn,
   DropDown,
@@ -38,24 +39,32 @@ class SearchBar extends React.Component {
   handleOutsideClick (e) {
     const searchBar = ReactDOM.findDOMNode(this)
     // chartOptionsArea = this.node
+    console.log(searchBar)
+    console.log(e.target)
     if (searchBar.contains(e.target)) {
       console.log('click inside')
+      this.setState(prevState => ({
+        focused: true
+      }))
       return
     }
     console.log('click outside')
     this.handleSelect()
   }
   handleSelect () {
-   
     if (!this.state.focused) {
       // attach/remove event handler
       document.addEventListener('click', this.handleOutsideClick, false)
+      this.setState(prevState => ({
+        focused: true
+      }))
     } else {
       document.removeEventListener('click', this.handleOutsideClick, false)
+      this.setState(prevState => ({
+        focused: false
+      }))
     }
-    this.setState(prevState => ({
-      focused: !prevState.focused
-    }))
+    
   }
 
   onChange (e, v) {
@@ -74,7 +83,9 @@ class SearchBar extends React.Component {
     this.setState({ focused: true })
     // this.onFocus();
   }
-
+  handleclear () {
+    console.log('clearing input')
+  }
   onBlur () {
     console.log('unfocused')
     if (this.state.value !== '') {
@@ -112,9 +123,22 @@ class SearchBar extends React.Component {
                   }}
                   type='search'
                   theme='filled'
-                  onClick={() => this.handleSelect()}
+                
                 />
               </SearchBarIconWrapper>
+              <SearchBarClearIconWrapper>
+                  {this.state.value != '' ? 
+                <Icon
+                  fill={theme.searchClearIconColor}
+                  style={{
+                    fontSize: '25px',
+                    color: theme.searchClearIconColor
+                  }}
+                  type='close'
+                  theme='filled'
+                  onClick={() => this.handleClear()}
+                /> : null}
+              </SearchBarClearIconWrapper>
               <Transition
                 in={this.state.focused}
                 timeout={duration}
@@ -136,11 +160,11 @@ class SearchBar extends React.Component {
                 )}
               </Transition>
               {this.state.value && this.state.focused
-                ? <DropDown {...theme} >
+                ? <DropDown {...theme}>
                   <Results>
-                    results go here
-                  </Results>
-                  </DropDown>
+                      results go here
+                    </Results>
+                </DropDown>
                 : null}
 
             </PrimaryColumn>
