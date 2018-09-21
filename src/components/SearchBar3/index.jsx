@@ -116,7 +116,6 @@ class SearchBar extends React.Component {
   }
 
   render () {
-    const results = search(this.state.value)
     return (
       <ThemeContext.Consumer>
         {theme => (
