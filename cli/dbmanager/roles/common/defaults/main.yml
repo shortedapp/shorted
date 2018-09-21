@@ -1,0 +1,15 @@
+packages:
+  base:
+    - htop
+    - lsof
+    - python3-pip
+    - git
+    - software-properties-common
+  container:
+    - docker
+
+epel_repo: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+pip_install_packages:
+  - name: docker-py
+  - name: docker-compose

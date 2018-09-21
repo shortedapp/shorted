@@ -1,0 +1,12 @@
+source:
+    csv:
+        path: /Users/castlemilk/projects/shorted/data/companies/ASXListedCompanies.csv
+        columns: [name, code, sector]
+destination:
+    elasticsearch:
+        host: localhost
+        port: 9200
+        username: ''
+        password: ''
+        index: companies
+        index_mappings_dir: mappings/companies

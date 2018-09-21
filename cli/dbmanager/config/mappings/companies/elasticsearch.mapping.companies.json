@@ -1,0 +1,66 @@
+{
+    "mappings": {
+        "properties": {
+            "name": {
+                "type": "text",
+                "analyzer": "english",
+                "copy_to": "full_description",
+                "fields": {
+                    "std": {
+                        "type": "text",
+                        "analyzer": "standard"
+                    },
+                    "ngram": {
+                        "type": "text",
+                        "analyzer": "NGramAnalyzer",
+                        "search_analyzer": "standard"
+                    },
+                    "shingles": {
+                        "type": "text",
+                        "analyzer": "ShingleAnalyzer"
+                    }
+                }
+            },
+            "code": {
+                "type": "text",
+                "analyzer": "english",
+                "copy_to": "full_description",
+                "fields": {
+                    "std": {
+                        "type": "text",
+                        "analyzer": "standard"
+                    },
+                    "ngram": {
+                        "type": "text",
+                        "analyzer": "NGramAnalyzer",
+                        "search_analyzer": "standard"
+                    },
+                    "shingles": {
+                        "type": "text",
+                        "analyzer": "ShingleAnalyzer"
+                    }
+                }
+            },
+            "sector": {
+                "type": "text",
+                "analyzer": "english",
+                "copy_to": "full_description",
+                "fields": {
+                    "std": {
+                        "type": "text",
+                        "analyzer": "standard"
+                    },
+                    "ngram": {
+                        "type": "text",
+                        "analyzer": "NGramAnalyzer",
+                        "search_analyzer": "standard"
+                    },
+                    "shingles": {
+                        "type": "text",
+                        "analyzer": "ShingleAnalyzer"
+                    }
+                }
+            }
+        }
+    }
+}

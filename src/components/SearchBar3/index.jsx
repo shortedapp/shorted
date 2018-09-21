@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Transition from 'react-transition-group/Transition'
-
-import { search } from 'src/services/elasticsearch/client'
-
+import SearchResults from '../SearchResults3';
 import { ThemeContext } from '../../theme-context'
 import { Icon } from 'antd'
 import {
@@ -13,7 +11,7 @@ import {
   CustomInput,
   PrimaryColumn,
   DropDown,
-  Results,
+  ResultsWrapper,
   transitionStyles,
   duration
 } from './style'
@@ -118,7 +116,7 @@ class SearchBar extends React.Component {
   }
 
   render () {
-    console.log(this.state.focused)
+    const results = search(this.state.value)
     return (
       <ThemeContext.Consumer>
         {theme => (
@@ -149,8 +147,8 @@ class SearchBar extends React.Component {
                 <Icon
                   fill={theme.searchClearIconColor}
                   style={{
-                    fontSize: '25px',
-                    visibility: this.state.value != '' ? 'visible' : 'hidden',
+                    fontSize: '15px',
+                    visibility: this.state.value != '' && this.state.focused ? 'visible' : 'hidden',
                     color: theme.searchClearIconColor
                   }}
                   type='close'
@@ -180,9 +178,9 @@ class SearchBar extends React.Component {
               </Transition>
               {this.state.value && this.state.focused
                 ? <DropDown {...theme}>
-                  <Results>
-                      results go here
-                    </Results>
+                  <ResultsWrapper>
+                      <SearchResults query={this.state.value}/>
+                    </ResultsWrapper>
                 </DropDown>
                 : null}
 

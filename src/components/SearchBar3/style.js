@@ -50,7 +50,7 @@ export const DropDown = styled.div`
         'results';
 `;
 
-export const Results = styled.div`
+export const ResultsWrapper = styled.div`
     grid-area: results;
     margin-left: 10px;
 `
