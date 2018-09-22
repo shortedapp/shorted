@@ -1,4 +1,5 @@
 import json
+import inspect
 import os
 from requests import Request, Session
 
@@ -8,7 +9,7 @@ from .exceptions import UnableToLoadMapping, UnableToLoadProperties, FailedToCre
     FailedToIndexRecord
 
 
-from .models import Name, Nutrients, Profile
+from .models import Company
 
 
 class ElasticsearchIndex(object):
@@ -22,41 +23,48 @@ class ElasticsearchIndex(object):
         self.port = config['port'] if config.get('port') else '9200'
         self.xpack = config['xpack'] if config.get('xpack') else False
         if self.xpack:
-            self.username = config['username'] if config.get('username') else 'elastic'
-            self.password = config['password'] if config.get('password') else 'changeme'
-        self.index_name = config['index'] if config.get('index') else 'nutry'
-        self.type = 'names'
+            self.username = config['username'] if config.get(
+                'username') else 'elastic'
+            self.password = config['password'] if config.get(
+                'password') else 'changeme'
+        self.index_name = config['index']['name'] if config.get(
+            'index') else 'companies'
+        self.type = 'companies'
         self.mappings = dict()
+        self.session = None
         self.secure = config['secure'] if config.get('secure') else False
         self.scheme = 'https' if self.secure else 'http'
         self.prefix = config['prefix'] if config.get('prefix') else ''
-        self.index_mapping_dir = config['index_mapping_dir'] \
-            if config.get('index_mapping_dir') else \
+        self.index_mapping_dir = config['index']['mapping_dir'] \
+            if config.get('index') else \
             os.path.dirname(os.path.dirname(__file__))
         self.properties_path = config['properties_dir'] \
             if config.get('properties_dir') else \
-            os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config', 'elasticsearch.properties.json')
+            os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                         'config', 'elasticsearch.properties.json')
 
         self.url = '{scheme}://{host}:{port}{prefix}'.format(scheme=self.scheme, host=self.host, port=self.port,
                                                              prefix='/' + self.prefix if self.prefix else '')
-        try:
-            self.load_mapping_config()
-        except Exception:
-            raise UnableToLoadMapping('cannot load mapping')
+        self.load_mapping_config()
         try:
             self.properties = load_index_properties(self.properties_path)
         except Exception:
             raise UnableToLoadProperties(self.properties_path)
 
     def load_mapping_config(self, config_dir=None):
-        for index, config in self.config['indexes'].items():
-            config_path = os.path.join(config_dir if config_dir else self.mapping_dir,
-                                       'config', config['mapping'])
-            try:
-                self.mappings[index] = load_mapping(config_path)
-            except Exception:
-                UnableToLoadMapping(config_path)
+        config_path = os.path.join('config', config_dir if config_dir else self.index_mapping_dir,
+                                   self.config['index']['mapping_file'])
+        try:
+            self.mappings[self.config['index']['name']
+                          ] = load_mapping(config_path)
+        except Exception:
+            UnableToLoadMapping(config_path)
         return self.mappings
+
+    def create_session(self):
+        self.session = Session()
+        if self.xpack:
+            self.session.auth = (self.username, self.password)
 
     def add_record(self, record, index_name=None, type=None):
         """
@@ -64,21 +72,21 @@ class ElasticsearchIndex(object):
         :param Record record:
         :return:
         """
-        if not isinstance(record, Name) and not isinstance(record, Nutrients) and not isinstance(record, Profile):
+        if not isinstance(record, Company):
             raise Exception('invalid input during add_record')
         path = "{url}/{index}/doc/{id}".format(url=self.url,
-                                             index=index_name if index_name else self.index_name,
-                                             id=record.get_id())
-        session = Session()
-        if self.xpack:
-            session.auth = (self.username, self.password)
-        headers = {'content-type': 'application/json', 'Accept': 'application/json'}
+                                               index=index_name if index_name else self.index_name,
+                                               id=record.get_id())
+        if not self.session:
+            self.create_session()
+        headers = {'content-type': 'application/json',
+                   'Accept': 'application/json'}
         request = Request('PUT',
                           path,
                           data=record.get_indexable_document(),
                           headers=headers)
-        prepped = session.prepare_request(request)
-        response = session.send(prepped)
+        prepped = self.session.prepare_request(request)
+        response = self.session.send(prepped)
         if response.status_code != 200 and response.status_code != 201:
             raise FailedToIndexRecord(response, record)
         else:
@@ -89,11 +97,15 @@ class ElasticsearchIndex(object):
         Removes a given elasticsearch index
         :return:
         """
-        path = "{url}/{index}".format(url=self.url, index=self.index_name if not index_name else index_name)
+        path = "{url}/{index}".format(url=self.url,
+                                      index=self.index_name if not index_name else index_name)
+        if not self.get_index(index_name):
+            return True
         session = Session()
         if self.xpack:
             session.auth = (self.username, self.password)
-        headers = {'content-type': 'application/json', 'Accept': 'application/json'}
+        headers = {'content-type': 'application/json',
+                   'Accept': 'application/json'}
         request = Request('DELETE', path, headers=headers)
         prepped = session.prepare_request(request)
         response = session.send(prepped)
@@ -107,11 +119,13 @@ class ElasticsearchIndex(object):
         fetch index information
         :return:
         """
-        path = "{url}/{index}".format(url=self.url, index=index_name if index_name else self.index_name)
+        path = "{url}/{index}".format(url=self.url,
+                                      index=index_name if index_name else self.index_name)
         session = Session()
         if self.xpack:
             session.auth = (self.username, self.password)
-        headers = {'content-type': 'application/json', 'Accept': 'application/json'}
+        headers = {'content-type': 'application/json',
+                   'Accept': 'application/json'}
         request = Request('GET', path, headers=headers)
         prepped = session.prepare_request(request)
         response = session.send(prepped)
@@ -152,9 +166,13 @@ class ElasticsearchIndex(object):
         """
         Generate request for creating index with desired properties
         """
-        path = "{url}/{index_name}".format(url=self.url, index_name=index_name if index_name else self.index_name)
-        props = lambda x: self.properties[x] if self.properties.get(x) else None
-        headers = {'content-type': 'application/json', 'Accept': 'application/json'}
+        path = "{url}/{index_name}".format(
+            url=self.url, index_name=index_name if index_name else self.index_name)
+
+        def props(x): return self.properties[x] if self.properties.get(
+            x) else None
+        headers = {'content-type': 'application/json',
+                   'Accept': 'application/json'}
         body = {"settings": {}}
         if self.properties:
             if props("index"):
@@ -164,7 +182,7 @@ class ElasticsearchIndex(object):
             if props("similarity"):
                 body["settings"]["similarity"] = props("similarity")
         if self.mappings[index_name if index_name else 'names']:
-            body["mappings"] = {'doc': self.mappings[index_name]['mappings'] }
+            body["mappings"] = {'doc': self.mappings[index_name]['mappings']}
         body = json.dumps(body)
         request = Request('PUT', path, data=body, headers=headers)
         return request

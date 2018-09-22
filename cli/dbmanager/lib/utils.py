@@ -41,7 +41,7 @@ def load_mapping(mapping_file_path):
             mapping_dict = json.load(fp)
         return mapping_dict
     except IOError:
-        print('mapping file not found')
+        print("mapping file not found: {}".format(mapping_file_path))
         return None
 
 

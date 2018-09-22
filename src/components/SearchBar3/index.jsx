@@ -1,20 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Transition from 'react-transition-group/Transition'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Transition from 'react-transition-group/Transition';
 import SearchResults from '../SearchResults3';
-import { ThemeContext } from '../../theme-context'
-import { Icon } from 'antd'
+import {ThemeContext} from '../../theme-context';
+import {Icon} from 'antd';
 import {
-  SearchBarWrapper,
-  SearchBarIconWrapper,
-  SearchBarClearIconWrapper,
-  CustomInput,
-  PrimaryColumn,
-  DropDown,
-  ResultsWrapper,
-  transitionStyles,
-  duration
-} from './style'
+    SearchBarWrapper,
+    SearchBarIconWrapper,
+    SearchBarClearIconWrapper,
+    CustomInput,
+    PrimaryColumn,
+    DropDown,
+    ResultsWrapper,
+    transitionStyles,
+    duration,
+} from './style';
 
 /**
  * SearchBar
@@ -26,170 +26,178 @@ import {
  *
  */
 class SearchBar extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      value: '',
-      focused: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: '',
+            focused: false,
+        };
+        this.handleOutsideClick = this.handleOutsideClick.bind(this);
+        this.escFunction = this.escFunction.bind(this);
     }
-    this.handleOutsideClick = this.handleOutsideClick.bind(this)
-    this.escFunction = this.escFunction.bind(this)
-  }
-  handleOutsideClick (e) {
-    const searchBar = ReactDOM.findDOMNode(this)
-    console.log(searchBar)
-    console.log(e.target)
-    if (searchBar.contains(e.target)) {
-      console.log('click inside')
-      this.setState(prevState => ({
-        focused: true
-      }))
-      return false
-    }
-    console.log('click outside')
-    this.handleSelect(e)
-    this.setState(prevState => ({
-      focused: false
-    }))
-  }
-  escFunction (event) {
-    if (event.keyCode === 27) {
-      this.setState(prevState => ({
-        focused: false
-      }))
-    }
-  }
-  componentDidMount () {
-    document.addEventListener('keydown', this.escFunction, false)
-  }
-  componentWillUnmount () {
-    document.removeEventListener('keydown', this.escFunction, false)
-  }
-  handleSelect (e) {
-    if (!this.state.focused) {
-      // attach/remove event handler
-      document.addEventListener('click', this.handleOutsideClick, false)
-      this.setState(prevState => ({
-        focused: true
-      }))
-    } else {
-      const searchBar = ReactDOM.findDOMNode(this)
-      if (searchBar.contains(e.target)) {
+    handleOutsideClick(e) {
+        const searchBar = ReactDOM.findDOMNode(this);
+        console.log(searchBar);
+        console.log(e.target);
+        if (searchBar.contains(e.target)) {
+            console.log('click inside');
+            this.setState(prevState => ({
+                focused: true,
+            }));
+            return false;
+        }
+        console.log('click outside');
+        this.handleSelect(e);
         this.setState(prevState => ({
-          focused: true
-        }))
-      } else {
-        document.removeEventListener('click', this.handleOutsideClick, false)
-      }
+            focused: false,
+        }));
     }
-  }
-
-  onChange (e, v) {
-    console.log(e, v)
-    console.log(e.target.value)
-    this.setState({ value: e.target.value })
-  }
-  onFocus () {
-    console.log('focused')
-    // this.setState(prevState => ({
-    //     focused: !prevState.focused,
-    // }));
-  }
-  onClick () {
-    console.log('search clicked')
-    this.setState({ focused: true })
-    // this.onFocus();
-  }
-  handleClear () {
-    console.log('clearing input')
-    this.setState({ value: '' })
-  }
-  onBlur () {
-    console.log('unfocused')
-    if (this.state.value !== '') {
-      this.setState({ focused: false })
-    } else {
-      this.setState(prevState => ({
-        focused: !prevState.focused
-      }))
+    escFunction(event) {
+        if (event.keyCode === 27) {
+            this.setState(prevState => ({
+                focused: false,
+            }));
+        }
     }
-  }
+    componentDidMount() {
+        document.addEventListener('keydown', this.escFunction, false);
+    }
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.escFunction, false);
+    }
+    handleSelect(e) {
+        if (!this.state.focused) {
+            // attach/remove event handler
+            document.addEventListener('click', this.handleOutsideClick, false);
+            this.setState(prevState => ({
+                focused: true,
+            }));
+        } else {
+            const searchBar = ReactDOM.findDOMNode(this);
+            if (searchBar.contains(e.target)) {
+                this.setState(prevState => ({
+                    focused: true,
+                }));
+            } else {
+                document.removeEventListener(
+                    'click',
+                    this.handleOutsideClick,
+                    false,
+                );
+            }
+        }
+    }
 
-  render () {
-    const results = search(this.state.value)
-    return (
-      <ThemeContext.Consumer>
-        {theme => (
-          <SearchBarWrapper
-            onClick={e => this.handleSelect(e)}
-            {...theme}
-            {...this.state}
-          >
-            <PrimaryColumn {...theme}>
-              <SearchBarIconWrapper {...theme} {...this.state}>
-                <Icon
-                  fill={
-                    this.state.focused
-                      ? theme.searchIconColorFocused
-                      : theme.searchIconColorUnfocused
-                  }
-                  style={{
-                    fontSize: '25px',
-                    color: this.state.focused
-                      ? theme.searchIconColorFocused
-                      : theme.searchIconColorUnfocused
-                  }}
-                  type='search'
-                  theme='filled'
-                />
-              </SearchBarIconWrapper>
-              <SearchBarClearIconWrapper onClick={() => this.handleClear()}>
-                <Icon
-                  fill={theme.searchClearIconColor}
-                  style={{
-                    fontSize: '15px',
-                    visibility: this.state.value != '' && this.state.focused ? 'visible' : 'hidden',
-                    color: theme.searchClearIconColor
-                  }}
-                  type='close'
-                  theme='filled'
-                />
+    onChange(e, v) {
+        console.log(e, v);
+        console.log(e.target.value);
+        this.setState({value: e.target.value});
+    }
+    onFocus() {
+        console.log('focused');
+        // this.setState(prevState => ({
+        //     focused: !prevState.focused,
+        // }));
+    }
+    onClick() {
+        console.log('search clicked');
+        this.setState({focused: true});
+        // this.onFocus();
+    }
+    handleClear() {
+        console.log('clearing input');
+        this.setState({value: ''});
+    }
+    onBlur() {
+        console.log('unfocused');
+        if (this.state.value !== '') {
+            this.setState({focused: false});
+        } else {
+            this.setState(prevState => ({
+                focused: !prevState.focused,
+            }));
+        }
+    }
 
-              </SearchBarClearIconWrapper>
-              <Transition
-                in={this.state.focused}
-                timeout={duration}
-                unmountOnExit
-              >
-                {state => (
-                  <CustomInput
-                    autoFocus
-                    {...theme}
-                    duration={duration}
-                    {...transitionStyles[state]}
-                    type='text'
-                    placeholder={this.state.focused ? 'Company' : ''}
-                    onFocus={() => this.onFocus()}
-                    // onBlur={() => this.onBlur()}
-                    onChange={(e, v) => this.onChange(e, v)}
-                    value={this.state.value}
-                  />
+    render() {
+        return (
+            <ThemeContext.Consumer>
+                {theme => (
+                    <SearchBarWrapper
+                        onClick={e => this.handleSelect(e)}
+                        {...theme}
+                        {...this.state}>
+                        <PrimaryColumn {...theme}>
+                            <SearchBarIconWrapper {...theme} {...this.state}>
+                                <Icon
+                                    fill={
+                                        this.state.focused
+                                            ? theme.searchIconColorFocused
+                                            : theme.searchIconColorUnfocused
+                                    }
+                                    style={{
+                                        fontSize: '25px',
+                                        color: this.state.focused
+                                            ? theme.searchIconColorFocused
+                                            : theme.searchIconColorUnfocused,
+                                    }}
+                                    type="search"
+                                    theme="filled"
+                                />
+                            </SearchBarIconWrapper>
+                            <SearchBarClearIconWrapper
+                                onClick={() => this.handleClear()}>
+                                <Icon
+                                    fill={theme.searchClearIconColor}
+                                    style={{
+                                        fontSize: '15px',
+                                        visibility:
+                                            this.state.value != '' &&
+                                            this.state.focused
+                                                ? 'visible'
+                                                : 'hidden',
+                                        color: theme.searchClearIconColor,
+                                    }}
+                                    type="close"
+                                    theme="filled"
+                                />
+                            </SearchBarClearIconWrapper>
+                            <Transition
+                                in={this.state.focused}
+                                timeout={duration}
+                                unmountOnExit>
+                                {state => (
+                                    <CustomInput
+                                        autoFocus
+                                        {...theme}
+                                        duration={duration}
+                                        {...transitionStyles[state]}
+                                        type="text"
+                                        placeholder={
+                                            this.state.focused ? 'Company' : ''
+                                        }
+                                        onFocus={() => this.onFocus()}
+                                        // onBlur={() => this.onBlur()}
+                                        onChange={(e, v) => this.onChange(e, v)}
+                                        value={this.state.value}
+                                    />
+                                )}
+                            </Transition>
+                            {this.state.value && this.state.focused ? (
+                                <DropDown {...theme}>
+                                    <ResultsWrapper>
+                                        <SearchResults
+                                            query={this.state.value}
+                                        />
+                                    </ResultsWrapper>
+                                </DropDown>
+                            ) : null}
+                        </PrimaryColumn>
+                    </SearchBarWrapper>
                 )}
-              </Transition>
-              {this.state.value && this.state.focused
-                ? <DropDown {...theme}>
-                  <ResultsWrapper>
-                      <SearchResults query={this.state.value}/>
-                    </ResultsWrapper>
-                </DropDown>
-                : null}
-
-            </PrimaryColumn>
-          </SearchBarWrapper>
-        )}
-      </ThemeContext.Consumer>
-    )
-  }
+            </ThemeContext.Consumer>
+        );
+    }
 }
 
-export default SearchBar
+export default SearchBar;

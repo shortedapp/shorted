@@ -17,7 +17,14 @@ elasticsearch.down:
 elasticsearch.restart:
 	docker-compose -f ./elasticsearch/docker-compose.yaml restart
 
-asx.index:
+index.init:
+	cd cli/dbmanager; . env/bin/activate; python dbmanager.py -ci
+index.create:
+	cd cli/dbmanager; . env/bin/activate; python dbmanager.py -i
+index.delete:
+	cd cli/dbmanager; . env/bin/activate; python dbmanager.py -di
+index.recreate:
+	cd cli/dbmanager; . env/bin/activate; python dbmanager.py -ri
 
 
 ## Show help

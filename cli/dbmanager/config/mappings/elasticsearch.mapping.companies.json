@@ -41,7 +41,7 @@
                     }
                 }
             },
-            "sector": {
+            "industry": {
                 "type": "text",
                 "analyzer": "english",
                 "copy_to": "full_description",
