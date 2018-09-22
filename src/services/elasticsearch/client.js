@@ -1,25 +1,26 @@
 import axios from 'axios';
-import { elasticsearchConfig } from 'src/config';
+import {elasticsearchConfig} from 'src/config';
 
-import { searchQuery } from './queries';
+import {searchQuery} from './queries';
 
 export function parseResults(response) {
     if (response.status !== 200) {
-      return null;
+        return null;
     }
+    console.log(response);
     return {
-      hits: response.data.hits.total,
-      max_score: response.data.hits.max_score,
-      items: response.data.hits.hits,
+        hits: response.data.hits.total,
+        max_score: response.data.hits.max_score,
+        items: response.data.hits.hits,
     };
-  }
-export function checkStatus(response) {
-if (response.status >= 200 && response.status < 300) {
-    return response;
 }
-const error = new Error(response.statusText);
-error.response = response;
-throw error;
+export function checkStatus(response) {
+    if (response.status >= 200 && response.status < 300) {
+        return response;
+    }
+    const error = new Error(response.statusText);
+    error.response = response;
+    throw error;
 }
 
 /**
@@ -30,16 +31,17 @@ throw error;
 export function search(searchString) {
     const path = `${elasticsearchConfig.index}/_search`;
     const session = axios.create({
-      baseURL: elasticsearchConfig.hostname,
-      auth: elasticsearchConfig.authentication,
-      headers: { 'Content-Type': 'application/json' },
+        baseURL: elasticsearchConfig.hostname,
+        auth: elasticsearchConfig.authentication,
+        headers: {'Content-Type': 'application/json'},
     });
-  
+
     const body = {
-      size: 20,
-      query: searchQuery(searchString),
+        size: 20,
+        query: searchQuery(searchString),
     };
-    return session.post(path, body)
-      .then(checkStatus)
-      .then(parseResults);
-  }
+    return session
+        .post(path, body)
+        .then(checkStatus)
+        .then(parseResults);
+}

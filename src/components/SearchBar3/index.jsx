@@ -88,7 +88,6 @@ class SearchBar extends React.Component {
         }
     }
 
-<<<<<<< HEAD
     onChange(e, v) {
         console.log(e, v);
         console.log(e.target.value);
@@ -119,46 +118,6 @@ class SearchBar extends React.Component {
             }));
         }
     }
-=======
-  render () {
-    return (
-      <ThemeContext.Consumer>
-        {theme => (
-          <SearchBarWrapper
-            onClick={e => this.handleSelect(e)}
-            {...theme}
-            {...this.state}
-          >
-            <PrimaryColumn {...theme}>
-              <SearchBarIconWrapper {...theme} {...this.state}>
-                <Icon
-                  fill={
-                    this.state.focused
-                      ? theme.searchIconColorFocused
-                      : theme.searchIconColorUnfocused
-                  }
-                  style={{
-                    fontSize: '25px',
-                    color: this.state.focused
-                      ? theme.searchIconColorFocused
-                      : theme.searchIconColorUnfocused
-                  }}
-                  type='search'
-                  theme='filled'
-                />
-              </SearchBarIconWrapper>
-              <SearchBarClearIconWrapper onClick={() => this.handleClear()}>
-                <Icon
-                  fill={theme.searchClearIconColor}
-                  style={{
-                    fontSize: '15px',
-                    visibility: this.state.value != '' && this.state.focused ? 'visible' : 'hidden',
-                    color: theme.searchClearIconColor
-                  }}
-                  type='close'
-                  theme='filled'
-                />
->>>>>>> ac93657ff355531977b6f0b89b2b41ded0b55501
 
     render() {
         return (
