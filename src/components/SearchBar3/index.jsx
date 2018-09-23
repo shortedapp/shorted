@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Transition from 'react-transition-group/Transition';
+import {search} from 'src/services/elasticsearch/client';
 import SearchResults from '../SearchResults3';
 import {ThemeContext} from '../../theme-context';
 import {Icon} from 'antd';
@@ -29,24 +30,23 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: '',
+            query: '',
+            error: false,
             focused: false,
+            results: null,
+            isLoading: false,
         };
         this.handleOutsideClick = this.handleOutsideClick.bind(this);
         this.escFunction = this.escFunction.bind(this);
     }
     handleOutsideClick(e) {
         const searchBar = ReactDOM.findDOMNode(this);
-        console.log(searchBar);
-        console.log(e.target);
         if (searchBar.contains(e.target)) {
-            console.log('click inside');
             this.setState(prevState => ({
                 focused: true,
             }));
             return false;
         }
-        console.log('click outside');
         this.handleSelect(e);
         this.setState(prevState => ({
             focused: false,
@@ -87,30 +87,46 @@ class SearchBar extends React.Component {
             }
         }
     }
+    fetchResults() {
+        console.log('fetching results');
+        search(this.state.query)
+            .then(result =>
+                this.setState({
+                    results: result,
+                    isLoading: false,
+                }),
+            )
+            .catch(error =>
+                this.setState({
+                    error,
+                    isLoading: false,
+                }),
+            );
+    }
 
-    onChange(e, v) {
-        console.log(e, v);
+    onChange(e) {
+        console.log(e);
         console.log(e.target.value);
-        this.setState({value: e.target.value});
+        this.setState({query: e.target.value}, () => {
+            if (this.state.query && this.state.query.length > 1) {
+                this.fetchResults();
+            }
+        });
     }
     onFocus() {
-        console.log('focused');
         // this.setState(prevState => ({
         //     focused: !prevState.focused,
         // }));
     }
     onClick() {
-        console.log('search clicked');
         this.setState({focused: true});
         // this.onFocus();
     }
     handleClear() {
-        console.log('clearing input');
-        this.setState({value: ''});
+        this.setState({query: ''});
     }
     onBlur() {
-        console.log('unfocused');
-        if (this.state.value !== '') {
+        if (this.state.query !== '') {
             this.setState({focused: false});
         } else {
             this.setState(prevState => ({
@@ -120,6 +136,7 @@ class SearchBar extends React.Component {
     }
 
     render() {
+        console.log(this.state.results);
         return (
             <ThemeContext.Consumer>
                 {theme => (
@@ -152,7 +169,7 @@ class SearchBar extends React.Component {
                                     style={{
                                         fontSize: '15px',
                                         visibility:
-                                            this.state.value != '' &&
+                                            this.state.query !== '' &&
                                             this.state.focused
                                                 ? 'visible'
                                                 : 'hidden',
@@ -177,17 +194,16 @@ class SearchBar extends React.Component {
                                             this.state.focused ? 'Company' : ''
                                         }
                                         onFocus={() => this.onFocus()}
-                                        // onBlur={() => this.onBlur()}
-                                        onChange={(e, v) => this.onChange(e, v)}
-                                        value={this.state.value}
+                                        onChange={e => this.onChange(e)}
+                                        value={this.state.query}
                                     />
                                 )}
                             </Transition>
-                            {this.state.value && this.state.focused ? (
+                            {this.state.query && this.state.focused ? (
                                 <DropDown {...theme}>
                                     <ResultsWrapper>
                                         <SearchResults
-                                            query={this.state.value}
+                                            data={this.state.results}
                                         />
                                     </ResultsWrapper>
                                 </DropDown>

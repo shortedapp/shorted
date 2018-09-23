@@ -30,6 +30,9 @@
                         "type": "text",
                         "analyzer": "standard"
                     },
+                    "raw": {
+                        "type": "keyword"
+                    },
                     "ngram": {
                         "type": "text",
                         "analyzer": "NGramAnalyzer",

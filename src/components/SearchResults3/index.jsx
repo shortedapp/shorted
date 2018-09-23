@@ -1,44 +1,52 @@
 import React from 'react';
-import {SearchResultsWrapper, NoResults} from './style';
-import {search} from 'src/services/elasticsearch/client';
+import {
+    ResultRowName,
+    ResultRowCode,
+    ResultRowWrapper,
+    SearchResultsWrapper,
+    NoResults,
+} from './style';
+
 import {ThemeContext} from '../../theme-context';
+const ResultRow = props => (
+    <ResultRowWrapper onMouseOver={props.handleHover} selected={props.selected}>
+        <ResultRowCode>{props.row.code}</ResultRowCode>
+        <ResultRowName>{props.row.name}</ResultRowName>
+    </ResultRowWrapper>
+);
 class SearchResults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: null,
-            isLoading: false,
-            error: null,
+            rowLimit: 10,
+            selectedRow: null,
         };
     }
     componentDidMount() {
         this.setState({isLoading: true});
-        search(this.props.query)
-            .then(result =>
-                this.setState({
-                    data: result.data,
-                    isLoading: false,
-                }),
-            )
-            .catch(error =>
-                this.setState({
-                    error,
-                    isLoading: false,
-                }),
-            );
+    }
+    onHover(code) {
+        console.log(code);
+        this.setState({selectedRow: code});
     }
     render() {
-        const resultsView = search(this.props.query);
+        // const testData = this.props.data.items.reduce();
+        const resultsView = this.props.data ? (
+            this.props.data.items.map(result => (
+                <ResultRow
+                    handleHover={() => this.onHover(result._source.code)}
+                    selected={this.state.selectedRow === result._source.code}
+                    key={result._source.code}
+                    row={result._source}
+                />
+            ))
+        ) : (
+            <NoResults>No Results Found</NoResults>
+        );
         return (
             <ThemeContext.Consumer>
                 {theme => (
-                    <SearchResultsWrapper>
-                        {this.props.results ? (
-                            resultsView
-                        ) : (
-                            <NoResults>No Results Found</NoResults>
-                        )}
-                    </SearchResultsWrapper>
+                    <SearchResultsWrapper>{resultsView}</SearchResultsWrapper>
                 )}
             </ThemeContext.Consumer>
         );
