@@ -29,7 +29,9 @@ export const themes = {
             searchBarBorderUnfocused: 'gray',
             searchBarBorderFocused: '#1890ff',
             searchResultsDropdownBoarder: 'gray',
-            searchClearIconColor: ''
+            searchClearIconColor: '',
+            searchResultsMoreBackgroundColor: 'black',
+            searchResultsMoreColor: 'white',
         },
     },
     dark: {
@@ -60,8 +62,10 @@ export const themes = {
             searchBarBackgroundUnfocused: '#d9d9d9',
             searchBarBorderUnfocused: 'gray',
             searchBarBorderFocused: '#1890ff',
-            searchResultsDropdownBoarder: 'gray',
-            searchClearIconColor: ''
+            searchResultsDropdownBoarder: 'black',
+            searchClearIconColor: '',
+            searchResultsMoreBackgroundColor: 'black',
+            searchResultsMoreColor: 'white',
         },
     },
 };

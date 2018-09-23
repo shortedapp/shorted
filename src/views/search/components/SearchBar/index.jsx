@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Transition from 'react-transition-group/Transition';
-import {search} from 'src/services/elasticsearch/client';
-import SearchResults from '../SearchResults3';
-import {ThemeContext} from '../../theme-context';
+import SearchResults from '../SearchResults';
+import {ThemeContext} from 'src/theme-context';
 import {Icon} from 'antd';
 import {
     SearchBarWrapper,
@@ -11,8 +10,6 @@ import {
     SearchBarClearIconWrapper,
     CustomInput,
     PrimaryColumn,
-    DropDown,
-    ResultsWrapper,
     transitionStyles,
     duration,
 } from './style';
@@ -87,29 +84,6 @@ class SearchBar extends React.Component {
             }
         }
     }
-    fetchResults() {
-        search(this.state.query)
-            .then(result =>
-                this.setState({
-                    results: result,
-                    isLoading: false,
-                }),
-            )
-            .catch(error =>
-                this.setState({
-                    error,
-                    isLoading: false,
-                }),
-            );
-    }
-
-    onChange(e) {
-        this.setState({query: e.target.value}, () => {
-            if (this.state.query && this.state.query.length > 1) {
-                this.fetchResults();
-            }
-        });
-    }
     onFocus() {
         // this.setState(prevState => ({
         //     focused: !prevState.focused,
@@ -119,11 +93,8 @@ class SearchBar extends React.Component {
         this.setState({focused: true});
         // this.onFocus();
     }
-    handleClear() {
-        this.setState({query: ''});
-    }
     onBlur() {
-        if (this.state.query !== '') {
+        if (this.props.query !== '') {
             this.setState({focused: false});
         } else {
             this.setState(prevState => ({
@@ -133,7 +104,7 @@ class SearchBar extends React.Component {
     }
 
     render() {
-        console.log(this.state.results);
+        console.log(this.props.query);
         return (
             <ThemeContext.Consumer>
                 {theme => (
@@ -160,13 +131,13 @@ class SearchBar extends React.Component {
                                 />
                             </SearchBarIconWrapper>
                             <SearchBarClearIconWrapper
-                                onClick={() => this.handleClear()}>
+                                onClick={() => this.props.onClear()}>
                                 <Icon
                                     fill={theme.searchClearIconColor}
                                     style={{
                                         fontSize: '15px',
                                         visibility:
-                                            this.state.query !== '' &&
+                                            this.props.query !== '' &&
                                             this.state.focused
                                                 ? 'visible'
                                                 : 'hidden',
@@ -193,20 +164,13 @@ class SearchBar extends React.Component {
                                                 : ''
                                         }
                                         onFocus={() => this.onFocus()}
-                                        onChange={e => this.onChange(e)}
-                                        value={this.state.query}
+                                        onChange={e =>
+                                            this.props.onQueryChange(e)
+                                        }
+                                        value={this.props.query}
                                     />
                                 )}
                             </Transition>
-                            {this.state.query && this.state.focused ? (
-                                <DropDown {...theme}>
-                                    <ResultsWrapper>
-                                        <SearchResults
-                                            data={this.state.results}
-                                        />
-                                    </ResultsWrapper>
-                                </DropDown>
-                            ) : null}
                         </PrimaryColumn>
                     </SearchBarWrapper>
                 )}

@@ -30,28 +30,6 @@ export const CustomInput = styled.input`
         outline: none;
     }
 `;
-export const DropDown = styled.div`
-    position: absolute;
-    background: white;
-    z-index: 2;
-    width: 101%;
-    border: 1px solid ${props => props.searchResultsDropdownBoarder};
-    -webkit-box-shadow: 4px 4px 20px -4px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 4px 4px 20px -4px rgba(0, 0, 0, 0.75);
-    box-shadow: 4px 4px 20px -4px rgba(0, 0, 0, 0.75);
-    border-radius: 5px;
-    margin-left: -2px;
-    margin-top: -4px;
-    display: grid;
-    grid-template-rows: 60px 1fr;
-    grid-template-areas:
-        'searchbar'
-        'results';
-`;
-
-export const ResultsWrapper = styled.div`
-    grid-area: results;
-`;
 
 export const SearchBarWrapper = styled.div`
     display: flex;
@@ -67,9 +45,8 @@ export const SearchBarWrapper = styled.div`
                 ? props.searchBarBorderFocused
                 : props.searchBarBorderUnfocused};
     border-radius: ${props => (props.focused ? 15 : 50)}px;
-    width: 580px;
+    width: 100%;
     transition-duration: 0.5s;
-    position: absolute;
     top: 30px;
     z-index: 20;
 `;
@@ -91,7 +68,6 @@ export const SearchBarIconWrapper = styled.div`
     z-index: 22;
 `;
 export const SearchBarClearIconWrapper = styled.div`
-    position: absolute;
     border-radius: 50px;
     display: grid;
     background: ${props =>
@@ -100,7 +76,7 @@ export const SearchBarClearIconWrapper = styled.div`
             : props.searchClearIconBackgroundUnfocused};
     align-items: center;
     align-self: center;
-    margin-left: 555px;
+    margin-left: 96%;
     transition-duration: 150ms;
     z-index: 22;
 `;

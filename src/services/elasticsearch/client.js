@@ -28,7 +28,7 @@ export function checkStatus(response) {
  * @param  {[string]} searchString text entered into search bar
  * @return {[type]}              response from elasticsearch
  */
-export function search(searchString) {
+export function search(searchString, size = 20) {
     const path = `${elasticsearchConfig.index}/_search`;
     const session = axios.create({
         baseURL: elasticsearchConfig.hostname,
@@ -37,7 +37,7 @@ export function search(searchString) {
     });
 
     const body = {
-        size: 20,
+        size: size,
         query: searchQuery(searchString),
     };
     return session

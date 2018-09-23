@@ -1,7 +1,10 @@
 import React from 'react';
+import {Icon} from 'antd';
 import {
     ResultRowIndustryHeader,
+    ResultRowWrapperHovered,
     ResultsShowMore,
+    ResultRowImage,
     ResultRowName,
     ResultRowCode,
     ResultRowWrapper,
@@ -9,13 +12,40 @@ import {
     NoResults,
 } from './style';
 
-import {ThemeContext} from '../../theme-context';
-const ResultRow = props => (
-    <ResultRowWrapper onMouseOver={props.handleHover} selected={props.selected}>
-        <ResultRowCode>{props.row.code}</ResultRowCode>
-        <ResultRowName>{props.row.name}</ResultRowName>
-    </ResultRowWrapper>
-);
+import {ThemeContext} from 'src/theme-context';
+const ResultRow = props => {
+    const row = (
+        <ResultRowWrapper onMouseOver={props.handleHover}>
+            <ResultRowImage>
+                <Icon
+                    type="picture"
+                    theme="filled"
+                    style={{
+                        fontSize: '60px',
+                    }}
+                />
+            </ResultRowImage>
+            <ResultRowCode>{props.row.code}</ResultRowCode>
+            <ResultRowName>{props.row.name}</ResultRowName>
+        </ResultRowWrapper>
+    );
+    const rowHovered = (
+        <ResultRowWrapperHovered onMouseOver={props.handleHover}>
+            <ResultRowImage>
+                <Icon
+                    type="picture"
+                    theme="filled"
+                    style={{
+                        fontSize: '60px',
+                    }}
+                />
+            </ResultRowImage>
+            <ResultRowCode>{props.row.code}</ResultRowCode>
+            <ResultRowName>{props.row.name}</ResultRowName>
+        </ResultRowWrapperHovered>
+    );
+    return props.selected ? rowHovered : row;
+};
 class SearchResults extends React.Component {
     constructor(props) {
         super(props);
@@ -74,22 +104,14 @@ class SearchResults extends React.Component {
         ) : (
             <NoResults>No Results Found</NoResults>
         );
-        console.log(structuredResultsView);
         return (
             <ThemeContext.Consumer>
                 {theme => (
                     <SearchResultsWrapper>
-                        {structuredResultsView.length > 0 ? (
-                            structuredResultsView
-                        ) : (
+                        {resultsView.length > 0 ? (
+                            resultsView
+                        ) : this.props.query.length > 0 ? (
                             <NoResults>No Results Found</NoResults>
-                        )}
-                        {this.props.data ? (
-                            this.props.data.hits > this.state.rowLimit ? (
-                                <ResultsShowMore {...theme} href="/search">
-                                    Show More Results
-                                </ResultsShowMore>
-                            ) : null
                         ) : null}
                     </SearchResultsWrapper>
                 )}
