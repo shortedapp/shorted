@@ -150,7 +150,7 @@ class SearchBar extends React.Component {
                                             : theme.searchIconColorUnfocused
                                     }
                                     style={{
-                                        fontSize: '25px',
+                                        fontSize: this.state.focused ? '20px' : '25px',
                                         color: this.state.focused
                                             ? theme.searchIconColorFocused
                                             : theme.searchIconColorUnfocused,

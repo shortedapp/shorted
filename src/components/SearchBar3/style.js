@@ -83,8 +83,8 @@ export const SearchBarIconWrapper = styled.div`
             ? props.searchIconBackgroundFocused
             : props.searchIconBackgroundUnfocused};
     align-items: center;
-    width: ${props => (props.focused ? 40 : 45)}px;
-    height: ${props => (props.focused ? 40 : 45)}px;
+    width: ${props => (props.focused ? 30 : 35)}px;
+    height: ${props => (props.focused ? 30 : 35)}px;
     align-self: center;
     margin-left: 10px;
     transition-duration: 150ms;
