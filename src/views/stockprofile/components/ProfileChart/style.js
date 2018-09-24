@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    grid-area: profile-chart;
     justify-content: center;
     text-align: center;
     vertical-align: middle;
@@ -10,5 +9,6 @@ export const Wrapper = styled.div`
     float: right;
     margin-left: auto;
     background: gray;
-    width: 800px;
+    width: 100%;
+    height: 100%;
 `;

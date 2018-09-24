@@ -18,10 +18,11 @@ export const themes = {
 };
 export const DashboardWrapper = styled.div`
     display: grid;
+    background: ${props => props.background};
     grid-template-columns: ${props => props.width} 1fr;
     grid-template-rows: 100px 70px 80px 50px 1fr;
     grid-template-areas:
-        'logo header'
+        'logo top-nav'
         'collapse content'
         'theme content'
         'nav content'
@@ -34,8 +35,13 @@ export const ThemeWrapper = styled.div`
     background: ${props => props.background};
 `;
 export const HeaderWrapper = styled.div`
-    grid-area: header;
+    grid-area: top-nav;
     background: ${props => props.background};
+    align-self: center;
+    margin-left: 30px;
+`;
+export const SearchBarWrapper = styled.div`
+    font-size: 16px;
 `;
 export const DashboardNavbarWrapper = styled.div`
     grid-area: nav;
@@ -66,5 +72,5 @@ export const ContentWrapper = styled.div`
     padding-bottom: 20px;
     background: ${props => props.background};
     color: ${props => props.color};
-    height: 1200px;
+    height: 1300px;
 `;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const DashboardWrapper = styled.div`
+export const SummaryWrapper = styled.div`
     display: grid;
     background: ${props => props.background};
     .content {
@@ -18,8 +18,8 @@ export const DashboardWrapper = styled.div`
         }
         @media only screen and (min-width: 1280px) {
             grid-gap: 10px;
-            grid-template-columns: 2fr 3fr 3fr 2.5fr;
-            grid-template-rows: 0.7fr 0.2fr 0.4fr 0.3fr;
+            grid-template-columns: 2fr 2fr 2fr 2fr;
+            grid-template-rows: 0.1fr 0.2fr 0.7fr 0.7fr;
             grid-template-areas:
                 'top-list top-graph top-graph top-right'
                 'top-list top-graph top-graph todo'

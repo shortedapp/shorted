@@ -3,14 +3,14 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
     display: grid;
     @media only screen and (min-width: 1024px) {
-        grid-template-columns: 90px 1fr 1fr 100px 70px 1fr;
+        grid-template-columns: 120px 1fr 1fr 100px 70px 1fr;
         grid-template-rows: repeat(2, 1fr);
         grid-template-areas:
             'code name name percentage indicator graph'
             'code name name percentage indicator graph';
     }
     @media only screen and (min-width: 1280px) {
-        grid-template-columns: 90px 1fr 130px 200px 1fr;
+        grid-template-columns: 120px 1fr 130px 200px 1fr;
         grid-template-rows: repeat(2, 1fr);
         grid-template-areas:
             'code name percentage indicator graph'

@@ -6,7 +6,7 @@ import UnAuthorized from '../../../../components/UnAuthorized';
 const List = props => (
     <Wrapper>
         {props.data ? props.data.map(row => (
-            <Row theme={props.theme} {...row} />
+            <Row onMouseOver={() => props.onHover(row.code)} theme={props.theme} {...row} />
         )) : <UnAuthorized />}
     </Wrapper>
 );

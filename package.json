@@ -1,52 +1,53 @@
 {
-  "name": "shorted-web-app",
-  "description": "Shorted web app",
-  "version": "1.0.0",
-  "author": "Ben Ebsworth <ben.ebsworth@gmail.com>",
-  "dependencies": {
-    "antd": "^3.8.2",
-    "babel-plugin-styled-components": "^1.5.1",
-    "fs": "0.0.1-security",
-    "gatsby": "next",
-    "gatsby-cli": "^1.1.58",
-    "gatsby-plugin-react-helmet": "next",
-    "gatsby-plugin-styled-components": "^3.0.0-beta.3",
-    "gatsby-source-filesystem": "next",
-    "gatsby-transformer-yaml": "next",
-    "prop-types": "^15.6.2",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-helmet": "^5.2.0",
-    "react-sparklines": "^1.7.0",
-    "react-transition-group": "^2.4.0",
-    "styled-components": "^3.4.2",
-    "victory": "^30.2.0"
-  },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write 'src/**/*.js'",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "genFixtures": "if [ -d cli/sample_data/env ];then cli/sample_data/env/bin/python3 cli/sample_data/gen_json.py -f data/ -s src/fixtures/topShortsFormatted.json; else python3 cli/sample_data/gen_json.py -f data/ -s src/fixtures/topShortsFormatted.json; fi"
-  },
-  "devDependencies": {
-    "babel-eslint": "^8.2.6",
-    "babel-plugin-import": "^1.8.0",
-    "babel-plugin-recharts": "^1.1.1",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-prettier": "^2.6.2",
-    "eslint-plugin-react": "^7.11.1",
-    "gatsby-plugin-root-import": "^1.0.0",
-    "prettier": "^1.14.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/shortedapp/web"
-  }
+    "name": "shorted-web-app",
+    "description": "Shorted web app",
+    "version": "1.0.0",
+    "author": "Ben Ebsworth <ben.ebsworth@gmail.com>",
+    "dependencies": {
+        "antd": "^3.8.2",
+        "axios": "^0.18.0",
+        "babel-plugin-styled-components": "^1.5.1",
+        "fs": "0.0.1-security",
+        "gatsby": "next",
+        "gatsby-cli": "^1.1.58",
+        "gatsby-plugin-react-helmet": "next",
+        "gatsby-plugin-styled-components": "^3.0.0-beta.3",
+        "gatsby-source-filesystem": "next",
+        "gatsby-transformer-yaml": "next",
+        "prop-types": "^15.6.2",
+        "react": "^16.4.2",
+        "react-dom": "^16.4.2",
+        "react-helmet": "^5.2.0",
+        "react-sparklines": "^1.7.0",
+        "react-transition-group": "^2.4.0",
+        "styled-components": "^3.4.6",
+        "victory": "^30.2.0"
+    },
+    "keywords": [
+        "gatsby"
+    ],
+    "license": "MIT",
+    "scripts": {
+        "build": "gatsby build",
+        "develop": "ACTIVE_ENV=development gatsby develop",
+        "format": "prettier --write 'src/**/*.js'",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "genFixtures": "if [ -d cli/sample_data/env ];then cli/sample_data/env/bin/python3 cli/sample_data/gen_json.py -f data/ -s src/fixtures/topShortsFormatted.json; else python3 cli/sample_data/gen_json.py -f data/ -s src/fixtures/topShortsFormatted.json; fi"
+    },
+    "devDependencies": {
+        "babel-eslint": "^8.2.6",
+        "babel-plugin-import": "^1.8.0",
+        "babel-plugin-recharts": "^1.1.1",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-plugin-import": "^2.14.0",
+        "eslint-plugin-jsx-a11y": "^6.1.1",
+        "eslint-plugin-prettier": "^2.6.2",
+        "eslint-plugin-react": "^7.11.1",
+        "gatsby-plugin-root-import": "^1.0.2",
+        "prettier": "^1.14.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/shortedapp/web"
+    }
 }

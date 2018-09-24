@@ -31,7 +31,7 @@ const AlertRow = props => (
                     <div className="idicator" />
                     <div className="history">history</div>
                 </HeaderWrapper>
-            ) : props.selectedRow == props.code ? (
+            ) : props.selectedRow === props.code ? (
                 <WrapperHovered {...theme}>
                     <Code>
                         <div className="code">{props.code}</div>

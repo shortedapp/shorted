@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    align-self: center;
 `;
 export const Header = styled.div`
     grid-area: header;

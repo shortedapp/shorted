@@ -1,15 +1,19 @@
 import styled from 'styled-components';
 
-export const StockProfileWrapper = styled.div`
+export const ProfileWrapper = styled.div`
     display: grid;
+    grid-area: content;
     justify-content: center;
+    max-width: 1200px;
+    text-align: center;
     .content {
         margin-top: 30px;
         display: grid;
-        max-width: 1900px;
         grid-gap: 20px;
+        width: 1300px;
+        height: 1200px;
         grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: 130px 400px 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
         grid-template-areas:
             'profile-header profile-header profile-header'
             'profile-chart profile-chart profile-side-panel'
@@ -29,6 +33,24 @@ export const StockProfileWrapper = styled.div`
             'legend'
             'legend';
     }
+`;
+
+export const ProfileViewWrapper = styled.div`
+display: grid;
+justify-content: center;
+background: ${props => props.background};
+grid-template-rows: 100px 1fr;
+grid-template-areas:
+        'logo top-nav'
+        'content content';
+`;
+
+export const ProfileViewHeader = styled.div`
+    grid-area: top-nav;
+`;
+export const LogoWrapper = styled.div`
+    grid-area: logo;
+    max-width: 100px;
 `;
 
 export const duration = 300;
@@ -51,3 +73,23 @@ export const themes = [
         backgroundColor: '#ffffff',
     },
 ];
+
+export const ProfileHeaderWrapper = styled.div`
+    grid-area: profile-header;
+`;
+
+export const ProfileChartWrapper = styled.div`
+    grid-area: profile-chart;
+
+`;
+
+export const ProfileAlertsWrapper = styled.div`
+    grid-area: profile-alerts;
+
+`;
+
+export const ProfileSidePanelWrapper = styled.div`
+    grid-area: profile-side-panel;
+`;  
+
+

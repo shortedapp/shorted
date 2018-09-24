@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const DashboardWrapper = styled.div`
+export const SectorsWrapper = styled.div`
     display: grid;
     background: ${props => props.background};
     color: ${props => props.color};

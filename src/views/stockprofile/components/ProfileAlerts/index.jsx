@@ -8,7 +8,7 @@ import {Wrapper} from './style';
  * * handle mobile compaction of navbar component
  *
  */
-class SearchBar extends React.Component {
+class ProfileAlerts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -19,4 +19,4 @@ class SearchBar extends React.Component {
     }
 }
 
-export default SearchBar;
+export default ProfileAlerts;

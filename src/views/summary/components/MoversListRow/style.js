@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const HeaderWrapper = styled.div`
     display: grid;
     color: ${props => props.textColor};
-    grid-template-columns: 70px 120px 1fr;
+    grid-template-columns: 77px 85px 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: 'code percentage indicator';
     margin: 2px;
@@ -32,7 +32,7 @@ export const Wrapper = styled.div`
     color: ${props => props.textColor};
     background: ${props => props.widgetRowBackgroundColor};
     border: 1px solid ${props => props.widgetRowBorderColor};
-    grid-template-columns: 70px 120px 1fr;
+    grid-template-columns: 77px 85px 1fr;
     grid-template-rows: repeat(2, 1fr);
     grid-template-areas:
         'code percentage indicator'
@@ -48,7 +48,7 @@ export const WrapperHovered = styled.div`
     color: ${props => props.textColor};
     background: ${props => props.widgetRowBackgroundColor};
     border: 1px solid ${props => props.widgetRowBorderColor};
-    grid-template-columns: 70px 120px 1fr;
+    grid-template-columns:77px 85px 1fr;
     grid-template-rows: repeat(2, 1fr);
     grid-template-areas:
         'code percentage indicator'
@@ -124,27 +124,25 @@ export const PercentageChanged = styled.div`
 export const IndicatorUp = styled.div`
     width: 0;
     height: 0;
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
-    border-bottom: 30px solid red;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid red;
 `;
 export const IndicatorDown = styled.div`
     width: 0;
     height: 0;
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
-    border-top: 30px solid green;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid green;
 `;
 
 export const IndicatorWrapper = styled.div`
     grid-area: indicator;
-    @media (min-width: 1650px) {
-        display: flex;
-    }
-    display: none;
+    display: grid;
     flex-direction: column;
     text-align: center;
     vertical-align: middle;
     justify-content: center;
-    margin-right: 10px;
+    margin: auto;
+    padding: auto;
 `;
