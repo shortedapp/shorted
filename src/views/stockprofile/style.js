@@ -34,6 +34,7 @@ export const ProfileWrapper = styled.div`
             'legend';
     }
 `;
+
 export const ProfileViewWrapper = styled.div`
 display: grid;
 justify-content: center;
@@ -50,7 +51,8 @@ export const ProfileViewHeader = styled.div`
 export const LogoWrapper = styled.div`
     grid-area: logo;
     max-width: 100px;
-`
+`;
+
 export const duration = 300;
 
 export const transitionStyles = {
@@ -71,3 +73,23 @@ export const themes = [
         backgroundColor: '#ffffff',
     },
 ];
+
+export const ProfileHeaderWrapper = styled.div`
+    grid-area: profile-header;
+`;
+
+export const ProfileChartWrapper = styled.div`
+    grid-area: profile-chart;
+
+`;
+
+export const ProfileAlertsWrapper = styled.div`
+    grid-area: profile-alerts;
+
+`;
+
+export const ProfileSidePanelWrapper = styled.div`
+    grid-area: profile-side-panel;
+`;  
+
+

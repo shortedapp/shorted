@@ -29,7 +29,7 @@ ACTIVE_ENV=development gatsby develop
 or
 
 ```sh
-make web.development
+make web.develop
 ```
 
 This runs the required commands via the Makefile found in the root of the project [here](Makefile)

@@ -11,6 +11,10 @@ import ProfileAlerts from './components/ProfileAlerts';
 import icon32 from './../../../static/favicon-32x32.png';
 import {
     ProfileViewWrapper,
+    ProfileHeaderWrapper,
+    ProfileChartWrapper,
+    ProfileSidePanelWrapper,
+    ProfileAlertsWrapper,
     ProfileViewHeader,
     LogoWrapper,
     ProfileWrapper,
@@ -44,7 +48,8 @@ class StockProfileView extends React.Component {
             selectedOption: value,
         });
     }
-    componentWillMount() {
+
+    UNSAFE_componentWillMount() {
         const profile = this.apiClient.getStockProfile(
             this.props.data.stocksYaml.code,
         );
@@ -127,10 +132,10 @@ class StockProfileView extends React.Component {
                                 <ProfileViewHeader {...theme} ></ProfileViewHeader>
                                 <ProfileWrapper {...theme} >
                                     <div className="content">
-                                        <ProfileHeader {...profile} />
-                                        <ProfileChart />
-                                        <ProfileAlerts />
-                                        <ProfileSidePanel />
+                                        <ProfileHeaderWrapper> <ProfileHeader {...profile} /></ProfileHeaderWrapper>
+                                        <ProfileChartWrapper><ProfileChart /></ProfileChartWrapper>
+                                        <ProfileAlertsWrapper><ProfileAlerts /></ProfileAlertsWrapper>
+                                        <ProfileSidePanelWrapper><ProfileSidePanel /></ProfileSidePanelWrapper>
                                     </div>
                                 </ProfileWrapper>
                             </ProfileViewWrapper>
