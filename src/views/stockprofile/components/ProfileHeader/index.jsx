@@ -1,5 +1,9 @@
 import React from 'react';
-import {Wrapper} from './style';
+import CompanyImage from 'src/components/CompanyImage';
+import {
+    CompanyLogoWrapper,
+    CompanyNameWrapper,
+    Wrapper} from './style';
 
 /**
  * Top Navbar responsible for rendering the basic site-map layout including: blog | about | disclaimer etc
@@ -15,7 +19,15 @@ class ProfileHeader extends React.Component {
     }
 
     render() {
-        return <Wrapper>{this.props.metadata.code}</Wrapper>;
+        return <Wrapper>
+        <CompanyLogoWrapper>
+            <CompanyImage src={this.props.logo} />
+        </CompanyLogoWrapper>
+        <CompanyNameWrapper>
+            {this.props.metadata.name}
+        </CompanyNameWrapper>
+        {this.props.metadata.code}
+        </Wrapper>;
     }
 }
 

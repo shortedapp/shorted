@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Transition from 'react-transition-group/Transition';
 import {ThemeContext, themes} from '../../theme-context';
-import ShortedAPI from '../../services/sapi/client';
+import ShortedAPI from 'src/services/sapi/client';
 import Logo from '../../components/Logo';
 import ProfileChart from './components/ProfileChart';
 import ProfileSidePanel from './components/ProfileSidePanel';
@@ -64,6 +64,7 @@ class StockProfileView extends React.Component {
 
     render() {
         const {profile} = this.state;
+        const logo = this.apiClient.getStockLogo(this.props.data.stocksYaml.code);
         return (
             <ThemeContext.Consumer>
                 {theme => (
@@ -132,7 +133,7 @@ class StockProfileView extends React.Component {
                                 <ProfileViewHeader {...theme} ></ProfileViewHeader>
                                 <ProfileWrapper {...theme} >
                                     <div className="content">
-                                        <ProfileHeaderWrapper> <ProfileHeader {...profile} /></ProfileHeaderWrapper>
+                                        <ProfileHeaderWrapper> <ProfileHeader {...profile} logo={logo}/></ProfileHeaderWrapper>
                                         <ProfileChartWrapper><ProfileChart /></ProfileChartWrapper>
                                         <ProfileAlertsWrapper><ProfileAlerts /></ProfileAlertsWrapper>
                                         <ProfileSidePanelWrapper><ProfileSidePanel /></ProfileSidePanelWrapper>

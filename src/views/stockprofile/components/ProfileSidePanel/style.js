@@ -12,4 +12,14 @@ export const Wrapper = styled.div`
     background: gray;
     width: 100%;
     height: 100%;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-rows: repeat(4, 80px);
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        'themepicker'
+        'legend'
+        'legend'
+        'legend'
+        'legend';
 `;

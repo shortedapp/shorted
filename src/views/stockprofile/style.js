@@ -4,7 +4,7 @@ export const ProfileWrapper = styled.div`
     display: grid;
     grid-area: content;
     justify-content: center;
-    max-width: 1200px;
+    max-width: 1300px;
     text-align: center;
     .content {
         margin-top: 30px;
@@ -19,19 +19,6 @@ export const ProfileWrapper = styled.div`
             'profile-chart profile-chart profile-side-panel'
             'profile-chart profile-chart profile-side-panel'
             'profile-alerts profile-alerts profile-side-panel';
-    }
-    .profile-side-panel {
-        grid-area: profile-side-panel;
-        display: grid;
-        grid-gap: 10px;
-        grid-template-rows: repeat(4, 80px);
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            'themepicker'
-            'legend'
-            'legend'
-            'legend'
-            'legend';
     }
 `;
 

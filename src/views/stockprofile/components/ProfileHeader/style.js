@@ -6,22 +6,35 @@ export const Wrapper = styled.div`
     vertical-align: middle;
     display: grid;
     grid-gap: 5px;
-    grid-template-rows: 40px 40px 40px 40px 100px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 100px 100px;
+    grid-template-columns: repeat(4, 1fr);
     grid-template-areas:
         'company-logo company-name company-name company-name'
-        'company-logo company-sector company-pe company-code';
+        'company-logo company-code company-sector company-pe';
     background: gray;
 `;
 
-export const CompanyLogo = styled.div`
+export const CompanyLogoWrapper = styled.div`
+    grid-area: company-logo;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    align-self: center;
 `;
 
-export const CompanyName = styled.div`
+export const CompanyNameWrapper = styled.div`
+    grid-area: company-name;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
 `;
 
-export const CompanyPE = styled.div`
+export const CompanyPEWrapper = styled.div`
 `;
 
-export const CompanySector = styled.div`
+export const CompanySectorWrapper = styled.div`
 `;
