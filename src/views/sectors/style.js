@@ -7,6 +7,9 @@ export const Wrapper = styled.div`
     display: grid;
     grid-gap: 13px;
     grid-template-columns: repeat(2, 1fr) 800px;
+    @media (max-width: 901px) {
+        grid-template-columns: repeat(2, 1fr) 4fr;
+    }
     grid-template-rows: 600px 1fr;
     grid-template-areas:
         'sector-legend sector-legend sector-piechart'
