@@ -14,7 +14,6 @@ import {
 class AdvancedChart extends React.Component {
     constructor(props) {
         super(props);
-        this.apiClient = new ShortedAPI();
         this.state = {
             options: {
                 values: ['d', 'w', 'm', 'y'],

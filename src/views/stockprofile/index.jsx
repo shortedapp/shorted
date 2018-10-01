@@ -176,7 +176,12 @@ class StockProfileView extends React.Component {
                                                     />
                                                 </ProfileHeaderWrapper>
                                                 <ProfileChartWrapper>
-                                                    <ProfileChart />
+                                                    <ProfileChart
+                                                        code={
+                                                            this.props.data
+                                                                .stocksYaml.code
+                                                        }
+                                                    />
                                                 </ProfileChartWrapper>
                                                 <ProfileAlertsWrapper>
                                                     <ProfileAlerts />

@@ -45,24 +45,24 @@ import StockLogo from './fixtures/images/stockLogo.png';
 class ShortedAPI {
     constructor(credentials = false) {
         console.log('constructing stub client');
-        this.credentials = credentials
-        this.authenticated = false
+        this.credentials = credentials;
+        this.authenticated = false;
     }
     /**
      * login
-     * generate authentication token for client side requests 
+     * generate authentication token for client side requests
      */
     login() {
         if (this.credentials) {
             this.authenticated = this.authenticate(this.credentials);
-            return this.authenticated
+            return this.authenticated;
         }
     }
     authenticate(credentials) {
         if (credentials) {
-            return true
+            return true;
         } else {
-            return false
+            return false;
         }
     }
     /**
@@ -178,16 +178,16 @@ class ShortedAPI {
     }
     /**
      * getUserAlerts()
-     * 
-     * 
-     * 
-     * 
+     *
+     *
+     *
+     *
      */
     getUserAlerts() {
         if (this.authenticated) {
             // get user list here
         } else {
-            return false
+            return false;
         }
     }
     /**
