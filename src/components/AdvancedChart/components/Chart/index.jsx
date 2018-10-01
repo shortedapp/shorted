@@ -78,64 +78,33 @@ class Chart extends React.Component {
     }
 
     render() {
-        const {data, selectedCode} = this.props;
+        const {data, selectedLine} = this.props;
         var lines = null;
-        if (this.props.mode === 'NORMAL') {
-            lines = data.dataKeys.map((key, index) => (
-                <VictoryLine
-                    name={key}
-                    key={key}
-                    eventKey={key}
-                    // labelComponent={<VictoryTooltip />}
-                    data={data.data}
-                    x="date"
-                    y={key}
-                    events={[
-                        {
-                            childName: key,
-                            target: 'data',
-                            eventHandlers: {
-                                onMouseOver: e => this.handleLineHover(e, key),
-                                onMouseOut: e => this.handleLineExit(e, key),
-                            },
+        lines = (
+            <VictoryLine
+                // labelComponent={<VictoryTooltip />}
+                key='standard'
+                data={data}
+                events={[
+                    {
+                        childName: 'standard',
+                        target: 'data',
+                        eventHandlers: {
+                            onMouseOver: e => this.handleLineHover(e, 'standard'),
+                            onMouseOut: e => this.handleLineExit(e, 'standard'),
                         },
-                    ]}
-                    style={{
-                        data: {
-                            stroke: colors700[index],
-                            strokeOpacity:
-                                key === selectedCode || !selectedCode ? 1 : 0.2,
-                            strokeWidth: 2,
-                        },
-                    }}
-                />
-            ));
-        } else if (this.props.mode === 'AREA') {
-            lines = data.dataKeys.map((key, index) => (
-                <VictoryArea
-                    key={key}
-                    data={data.data}
-                    x="date"
-                    y={key}
-                    events={[
-                        {
-                            target: 'parent',
-                            eventHandlers: {
-                                onMouseOver: e => this.handleLineHover(e, key),
-                            },
-                        },
-                    ]}
-                    style={{
-                        data: {
-                            stroke: colors700[index],
-                            fill: colors700[index],
-                            fillOpacity: 0.3,
-                            strokeWidth: 2,
-                        },
-                    }}
-                />
-            ));
-        }
+                    },
+                ]}
+                style={{
+                    data: {
+                        stroke: colors700[0],
+                        strokeOpacity:
+                        'standard' === selectedLine || !selectedLine ? 1 : 0.2,
+                        strokeWidth: 2,
+                    },
+                }}
+            />
+        );
         return (
             <ThemeContext.Consumer>
                 {theme => (
@@ -169,7 +138,7 @@ class Chart extends React.Component {
                                                         flyoutComponent={
                                                             <TopChartTooltip
                                                                 selectedCode={
-                                                                    selectedCode
+                                                                    selectedLine
                                                                 }
                                                                 dataKeys={
                                                                     data.dataKeys
