@@ -1,5 +1,8 @@
 import React from 'react';
+import {ThemeContext} from 'src/theme-context';
+import ShortedAPI from 'src/services/sapi/client';
 import {Wrapper} from './style';
+import AdvancedChart from '../../../../components/AdvancedChart';
 
 /**
  * Top Navbar responsible for rendering the basic site-map layout including: blog | about | disclaimer etc
@@ -12,10 +15,16 @@ class ProfileChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.apiClient = new ShortedAPI();
+
     }
 
     render() {
-        return <Wrapper>chart goes here</Wrapper>;
+        return (
+            <ThemeContext.Consumer>
+                {theme => <Wrapper {...theme}><AdvancedChart code={this.props.code}/></Wrapper>}
+            </ThemeContext.Consumer>
+        );
     }
 }
 

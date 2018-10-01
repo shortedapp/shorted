@@ -1,4 +1,5 @@
 import React from 'react';
+import {ThemeContext} from 'src/theme-context';
 import {Wrapper} from './style';
 
 /**
@@ -15,7 +16,11 @@ class ProfileAlerts extends React.Component {
     }
 
     render() {
-        return <Wrapper>alerts go here</Wrapper>;
+        return (
+            <ThemeContext.Consumer>
+                {theme => <Wrapper {...theme}>alerts go here</Wrapper>}
+            </ThemeContext.Consumer>
+        );
     }
 }
 

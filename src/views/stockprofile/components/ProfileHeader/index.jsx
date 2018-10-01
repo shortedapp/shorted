@@ -1,5 +1,19 @@
 import React from 'react';
-import {Wrapper} from './style';
+import CompanyImage from 'src/components/CompanyImage';
+import ShortedAPI from 'src/services/sapi/client';
+import {ThemeContext} from 'src/theme-context';
+import ProfileStockWidget from '../ProfileStockWidget';
+import ProfileSectorWidget from '../ProfileSectorWidget';
+import ProfileInterestWidget from '../ProfileInterestWidget';
+import {
+    CompanyLogoWrapper,
+    CompanyNameWrapper,
+    Wrapper,
+    CompanyCodeWrapper,
+    CompanySectorWrapper,
+    CompanyInterestWrapper,
+    CompanyStockWrapper,
+} from './style';
 
 /**
  * Top Navbar responsible for rendering the basic site-map layout including: blog | about | disclaimer etc
@@ -11,11 +25,51 @@ import {Wrapper} from './style';
 class ProfileHeader extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.apiClient = new ShortedAPI();
+        this.state = {data: null};
+    }
+    componentDidMount() {
+        this.toggleEnterState();
     }
 
+    toggleEnterState() {
+        this.setState({
+            inside: true,
+        });
+    }
     render() {
-        return <Wrapper>{this.props.metadata.code}</Wrapper>;
+        const data = this.apiClient.getStockProfile(this.props.metadata.code);
+        console.log(data);
+        return (
+            <ThemeContext.Consumer>
+                {theme => (
+                    <Wrapper>
+                        <CompanyLogoWrapper {...theme}>
+                            <CompanyImage src={this.props.logo} />
+                        </CompanyLogoWrapper>
+                        <CompanyNameWrapper {...theme}>
+                            {this.props.metadata.name}
+                        </CompanyNameWrapper>
+                        <CompanyCodeWrapper {...theme}>
+                            <div className="code">
+                                {this.props.metadata.code}
+                            </div>
+                        </CompanyCodeWrapper>
+                        <CompanySectorWrapper {...theme}>
+                            <ProfileSectorWidget data={data.data.sectorShort} />
+                        </CompanySectorWrapper>
+                        <CompanyInterestWrapper {...theme}>
+                            <ProfileInterestWidget
+                                data={data.data.stockInterest}
+                            />
+                        </CompanyInterestWrapper>
+                        <CompanyStockWrapper {...theme}>
+                            <ProfileStockWidget data={data.data.stockPrice} />
+                        </CompanyStockWrapper>
+                    </Wrapper>
+                )}
+            </ThemeContext.Consumer>
+        );
     }
 }
 

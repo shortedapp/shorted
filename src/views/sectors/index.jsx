@@ -1,7 +1,18 @@
-import React from 'react';
-import Transition from 'react-transition-group/Transition';
-import ShortedAPI from '../../services/sapi/client';
-import {SectorsWrapper, themes, duration, transitionStyles} from './style';
+import React from 'react'
+import Transition from 'react-transition-group/Transition'
+import ShortedAPI from '../../services/sapi/client'
+import {
+  Wrapper,
+  themes,
+  duration,
+  transitionStyles,
+  SectorLegendWrapper,
+  SectorPieChartWrapper,
+  SectorPanelWrapper
+} from './style'
+import SectorPanel from './components/SectorPanel'
+import SectorLegend from './components/SectorLegend'
+import PieChart from './components/PieChart'
 
 /**
  * View:Sectors
@@ -17,34 +28,38 @@ import {SectorsWrapper, themes, duration, transitionStyles} from './style';
  */
 
 class Sectors extends React.Component {
-    constructor(props) {
-        super(props);
-        this.apiClient = new ShortedAPI();
-        this.state = {
-            inside: false,
-        };
+  constructor (props) {
+    super(props)
+    this.apiClient = new ShortedAPI()
+    this.state = {
+      inside: false
     }
-    componentDidMount() {
-        this.toggleEnterState();
-    }
-    
-    toggleEnterState() {
-        this.setState({inside: true});
-    }
+  }
+  componentDidMount () {
+    this.toggleEnterState()
+  }
 
-    render() {
-        return (
-            <Transition timeout={duration} in appear>
-                {state => {
-                    return (
-                        <SectorsWrapper {...this.props.theme}>
-                            Sector breakdown goes here
-                        </SectorsWrapper>
-                    );
-                }}
-            </Transition>
-        );
-    }
+  toggleEnterState () {
+    this.setState({ inside: true })
+  }
+
+  render () {
+    return (
+      <Transition timeout={duration} in appear>
+        {state => {
+          return (
+            <Wrapper {...this.props.theme}>
+              <SectorLegendWrapper>
+                <SectorLegend />
+              </SectorLegendWrapper>
+              <SectorPieChartWrapper><PieChart /></SectorPieChartWrapper>
+              <SectorPanelWrapper><SectorPanel /></SectorPanelWrapper>
+            </Wrapper>
+          )
+        }}
+      </Transition>
+    )
+  }
 }
 
-export default Sectors;
+export default Sectors

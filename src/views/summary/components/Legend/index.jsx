@@ -12,7 +12,7 @@ import {
     CompanyName,
     CompanySector,
 } from './style';
-import { ThemeContext } from '../../../../theme-context';
+import {ThemeContext} from '../../../../theme-context';
 import ShortedAPI from '../../../../services/sapi/client';
 /**
  * Renders a shorted.com.au logo
@@ -47,37 +47,47 @@ class Legend extends React.Component {
         const data = this.apiClient.getStockSummary(this.props.code);
         const logo = this.apiClient.getStockLogo(this.props.code);
         return (
-        <ThemeContext.Consumer>
-            { theme => (
-                <Transition timeout={duration} in appear>
-                    {state => {
-                        return this.props.code ? (
-                            <Wrapper
-                                {...theme}
-                                duration={duration}
-                                {...transitionStyles[state]}>
-                                <LegendCompanyLogo {...theme}logo={logo} />
-                                <LegendCompanyCode {...theme}code={this.props.code} />
-                                <LegendCompanyPE {...theme}pe={data.data.PE} />
-                                <CompanyName {...theme}>{data.metadata.name}</CompanyName>
-                                <CompanySector {...theme}>
-                                    {data.metadata.sector}
-                                </CompanySector>
-                                <LegendCompanyMarketCap
+            <ThemeContext.Consumer>
+                {theme => (
+                    <Transition timeout={duration} in appear>
+                        {state => {
+                            return this.props.code ? (
+                                <Wrapper
                                     {...theme}
-                                    data={data.data.marketCap}
-                                />
-                            </Wrapper>
-                        ) : (
-                            <UnselectedWrapper
-                                duration={duration}
-                                {...transitionStyles[state]}>
-                                <p>hover over graph to show profile</p>
-                            </UnselectedWrapper>
-                        );
-                    }}
-                </Transition>)}
-        </ThemeContext.Consumer>)
+                                    duration={duration}
+                                    {...transitionStyles[state]}>
+                                    <LegendCompanyLogo {...theme} logo={logo} />
+                                    <LegendCompanyCode
+                                        {...theme}
+                                        code={this.props.code}
+                                    />
+                                    <LegendCompanyPE
+                                        {...theme}
+                                        pe={data.data.PE}
+                                    />
+                                    <CompanyName {...theme}>
+                                        {data.metadata.name}
+                                    </CompanyName>
+                                    <CompanySector {...theme}>
+                                        {data.metadata.sector}
+                                    </CompanySector>
+                                    <LegendCompanyMarketCap
+                                        {...theme}
+                                        data={data.data.stockPrice}
+                                    />
+                                </Wrapper>
+                            ) : (
+                                <UnselectedWrapper
+                                    duration={duration}
+                                    {...transitionStyles[state]}>
+                                    <p>hover over graph to show profile</p>
+                                </UnselectedWrapper>
+                            );
+                        }}
+                    </Transition>
+                )}
+            </ThemeContext.Consumer>
+        );
     }
 }
 
