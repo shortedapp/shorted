@@ -8,7 +8,8 @@ export const Wrapper = styled.div`
     flex-direction: column;
     float: right;
     margin-left: auto;
-    background: gray;
+    background: ${props => props.profileGraphWidgetBackground};
     width: 100%;
     height: 100%;
+    border-radius: 10px;
 `;

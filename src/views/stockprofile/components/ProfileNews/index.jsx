@@ -9,7 +9,7 @@ import {Wrapper} from './style';
  * * handle mobile compaction of navbar component
  *
  */
-class ProfileChart extends React.Component {
+class ProfileNews extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -18,10 +18,10 @@ class ProfileChart extends React.Component {
     render() {
         return (
             <ThemeContext.Consumer>
-                {theme => <Wrapper {...theme}>chart goes here</Wrapper>}
+                {theme => <Wrapper {...theme}>profile news</Wrapper>}
             </ThemeContext.Consumer>
         );
     }
 }
 
-export default ProfileChart;
+export default ProfileNews;

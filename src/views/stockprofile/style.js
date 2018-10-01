@@ -3,33 +3,45 @@ import styled from 'styled-components';
 export const ProfileWrapper = styled.div`
     display: grid;
     grid-area: content;
-    justify-content: center;
-    max-width: 1300px;
-    text-align: center;
+    background: ${props => props.profileBackgroundColor};
+    width: 100%;
+    height: 100%;
     .content {
         margin-top: 30px;
         display: grid;
         grid-gap: 20px;
-        width: 1300px;
+        width: 100%;
         height: 1200px;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 350px repeat(4, 1fr) 100px;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas:
-            'profile-header profile-header profile-header'
-            'profile-chart profile-chart profile-side-panel'
-            'profile-chart profile-chart profile-side-panel'
-            'profile-alerts profile-alerts profile-side-panel';
+            'profile-header profile-header profile-header profile-header profile-header profile-header'
+            'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
+            'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
+            'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
+            'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo'
+            'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo';
     }
 `;
 
+export const ThemeWrapper = styled.div`
+    grid-area: theme;
+    color: ${props => props.textColor};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
 export const ProfileViewWrapper = styled.div`
-display: grid;
-justify-content: center;
-background: ${props => props.background};
-grid-template-rows: 100px 1fr;
-grid-template-areas:
-        'logo top-nav'
-        'content content';
+    display: grid;
+    width: 100%;
+    justify-content: center;
+    background: ${props => props.profileBackgroundColor};
+    grid-template-rows: 100px 1fr;
+    grid-template-columns: 250px 1fr 200px;
+    grid-template-areas:
+        'logo top-nav theme'
+        'content content content';
 `;
 
 export const ProfileViewHeader = styled.div`
@@ -63,20 +75,30 @@ export const themes = [
 
 export const ProfileHeaderWrapper = styled.div`
     grid-area: profile-header;
+    width: 100%;
+    background: ${props => props.profileHeaderBackgroundColor};
 `;
 
 export const ProfileChartWrapper = styled.div`
     grid-area: profile-chart;
-
+    position: relative;
+    top: -160px;
 `;
 
 export const ProfileAlertsWrapper = styled.div`
     grid-area: profile-alerts;
-
+    position: relative;
+    top: -160px;
+    height: calc(100% + 160px);
+`;
+export const ProfileNewsWrapper = styled.div`
+    grid-area: profile-news;
+    position: relative;
+    top: -160px;
+    height: calc(100% + 160px);
 `;
 
 export const ProfileSidePanelWrapper = styled.div`
     grid-area: profile-side-panel;
-`;  
-
-
+    height: calc(100% - 40px);
+`;

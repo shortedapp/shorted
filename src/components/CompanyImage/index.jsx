@@ -32,7 +32,11 @@ class Header extends React.Component {
                         <Wrapper
                             duration={duration}
                             {...transitionStyles[state]}>
-                            <img src={this.props.src} alt='company-logo'/>
+                            <img
+                                style={{width: 70}}
+                                src={this.props.src}
+                                alt="company-logo"
+                            />
                         </Wrapper>
                     );
                 }}
