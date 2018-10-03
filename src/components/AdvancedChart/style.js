@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
     display: grid;
     grid-gap: 5px;
-    width: 100%;
-    height: 100%;
+    max-width: 1100px;
     padding: 10px;
     grid-template-rows: 40px 1fr;
     grid-template-columns: 1fr 40px;

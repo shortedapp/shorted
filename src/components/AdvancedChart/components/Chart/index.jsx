@@ -20,7 +20,8 @@ import {
     colors700,
     colors300,
 } from './style';
-import {TopChartTooltip} from './components';
+import {StandardChartTooltip} from './components';
+import { findMinMax } from '../../../../utils';
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
@@ -64,14 +65,15 @@ class Chart extends React.Component {
         this.setState({inside: true});
     }
     handleVoronoiSelect(points, props) {
+        console.log(points)
         if (points[0]) {
             console.log('voronio snapped to', points[0].childName);
-            this.props.onSelectCode(points[0].childName);
+            this.props.onSelectLine(points[0].childName);
         }
     }
     handleLineHover(e, key) {
         console.log('new line slected:', key);
-        this.props.onSelectCode(key);
+        this.props.onSelectLine(key);
     }
     handleLineExit(e, key) {
         console.log('exiting line', key);
@@ -79,12 +81,16 @@ class Chart extends React.Component {
 
     render() {
         const {data, selectedLine} = this.props;
+        const [min, max] = findMinMax(data)
         var lines = null;
         lines = (
             <VictoryLine
                 // labelComponent={<VictoryTooltip />}
+                width={1100} height={900}
+                name='standard'
                 key='standard'
                 data={data}
+                domain={{y: [min-2, max+2] }}
                 events={[
                     {
                         childName: 'standard',
@@ -114,6 +120,7 @@ class Chart extends React.Component {
                                 <Wrapper
                                     {...theme}
                                     duration={duration}
+                                    
                                     {...transitionStyles[state]}>
                                     <VictoryChart
                                         padding={{
@@ -122,6 +129,8 @@ class Chart extends React.Component {
                                             right: 10,
                                             bottom: 20,
                                         }}
+                                        width={650}
+                                        height={380}
                                         containerComponent={
                                             <VictoryVoronoiContainer
                                                 radius={10}
@@ -136,8 +145,8 @@ class Chart extends React.Component {
                                                 labelComponent={
                                                     <VictoryTooltip
                                                         flyoutComponent={
-                                                            <TopChartTooltip
-                                                                selectedCode={
+                                                            <StandardChartTooltip
+                                                                selectedLine={
                                                                     selectedLine
                                                                 }
                                                                 dataKeys={
