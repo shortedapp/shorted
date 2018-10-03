@@ -21,11 +21,7 @@ import {
     colors300,
 } from './style';
 import {StandardChartTooltip} from './components';
-import {findMinMax} from '../../../../utils';
-
-const monthNames = ["Jan", "Feb", "Mar", "April", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-];
+import {findMinMax, getMonthlyNameShort, getYearlyNameShort} from '../../../../utils';
 
 /**
  * Chart
@@ -84,10 +80,13 @@ class Chart extends React.Component {
         console.log('exiting line', key);
     }
     getXaxis(t, window) {
+        // console.log(window)
+        // console.log(t)
         switch (window) {
             case 'm':
-                console.log(new Date(t).toDateString().split(' ')[1])
-                return monthNames[new Date(t).getMonth()]
+                return getMonthlyNameShort(t)
+            case 'y':
+                return getYearlyNameShort(t)
             default:
                 return t
         }

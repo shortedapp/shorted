@@ -57,7 +57,6 @@ class AdvancedChart extends React.Component {
       this.props.code,
       selectedWindowOption
     )
-    console.log('AdvanvedChart:', data)
     return (
       <ThemeContext.Consumer>
         {theme => (

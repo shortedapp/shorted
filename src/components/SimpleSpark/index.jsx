@@ -46,8 +46,8 @@ class SimpleSpark extends React.Component {
                             <VictoryGroup
                                 padding={{
                                     top: 10,
-                                    left: 20,
-                                    right: 20,
+                                    left: 10,
+                                    right: 10,
                                     bottom: 10,
                                 }}
                                 height={80}
