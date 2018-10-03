@@ -22,6 +22,11 @@ import {
 } from './style';
 import {StandardChartTooltip} from './components';
 import {findMinMax} from '../../../../utils';
+
+const monthNames = ["Jan", "Feb", "Mar", "April", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
@@ -78,9 +83,18 @@ class Chart extends React.Component {
     handleLineExit(e, key) {
         console.log('exiting line', key);
     }
+    getXaxis(t, window) {
+        switch (window) {
+            case 'm':
+                console.log(new Date(t).toDateString().split(' ')[1])
+                return monthNames[new Date(t).getMonth()]
+            default:
+                return t
+        }
+    }
 
     render() {
-        const {data, selectedLine} = this.props;
+        const {data, selectedLine, selectedWindowOption} = this.props;
         const [min, max] = findMinMax(data);
         var lines = null;
         lines = (
@@ -170,6 +184,7 @@ class Chart extends React.Component {
                                             padding={{bottom: 30}}
                                             standalone={false}
                                             tickCount={5}
+                                            tickFormat={t => this.getXaxis(t, selectedWindowOption)}
                                             style={{
                                                 axis: {
                                                     stroke: theme.axisColor,

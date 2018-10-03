@@ -30,7 +30,7 @@ export const CompanyNameWrapper = styled.div`
     text-align: center;
     flex-direction: column;
     display: flex;
-    font-size: 2vw;
+    font-size: 20px;
     font-weight: bold;
     color: ${props => props.profileHeaderTextColor};
 `;

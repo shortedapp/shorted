@@ -33,7 +33,6 @@ export const ProfileWrapper = styled.div`
             display: grid;
             grid-gap: 20px;
             width: 100%;
-
             height: 1200px;
             grid-template-columns: 350px repeat(4, 1fr) 100px;
             grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
@@ -53,7 +52,7 @@ export const ProfileWrapper = styled.div`
             display: grid;
             grid-gap: 20px;
             width: 100%;
-            max-width: 1456px;
+            /* max-width: 1700px; */
             height: 1200px;
             grid-template-columns: 350px repeat(4, 1fr) 100px;
             grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
