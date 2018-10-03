@@ -6,21 +6,65 @@ export const ProfileWrapper = styled.div`
     background: ${props => props.profileBackgroundColor};
     width: 100%;
     height: 100%;
-    .content {
-        margin-top: 30px;
-        display: grid;
-        grid-gap: 20px;
-        width: 100%;
-        height: 1200px;
-        grid-template-columns: 350px repeat(4, 1fr) 100px;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-        grid-template-areas:
-            'profile-header profile-header profile-header profile-header profile-header profile-header'
-            'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
-            'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
-            'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
-            'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo'
-            'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo';
+    /* iPads (landscape) ----------- */
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+        .content {
+            margin-top: 30px;
+            display: grid;
+            grid-gap: 20px;
+            width: 100%;
+            max-width: 1456px;
+            height: 1200px;
+            grid-template-columns: 350px repeat(4, 1fr) 100px;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-areas:
+                'profile-header profile-header profile-header profile-header profile-header profile-header'
+                'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
+                'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
+                'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
+                'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo'
+                'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo';
+        }
+    }
+    /* small Desktops and laptops ----------- */
+    @media only screen and (min-width: 1024px) {
+        .content {
+            margin-top: 30px;
+            display: grid;
+            grid-gap: 20px;
+            width: 100%;
+
+            height: 1200px;
+            grid-template-columns: 350px repeat(4, 1fr) 100px;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-areas:
+                'profile-header profile-header profile-header profile-header profile-header profile-header'
+                'profile-chart profile-chart profile-chart profile-chart profile-chart todo'
+                'profile-chart profile-chart profile-chart profile-chart profile-chart todo'
+                'profile-chart profile-chart profile-chart profile-chart profile-chart todo'
+                'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo'
+                'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo';
+        }
+    }
+    /* Desktops and laptops ----------- */
+    @media only screen and (min-width: 1224px) {
+        .content {
+            margin-top: 30px;
+            display: grid;
+            grid-gap: 20px;
+            width: 100%;
+            max-width: 1456px;
+            height: 1200px;
+            grid-template-columns: 350px repeat(4, 1fr) 100px;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-areas:
+                'profile-header profile-header profile-header profile-header profile-header profile-header'
+                'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
+                'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
+                'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
+                'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo'
+                'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo';
+        }
     }
 `;
 

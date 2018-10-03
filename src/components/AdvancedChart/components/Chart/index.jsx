@@ -21,7 +21,7 @@ import {
     colors300,
 } from './style';
 import {StandardChartTooltip} from './components';
-import { findMinMax } from '../../../../utils';
+import {findMinMax} from '../../../../utils';
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
@@ -65,7 +65,7 @@ class Chart extends React.Component {
         this.setState({inside: true});
     }
     handleVoronoiSelect(points, props) {
-        console.log(points)
+        console.log(points);
         if (points[0]) {
             console.log('voronio snapped to', points[0].childName);
             this.props.onSelectLine(points[0].childName);
@@ -81,22 +81,24 @@ class Chart extends React.Component {
 
     render() {
         const {data, selectedLine} = this.props;
-        const [min, max] = findMinMax(data)
+        const [min, max] = findMinMax(data);
         var lines = null;
         lines = (
             <VictoryLine
                 // labelComponent={<VictoryTooltip />}
-                width={1100} height={900}
-                name='standard'
-                key='standard'
+                width={1100}
+                height={900}
+                name="standard"
+                key="standard"
                 data={data}
-                domain={{y: [min-2, max+2] }}
+                domain={{y: [min - 2, max + 2]}}
                 events={[
                     {
                         childName: 'standard',
                         target: 'data',
                         eventHandlers: {
-                            onMouseOver: e => this.handleLineHover(e, 'standard'),
+                            onMouseOver: e =>
+                                this.handleLineHover(e, 'standard'),
                             onMouseOut: e => this.handleLineExit(e, 'standard'),
                         },
                     },
@@ -105,7 +107,9 @@ class Chart extends React.Component {
                     data: {
                         stroke: colors700[0],
                         strokeOpacity:
-                        'standard' === selectedLine || !selectedLine ? 1 : 0.2,
+                            'standard' === selectedLine || !selectedLine
+                                ? 1
+                                : 0.2,
                         strokeWidth: 2,
                     },
                 }}
@@ -120,7 +124,6 @@ class Chart extends React.Component {
                                 <Wrapper
                                     {...theme}
                                     duration={duration}
-                                    
                                     {...transitionStyles[state]}>
                                     <VictoryChart
                                         padding={{

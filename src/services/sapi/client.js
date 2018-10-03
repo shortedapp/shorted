@@ -1,4 +1,4 @@
-import { slice } from './utils';
+import {slice} from './utils';
 // data for topshorts graph
 import topShorts from './fixtures/data/topShortsFormatted.json';
 // data for top shorts list
@@ -19,18 +19,10 @@ import OREStockSummary from './fixtures/data/OREStockSummary.json';
 import SYRStockSummary from './fixtures/data/SYRStockSummary.json';
 
 // timeseries
-<<<<<<< HEAD
-import CBAStock from './fixtures/data/timeseries/CBA.json';
-import JBHStock from './fixtures/data/timeseries/JBH.json';
-import OREStock from './fixtures/data/timeseries/ORE.json';
-import TLSStock from './fixtures/data/timeseries/TLS.json';
-=======
 import CBA from './fixtures/data/timeseries/CBA.json';
 import ORE from './fixtures/data/timeseries/ORE.json';
 import TLS from './fixtures/data/timeseries/TLS.json';
 import JBH from './fixtures/data/timeseries/JBH.json';
-
->>>>>>> dde0af141bd6ca2b1378ea6e78b5d52c39086f91
 
 // logos
 import CBALogo from './fixtures/images/cba-logo.png';
@@ -81,25 +73,6 @@ class ShortedAPI {
         }
     }
     /**
-     * getStockData
-     * fetch the timeseries for a given short
-     *
-     */
-    getShortTimeseries(code) {
-        switch (code) {
-            case 'CBA':
-                return CBAStock;
-            case 'TLS':
-                return TLSStock;
-            case 'ORE':
-                return OREStock;
-            case 'JBH':                                               
-                return JBHStock;
-            default:
-                return false;
-        }
-    }
-    /**
      * getTopShorts
      * get the top 10 short positioned stocks time series data from shorted api endpoint
      */
@@ -139,19 +112,19 @@ class ShortedAPI {
     /**
      * getShortTimeseries
      * fetch the latest timeseries data for a selected stock code
-     * 
-     * 
+     *
+     *
      */
     getShortTimeseries(code, window) {
         switch (code) {
             case 'CBA':
-                return slice(CBA,window);
+                return slice(CBA, window);
             case 'TLS':
-                return slice(TLS,window);
+                return slice(TLS, window);
             case 'ORE':
-                return slice(ORE,window);
+                return slice(ORE, window);
             case 'JBH':
-                return slice(JBH,window);
+                return slice(JBH, window);
             default:
                 return false;
         }

@@ -5,12 +5,12 @@ export const Wrapper = styled.div`
     text-align: center;
     vertical-align: middle;
     display: grid;
-    grid-gap: 1px;
+    grid-gap: 5px;
     width: 100%;
     height: 100%;
     padding: 20px;
-    grid-template-rows: 20px 30px 1fr 1fr;
-    grid-template-columns: 40px 100px 1fr 30px;
+    grid-template-rows: 20px 20px 1fr 1fr;
+    grid-template-columns: 40px 0.5fr 1fr 30px;
     grid-template-areas:
         'widget-unit widget-value widget-graph widget-info'
         'todo widget-value widget-graph widget-info'
@@ -36,7 +36,7 @@ export const WidgetValueWrapper = styled.div`
     vertical-align: middle;
     align-self: center;
     font-weight: 300;
-    font-size: 35px;
+    font-size: 30px;
     color: ${props => props.profileHeaderWidgetValueTextColor};
     font-family: Avenir Next, sans-serif;
 `;
@@ -51,10 +51,9 @@ export const WidgetDescriptionWrapper = styled.div`
     grid-area: widget-description;
     color: ${props => props.profileHeaderWidgetDescriptionTextColor};
     font-weight: 300;
-    font-size: 14px;
+    font-size: 13px;
     font-family: Avenir Next, sans-serif;
 `;
-
 export const WidgetInfoWrapper = styled.div`
     grid-area: widget-info;
     position: relative;
