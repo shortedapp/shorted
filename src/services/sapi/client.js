@@ -1,4 +1,4 @@
-import { slice } from './utils';
+import {slice} from './utils';
 // data for topshorts graph
 import topShorts from './fixtures/data/topShortsFormatted.json';
 // data for top shorts list
@@ -23,7 +23,6 @@ import CBA from './fixtures/data/timeseries/CBA.json';
 import ORE from './fixtures/data/timeseries/ORE.json';
 import TLS from './fixtures/data/timeseries/TLS.json';
 import JBH from './fixtures/data/timeseries/JBH.json';
-
 
 // logos
 import CBALogo from './fixtures/images/cba-logo.png';
@@ -113,19 +112,19 @@ class ShortedAPI {
     /**
      * getShortTimeseries
      * fetch the latest timeseries data for a selected stock code
-     * 
-     * 
+     *
+     *
      */
     getShortTimeseries(code, window) {
         switch (code) {
             case 'CBA':
-                return slice(CBA,window);
+                return slice(CBA, window);
             case 'TLS':
-                return slice(TLS,window);
+                return slice(TLS, window);
             case 'ORE':
-                return slice(ORE,window);
+                return slice(ORE, window);
             case 'JBH':
-                return slice(JBH,window);
+                return slice(JBH, window);
             default:
                 return false;
         }

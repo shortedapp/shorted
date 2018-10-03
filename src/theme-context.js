@@ -43,6 +43,8 @@ export const themes = {
             profileHeaderWidgetGraphStroke: '#4bbdd4',
             profileGraphWidgetBackground: '#f6faff',
             profileBackgroundColor: '#f0f0f0',
+            profileChartIndicatorCenter: 'black',
+            profileChartIndicatorOuter: 'black'
         },
     },
     dark: {
@@ -88,6 +90,8 @@ export const themes = {
             profileHeaderWidgetDescriptionTextColor: '#a6a6a6',
             profileGraphWidgetBackground: '#1f1f1f',
             profileBackgroundColor: '#151414',
+            profileChartIndicatorCenter: 'white',
+            profileChartIndicatorOuter: 'white'
         },
     },
 };

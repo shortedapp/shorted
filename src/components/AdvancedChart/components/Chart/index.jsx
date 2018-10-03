@@ -20,7 +20,13 @@ import {
     colors700,
     colors300,
 } from './style';
-import {TopChartTooltip} from './components';
+import {StandardChartTooltip} from './components';
+import {findMinMax} from '../../../../utils';
+
+const monthNames = ["Jan", "Feb", "Mar", "April", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
@@ -64,33 +70,49 @@ class Chart extends React.Component {
         this.setState({inside: true});
     }
     handleVoronoiSelect(points, props) {
+        console.log(points);
         if (points[0]) {
             console.log('voronio snapped to', points[0].childName);
-            this.props.onSelectCode(points[0].childName);
+            this.props.onSelectLine(points[0].childName);
         }
     }
     handleLineHover(e, key) {
         console.log('new line slected:', key);
-        this.props.onSelectCode(key);
+        this.props.onSelectLine(key);
     }
     handleLineExit(e, key) {
         console.log('exiting line', key);
     }
+    getXaxis(t, window) {
+        switch (window) {
+            case 'm':
+                console.log(new Date(t).toDateString().split(' ')[1])
+                return monthNames[new Date(t).getMonth()]
+            default:
+                return t
+        }
+    }
 
     render() {
-        const {data, selectedLine} = this.props;
+        const {data, selectedLine, selectedWindowOption} = this.props;
+        const [min, max] = findMinMax(data);
         var lines = null;
         lines = (
             <VictoryLine
                 // labelComponent={<VictoryTooltip />}
-                key='standard'
+                width={1100}
+                height={900}
+                name="standard"
+                key="standard"
                 data={data}
+                domain={{y: [min - 2, max + 2]}}
                 events={[
                     {
                         childName: 'standard',
                         target: 'data',
                         eventHandlers: {
-                            onMouseOver: e => this.handleLineHover(e, 'standard'),
+                            onMouseOver: e =>
+                                this.handleLineHover(e, 'standard'),
                             onMouseOut: e => this.handleLineExit(e, 'standard'),
                         },
                     },
@@ -99,7 +121,9 @@ class Chart extends React.Component {
                     data: {
                         stroke: colors700[0],
                         strokeOpacity:
-                        'standard' === selectedLine || !selectedLine ? 1 : 0.2,
+                            'standard' === selectedLine || !selectedLine
+                                ? 1
+                                : 0.2,
                         strokeWidth: 2,
                     },
                 }}
@@ -122,6 +146,8 @@ class Chart extends React.Component {
                                             right: 10,
                                             bottom: 20,
                                         }}
+                                        width={650}
+                                        height={380}
                                         containerComponent={
                                             <VictoryVoronoiContainer
                                                 radius={10}
@@ -136,8 +162,8 @@ class Chart extends React.Component {
                                                 labelComponent={
                                                     <VictoryTooltip
                                                         flyoutComponent={
-                                                            <TopChartTooltip
-                                                                selectedCode={
+                                                            <StandardChartTooltip
+                                                                selectedLine={
                                                                     selectedLine
                                                                 }
                                                                 dataKeys={
@@ -158,6 +184,7 @@ class Chart extends React.Component {
                                             padding={{bottom: 30}}
                                             standalone={false}
                                             tickCount={5}
+                                            tickFormat={t => this.getXaxis(t, selectedWindowOption)}
                                             style={{
                                                 axis: {
                                                     stroke: theme.axisColor,

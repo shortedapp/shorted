@@ -20,11 +20,11 @@ class AdvancedChart extends React.Component {
         values: ['d', 'w', 'm', 'y']
       },
       selectedWindowOption: 'm',
-      selectedCode: false,
+      selectedLine: false,
       selectedChartOption: 'NORMAL',
       inside: false
     }
-    this.apiClient = new ShortedAPI();
+    this.apiClient = new ShortedAPI()
   }
   handleWindowOptionSelected (value) {
     this.setState({
@@ -34,9 +34,10 @@ class AdvancedChart extends React.Component {
   handleChartOptionChange (value) {
     this.setState({ selectedChartOption: value })
   }
-  handleSelectCode (value) {
+  handleSelectLine (value) {
+    console.log('selectedLine:',value)
     this.setState({
-      selectedCode: value
+      selectedLine: value
     })
   }
   componentDidMount () {
@@ -50,10 +51,13 @@ class AdvancedChart extends React.Component {
       options,
       selectedChartOption,
       selectedWindowOption,
-      selectedCode
+      selectedLine
     } = this.state
-    const data = this.apiClient.getShortTimeseries(this.props.code,selectedWindowOption)
-    console.log('AdvanvedChart:',data)
+    const data = this.apiClient.getShortTimeseries(
+      this.props.code,
+      selectedWindowOption
+    )
+    console.log('AdvanvedChart:', data)
     return (
       <ThemeContext.Consumer>
         {theme => (
@@ -73,7 +77,12 @@ class AdvancedChart extends React.Component {
               />
             </WindowWrapper>
             <ChartWrapper>
-              <Chart data={data}/>
+              <Chart
+                data={data}
+                selectedWindowOption={selectedWindowOption}
+                selectedLine={selectedLine}
+                onSelectLine={value => this.handleSelectLine(value)}
+              />
             </ChartWrapper>
           </Wrapper>
         )}

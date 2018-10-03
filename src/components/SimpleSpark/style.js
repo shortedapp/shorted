@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
     background: transparent;
     border-radius: 5px;
     display: flex;
-    height: 130px;
+    height: 100%;
 `;
 export const Header = styled.div`
     grid-area: header;

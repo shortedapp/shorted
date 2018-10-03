@@ -3,9 +3,9 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
     display: grid;
     grid-gap: 5px;
-    width: 100%;
-    height: 100%;
     padding: 10px;
+    max-width: 965px;
+    height: 100%;
     grid-template-rows: 40px 1fr;
     grid-template-columns: 1fr 40px;
     grid-template-areas:
