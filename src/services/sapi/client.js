@@ -17,6 +17,12 @@ import JBHStockSummary from './fixtures/data/JBHStockSummary.json';
 import OREStockSummary from './fixtures/data/OREStockSummary.json';
 import SYRStockSummary from './fixtures/data/SYRStockSummary.json';
 
+// timeseries
+import CBAStock from './fixtures/data/timeseries/CBA.json';
+import JBHStock from './fixtures/data/timeseries/JBH.json';
+import OREStock from './fixtures/data/timeseries/ORE.json';
+import TLSStock from './fixtures/data/timeseries/TLS.json';
+
 // logos
 import CBALogo from './fixtures/images/cba-logo.png';
 import TLSLogo from './fixtures/images/tls-logo.png';
@@ -63,6 +69,25 @@ class ShortedAPI {
             return true;
         } else {
             return false;
+        }
+    }
+    /**
+     * getStockData
+     * fetch the timeseries for a given short
+     *
+     */
+    getShortTimeseries(code) {
+        switch (code) {
+            case 'CBA':
+                return CBAStock;
+            case 'TLS':
+                return TLSStock;
+            case 'ORE':
+                return OREStock;
+            case 'JBH':                                               
+                return JBHStock;
+            default:
+                return false;
         }
     }
     /**
