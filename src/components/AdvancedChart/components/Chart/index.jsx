@@ -20,7 +20,8 @@ import {
     colors700,
     colors300,
 } from './style';
-import {TopChartTooltip} from './components';
+import {StandardChartTooltip} from './components';
+import { findMinMax } from '../../../../utils';
 /**
  * Chart
  * Component responsible for rendering the page1 graphic displaying the top short positions
@@ -64,78 +65,52 @@ class Chart extends React.Component {
         this.setState({inside: true});
     }
     handleVoronoiSelect(points, props) {
+        console.log(points)
         if (points[0]) {
             console.log('voronio snapped to', points[0].childName);
-            this.props.onSelectCode(points[0].childName);
+            this.props.onSelectLine(points[0].childName);
         }
     }
     handleLineHover(e, key) {
         console.log('new line slected:', key);
-        this.props.onSelectCode(key);
+        this.props.onSelectLine(key);
     }
     handleLineExit(e, key) {
         console.log('exiting line', key);
     }
 
     render() {
-        const {data, selectedCode} = this.props;
+        const {data, selectedLine} = this.props;
+        const [min, max] = findMinMax(data)
         var lines = null;
-        if (this.props.mode === 'NORMAL') {
-            lines = data.dataKeys.map((key, index) => (
-                <VictoryLine
-                    name={key}
-                    key={key}
-                    eventKey={key}
-                    // labelComponent={<VictoryTooltip />}
-                    data={data.data}
-                    x="date"
-                    y={key}
-                    events={[
-                        {
-                            childName: key,
-                            target: 'data',
-                            eventHandlers: {
-                                onMouseOver: e => this.handleLineHover(e, key),
-                                onMouseOut: e => this.handleLineExit(e, key),
-                            },
+        lines = (
+            <VictoryLine
+                // labelComponent={<VictoryTooltip />}
+                width={1100} height={900}
+                name='standard'
+                key='standard'
+                data={data}
+                domain={{y: [min-2, max+2] }}
+                events={[
+                    {
+                        childName: 'standard',
+                        target: 'data',
+                        eventHandlers: {
+                            onMouseOver: e => this.handleLineHover(e, 'standard'),
+                            onMouseOut: e => this.handleLineExit(e, 'standard'),
                         },
-                    ]}
-                    style={{
-                        data: {
-                            stroke: colors700[index],
-                            strokeOpacity:
-                                key === selectedCode || !selectedCode ? 1 : 0.2,
-                            strokeWidth: 2,
-                        },
-                    }}
-                />
-            ));
-        } else if (this.props.mode === 'AREA') {
-            lines = data.dataKeys.map((key, index) => (
-                <VictoryArea
-                    key={key}
-                    data={data.data}
-                    x="date"
-                    y={key}
-                    events={[
-                        {
-                            target: 'parent',
-                            eventHandlers: {
-                                onMouseOver: e => this.handleLineHover(e, key),
-                            },
-                        },
-                    ]}
-                    style={{
-                        data: {
-                            stroke: colors700[index],
-                            fill: colors700[index],
-                            fillOpacity: 0.3,
-                            strokeWidth: 2,
-                        },
-                    }}
-                />
-            ));
-        }
+                    },
+                ]}
+                style={{
+                    data: {
+                        stroke: colors700[0],
+                        strokeOpacity:
+                        'standard' === selectedLine || !selectedLine ? 1 : 0.2,
+                        strokeWidth: 2,
+                    },
+                }}
+            />
+        );
         return (
             <ThemeContext.Consumer>
                 {theme => (
@@ -145,6 +120,7 @@ class Chart extends React.Component {
                                 <Wrapper
                                     {...theme}
                                     duration={duration}
+                                    
                                     {...transitionStyles[state]}>
                                     <VictoryChart
                                         padding={{
@@ -153,6 +129,8 @@ class Chart extends React.Component {
                                             right: 10,
                                             bottom: 20,
                                         }}
+                                        width={650}
+                                        height={380}
                                         containerComponent={
                                             <VictoryVoronoiContainer
                                                 radius={10}
@@ -167,9 +145,9 @@ class Chart extends React.Component {
                                                 labelComponent={
                                                     <VictoryTooltip
                                                         flyoutComponent={
-                                                            <TopChartTooltip
-                                                                selectedCode={
-                                                                    selectedCode
+                                                            <StandardChartTooltip
+                                                                selectedLine={
+                                                                    selectedLine
                                                                 }
                                                                 dataKeys={
                                                                     data.dataKeys

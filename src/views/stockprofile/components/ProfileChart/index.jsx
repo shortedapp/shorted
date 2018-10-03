@@ -1,5 +1,6 @@
 import React from 'react';
 import {ThemeContext} from 'src/theme-context';
+import ShortedAPI from 'src/services/sapi/client';
 import {Wrapper} from './style';
 import AdvancedChart from '../../../../components/AdvancedChart';
 
@@ -15,13 +16,13 @@ class ProfileChart extends React.Component {
         super(props);
         this.state = {};
         this.apiClient = new ShortedAPI();
+
     }
 
     render() {
-        const data = this.apiClient.getStockData(this.props.code)
         return (
             <ThemeContext.Consumer>
-                {theme => <Wrapper {...theme}><AdvancedChart data=/></Wrapper>}
+                {theme => <Wrapper {...theme}><AdvancedChart code={this.props.code}/></Wrapper>}
             </ThemeContext.Consumer>
         );
     }
