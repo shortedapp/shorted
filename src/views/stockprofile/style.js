@@ -16,11 +16,9 @@ export const ProfileWrapper = styled.div`
             max-width: 1456px;
             height: 1200px;
             grid-template-columns: 350px repeat(4, 1fr) 100px;
-            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
             grid-template-areas:
                 'profile-header profile-header profile-header profile-header profile-header profile-header'
-                'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
-                'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
                 'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
                 'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo'
                 'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo';
@@ -35,14 +33,11 @@ export const ProfileWrapper = styled.div`
             width: 100%;
             height: 1200px;
             grid-template-columns: 350px repeat(4, 1fr) 100px;
-            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
             grid-template-areas:
                 'profile-header profile-header profile-header profile-header profile-header profile-header'
                 'profile-chart profile-chart profile-chart profile-chart profile-chart todo'
-                'profile-chart profile-chart profile-chart profile-chart profile-chart todo'
-                'profile-chart profile-chart profile-chart profile-chart profile-chart todo'
                 'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo'
-                'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo';
         }
     }
     /* Desktops and laptops ----------- */
@@ -55,13 +50,10 @@ export const ProfileWrapper = styled.div`
             /* max-width: 1700px; */
             height: 1200px;
             grid-template-columns: 350px repeat(4, 1fr) 100px;
-            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
             grid-template-areas:
                 'profile-header profile-header profile-header profile-header profile-header profile-header'
                 'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
-                'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
-                'profile-side-panel profile-chart profile-chart profile-chart profile-chart todo'
-                'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo'
                 'profile-side-panel profile-alerts profile-alerts profile-news profile-news todo';
         }
     }

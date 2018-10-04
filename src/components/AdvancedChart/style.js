@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
     display: grid;
     grid-gap: 5px;
     padding: 10px;
-    max-width: 965px;
+    /* max-width: 965px; */
     height: 100%;
     grid-template-rows: 40px 1fr;
     grid-template-columns: 1fr 40px;
@@ -31,4 +31,11 @@ export const OptionsWrapper = styled.div`
 
 export const ChartWrapper = styled.div`
     grid-area: chart;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+    
 `;
