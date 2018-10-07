@@ -25,7 +25,7 @@ export const TooltipWrapper = styled.svg`
     }
 `;
 export const Wrapper = styled.div`
-    max-width: 931px;
+    width: 100%;
 `;
 export const intervals = {
     d: 2,

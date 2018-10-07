@@ -20,6 +20,6 @@ export const Chart = styled.div`
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    height: 120px;
+    height: 82px;
     width: 100%;
 `;

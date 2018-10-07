@@ -60,3 +60,4 @@ export const WidgetInfoWrapper = styled.div`
     top: -10px;
     left: 10px;
 `;
+

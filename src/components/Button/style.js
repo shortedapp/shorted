@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.button`
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 30px;
     display: flex;
     justify-content: center; /* align horizontal */
     align-items: center; /* align vertical */
     margin: 5px;
     border-radius: 2px;
-    color: ${props => props.color};
+    border: solid 1px ${props => props.buttonBorder};
+    color: ${props => props.buttonTextColor};
     background: ${props =>
         props.selected ? props.buttonSelected : props.buttonUnselected};
     outline: 0;
-    font-size: 12px;
-    font-family: 'Avenir Next,Segoe UI', Helvetica, Arial, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-size: 17px;
+    font-family: Avenir Next, sans-serif;
     font-weight: bold;
 `;
