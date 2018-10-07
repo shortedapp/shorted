@@ -187,7 +187,7 @@ class StockProfileView extends React.Component {
                                                     <ProfileAlerts />
                                                 </ProfileAlertsWrapper>
                                                 <ProfileSidePanelWrapper>
-                                                    <ProfileSidePanel />
+                                                    <ProfileSidePanel metadata={this.state.profile.metadata}/>
                                                 </ProfileSidePanelWrapper>
                                                 <ProfileNewsWrapper>
                                                     <ProfileNews />
