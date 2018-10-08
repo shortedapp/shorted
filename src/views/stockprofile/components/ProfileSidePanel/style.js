@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     justify-content: center;
@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
         'se'
         'asx-link'
         'stock-website';
-`
+`;
 
 export const ProfileSector = styled.div`
     grid-area: sector;
@@ -43,7 +43,6 @@ export const ProfileSector = styled.div`
         align-items: center;
         justify-content: center;
         .icon {
-
         }
         .text {
             font-size: 15px;
@@ -56,19 +55,15 @@ export const ProfileSector = styled.div`
         font-family: Avenir Next, sans-serif;
         font-weight: bold;
     }
-
-`
+`;
 export const ProfileASXLink = styled.div`
     grid-area: asx-link;
-    
-`
-export const ProfileYahooLink = styled.div`
-    
-`
+`;
+export const ProfileYahooLink = styled.div``;
 export const ProfileDescription = styled.div`
     grid-area: stock-description;
-    
-`
+    font-size: 10px;
+`;
 export const StockEquityWrapper = styled.div`
     display: grid;
     grid-area: se;
@@ -80,8 +75,7 @@ export const StockEquityWrapper = styled.div`
     height: 100%;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
-    grid-template-areas:
-        'pe mc';
+    grid-template-areas: 'pe mc';
 `;
 export const ProfilePE = styled.div`
     grid-area: pe;
@@ -107,8 +101,7 @@ export const ProfilePE = styled.div`
         grid-area: value;
         font-family: Avenir Next, sans-serif;
     }
-    
-`
+`;
 export const ProfileMarketCap = styled.div`
     grid-area: mc;
     display: grid;
@@ -133,9 +126,7 @@ export const ProfileMarketCap = styled.div`
         grid-area: value;
         font-family: Avenir Next, sans-serif;
     }
-    
-`
+`;
 export const ProfileStockWebsite = styled.div`
     grid-area: stock-website;
-
-`
+`;
