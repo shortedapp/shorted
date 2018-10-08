@@ -5,6 +5,7 @@ import {
   Wrapper,
   ProfilePE,
   ProfileMarketCap,
+  StockEquityWrapper,
   ProfileDescription,
   ProfileASXLink,
   ProfileYahooLink,
@@ -31,16 +32,30 @@ class ProfileSidePanel extends React.Component {
         {theme => (
           <Wrapper {...theme}>
             <ProfileSector>
-              <div className='icon'>
-                <Icon style={{ fontSize: 35}}type='pie-chart' theme='outlined' />
+              <div className='title'>
+                <div className='icon'>
+                <Icon style={{ fontSize: 15}}type='pie-chart' theme='outlined' />
+                </div>
+                <div className='text'>
+                Sector
+                </div>
               </div>
               <div className='text'>{this.props.metadata.sector || 'sector goes here'}</div>
             </ProfileSector>
-            <ProfilePE>PE</ProfilePE>
-            <ProfileMarketCap>mc</ProfileMarketCap>
-            <ProfileDescription>descr</ProfileDescription>
-            <ProfileASXLink>asx link</ProfileASXLink>
-            <ProfileYahooLink>yahoo</ProfileYahooLink>
+            <StockEquityWrapper>
+            <ProfilePE>
+                <div className="title">P/E Ratio</div>
+                <div className="value">{this.props.metadata.pe || 2342.32}</div>
+            </ProfilePE>
+            <ProfileMarketCap>
+                <div className="title">Market Cap</div>
+                <div className="value">{this.props.metadata.pe || "3423.22323M" }</div>
+                </ProfileMarketCap>
+            </StockEquityWrapper>
+            
+            <ProfileDescription>{this.props.metadata.description || 'NA'}</ProfileDescription>
+            <ProfileASXLink>{this.props.metadata.asx_link || 'asx-link'}</ProfileASXLink>
+            <ProfileYahooLink>{this.props.metadata.yahoo_link || 'yahoo-link'}</ProfileYahooLink>
           </Wrapper>
         )}
       </ThemeContext.Consumer>

@@ -13,14 +13,13 @@ export const Wrapper = styled.div`
     height: 100%;
     display: grid;
     grid-gap: 10px;
-    grid-template-rows: 100px;
+    grid-template-rows: 70px 70px 50px 70px 50px;
     grid-template-columns: 1fr;
     grid-template-areas:
         'sector'
-        'stock-pe'
-        'stock-mc'
-        'asx-link'
         'stock-description'
+        'se'
+        'asx-link'
         'stock-website';
 `
 
@@ -33,15 +32,23 @@ export const ProfileSector = styled.div`
     align-self: center;
     width: 100%;
     height: 100%;
-    grid-template-columns: 40px 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20px 1fr;
     grid-template-areas:
-        'icon text';
-    .icon {
-        grid-area: icon;
-        justify-self: center;
-        text-align: center;
-        align-content: center;
-        align-self: center;
+        'title'
+        'text';
+    .title {
+        grid-area: title;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .icon {
+
+        }
+        .text {
+            font-size: 15px;
+            padding: 5px;
+        }
     }
     .text {
         grid-area: text;
@@ -62,12 +69,70 @@ export const ProfileDescription = styled.div`
     grid-area: stock-description;
     
 `
+export const StockEquityWrapper = styled.div`
+    display: grid;
+    grid-area: se;
+    justify-self: center;
+    text-align: center;
+    align-content: center;
+    align-self: center;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        'pe mc';
+`;
 export const ProfilePE = styled.div`
-    grid-area: stock-pe;
+    grid-area: pe;
+    display: grid;
+    justify-self: center;
+    text-align: center;
+    align-content: center;
+    align-self: center;
+    height: 60px;
+    width: 70px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20px 1fr;
+    grid-template-areas:
+        'title'
+        'value';
+    .title {
+        grid-area: title;
+        text-align: left;
+        font-family: Avenir Next, sans-serif;
+        font-weight: bold;
+    }
+    .value {
+        grid-area: value;
+        font-family: Avenir Next, sans-serif;
+    }
     
 `
 export const ProfileMarketCap = styled.div`
-    grid-area: stock-mc;
+    grid-area: mc;
+    display: grid;
+    justify-self: center;
+    text-align: center;
+    align-content: center;
+    align-self: center;
+    height: 60px;
+    width: 70px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20px 1fr;
+    grid-template-areas:
+        'title'
+        'value';
+    .title {
+        grid-area: title;
+        text-align: left;
+        font-family: Avenir Next, sans-serif;
+        font-weight: bold;
+    }
+    .value {
+        grid-area: value;
+        font-family: Avenir Next, sans-serif;
+    }
     
 `
 export const ProfileStockWebsite = styled.div`
