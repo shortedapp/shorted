@@ -84,3 +84,52 @@ export const getMonthlyNameShort = (t) => {
     // console.log('utils:getMonthNameShort:',date.getMonthName())
     return date.getMonthNameShort()
 }
+
+
+/**
+ * getLinks
+ * @param {*} metadata
+ * parses metadata generates a number of external links made available on profile/stock legend views
+ * Bloomberg: ASN -> https://www.bloomberg.com/quote/ASN:AU 
+ * Google Finance: ASN -> https://www.google.com/search?q=ASX:ASN
+ * Yahoo FInance: ASN -> https://finance.yahoo.com/quote/ASN.AX?ltr=1
+ * ASX: ASN -> https://www.asx.com.au/asx/share-price-research/company/ASN
+ * HotCopper : ASN -> https://hotcopper.com.au/asx/asn/
+ * Twitter (from metadata)
+ * Company website (from metadata)
+ * 
+ */
+export const getLinks = (metadata) => {
+    return [
+        {
+            name: 'company',
+            url: metadata.company_url
+        },
+        {
+            name: 'twitter',
+            url: metadata.twitter_url,
+        },
+        {
+            name: 'asx',
+            url: `https://www.asx.com.au/asx/share-price-research/company/${metadata.code}`
+        },
+        {
+            name: 'hotcopper',
+            url: `https://hotcopper.com.au/asx/${metadata.code}/`
+        },
+        {
+            name: 'bloomberg',
+            url: `https://www.bloomberg.com/quote/${metadata.code}:AU`
+        },
+        {
+            name: 'yahoo',
+            url: `https://finance.yahoo.com/quote/${metadata.code}.AX`
+        },
+        {
+            name: 'google',
+            url: `https://www.google.com/search?q=ASX:${metadata.code}`
+        }
+
+    ]
+
+}

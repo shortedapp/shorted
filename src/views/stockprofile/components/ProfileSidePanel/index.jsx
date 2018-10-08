@@ -1,16 +1,19 @@
 import React from 'react'
 import { Icon } from 'antd'
 import { ThemeContext } from 'src/theme-context'
+import { getLinks } from 'src/utils';
 import {
   Wrapper,
   ProfilePE,
   ProfileMarketCap,
   StockEquityWrapper,
   ProfileDescription,
+  ExternalLinks,
   ProfileASXLink,
   ProfileYahooLink,
   ProfileSector
 } from './style'
+import SocialMediaBar from '../../../../components/SocialMediaBar';
 
 /**
  * Top Navbar responsible for rendering the basic site-map layout including: blog | about | disclaimer etc
@@ -52,10 +55,8 @@ class ProfileSidePanel extends React.Component {
                 <div className="value">{this.props.metadata.pe || "3423.22323M" }</div>
                 </ProfileMarketCap>
             </StockEquityWrapper>
-            
             <ProfileDescription>{this.props.metadata.description || 'NA'}</ProfileDescription>
-            <ProfileASXLink>{this.props.metadata.asx_link || 'asx-link'}</ProfileASXLink>
-            <ProfileYahooLink>{this.props.metadata.yahoo_link || 'yahoo-link'}</ProfileYahooLink>
+            <ExternalLinks><SocialMediaBar items={getLinks(this.props.metadata)}/></ExternalLinks>
           </Wrapper>
         )}
       </ThemeContext.Consumer>

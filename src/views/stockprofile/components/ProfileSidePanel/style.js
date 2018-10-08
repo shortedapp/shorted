@@ -56,8 +56,24 @@ export const ProfileSector = styled.div`
         font-weight: bold;
     }
 `;
-export const ProfileASXLink = styled.div`
+export const ExternalLinks = styled.div`
     grid-area: asx-link;
+    display: grid;
+    justify-self: center;
+    text-align: left;
+    align-self: center;
+    float: left;
+    grid-template-columns: 30px 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 'logo url';
+    .logo {
+        grid-area: logo;
+        float: left;
+    }
+    .url {
+        grid-area: url;
+    }
+
 `;
 export const ProfileYahooLink = styled.div``;
 export const ProfileDescription = styled.div`
