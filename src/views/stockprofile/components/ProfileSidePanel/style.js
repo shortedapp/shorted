@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     margin-left: 20px;
     margin-top: 40px;
-    color: ${props => props.color};
+    color: ${props => props.profileSidePanelTextColor};
     height: 100%;
     display: grid;
     grid-gap: 10px;
@@ -73,7 +73,6 @@ export const ExternalLinks = styled.div`
     .url {
         grid-area: url;
     }
-
 `;
 export const ProfileYahooLink = styled.div``;
 export const ProfileDescription = styled.div`
