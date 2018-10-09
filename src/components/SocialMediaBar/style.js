@@ -2,9 +2,10 @@ import styled from 'styled-components';
 export const Image = styled.img`
     width: 2.2em;
     height: 2.2em;
+    margin: 5px;
 `;
 export const IconWrapper = styled.div`
-    margin: 2px;
+    margin: 5px;
 `;
 
 export const Wrapper = styled.div`

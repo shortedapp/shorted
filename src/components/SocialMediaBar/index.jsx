@@ -3,16 +3,20 @@ import { IconContext } from 'react-icons'
 import { ThemeContext } from 'src/theme-context'
 import { contentMap } from './contentMap'
 import { Wrapper, Image, IconWrapper } from './style'
-import GatsbyLink from 'gatsby-link'
-import { Icon } from 'antd'
+import { OutboundLink } from 'gatsby-plugin-google-analytics'
 
 const getContent = (name, theme) => {
   const meta = contentMap[name]
+  console.log(theme)
   switch (meta.type) {
     case 'icon':
       return <IconWrapper>{meta.src}</IconWrapper>
     case 'svg':
-      return <Image src={meta.src} alt={meta.alt} />
+      if (theme.color === 'white') {
+        return <Image src={meta.srcLight} alt={meta.alt} />
+      } else {
+        return <Image src={meta.srcDark} alt={meta.alt} />
+      }
     default:
   }
 }
@@ -22,7 +26,9 @@ const SocialMediaBar = props => (
       <IconContext.Provider value={{ color: theme.textColor, size: '2.2em' }}>
         <Wrapper>
           {props.items.map(item => (
-            <GatsbyLink url={item.url}>{getContent(item.name)}</GatsbyLink>
+            <OutboundLink href={item.url}>
+              {getContent(item.name, theme)}
+            </OutboundLink>
           ))}
         </Wrapper>
       </IconContext.Provider>

@@ -1,11 +1,13 @@
 import React from 'react';
-import ASXLogo from 'src/assets/images/asx-logo.svg';
+import ASXLogoLight from 'src/assets/images/asx-logo-dark.svg';
+import ASXLogoDark from 'src/assets/images/asx-logo-light.svg';
 import { FaGoogle, FaTwitterSquare, FaYahoo, FaBold, FaHospitalSymbol, FaBuilding } from 'react-icons/fa';
 
 export const contentMap = {
     asx: {
         type: 'svg',
-        src: ASXLogo,
+        srcLight: ASXLogoLight,
+        srcDark: ASXLogoDark,
         name: 'asx',
         alt: 'asx-logo'
     },
