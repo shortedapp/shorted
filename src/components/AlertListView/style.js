@@ -17,3 +17,7 @@ export const Wrapper = styled.button`
     font-family: Avenir Next, sans-serif;
     font-weight: bold;
 `;
+
+export const RowWrapper = styled.div``;
+export const RowHeaderWrapper = styled.div``;
+export const ListViewHeader = styled.div``;
