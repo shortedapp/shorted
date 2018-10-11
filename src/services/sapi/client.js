@@ -224,7 +224,18 @@ class ShortedAPI {
      *
      */
     getAlerts(code) {
-        return topAlerts.alerts.code;
+        switch (code) {
+            case 'CBA':
+                return CBAAlerts
+            case 'TLS':
+                return TLSAlerts;
+            case 'JBH':
+                return JBHAlerts;
+            case 'ORE':
+                return OREAlerts;
+            default:
+                return CBAAlerts;
+        }
     }
     /**
      *

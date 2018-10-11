@@ -1,0 +1,25 @@
+{
+    "alerts": [
+        {
+            "name": "daily average spike",
+            "type": "average",
+            "value": 1.1,
+            "unit": "%",
+            "date": "01/01/2018"
+        },
+        {
+            "name": "anomalous change",
+            "type": "anomaly",
+            "value": 3.3,
+            "unit": "%",
+            "date": "01/01/2018"
+        },
+        {
+            "name": "daily average spike",
+            "type": "average",
+            "value": 1.1,
+            "unit": "%"
+        }
+    ],
+    "last_modified": "01/01/2018"
+}

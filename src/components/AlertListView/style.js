@@ -1,23 +1,24 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.button`
-    width: 40px;
-    height: 30px;
+export const duration = 500;
+export const transitionStyles = {
+    entering: {opacity: 0, Ypos: 500},
+    entered: {opacity: 1, Ypos: 0},
+    exited: {opacity: 0},
+};
+export const Wrapper = styled.div`
     display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center; /* align vertical */
-    margin: 5px;
-    border-radius: 2px;
-    border: solid 1px ${props => props.buttonBorder};
-    color: ${props => props.buttonTextColor};
-    background: ${props =>
-        props.selected ? props.buttonSelected : props.buttonUnselected};
-    outline: 0;
-    font-size: 17px;
-    font-family: Avenir Next, sans-serif;
-    font-weight: bold;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+`;
+export const EmptyList = styled.div`
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
 `;
 
 export const RowWrapper = styled.div``;
 export const RowHeaderWrapper = styled.div``;
-export const ListViewHeader = styled.div``;

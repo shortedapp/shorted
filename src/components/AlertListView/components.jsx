@@ -1,5 +1,5 @@
 import React from 'react';
-import { RowWrapper, HeaderWrapper } from './style';
+import { RowWrapper, RowHeaderWrapper } from './style';
 
 export const Row = (props) => <RowWrapper></RowWrapper>
-export const Header = (props) => <HeaderWrapper></HeaderWrapper>
+export const RowHeader = (props) => <RowHeaderWrapper></RowHeaderWrapper>

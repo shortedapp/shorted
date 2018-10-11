@@ -1,6 +1,7 @@
 import React from 'react';
 import {ThemeContext} from 'src/theme-context';
-import {Wrapper} from './style';
+import ALertListView from 'src/components/AlertListView';
+import {Wrapper, Header, Results} from './style';
 
 /**
  * Top Navbar responsible for rendering the basic site-map layout including: blog | about | disclaimer etc
@@ -18,7 +19,10 @@ class ProfileAlerts extends React.Component {
     render() {
         return (
             <ThemeContext.Consumer>
-                {theme => <Wrapper {...theme}>alerts go here</Wrapper>}
+                {theme => <Wrapper {...theme}>
+                <Header>Alerts</Header>
+                <Results><ALertListView /></Results>
+                </Wrapper>}
             </ThemeContext.Consumer>
         );
     }

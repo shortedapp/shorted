@@ -1,8 +1,8 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import {ThemeContext} from '../../../../theme-context';
-import { Row } from './components';
-import {Wrapper, ListViewHeader, Header, duration, transitionStyles} from './style';
+import {ThemeContext} from 'src/theme-context';
+import { Row, RowHeader } from './components';
+import {Wrapper, ListViewHeader, ListViewRows, EmptyList, duration, transitionStyles} from './style';
 /**
  * Renders a list of Row components. These rows will display an alert card for events occuring for a given stock
  * TODO:
@@ -38,9 +38,9 @@ class AlertListView extends React.Component {
     }
 
     render() {
-        const rows = this.props.data.map(row_data => (
+        const rows = this.props.data ? this.props.data.map(row_data => (
             <Row></Row>
-        ));
+        )) : <EmptyList>No Alerts Found</EmptyList>
         return (
             <ThemeContext.Consumer>
                 {theme => (
@@ -52,8 +52,7 @@ class AlertListView extends React.Component {
                                     onMouseLeave={() => this.handleMouseLeave()}
                                     duration={duration}
                                     {...transitionStyles[state]}>
-                                    <Header {...theme}>Alerts</Header>
-                                    <ListViewHeader header />
+                                    {this.props.data ? <RowHeader /> : null}
                                     {rows}
                                 </Wrapper>
                             );
