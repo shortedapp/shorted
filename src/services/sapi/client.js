@@ -24,6 +24,13 @@ import ORE from './fixtures/data/timeseries/ORE.json';
 import TLS from './fixtures/data/timeseries/TLS.json';
 import JBH from './fixtures/data/timeseries/JBH.json';
 
+//alerts
+import CBAAlerts from './fixtures/data/alerts/CBA.json';
+import TLSAlerts from './fixtures/data/alerts/TLS.json';
+import JBHAlerts from './fixtures/data/alerts/JBH.json';
+import OREAlerts from './fixtures/data/alerts/ORE.json';
+
+
 // logos
 import CBALogo from './fixtures/images/cba-logo.png';
 import TLSLogo from './fixtures/images/tls-logo.png';

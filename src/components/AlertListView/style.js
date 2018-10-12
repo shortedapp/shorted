@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     height: 100%;
+    margin: 5px;
 `;
 export const EmptyList = styled.div`
     height: 100%;
@@ -20,5 +21,10 @@ export const EmptyList = styled.div`
     justify-content: center;
 `;
 
-export const RowWrapper = styled.div``;
+export const RowWrapper = styled.div`
+    background: white;
+    width: 100%;
+    margin: 5px;
+    height: 100px;
+`;
 export const RowHeaderWrapper = styled.div``;

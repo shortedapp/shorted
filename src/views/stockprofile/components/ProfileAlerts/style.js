@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     background: ${props => props.profileGraphWidgetBackground};
     width: 100%;
-    height: 100%;
+    overflow: scroll;
     border-radius: 10px;
     grid-gap: 5px;
     grid-template-rows: 30px 1fr;

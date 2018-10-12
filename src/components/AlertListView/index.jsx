@@ -38,8 +38,8 @@ class AlertListView extends React.Component {
     }
 
     render() {
-        const rows = this.props.data ? this.props.data.map(row_data => (
-            <Row></Row>
+        const rows = this.props.data ? this.props.data.alerts.map((row_data, index) => (
+            <Row key={`alert-row-${index}`} data={row_data}/>
         )) : <EmptyList>No Alerts Found</EmptyList>
         return (
             <ThemeContext.Consumer>

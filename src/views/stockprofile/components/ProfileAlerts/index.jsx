@@ -1,6 +1,7 @@
 import React from 'react';
 import {ThemeContext} from 'src/theme-context';
 import ALertListView from 'src/components/AlertListView';
+import ShortedAPI from 'src/services/sapi/client';
 import {Wrapper, Header, Results} from './style';
 
 /**
@@ -13,15 +14,36 @@ import {Wrapper, Header, Results} from './style';
 class ProfileAlerts extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            data: null,
+            inside: false
+        };
+        this.apiClient = new ShortedAPI();
     }
-
+    componentDidMount() {
+        this._fetchData();
+    }
+    _fetchData() {
+        Promise.resolve(
+            this.apiClient.getAlerts(
+                this.props.code),
+        )
+            .then(result => {
+                this.setState({
+                    data: result,
+                    inside: true,
+                });
+            })
+            .catch(error => console.log('_fetchData:error:', error));
+    }
     render() {
+        const { data } = this.state;
+        console.log('ProfileAlerts:data:', data)
         return (
             <ThemeContext.Consumer>
                 {theme => <Wrapper {...theme}>
                 <Header>Alerts</Header>
-                <Results><ALertListView /></Results>
+                <Results><ALertListView data={data} /></Results>
                 </Wrapper>}
             </ThemeContext.Consumer>
         );

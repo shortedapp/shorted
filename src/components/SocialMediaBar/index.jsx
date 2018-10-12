@@ -27,7 +27,7 @@ const SocialMediaBar = props => (
                 value={{color: theme.profileSidePanelTextColor, size: '2.2em'}}>
                 <Wrapper>
                     {props.items.map(item => (
-                        <OutboundLink href={item.url}>
+                        <OutboundLink key={item.name} href={item.url}>
                             {getContent(item.name, theme)}
                         </OutboundLink>
                     ))}

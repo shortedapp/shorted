@@ -15,7 +15,6 @@ class ProfileChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.apiClient = new ShortedAPI();
 
     }
 
