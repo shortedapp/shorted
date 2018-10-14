@@ -1,8 +1,11 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
+import {IconContext} from 'react-icons';
 import {ThemeContext} from 'src/theme-context';
-import { Row, RowHeader } from './components';
-import {Wrapper, ListViewHeader, ListViewRows, EmptyList, duration, transitionStyles} from './style';
+
+import Row from './components/Row';
+import RowHeader from './components/RowHeader';
+import {Wrapper, EmptyList, duration, transitionStyles} from './style';
 /**
  * Renders a list of Row components. These rows will display an alert card for events occuring for a given stock
  * TODO:
@@ -38,9 +41,13 @@ class AlertListView extends React.Component {
     }
 
     render() {
-        const rows = this.props.data ? this.props.data.alerts.map((row_data, index) => (
-            <Row key={`alert-row-${index}`} data={row_data}/>
-        )) : <EmptyList>No Alerts Found</EmptyList>
+        const rows = this.props.data ? (
+            this.props.data.alerts.map((row_data, index) => (
+                <Row key={`alert-row-${index}`} data={row_data} />
+            ))
+        ) : (
+            <EmptyList>No Alerts Found</EmptyList>
+        );
         return (
             <ThemeContext.Consumer>
                 {theme => (
@@ -52,8 +59,14 @@ class AlertListView extends React.Component {
                                     onMouseLeave={() => this.handleMouseLeave()}
                                     duration={duration}
                                     {...transitionStyles[state]}>
-                                    {this.props.data ? <RowHeader /> : null}
-                                    {rows}
+                                    <IconContext.Provider
+                                        value={{
+                                            color:
+                                                theme.profileSidePanelTextColor,
+                                            size: '2.2em',
+                                        }}>
+                                        {rows}
+                                    </IconContext.Provider>
                                 </Wrapper>
                             );
                         }}

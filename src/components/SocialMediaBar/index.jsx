@@ -7,7 +7,6 @@ import {OutboundLink} from 'gatsby-plugin-google-analytics';
 
 const getContent = (name, theme) => {
     const meta = contentMap[name];
-    console.log(theme);
     switch (meta.type) {
         case 'icon':
             return <IconWrapper>{meta.src}</IconWrapper>;

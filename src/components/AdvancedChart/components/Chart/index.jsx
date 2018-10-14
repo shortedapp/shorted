@@ -111,6 +111,7 @@ class Chart extends React.Component {
                                     duration={duration}
                                     {...transitionStyles[state]}>
                                     <VictoryChart
+                                        standalone={true}
                                         padding={{
                                             top: 0,
                                             left: 20,
@@ -200,7 +201,6 @@ class Chart extends React.Component {
 
                                         <VictoryAxis
                                             dependentAxis
-                                            standalone={false}
                                             tickFormat={t => `${Math.round(t)}`}
                                             tickLabelComponent={
                                                 <VictoryLabel />
@@ -227,7 +227,6 @@ class Chart extends React.Component {
                                             }}
                                         />
                                         <VictoryLine
-                                            dependentAxis
                                             width={1100}
                                             height={900}
                                             name="standard"

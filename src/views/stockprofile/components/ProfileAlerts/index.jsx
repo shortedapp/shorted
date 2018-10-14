@@ -16,7 +16,7 @@ class ProfileAlerts extends React.Component {
         super(props);
         this.state = {
             data: null,
-            inside: false
+            inside: false,
         };
         this.apiClient = new ShortedAPI();
     }
@@ -24,10 +24,7 @@ class ProfileAlerts extends React.Component {
         this._fetchData();
     }
     _fetchData() {
-        Promise.resolve(
-            this.apiClient.getAlerts(
-                this.props.code),
-        )
+        Promise.resolve(this.apiClient.getAlerts(this.props.code))
             .then(result => {
                 this.setState({
                     data: result,
@@ -37,14 +34,18 @@ class ProfileAlerts extends React.Component {
             .catch(error => console.log('_fetchData:error:', error));
     }
     render() {
-        const { data } = this.state;
-        console.log('ProfileAlerts:data:', data)
+        const {data} = this.state;
+        console.log('ProfileAlerts:data:', data);
         return (
             <ThemeContext.Consumer>
-                {theme => <Wrapper {...theme}>
-                <Header>Alerts</Header>
-                <Results><ALertListView data={data} /></Results>
-                </Wrapper>}
+                {theme => (
+                    <Wrapper {...theme}>
+                        <Header {...theme}>Alerts</Header>
+                        <Results>
+                            <ALertListView data={data} />
+                        </Results>
+                    </Wrapper>
+                )}
             </ThemeContext.Consumer>
         );
     }
