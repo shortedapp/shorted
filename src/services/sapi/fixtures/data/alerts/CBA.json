@@ -2,28 +2,28 @@
     "alerts": [
         {
             "name": "daily average spike",
-            "type": "technical",
+            "type": "Technical Analysis",
             "value": 1.1,
             "unit": "%",
             "date": "01/01/2018"
         },
         {
             "name": "anomalous change",
-            "type": "anomaly",
+            "type": "Anomalous Behavior",
             "value": 3.3,
             "unit": "%",
             "date": "01/01/2018"
         },
         {
             "name": "short position change",
-            "type": "price",
+            "type": "Short Position",
             "value": 1.1,
             "unit": "%",
             "date": "05/01/2018"
         },
         {
             "name": "daily average spike",
-            "type": "technical",
+            "type": "Technical Analysis",
             "value": 1.1,
             "unit": "%",
             "date": "05/01/2018"

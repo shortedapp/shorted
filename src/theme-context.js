@@ -51,6 +51,7 @@ export const themes = {
             profileChartGridColor: '#eff3f8',
             profileChartLegendTextColor: '#565656',
             profileSidePanelTextColor: '#333333',
+            profileCardRowBackground: '#e4e4e4'
         },
     },
     dark: {
@@ -104,6 +105,7 @@ export const themes = {
             profileChartGridColor: '#343434',
             profileChartLegendTextColor: 'white',
             profileSidePanelTextColor: 'white',
+            profileCardRowBackground: '#525252'
         },
     },
 };
