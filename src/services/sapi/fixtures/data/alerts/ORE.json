@@ -1,0 +1,34 @@
+{
+    "alerts": [
+        {
+            "name": "daily average spike",
+            "type": "technical",
+            "value": 1.1,
+            "unit": "%",
+            "date": "01/01/2018"
+        },
+        {
+            "name": "anomalous change",
+            "type": "anomaly",
+            "value": 3.3,
+            "unit": "%",
+            "date": "01/01/2018"
+        },
+        {
+            "name": "short position change",
+            "type": "price",
+            "value": 1.1,
+            "unit": "%",
+            "date": "05/01/2018"
+        },
+        {
+            "name": "daily average spike",
+            "type": "technical",
+            "value": 1.1,
+            "unit": "%",
+            "date": "05/01/2018"
+        }
+    ],
+    "last_modified": "01/01/2018",
+    "code": "CBA"
+}

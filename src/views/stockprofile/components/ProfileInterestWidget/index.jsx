@@ -35,7 +35,7 @@ class ProfileSectorWidget extends React.Component {
             <ThemeContext.Consumer>
                 {theme => (
                     <Wrapper>
-                        <WidgetUnitWrapper {...theme}>Users</WidgetUnitWrapper>
+                        <WidgetUnitWrapper {...theme}><Icon style={{fontSize: 24}} type="eye" theme="outlined" /></WidgetUnitWrapper>
                         <WidgetValueWrapper {...theme}>
                             {this.props.data[this.props.data.length - 1].y}
                         </WidgetValueWrapper>

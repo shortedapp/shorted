@@ -5,8 +5,35 @@ export const Wrapper = styled.div`
     text-align: center;
     vertical-align: middle;
     display: grid;
-    grid-gap: 20px;
-    margin-top: 20px;
+    /* iPads (landscape) ----------- */
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+        top: 0px;
+    }
+    /* small Desktops and laptops ----------- */
+    @media only screen and (min-width: 1024px) {
+        padding: 10px;
+        grid-gap: 5px;
+        grid-template-rows: repeat(3, 100px);
+        grid-template-columns: 350px repeat(3, 1fr) 100px;
+        grid-template-areas:
+            'company-logo stock-history stock-history'
+            'company-name sector-history sector-history'
+            'company-code stock-interest stock-interest';
+    }
+    /* Desktops and laptops ----------- */
+    @media only screen and (min-width: 1224px) {
+        padding: 10px;
+        grid-gap: 10px;
+        margin: 0px;
+        margin-top: 20px;
+        grid-template-rows: 130px 70px 50px;
+        grid-template-columns: 350px repeat(3, 1fr) 100px;
+        grid-template-areas:
+            'company-logo stock-history sector-history stock-interest'
+            'company-name todo todo todo'
+            'company-code todo todo todo';
+    }
+
     width: 100%;
     grid-template-rows: 130px 70px 50px;
     grid-template-columns: 350px repeat(3, 1fr) 100px;
@@ -30,6 +57,7 @@ export const CompanyNameWrapper = styled.div`
     text-align: center;
     flex-direction: column;
     display: flex;
+    justify-content: center;
     font-size: 20px;
     font-weight: bold;
     color: ${props => props.profileHeaderTextColor};

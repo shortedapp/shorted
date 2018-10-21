@@ -18,7 +18,6 @@ export const Button = styled.div`
     width: 30px;
     height: 30px;
     margin-right: 7px;
-    padding-top: 10px;
     display: inline-block;
     position: relative;
 `;

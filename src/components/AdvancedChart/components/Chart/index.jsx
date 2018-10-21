@@ -6,6 +6,8 @@ import {
     VictoryTooltip,
     VictoryLine,
     VictoryArea,
+    VictoryContainer,
+    VictoryCursorContainer,
     VictoryVoronoiContainer,
 } from 'victory';
 import Transition from 'react-transition-group/Transition';
@@ -21,11 +23,11 @@ import {
     colors300,
 } from './style';
 import {StandardChartTooltip} from './components';
-import {findMinMax} from '../../../../utils';
-
-const monthNames = ["Jan", "Feb", "Mar", "April", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-];
+import {
+    findMinMax,
+    getMonthlyNameShort,
+    getYearlyNameShort,
+} from '../../../../utils';
 
 /**
  * Chart
@@ -70,10 +72,9 @@ class Chart extends React.Component {
         this.setState({inside: true});
     }
     handleVoronoiSelect(points, props) {
-        console.log(points);
         if (points[0]) {
             console.log('voronio snapped to', points[0].childName);
-            this.props.onSelectLine(points[0].childName);
+            this.props.onSelectLine(points[0].childName, points[0].y);
         }
     }
     handleLineHover(e, key) {
@@ -84,51 +85,21 @@ class Chart extends React.Component {
         console.log('exiting line', key);
     }
     getXaxis(t, window) {
+        // console.log(window)
+        // console.log(t)
         switch (window) {
             case 'm':
-                console.log(new Date(t).toDateString().split(' ')[1])
-                return monthNames[new Date(t).getMonth()]
+                return getMonthlyNameShort(t);
+            case 'y':
+                return getYearlyNameShort(t);
             default:
-                return t
+                return t;
         }
     }
 
     render() {
         const {data, selectedLine, selectedWindowOption} = this.props;
         const [min, max] = findMinMax(data);
-        var lines = null;
-        lines = (
-            <VictoryLine
-                // labelComponent={<VictoryTooltip />}
-                width={1100}
-                height={900}
-                name="standard"
-                key="standard"
-                data={data}
-                domain={{y: [min - 2, max + 2]}}
-                events={[
-                    {
-                        childName: 'standard',
-                        target: 'data',
-                        eventHandlers: {
-                            onMouseOver: e =>
-                                this.handleLineHover(e, 'standard'),
-                            onMouseOut: e => this.handleLineExit(e, 'standard'),
-                        },
-                    },
-                ]}
-                style={{
-                    data: {
-                        stroke: colors700[0],
-                        strokeOpacity:
-                            'standard' === selectedLine || !selectedLine
-                                ? 1
-                                : 0.2,
-                        strokeWidth: 2,
-                    },
-                }}
-            />
-        );
         return (
             <ThemeContext.Consumer>
                 {theme => (
@@ -140,14 +111,15 @@ class Chart extends React.Component {
                                     duration={duration}
                                     {...transitionStyles[state]}>
                                     <VictoryChart
+                                        standalone={true}
                                         padding={{
-                                            top: 10,
+                                            top: 0,
                                             left: 20,
                                             right: 10,
                                             bottom: 20,
                                         }}
                                         width={650}
-                                        height={380}
+                                        height={280}
                                         containerComponent={
                                             <VictoryVoronoiContainer
                                                 radius={10}
@@ -164,7 +136,8 @@ class Chart extends React.Component {
                                                         flyoutComponent={
                                                             <StandardChartTooltip
                                                                 selectedLine={
-                                                                    selectedLine
+                                                                    selectedLine ||
+                                                                    'standard'
                                                                 }
                                                                 dataKeys={
                                                                     data.dataKeys
@@ -179,12 +152,37 @@ class Chart extends React.Component {
                                                 }
                                             />
                                         }>
-                                        {lines}
+                                        <svg>
+                                            <defs>
+                                                <filter id="glow">
+                                                    <feGaussianBlur
+                                                        className="blur"
+                                                        result="coloredBlur"
+                                                        stdDeviation="4"
+                                                    />
+                                                    <feComponentTransfer>
+                                                        <feFuncA
+                                                            type="linear"
+                                                            slope="0.4"
+                                                        />
+                                                    </feComponentTransfer>
+                                                    <feMerge>
+                                                        <feMergeNode />
+                                                        <feMergeNode in="SourceGraphic" />
+                                                    </feMerge>
+                                                </filter>
+                                            </defs>
+                                        </svg>
+
                                         <VictoryAxis
                                             padding={{bottom: 30}}
-                                            standalone={false}
                                             tickCount={5}
-                                            tickFormat={t => this.getXaxis(t, selectedWindowOption)}
+                                            tickFormat={t =>
+                                                this.getXaxis(
+                                                    t,
+                                                    selectedWindowOption,
+                                                )
+                                            }
                                             style={{
                                                 axis: {
                                                     stroke: theme.axisColor,
@@ -200,6 +198,7 @@ class Chart extends React.Component {
                                                 },
                                             }}
                                         />
+
                                         <VictoryAxis
                                             dependentAxis
                                             tickFormat={t => `${Math.round(t)}`}
@@ -218,6 +217,53 @@ class Chart extends React.Component {
                                                     fontSize: 7,
                                                     padding: 4,
                                                     fill: theme.axisColor,
+                                                },
+                                                grid: {
+                                                    stroke:
+                                                        theme.profileChartGridColor,
+                                                    opacity: 0.8,
+                                                    strokeWidth: 2,
+                                                },
+                                            }}
+                                        />
+                                        <VictoryLine
+                                            width={1100}
+                                            height={900}
+                                            name="standard"
+                                            key="standard"
+                                            data={data}
+                                            domain={{y: [min - 2, max + 2]}}
+                                            events={[
+                                                {
+                                                    childName: 'standard',
+                                                    target: 'data',
+                                                    eventHandlers: {
+                                                        onMouseOver: e =>
+                                                            this.handleLineHover(
+                                                                e,
+                                                                'standard',
+                                                            ),
+                                                        onMouseOut: e =>
+                                                            this.handleLineExit(
+                                                                e,
+                                                                'standard',
+                                                            ),
+                                                    },
+                                                },
+                                            ]}
+                                            style={{
+                                                data: {
+                                                    //stroke: colors700[0],
+                                                    stroke:
+                                                        theme.profileChartLineColor,
+                                                    strokeOpacity:
+                                                        selectedLine ===
+                                                            'standard' ||
+                                                        !selectedLine
+                                                            ? 1
+                                                            : 0.2,
+                                                    strokeWidth: 2,
+                                                    filter: 'url(#glow)',
                                                 },
                                             }}
                                         />

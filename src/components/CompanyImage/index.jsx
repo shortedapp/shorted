@@ -1,6 +1,6 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import {duration, transitionStyles, Wrapper} from './style';
+import {duration, transitionStyles, Wrapper, Img} from './style';
 
 /**
  * Top Navbar responsible for rendering the basic site-map layout including: blog | about | disclaimer etc
@@ -32,11 +32,7 @@ class Header extends React.Component {
                         <Wrapper
                             duration={duration}
                             {...transitionStyles[state]}>
-                            <img
-                                style={{width: 70}}
-                                src={this.props.src}
-                                alt="company-logo"
-                            />
+                            <Img src={this.props.src} alt="company-logo" />
                         </Wrapper>
                     );
                 }}

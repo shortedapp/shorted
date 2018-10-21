@@ -33,5 +33,17 @@ module.exports = {
                 pages: path.join(__dirname, 'src/pages'),
             },
         },
+        {
+            resolve: `gatsby-plugin-google-analytics`,
+            options: {
+              trackingId: "UA-119767237-2",
+              // Puts tracking script in the head instead of the body
+              head: false,
+              // Setting this parameter is optional
+              anonymize: false,
+              // Setting this parameter is also optional
+              respectDNT: false
+            },
+        },
     ],
 };
