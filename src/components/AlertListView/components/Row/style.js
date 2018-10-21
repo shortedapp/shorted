@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
     display: grid;
     background: ${props => props.profileCardRowBackground};
     grid-gap: 2px;
-    grid-template-rows: 60px 20px 60px;
+    grid-template-rows: 60px 20px 20px;
     grid-template-columns: 60px 2fr 1fr 20px;
     grid-template-areas:
         'icon type na na'
@@ -31,7 +31,7 @@ export const IconWrapper = styled.div`
 `;
 export const TypeWrapper = styled.div`
     grid-area: type;
-    margin-left: 30px;
+    margin-left: 15px;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -46,5 +46,8 @@ export const DescriptionWraper = styled.div`
     grid-area: description;
     font-family: Avenir Next, sans-serif;
     color: ${props => props.color};
+    font-size: 25px;
+    text-align: left;
+    margin-left: 20px;
 `;
 export const SparkWrapper = styled.div``;
