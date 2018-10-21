@@ -6,13 +6,13 @@ export const Wrapper = styled.div`
     padding: 5px;
     display: grid;
     background: ${props => props.profileCardRowBackground};
-    grid-gap: 2px;
-    grid-template-rows: 60px 20px 60px;
-    grid-template-columns: 60px 2fr 1fr 20px;
+    grid-gap: 5px;
+    grid-template-rows: 30px 20px 40px;
+    grid-template-columns: 30px 30px 1fr 2fr 20px;
     grid-template-areas:
-        'icon type na na'
-        'description description todo todo'
-        'empty empty todo todo';
+        'icon type type type na'
+        'description description description todo todo'
+        'direction value z todo todo';
 `;
 
 export const IconWrapper = styled.div`
@@ -20,8 +20,8 @@ export const IconWrapper = styled.div`
     display: flex;
     margin: 5px;
     background: ${props => props.color};
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
     display: flex;
     flex-direction: center;
     justify-content: center;
@@ -31,7 +31,7 @@ export const IconWrapper = styled.div`
 `;
 export const TypeWrapper = styled.div`
     grid-area: type;
-    margin-left: 30px;
+    margin-left: 15px;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -39,12 +39,31 @@ export const TypeWrapper = styled.div`
     justify-content: center;
     font-family: Avenir Next, sans-serif;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
     color: ${props => props.color};
 `;
 export const DescriptionWraper = styled.div`
     grid-area: description;
     font-family: Avenir Next, sans-serif;
     color: ${props => props.color};
+    text-align: left;
 `;
-export const SparkWrapper = styled.div``;
+export const DirectionWrapper = styled.div`
+    grid-area: direction;
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+    justify-content: center;
+`;
+export const ValueWrapper = styled.div`
+    grid-area: value;
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+    justify-content: center;
+    font-size: 20px;
+    color: ${props => props.positive ? 'red' : 'green'};
+`;
+export const SparkWrapper = styled.div`
+
+`;

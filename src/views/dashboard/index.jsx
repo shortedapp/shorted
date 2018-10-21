@@ -1,7 +1,6 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import {Menu, Icon, Switch, Button} from 'antd';
-import 'antd/dist/antd.css';
 import {ThemeContext, themes} from '../../theme-context';
 import Logo from '../../components/Logo';
 import ErrorBoundary from '../../components/ErrorBoundary';

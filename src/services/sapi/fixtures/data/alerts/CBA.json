@@ -10,7 +10,7 @@
         {
             "name": "anomalous change",
             "type": "Anomalous Behavior",
-            "value": 3.3,
+            "value": -3.3,
             "unit": "%",
             "date": "01/01/2018"
         },
@@ -24,7 +24,7 @@
         {
             "name": "daily average spike",
             "type": "Technical Analysis",
-            "value": 1.1,
+            "value": -1.1,
             "unit": "%",
             "date": "05/01/2018"
         }

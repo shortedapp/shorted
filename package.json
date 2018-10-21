@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "author": "Ben Ebsworth <ben.ebsworth@gmail.com>",
     "dependencies": {
-        "antd": "^3.8.2",
+        "antd": "^3.10.1",
         "axios": "^0.18.0",
         "babel-plugin-styled-components": "^1.5.1",
         "fs": "0.0.1-security",
