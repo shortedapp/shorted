@@ -53,11 +53,13 @@ class SearchBar extends React.Component {
   }
   escFunction (event) {
     if (event.keyCode === 27) {
-      this.setState(prevState => ({
+        if (this.state.focused) {
+            document.removeEventListener('click', this.handleOutsideClick, false) 
+        }
+        this.setState(prevState => ({
         focused: false
-      }))
-      event.target.blur()
-      return false
+        }))
+        return false
       
     }
     // this.handleSelect(event)
@@ -82,8 +84,9 @@ class SearchBar extends React.Component {
           focused: true
         }))
       } else {
-        //TODO: fix reference here for only when mounted
-        document.removeEventListener('click', this.handleOutsideClick, false)
+        if (this.state.focused) {
+            document.removeEventListener('click', this.handleOutsideClick, false)
+        }
       }
     }
   }
