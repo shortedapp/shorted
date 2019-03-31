@@ -1,8 +1,8 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
 import {ThemeContext, themes} from '../../theme-context';
-import {search} from 'src/services/elasticsearch/client';
 import Logo from 'src/components/Logo';
+import { search } from 'src/services/elasticsearch/client'
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import {
@@ -80,6 +80,7 @@ class Search extends React.Component {
                                     <SearchBarWrapper>
                                         <SearchBar
                                             query={this.state.query}
+                                            client={search}
                                             onClear={() => this.handleClear()}
                                             onQueryChange={query =>
                                                 this.handleQueryChange(query)

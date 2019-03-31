@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const NoResults = styled.div``;
+export const NoResults = styled.div`
+    font-family: Avenir Next, sans-serif;
+`;
 export const ResultRowWrapper = styled.div`
     display: grid;
     grid-gap: 10px;
@@ -10,12 +12,14 @@ export const ResultRowWrapper = styled.div`
     grid-template-areas: 'code name';
     height: 35px;
     background: ${props => (props.selected ? '#d9d9d9' : 'white')};
+    font-family: Avenir Next, sans-serif;
 `;
 export const ResultRowIndustryHeader = styled.div`
     display: flex;
     font-weight: bold;
     font-size: 20px;
     margin-left: 5px;
+    font-family: Avenir Next, sans-serif;
 `;
 export const ResultsShowMore = styled.a`
     display: flex;
@@ -27,6 +31,7 @@ export const ResultsShowMore = styled.a`
     color: ${props => props.searchResultsMoreColor};
     align-items: center;
     text-decoration: none !important;
+    font-family: Avenir Next, sans-serif;
 `;
 export const ResultRowCode = styled.div`
     grid-area: code;

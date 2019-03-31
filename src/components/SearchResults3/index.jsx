@@ -8,8 +8,6 @@ import {
     SearchResultsWrapper,
     NoResults,
 } from './style';
-
-import {ThemeContext} from '../../theme-context';
 const ResultRow = props => (
     <ResultRowWrapper onMouseOver={props.handleHover} selected={props.selected}>
         <ResultRowCode>{props.row.code}</ResultRowCode>
@@ -75,9 +73,8 @@ class SearchResults extends React.Component {
             <NoResults>No Results Found</NoResults>
         );
         console.log(structuredResultsView);
+        const theme = this.props.theme
         return (
-            <ThemeContext.Consumer>
-                {theme => (
                     <SearchResultsWrapper>
                         {structuredResultsView.length > 0 ? (
                             structuredResultsView
@@ -92,8 +89,6 @@ class SearchResults extends React.Component {
                             ) : null
                         ) : null}
                     </SearchResultsWrapper>
-                )}
-            </ThemeContext.Consumer>
         );
     }
 }
