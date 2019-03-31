@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {elasticsearchConfig} from 'src/config';
+import {elasticsearchConfig} from '../../config';
 
 import {searchQuery} from './queries';
 

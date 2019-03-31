@@ -3,6 +3,7 @@ import Transition from 'react-transition-group/Transition';
 import {Menu, Icon, Switch, Button} from 'antd';
 import {ThemeContext, themes} from '../../theme-context';
 import Logo from '../../components/Logo';
+import { search } from 'src/services/elasticsearch/client'
 import ErrorBoundary from '../../components/ErrorBoundary';
 import SearchBar from '../../components/SearchBar3';
 import ThemeSwitch from '../../components/ThemeSwitch';
@@ -95,14 +96,14 @@ class Dashboard extends React.Component {
             <ThemeContext.Provider value={themes[this.state.theme].style}>
                 <ThemeContext.Consumer>
                     {theme => {
-                        console.log(theme);
+                        console.log('theme:dashboard:',theme);
                         return (
                             <DashboardWrapper
                                 {...theme}
                                 width={this.state.collapsed ? `80px` : `200px`}>
                                 <HeaderWrapper {...theme}>
                                     <SearchBarWrapper>
-                                        <SearchBar />
+                                        <SearchBar client={search} theme={theme} />
                                     </SearchBarWrapper>
                                 </HeaderWrapper>
                                 <Logo

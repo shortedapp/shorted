@@ -11,19 +11,17 @@ export const transitionStyles = {
 export const CustomInput = styled.input`
     font-size: 1em;
     text-align: left;
-    height: 50px;
+    height: 100%;
     border-radius: ${props => (props.focused ? 15 : 15)}px;
     background: transparent;
     position: absolute;
     z-index: 20;
-    padding: 0.5em;
     padding-right: 45px;
     padding-left: 55px;
     display: block;
     width: ${props => (props.focused ? `100%` : `100%`)};
     transition: ${props => `${props.duration}ms ease-in`};
     transition-property: width, opacity, transform;
-    /* transition: opacity 250ms 500ms, visibility 250ms 500ms; */
     outline: none;
     border: none;
     &:focus {
