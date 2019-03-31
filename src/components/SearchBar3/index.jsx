@@ -56,12 +56,16 @@ class SearchBar extends React.Component {
       this.setState(prevState => ({
         focused: false
       }))
+      event.target.blur()
+      return false
+      
     }
+    // this.handleSelect(event)
   }
-  componentDidMount () {
+  componentDidMount = () => {
     document.addEventListener('keydown', this.escFunction, false)
   }
-  componentWillUnmount () {
+  componentWillUnmount = () => {
     document.removeEventListener('keydown', this.escFunction, false)
   }
   handleSelect (e) {
@@ -78,6 +82,7 @@ class SearchBar extends React.Component {
           focused: true
         }))
       } else {
+        //TODO: fix reference here for only when mounted
         document.removeEventListener('click', this.handleOutsideClick, false)
       }
     }

@@ -74,7 +74,7 @@ export const SearchBarWrapper = styled.div`
 
 export const SearchBarIconWrapper = styled.div`
     position: absolute;
-    border-radius: 50px;
+    border-radius: 30px;
     display: grid;
     background: ${props =>
         props.focused
