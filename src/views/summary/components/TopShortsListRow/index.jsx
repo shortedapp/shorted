@@ -21,20 +21,15 @@ import {
  */
 
 const TopShortListRow = props => {
+    const theme = props.theme;
     const headerView = (
-        <ThemeContext.Consumer>
-            {theme => (
                 <WrapperHeader>
                     <div className="code">code</div>
                     <div className="company-name">company name</div>
                     <div className="percentage">%</div>
                 </WrapperHeader>
-            )}
-        </ThemeContext.Consumer>
     );
     const rowView = (
-        <ThemeContext.Consumer>
-            {theme =>
                 props.isHovered ? (
                     <WrapperHovered
                         {...theme}
@@ -59,8 +54,6 @@ const TopShortListRow = props => {
                         </Percent>
                     </Wrapper>
                 )
-            }
-        </ThemeContext.Consumer>
     );
     if (props.header) {
         return headerView;

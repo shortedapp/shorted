@@ -1,6 +1,5 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import {ThemeContext} from '../../../../theme-context';
 import TopShortsListRow from '../../components/TopShortsListRow';
 import {Wrapper, Header, More, duration, transitionStyles} from './style';
 /**
@@ -35,9 +34,11 @@ class TopShortsList extends React.Component {
     }
 
     render() {
+        const theme = this.props.theme;
         const rows = this.props.data.map(row_data => (
             <TopShortsListRow
                 row
+                theme={theme}
                 isHovered={this.state.hovered === row_data.code}
                 onHover={() => this.handleHover(row_data.code)}
                 key={row_data.code}
@@ -45,26 +46,22 @@ class TopShortsList extends React.Component {
             />
         ));
         return (
-            <ThemeContext.Consumer>
-                {theme => (
-                    <Transition timeout={duration} in appear>
-                        {state => {
-                            return (
-                                <Wrapper
-                                    {...theme}
-                                    onMouseLeave={() => this.handleMouseLeave()}
-                                    duration={duration}
-                                    {...transitionStyles[state]}>
-                                    <Header {...theme}>Top Short List</Header>
-                                    <TopShortsListRow header />
-                                    {rows}
-                                    <More {...theme}>show more</More>
-                                </Wrapper>
-                            );
-                        }}
-                    </Transition>
-                )}
-            </ThemeContext.Consumer>
+            <Transition timeout={duration} in appear>
+                {state => {
+                    return (
+                        <Wrapper
+                            {...theme}
+                            onMouseLeave={() => this.handleMouseLeave()}
+                            duration={duration}
+                            {...transitionStyles[state]}>
+                            <Header {...theme}>Top Short List</Header>
+                            <TopShortsListRow header />
+                            {rows}
+                            <More {...theme}>show more</More>
+                        </Wrapper>
+                    );
+                }}
+            </Transition>
         );
     }
 }

@@ -18,6 +18,7 @@ export const Wrapper = styled.div`
     transition: ${props => `${props.duration}ms ease-in-out`};
     transition-property: opacity, transform;
     transform: ${props => `translateY(${props.Ypos}px)`};
+    font-family: Avenir Next, sans-serif;
 `;
 export const Header = styled.div`
     margin-top: 10px;
@@ -25,7 +26,6 @@ export const Header = styled.div`
     text-align: center;
     font-size: 22px;
     font-weight: bold;
-    font-family: Avenir Next, sans-serif;
 `;
 export const More = styled.div`
     height: 50px;
@@ -37,7 +37,6 @@ export const More = styled.div`
     border-radius: 0 0 5px 5px;
     margin: 4px;
     justify-content: center;
-    font-family: Avenir Next, sans-serif;
     display: flex;
     flex-direction: column;
     text-align: center;

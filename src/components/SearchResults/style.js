@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const NoResults = styled.div`
     font-family: Avenir Next, sans-serif;
+    padding-left: 10px;
 `;
 export const ResultRowWrapper = styled.div`
     display: grid;
@@ -48,6 +49,6 @@ export const ResultRowName = styled.div`
 `;
 
 export const SearchResultsWrapper = styled.div`
-    height: 300px;
+    max-height: 300px;
     overflow: scroll;
 `;

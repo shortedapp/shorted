@@ -4,18 +4,43 @@ export const WrapperHeader = styled.div`
     display: grid;
     color: ${props => props.textColor};
     background: ${props => props.widgetRowBackgroundColor};
-    @media (min-width: 901px) {
+    @media only screen and (max-width: 600px) {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-areas: 'code name percentage';
+    } 
+
+    /* Small devices (portrait tablets and large phones, 600px and up) */
+    @media only screen and (min-width: 600px) {
+        grid-template-columns: 100px repeat(2, 1fr);
+        grid-template-areas: 'code name percentage';
+    } 
+
+    /* Medium devices (landscape tablets, 768px and up) */
+    @media only screen and (min-width: 768px) {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-areas: 'code name name name percentage'; 
+    } 
+
+    /* Large devices (laptops/desktops, 992px and up) */
+    @media only screen and (min-width: 992px) {
         grid-template-columns: repeat(5, 1fr);
         grid-template-areas: 'code name name name percentage';
+
     }
-    @media (max-width: 900px) {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-areas: 'code percentage';
+
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
+    @media only screen and (min-width: 1200px) {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-areas: 'code name name name percentage';
+
     }
     margin: 4px;
     height: 40px;
     margin-bottom: 0px;
     align-items: center;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
     .code {
         grid-area: code;
         text-align: center;
@@ -23,14 +48,12 @@ export const WrapperHeader = styled.div`
     }
     .company-name {
         grid-area: name;
-        text-align: center;
         margin-right: 30px;
     }
     .percentage {
         grid-area: percentage;
-        width: 70px;
-        padding-right: 14px;
-        text-align: center;
+        padding-right: 35px;
+        text-align: right;
     }
 `;
 export const Wrapper = styled.a`
@@ -41,13 +64,36 @@ export const Wrapper = styled.a`
     background: ${props => props.widgetRowBackgroundColor};
     border: 1px solid ${props => props.widgetRowBorderColor};
     text-decoration: none !important;
-    @media (min-width: 901px) {
+    /* Extra small devices (phones, 600px and down) */
+    @media only screen and (max-width: 600px) {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-areas: 'code name percentage';
+    } 
+
+    /* Small devices (portrait tablets and large phones, 600px and up) */
+    @media only screen and (min-width: 600px) {
+        grid-template-columns: 100px repeat(2, 1fr);
+        grid-template-areas: 'code name percentage';
+    } 
+
+    /* Medium devices (landscape tablets, 768px and up) */
+    @media only screen and (min-width: 768px) {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-areas: 'code name name name percentage'; 
+    } 
+
+    /* Large devices (laptops/desktops, 992px and up) */
+    @media only screen and (min-width: 992px) {
         grid-template-columns: repeat(5, 1fr);
         grid-template-areas: 'code name name name percentage';
+
     }
-    @media (max-width: 900px) {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-areas: 'code percentage';
+
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
+    @media only screen and (min-width: 1200px) {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-areas: 'code name name name percentage';
+
     }
     margin: 4px;
     height: 100%;
@@ -74,7 +120,7 @@ export const WrapperHovered = styled.a`
     margin: 4px;
     height: 100%;
     border-radius: 0 30px 30px 0;
-    transform: scale(1.05);
+    transform: scale(1.01);
     transition-duration: 0.1s;
     -webkit-box-shadow: -3px 4px 7px 0px rgba(0, 0, 0, 0.25);
     -moz-box-shadow: -3px 4px 7px 0px rgba(0, 0, 0, 0.25);
@@ -91,9 +137,6 @@ export const WrapperHovered = styled.a`
 
 export const Name = styled.div`
     grid-area: name;
-    @media (max-width: 1300px) {
-        display: none;
-    }
     display: inline-block;
     vertical-align: middle;
     flex-wrap: wrap;

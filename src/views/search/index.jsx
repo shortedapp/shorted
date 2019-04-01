@@ -1,5 +1,4 @@
 import React from 'react';
-import Transition from 'react-transition-group/Transition';
 import {ThemeContext, themes} from '../../theme-context';
 import Logo from 'src/components/Logo';
 import { search } from 'src/services/elasticsearch/client'
@@ -12,7 +11,6 @@ import {
     SearchBarWrapper,
     LogoWrapper,
 } from './style';
-import {SearchResultsWrapper} from '../../components/SearchResults3/style';
 class Search extends React.Component {
     constructor(props) {
         super(props);

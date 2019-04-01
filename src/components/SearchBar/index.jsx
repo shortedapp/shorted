@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Transition from 'react-transition-group/Transition'
 import { search } from '../../services/elasticsearch/client'
-import SearchResults from '../SearchResults3'
+import SearchResults from '../SearchResults'
 import { Icon } from 'antd'
 import {
   SearchBarWrapper,

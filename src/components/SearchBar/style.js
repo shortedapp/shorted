@@ -105,7 +105,7 @@ export const SearchBarClearIconWrapper = styled.div`
 
 export const PrimaryColumn = styled.div`
     flex: 2;
-    width: 97%;
+    width: 100%;
     display: flex;
     border-radius: 50px;
     background: transparent;

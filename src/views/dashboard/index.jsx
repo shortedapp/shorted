@@ -5,7 +5,7 @@ import {ThemeContext, themes} from '../../theme-context';
 import Logo from '../../components/Logo';
 import { search } from 'src/services/elasticsearch/client'
 import ErrorBoundary from '../../components/ErrorBoundary';
-import SearchBar from '../../components/SearchBar3';
+import SearchBar from '../../components/SearchBar';
 import ThemeSwitch from '../../components/ThemeSwitch';
 import Sectors from '../../views/sectors';
 import Alerts from '../../views/alerts';
