@@ -19,6 +19,8 @@ export const Wrapper = styled.div`
     transition-property: opacity, transform;
     transform: ${props => `translateY(${props.Ypos}px)`};
     font-family: Avenir Next, sans-serif;
+    max-height: 400px;
+    overflow: scroll;
 `;
 export const Header = styled.div`
     margin-top: 10px;

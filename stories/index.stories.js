@@ -44,3 +44,14 @@ storiesOf('Summary/TopShortsList', module)
         theme={themes['dark'].style}
         data={apiClient.getTopShortsList(20)}
     />)
+storiesOf('AnalyticsRow', module)
+    .addDecorator(story => (
+        <ThemeContext.Provider value={themes}>
+            <ThemeContext.Consumer>
+                {themes => { return story(themes)}}
+            </ThemeContext.Consumer>
+        </ThemeContext.Provider>))
+    .add('light', (themes) => <TopShortsList
+        theme={themes['light'].style}
+        data={apiClient.getTopShortsList(20)}
+    />)
