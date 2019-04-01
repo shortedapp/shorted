@@ -6,7 +6,8 @@ export const NoResults = styled.div`
 export const ResultRowWrapper = styled.div`
     display: grid;
     grid-gap: 10px;
-    margin-left: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     grid-template-rows: 1fr;
     grid-template-columns: 45px 1fr;
     grid-template-areas: 'code name';
@@ -46,4 +47,7 @@ export const ResultRowName = styled.div`
     align-self: center;
 `;
 
-export const SearchResultsWrapper = styled.div``;
+export const SearchResultsWrapper = styled.div`
+    height: 300px;
+    overflow: scroll;
+`;

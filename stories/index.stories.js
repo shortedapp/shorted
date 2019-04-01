@@ -20,7 +20,7 @@ storiesOf('Button', module)
     </Button>
   ));
 const searchClient = (query) => [ ]
-storiesOf('SearchBar3', module)
+storiesOf('SearchBar', module)
     .addDecorator(story => (
         <ThemeContext.Provider value={themes}>
             <ThemeContext.Consumer>

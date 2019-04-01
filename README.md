@@ -76,3 +76,19 @@ Targets:
   index.status         check index status
   help                 Show help
 ```
+
+### storybook
+
+for viewing and developing individual components please view the current available library in storybook by running the following:
+
+#### install dependencies
+
+```bash
+npm install
+```
+
+#### start storybook
+
+```bash
+npm run storybook
+```

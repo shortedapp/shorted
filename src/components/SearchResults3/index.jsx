@@ -42,7 +42,7 @@ class SearchResults extends React.Component {
         if (this.props.data) {
             for (const [key, results] of Object.entries(resultsStructured)) {
                 structuredResultsView.push(
-                    <ResultRowIndustryHeader>{key}</ResultRowIndustryHeader>,
+                    <ResultRowIndustryHeader key={`key-${key}`}>{key}</ResultRowIndustryHeader>,
                 );
                 results.map(result =>
                     structuredResultsView.push(

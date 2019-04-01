@@ -90,7 +90,8 @@ index.recreate:
 ## check index status
 index.status:
 	curl localhost:9200/_cat/indices
-
+storybook:
+	npm run storybook
 
 ## Show help
 help:
