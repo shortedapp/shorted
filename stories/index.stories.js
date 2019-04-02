@@ -6,6 +6,7 @@ import { linkTo } from '@storybook/addon-links';
 import ShortedAPI from '../src/services/sapi/client';
 import { Button, Welcome } from '@storybook/react/demo';
 import SearchBar from '../src/components/SearchBar';
+import AnalyticsRow from '../src/components/AnalyticsRow';
 import TopShortsList from '../src/views/summary/components/TopShortsList';
 import {ThemeContext, themes} from '../src/theme-context';
 const apiClient = new ShortedAPI()
@@ -51,7 +52,7 @@ storiesOf('AnalyticsRow', module)
                 {themes => { return story(themes)}}
             </ThemeContext.Consumer>
         </ThemeContext.Provider>))
-    .add('light', (themes) => <TopShortsList
+    .add('light', (themes) => <AnalyticsRow
         theme={themes['light'].style}
-        data={apiClient.getTopShortsList(20)}
+        {...apiClient.getTopShortsList(20)[0]}
     />)

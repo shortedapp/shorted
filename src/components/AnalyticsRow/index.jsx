@@ -1,8 +1,6 @@
 import React from 'react';
-import {ThemeContext} from '../../../../theme-context';
 import {
     Wrapper,
-    WrapperHeader,
     WrapperHovered,
     Code,
     Name,
