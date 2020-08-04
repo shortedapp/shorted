@@ -1,0 +1,23 @@
+service: google-golang-simple-http-endpoint
+
+frameworkVersion: ">=1.33.0 <2.0.0"
+
+package:
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - .git/**
+
+plugins:
+  - serverless-google-cloudfunctions
+provider:
+  name: google
+  runtime: go111                           # currently both vendored and go.mod repos are supported
+  project: shorted-np               # replace with your project name here
+  credentials: ~/.gcloud/slsframework.json # path must be absolute, change to whichever keyfile you need
+
+functions:
+  hello:
+    handler: Hello
+    events:
+      - http: path

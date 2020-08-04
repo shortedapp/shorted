@@ -1,0 +1,15 @@
+{
+    "data": [
+        { "code": "BHP", "current": 19.5, "change": 19.01 },
+        { "code": "NWL", "current": 17.3, "change": 16.32 },
+        { "code": "TGR", "current": 1.1, "change": 13.3 },
+        { "code": "WOR", "current": 10.1, "change": 9.71 },
+        { "code": "CDP", "current": 0, "change": -7.52 },
+        { "code": "ORE", "current": 2.2, "change": -5.54 },
+        { "code": "BLA", "current": 1.53, "change": 3.39 },
+        { "code": "ATM", "current": 8.87, "change": 2.21 },
+        { "code": "MOAT", "current": 2.28, "change": -1.12 },
+        { "code": "MYX", "current": 4.5, "change": 0.8 }
+    ],
+    "last_modified": "01/01/2018"
+}
