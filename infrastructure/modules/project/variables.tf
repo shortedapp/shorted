@@ -3,6 +3,7 @@ variable "global" {
         project_name = string
         region = string
         environment = string
+        domain = string
     })
 }
 

@@ -48,12 +48,14 @@ enable.apis:
 	gcloud services enable compute.googleapis.com
 	gcloud services enable serviceusage.googleapis.com
 set.iam.project-admin:
+	$(call load_env)
 	gcloud organizations add-iam-policy-binding ${ORG_ID} \
   	--member serviceAccount:terraform@${TF_ADMIN}.iam.gserviceaccount.com \
   	--role roles/resourcemanager.projectCreator
 	gcloud organizations add-iam-policy-binding ${ORG_ID} \
 	--member serviceAccount:terraform@${TF_ADMIN}.iam.gserviceaccount.com \
-	--role roles/billing.user
+	--role roles/billing.admin
+
 create.tf-bucket:
 	@gsutil mb -p ${TF_ADMIN} gs://${TF_ADMIN} || echo "✅ bucket already exists"
 	@gsutil versioning set on gs://${TF_ADMIN} || echo "✅ bucket versioning set"
