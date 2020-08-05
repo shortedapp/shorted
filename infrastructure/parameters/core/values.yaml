@@ -1,0 +1,13 @@
+global:
+  domain: shorted.com.au
+  region: australia-southeast1
+
+projects:
+  shorted:
+    name: shorted
+    environment: dev
+    services:
+    - compute.googleapis.com
+    - cloudfunctions.googleapis.com
+    admins:
+    - ben
