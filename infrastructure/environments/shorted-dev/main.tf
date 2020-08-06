@@ -6,8 +6,8 @@ locals {
     config = merge(local.configSpec, local.configYAML)
 }
 
-module "project" {
-    source = "../../modules/project"
+module "iam" {
+    source = "../../modules/iam"
     global = local.config.global
-    configuration = local.config.project
+    configuration = local.config.iam
 }

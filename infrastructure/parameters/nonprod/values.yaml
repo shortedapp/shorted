@@ -1,5 +1,0 @@
-global:
-    region: australia-southeast1
-    project_name: shorted
-    environment: nonprod
-    

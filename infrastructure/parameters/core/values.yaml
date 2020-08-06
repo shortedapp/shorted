@@ -1,0 +1,21 @@
+global:
+  domain: shorted.com.au
+  region: australia-southeast1
+
+projects:
+  shorted:
+    name: shorted
+    environment: dev
+    adminRoles:
+    - roles/owner
+    - roles/storage.admin
+    - roles/cloudfunctions.admin
+    services:
+    - cloudresourcemanager.googleapis.com
+    - deploymentmanager.googleapis.com
+    - compute.googleapis.com
+    - cloudfunctions.googleapis.com
+    - iam.googleapis.com
+    - cloudbuild.googleapis.com
+    admins:
+    - ben
