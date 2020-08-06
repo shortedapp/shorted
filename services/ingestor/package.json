@@ -1,0 +1,9 @@
+{
+  "name": "ingestor",
+  "description": "",
+  "version": "0.1.0",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless-google-cloudfunctions": "^3.1.0"
+  }
+}

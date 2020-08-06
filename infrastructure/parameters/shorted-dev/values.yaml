@@ -1,0 +1,18 @@
+global:
+    region: australia-southeast1
+    project_name: shorted
+    environment: dev
+    domain: shorted.com.au
+
+iam:
+    serviceAccounts:
+        functions-admin:
+            name: functions-admin
+            keyAdmins:
+            - user:ben@shorted.com.au
+            roles:
+            - roles/deploymentmanager.editor
+            - roles/storage.admin
+            - roles/logging.admin
+            - roles/cloudfunctions.developer
+    

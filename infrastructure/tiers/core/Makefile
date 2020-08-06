@@ -49,17 +49,34 @@ create.provider:
 	echo $$CONTENT > _provider.tf
 
 set.workspace:
-	GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform workspace new ${WORKSPACE} || GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform workspace select ${WORKSPACE}
+	@GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform workspace new ${WORKSPACE} || GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform workspace select ${WORKSPACE}
 
-init:
-	GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform init
+init: set.workspace
+	@GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform init
 
-plan: init set.workspace
-	GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform plan
+plan: init 
+	@GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform plan
 
-apply: set.workspace
-	GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform apply -lock=false
+apply: init plan
+	@GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform apply
 
-destroy: set.workspace
+get.projects: init
+	@echo "projects within core include:"
+	@GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform show	-json | jq -r '.values.root_module.child_modules[0].resources | map(select(.type=="google_project")) | map(.values.project_id)' | jq -r '.[]' | \
+	while read i; do \
+		echo $$i; \
+	done
+
+get.credentials.all:
+	@echo "getting credentials for all core projects:"
+	@GOOGLE_APPLICATION_CREDENTIALS=${TF_ADMIN_CREDS} terraform show	-json | jq -r '.values.root_module.child_modules[0].resources | map(select(.type=="google_project")) | map(.values.project_id)' | jq -r '.[]' | \
+	while read project; do \
+		gcloud iam service-accounts keys create ~/.config/gcloud/$$project-terraform.json \
+  		--iam-account terraform@$$project.iam.gserviceaccount.com; \
+		printf "✅"; \
+	done
+
+
+destroy: init
 	terraform destroy
 

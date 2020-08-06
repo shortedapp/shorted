@@ -14,7 +14,15 @@ locals {
         user = user
       }
     ]
-  ]) 
+  ])
+  adminRoles = flatten([
+      for project, config in var.configuration: [
+          for role in config.adminRoles: {
+              project = config.name
+              role = role
+          }
+      ]
+  ])
 }
 
 data "google_organization" "org" {
@@ -55,11 +63,20 @@ resource "google_service_account" "project_admin_sa" {
   display_name = "Terraform/Admin"
 }
 
-resource "google_service_account_iam_member" "project_admin_permissions" {
+resource "google_service_account_iam_member" "project_admin_owner" {
   for_each = var.configuration
   service_account_id = google_service_account.project_admin_sa[each.key].name
   role = "roles/owner"
   member = "serviceAccount:${google_service_account.project_admin_sa[each.key].email}"
+}
+
+resource "google_project_iam_member" "project_admin_permissions" {
+  for_each = {
+    for role in local.adminRoles: "${role.project}.${role.role}" => role 
+  }
+  project = google_project.project[each.value.project].project_id 
+  role = each.value.role
+  member = "serviceAccount:${google_service_account.project_admin_sa[each.value.project].email}"
 }
 
 resource "google_project_iam_member" "project_user_admin_permissions" {
@@ -69,4 +86,15 @@ resource "google_project_iam_member" "project_user_admin_permissions" {
   project = google_project.project[each.value.project].project_id 
   role = "roles/owner"
   member = "user:${each.value.user}@${var.global.domain}"
+}
+
+resource "google_storage_bucket" "tf_state_store" {
+  for_each = var.configuration
+  project = google_project.project[each.key].project_id 
+  name          = "tf-state-${google_project.project[each.key].project_id}"
+  location      = var.global.region
+  force_destroy = false
+  versioning {
+    enabled = true
+  }
 }
