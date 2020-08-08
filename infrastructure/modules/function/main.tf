@@ -22,6 +22,10 @@ resource "google_cloudfunctions_function" "function" {
   source_archive_object = google_storage_bucket_object.archive.name
   trigger_http          = var.configuration.triggerType == "http" ? true : false
   entry_point           = var.configuration.entrypoint
+  environment_variables = {
+      for envVar in var.configuration.envVars:
+        envVar.name => envVar.value
+  }
 }
 
 # IAM entry for all users to invoke the function

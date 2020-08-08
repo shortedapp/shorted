@@ -31,17 +31,21 @@ create.provider:
 
 
 set.workspace: init
-	terraform workspace new ${WORKSPACE} || terraform workspace select ${WORKSPACE}
+	@terraform workspace new ${WORKSPACE} > /dev/null 2>&1 || terraform workspace select ${WORKSPACE} > /dev/null 2>&1
 
 init: 
-	GOOGLE_APPLICATION_CREDENTIALS=${TF_CREDS} terraform init
+	@GOOGLE_APPLICATION_CREDENTIALS=${TF_CREDS} terraform init > /dev/null 2>&1
 
 plan: set.workspace
-	GOOGLE_APPLICATION_CREDENTIALS=${TF_CREDS} terraform plan
+	GOOGLE_APPLICATION_CREDENTIALS=${TF_CREDS} terraform plan 
 
 apply: plan
 	GOOGLE_APPLICATION_CREDENTIALS=${TF_CREDS} terraform apply
 
-show: set.workspace
-	GOOGLE_APPLICATION_CREDENTIALS=${TF_CREDS} terraform show
+destroy:
+	GOOGLE_APPLICATION_CREDENTIALS=${TF_CREDS} terraform destroy
 
+show: set.workspace
+	@GOOGLE_APPLICATION_CREDENTIALS=${TF_CREDS} terraform show -json 
+get.url: set.workspace
+	@GOOGLE_APPLICATION_CREDENTIALS=${TF_CREDS} terraform show -json | jq -r '.values.root_module.child_modules[0].resources | map(select(.type=="google_cloudfunctions_function")) | .[0].values.https_trigger_url'

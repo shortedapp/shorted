@@ -23,12 +23,31 @@ GOOGLE_PROJECT=${PROJECT_ID}
 # 	gcloud functions describe --region ${REGION} --project ${PROJECT_ID} ingestor-dev-first
 # s.deploy:
 # 	serverless deploy --region=${REGION}
-deploy: zip infrastructure
+run: build
+	bin/collector
+build:
+	go build -o bin/collector ./cmd/collector
+
+deploy: zip infrastructure.create
+
+destroy: infrastructure.destroy
+	rm -rf index.zip
+
+
 describe:
-	make -C infra/environments/${ENV} show	
+	make -C infra/environments/${ENV} show
 zip:
-	zip	-r index.zip function.go cmd pkg
-infrastructure:
+	rm -rf index.zip
+	zip	-r index.zip function.go cmd pkg go.mod go.sum
+infrastructure.create:
 	echo "creating infra for ${ENV}"
 	make -C infra/environments/${ENV} create.provider
 	make -C infra/environments/${ENV} apply
+infrastructure.destroy:
+	make -C infra/environments/${ENV} create.provider
+	make -C infra/environments/${ENV} destroy
+
+get.url:
+	@make -C infra/environments/${ENV} get.url
+invoke:
+	curl -vvv $(shell make get.url)

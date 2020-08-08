@@ -1,4 +1,4 @@
-package ingestor
+package collector
 
 import (
 	"io/ioutil"
@@ -25,7 +25,7 @@ func TestHello(t *testing.T) {
 			q.Add("name", te.name)
 			r.URL.RawQuery = q.Encode()
 
-			Hello(w, r)
+			Collect(w, r)
 
 			rw := w.Result()
 			defer rw.Body.Close()
