@@ -51,3 +51,6 @@ get.url:
 	@make -C infra/environments/${ENV} get.url
 invoke:
 	curl -vvv $(shell make get.url)
+
+invoke.local:
+	curl localhost:8080 -d '{"source": { "url": "https://www.asx.com.au/asx/research/ASXListedCompanies.csv", "format": "csv"}, "sink": {"url": "gs://bucket-name/path", "format": "csv"}}'

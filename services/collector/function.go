@@ -1,12 +1,10 @@
 package collector
 
 import (
-	"encoding/json"
-	"fmt"
-	"html"
 	"net/http"
 	"os"
 
+	"github.com/shortedapp/shorted/services/collector/pkg/collector"
 	"github.com/shortedapp/shorted/services/collector/pkg/log"
 	"go.uber.org/zap"
 )
@@ -25,17 +23,8 @@ func init() {
 // HelloWorld writes "Hello, World!" to the HTTP response.
 func Collect(w http.ResponseWriter, r *http.Request) {
 	log.LogRequest(w, r, loggingEncoder)
-	var d struct {
-		Name string `json:"name"`
-	}
-	if err := json.NewDecoder(r.Body).Decode(&d); err != nil {
-		fmt.Fprint(w, "Hello, World!")
-		return
-	}
-	if d.Name == "" {
-		fmt.Fprint(w, "Hello, World!")
-		return
-	}
-	fmt.Fprintf(w, "Hello, %s!", html.EscapeString(d.Name))
-
+	c := collector.New(r.Body)
+	c.Pull()
+	c.Process()
+	// logger.Infof("successfully processed body: %v", c)
 }
