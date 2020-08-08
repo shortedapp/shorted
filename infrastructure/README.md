@@ -38,6 +38,9 @@ make core
 ## References
 
 [1] https://cloud.google.com/community/tutorials/managing-gcp-projects-with-terraform
+
 [2] https://support.google.com/a/answer/2405986?hl=en
+
 [3] https://cloud.google.com/resource-manager/docs/super-admin-best-practices
+
 [4] https://www.serverless.com/framework/docs/providers/google/guide/credentials/

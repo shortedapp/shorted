@@ -23,6 +23,17 @@ locals {
           }
       ]
   ])
+  adminUserRoles = flatten([
+      for project, config in var.configuration: [
+          for user in config.admins: [
+              for role in config.adminRoles: {
+                  project = config.name
+                  user = user
+                  role = role
+              }
+          ]
+      ]
+  ])
 }
 
 data "google_organization" "org" {
@@ -85,6 +96,15 @@ resource "google_project_iam_member" "project_user_admin_permissions" {
   }
   project = google_project.project[each.value.project].project_id 
   role = "roles/owner"
+  member = "user:${each.value.user}@${var.global.domain}"
+}
+
+resource "google_project_iam_member" "project_user_admin_permissions_extra" {
+  for_each = {
+    for user in local.adminUserRoles: "${user.project}.${user.user}.${user.role}" => user 
+  }
+  project = google_project.project[each.value.project].project_id 
+  role = each.value.role
   member = "user:${each.value.user}@${var.global.domain}"
 }
 
