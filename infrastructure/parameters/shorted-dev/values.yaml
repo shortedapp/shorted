@@ -15,4 +15,7 @@ iam:
             - roles/storage.admin
             - roles/logging.admin
             - roles/cloudfunctions.developer
+            - roles/cloudfunctions.serviceAgent
+            - roles/cloudfunctions.admin
+            - roles/iam.serviceAccountUser
     

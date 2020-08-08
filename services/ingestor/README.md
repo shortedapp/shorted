@@ -6,6 +6,10 @@ The ingestor service is responsible for processing data from the ASIC data store
 
 ### Local
 
+```bash
+make invoke.local
+```
+
 ### Deploy
 
 ```bash
@@ -19,3 +23,7 @@ serverless deploy
 [2] https://cloud.google.com/functions/docs/securing/managing-access-iam#allowing_unauthenticated_function_invocation
 
 [3] https://cloud.google.com/functions/docs/first-go
+
+[4] https://cloud.google.com/functions/docs/writing#structuring_source_code
+
+[5] https://www.terraform.io/docs/providers/google/r/cloudfunctions_function.html
