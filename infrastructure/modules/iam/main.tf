@@ -1,6 +1,9 @@
 locals {
+    serviceAccounts = {
+        for serviceAccount, config in var.configuration.serviceAccounts: "${serviceAccount}" => merge({ roles = [],keyAdmins = []}, config)
+    }
     saRoles = flatten([
-        for serviceAccount, config in var.configuration.serviceAccounts: [
+        for serviceAccount, config in local.serviceAccounts: [
             for role in config.roles: {
                 name = config.name
                 role = role
@@ -8,7 +11,7 @@ locals {
         ]
     ])
     saKeyAdmins = flatten([
-       for serviceAccount, config in var.configuration.serviceAccounts: [
+       for serviceAccount, config in local.serviceAccounts: [
            for keyAdmin in config.keyAdmins: {
                name = config.name
                keyAdmin = keyAdmin
@@ -23,7 +26,7 @@ data "google_project" "project" {
 
 resource "google_service_account" "iam_sa" {
     for_each = {
-        for sa, config in var.configuration.serviceAccounts: "${config.name}" => config
+        for sa, config in local.serviceAccounts: "${config.name}" => config
     }
     project = data.google_project.project.project_id
     account_id = each.value.name

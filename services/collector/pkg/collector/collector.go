@@ -1,9 +1,10 @@
 package collector
 
 import (
+	"bufio"
+	"bytes"
 	"encoding/csv"
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -15,25 +16,26 @@ import (
 // Collector - collecting arbitrary data and storing as required
 type Collector struct {
 	// URL we will be collecting data from
-	Source      source `json:"source"`
-	Sink        sink   `json:"sink"`
-	Destination string `json:"format"`
-	result      result
+	Source         Source `json:"source"`
+	Sink           Sink   `json:"sink"`
+	Destination    string `json:"format"`
+	Result         Result
 	loggingEncoder string
 }
-type source struct {
+type Source struct {
 	URL string `json"url"`
 	// Format of file (will be used for parsing potential)
 	Format string `json:"format"`
 }
-type sink struct {
+type Sink struct {
 	Format string `json:"format"`
 	URL    string `json:"url"`
 }
 
-type result struct {
+type Result struct {
 	Data     []byte
 	response *http.Response
+	Status   string
 }
 
 func New(r io.ReadCloser) *Collector {
@@ -47,32 +49,46 @@ func New(r io.ReadCloser) *Collector {
 
 func (c *Collector) Pull() error {
 	var err error
-	c.result.response, err = http.Get(c.Source.URL)
+	c.Result.response, err = http.Get(c.Source.URL)
 	if err != nil {
 		log.Errorf("unable to fetch contents for url %s", c.Source.URL)
 		return err
 	}
 	log.Infof("pulled from %v", c.Source.URL)
-	log.Response(c.result.response, c.loggingEncoder)
+	log.Response(c.Result.response, c.loggingEncoder)
+	c.Result.Status = "SUCCESS"
 	return nil
 }
 
 func (c *Collector) Process() error {
-	r := csv.NewReader(c.result.response.Body)
-	r.FieldsPerRecord = 3
-	r.Read()
-	r.Read()
-	for {
-		record, err := r.Read()
-		if err == io.EOF {
-			break
+	b, _ := ioutil.ReadAll(c.Result.response.Body)
+	reader := bufio.NewReader(bytes.NewReader(b))
+	count := 0
+	switch c.Source.Format {
+	case "csv":
+		r := csv.NewReader(bytes.NewReader(b))
+		r.FieldsPerRecord = 3
+		for {
+			line, err := reader.ReadBytes('\n')
+			_, validationErr := r.Read()
+			if err == io.EOF || validationErr == io.EOF {
+				break
+			}
+			if validationErr != nil {
+				log.Infof("skipping invalid row: %s", string(line), validationErr)
+				continue
+			}
+			c.Result.Data = append(c.Result.Data, line...)
+			count++
 		}
-		if err != nil {
-			log.Errorf("error processing: %v", err)
-			return err
-		}
-		fmt.Println(record)
+		log.Infof("processed %d rows", count)
+		return nil
+
 	}
+	return nil
+}
+
+func (c *Collector) Push() error {
 	return nil
 }
 

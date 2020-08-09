@@ -123,6 +123,6 @@ func Errorf(template string, args ...interface{}) {
 	zap.S().Errorf(template, args)
 }
 
-func Fatal(msg string) {
+func Fatal(msg interface{}) {
 	zap.S().Fatal(msg)
 }

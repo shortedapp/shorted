@@ -14,9 +14,10 @@ GOOGLE_PROJECT=${PROJECT_ID}
 # delete:
 # 	gcloud functions delete Hello --runtime go113 --trigger-http
 
-# get.credentials:
-# 	gcloud iam service-accounts keys create ~/.config/gcloud/${SA_NAME}.json \
-#   		--iam-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+get.credentials:
+	gcloud auth activate-service-account --key-file ~/.config/gcloud/${PROJECT_ID}-terraform.json
+	gcloud iam service-accounts keys create ~/.config/gcloud/${SA_NAME}.json \
+  		--iam-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
 
 # describe:
 	
