@@ -20,6 +20,8 @@ iam:
             - roles/iam.serviceAccountUser
         collector:
             name: collector
+            roles:
+            - roles/cloudtrace.agent
 
 gcs:
     buckets:

@@ -1,8 +1,8 @@
 global:
-    region: australia-southeast1
-    project_name: shorted
-    environment: dev
-    domain: shorted.com.au
+  region: australia-southeast1
+  project_name: shorted
+  environment: dev
+  domain: shorted.com.au
 function:
   name: collector
   description: data collection and store
@@ -15,5 +15,10 @@ function:
   envVars:
   - name: LOGGING_ENCODER
     value: stackdriver
+  # iam:
+  #     serviceAccount:
+  #       name: ..
+  #       roles:
+  #       - ..
 
   

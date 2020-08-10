@@ -193,9 +193,9 @@ func Response(ctx context.Context, r *http.Response) {
 func Infof(ctx context.Context, template string, args ...interface{}) {
 	span := trace.SpanFromContext(ctx)
 	if loggingConfig.LoggingEncoder != "stackdriver" {
-		zap.S().Infof(template, args...)
+		zap.S().Infof(template, args)
 	} else if span == nil {
-		zap.S().Infof("Source - HTTP Response", args...)
+		zap.S().Infof(template, args)
 	} else {
 		sCtx := span.SpanContext()
 		tr := sCtx.TraceID.String()
@@ -203,17 +203,17 @@ func Infof(ctx context.Context, template string, args ...interface{}) {
 		fields := []zapcore.Field{
 			zap.String("Trace", trace),
 		}
-		zap.L().Info(template, fields...)
+		zap.L().Info(fmt.Sprintf(template, args), fields...)
 	}
 }
 
 // Fatalf uses fmt.Sprintf to construct and log a message at fatal level.
 func Fatalf(template string, args ...interface{}) {
-	zap.S().Fatalf(template, args...)
+	zap.S().Fatalf(template, args)
 }
 
 func Errorf(template string, args ...interface{}) {
-	zap.S().Errorf(template, args...)
+	zap.S().Errorf(template, args)
 }
 
 func Fatal(msg interface{}) {

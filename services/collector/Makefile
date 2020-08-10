@@ -33,6 +33,8 @@ build:
 
 deploy: zip infrastructure.create
 
+redeploy: destroy deploy
+
 destroy: infrastructure.destroy
 	rm -rf index.zip
 
