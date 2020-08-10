@@ -4,7 +4,7 @@ global:
     environment: dev
     domain: shorted.com.au
 function:
-  name: collect
+  name: collector
   description: data collection and store
   runtime: go113
   memory: 128

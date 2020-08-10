@@ -43,6 +43,16 @@ make invoke
 
 [8] https://cloud.google.com/functions/docs/concepts/go-runtime
 
+[9] https://stackoverflow.com/questions/52075778/what-does-a-production-ready-google-cloud-function-look-like
+
+[10] https://levelup.gitconnected.com/how-i-structure-cloud-functions-in-go-61e151b278ac
+
+[11] https://www.youtube.com/watch?v=Zo1XMfCX9xc
+
+[12] https://cloud.google.com/functions/docs/bestpractices/tips
+
 ### Go Code
 
-[6] https://github.com/snowzach/blocc
+[9] https://github.com/snowzach/blocc
+
+[10] https://github.com/google/go-cloud/blob/master/samples/guestbook/main.go

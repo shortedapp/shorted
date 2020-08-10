@@ -3,13 +3,15 @@ package collector
 import (
 	"bufio"
 	"bytes"
+	"context"
 	"encoding/csv"
 	"encoding/json"
 	"io"
 	"io/ioutil"
 	"net/http"
-	"os"
 
+	"github.com/shortedapp/shorted/services/collector/pkg/clients/blob"
+	"github.com/shortedapp/shorted/services/collector/pkg/config"
 	"github.com/shortedapp/shorted/services/collector/pkg/log"
 )
 
@@ -21,6 +23,8 @@ type Collector struct {
 	Destination    string `json:"format"`
 	Result         Result
 	loggingEncoder string
+	Context        context.Context
+	Config         *config.Config
 }
 type Source struct {
 	URL string `json"url"`
@@ -38,9 +42,10 @@ type Result struct {
 	Status   string
 }
 
-func New(r io.ReadCloser) *Collector {
+func New(ctx context.Context, cfg *config.Config, r io.ReadCloser) *Collector {
 	c, err := processBody(r)
-	c.loggingEncoder = os.Getenv("LOGGING_ENCODER")
+	c.Config = cfg
+	c.Context = ctx
 	if err != nil {
 		return &Collector{}
 	}
@@ -54,8 +59,8 @@ func (c *Collector) Pull() error {
 		log.Errorf("unable to fetch contents for url %s", c.Source.URL)
 		return err
 	}
-	log.Infof("pulled from %v", c.Source.URL)
-	log.Response(c.Result.response, c.loggingEncoder)
+	log.Infof(c.Context, "pulled from %v", c.Source.URL)
+	log.Response(c.Context, c.Result.response)
 	c.Result.Status = "SUCCESS"
 	return nil
 }
@@ -75,13 +80,13 @@ func (c *Collector) Process() error {
 				break
 			}
 			if validationErr != nil {
-				log.Infof("skipping invalid row: %s", string(line), validationErr)
+				log.Infof(c.Context, "skipping invalid row: %s, error: %s", string(line), validationErr)
 				continue
 			}
 			c.Result.Data = append(c.Result.Data, line...)
 			count++
 		}
-		log.Infof("processed %d rows", count)
+		log.Infof(c.Context, "processed %d rows", count)
 		return nil
 
 	}
@@ -89,7 +94,7 @@ func (c *Collector) Process() error {
 }
 
 func (c *Collector) Push() error {
-	return nil
+	return blob.BucketWrite(c.Context, c.Sink.URL, c.Result.Data)
 }
 
 func processBody(r io.ReadCloser) (Collector, error) {

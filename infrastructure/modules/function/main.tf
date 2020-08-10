@@ -6,10 +6,16 @@ resource "google_storage_bucket" "bucket" {
   name = "${var.configuration.name}-${random_id.suffix.hex}"
 }
 
+
+
 resource "google_storage_bucket_object" "archive" {
   name   = "index.zip"
   bucket = google_storage_bucket.bucket.name
   source = var.configuration.zipPath
+}
+
+data "google_service_account" "function_user" {
+  account_id = var.configuration.name
 }
 
 resource "google_cloudfunctions_function" "function" {
@@ -26,6 +32,7 @@ resource "google_cloudfunctions_function" "function" {
       for envVar in var.configuration.envVars:
         envVar.name => envVar.value
   }
+  service_account_email = data.google_service_account.function_user.email
 }
 
 # IAM entry for all users to invoke the function

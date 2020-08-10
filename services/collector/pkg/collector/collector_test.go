@@ -45,6 +45,7 @@ func TestCSV(t *testing.T) {
 			assert.NoError(t, tc.Collector.Pull())
 			assert.Equalf(t, "SUCCESS", tc.Collector.Result.Status, "got request status: %v, want: %v", tc.Collector.Result.Status, "SUCCESS")
 			assert.NoErrorf(t, tc.Collector.Process(), "error processing source")
+			assert.NoErrorf(t, tc.Collector.Push(), "error pushing to sink")
 			defer server.Close()
 		})
 	}

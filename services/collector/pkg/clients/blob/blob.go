@@ -51,9 +51,8 @@ func (b *Blob) BucketWrite(path string, data []byte) error {
 	return nil
 }
 
-func BucketWrite(path string, data []byte) error {
+func BucketWrite(ctx context.Context, path string, data []byte) error {
 	bucketName, filePath := separatePath(path)
-	ctx := context.Background()
 	bucket, err := blob.OpenBucket(ctx, bucketName)
 	if err != nil {
 		return fmt.Errorf("could not open bucket: %v", err)
@@ -73,6 +72,8 @@ func BucketWrite(path string, data []byte) error {
 	if closeErr != nil {
 		log.Fatal(closeErr)
 	}
+	log.Infof(ctx, "successful write to bucket [%s] at key [%s]", bucketName, filePath)
+	
 	defer bucket.Close()
 	return nil
 }

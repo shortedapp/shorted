@@ -5,6 +5,7 @@ import (
 
 	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
 	"github.com/shortedapp/shorted/services/collector"
+	"github.com/shortedapp/shorted/services/collector/pkg/config"
 	"github.com/shortedapp/shorted/services/collector/pkg/log"
 	"go.uber.org/zap"
 )
@@ -14,7 +15,11 @@ var (
 )
 
 func main() {
-	log.InitLogger()
+	cfg := &config.Config{
+		ProjectId:      os.Getenv("PROJECT_ID"),
+		LoggingEncoder: os.Getenv("LOGGING_ENCODER"),
+	}
+	log.InitLogger(cfg)
 	logger = zap.S().With("collector", "cmd")
 	funcframework.RegisterHTTPFunction("/", collector.Collect)
 	// Use PORT environment variable, or default to 8080.

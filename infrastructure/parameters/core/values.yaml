@@ -17,5 +17,6 @@ projects:
     - cloudfunctions.googleapis.com
     - iam.googleapis.com
     - cloudbuild.googleapis.com
+    - cloudtrace.googleapis.com
     admins:
     - ben

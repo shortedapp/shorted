@@ -57,12 +57,7 @@ resource "google_storage_bucket_iam_member" "bucket_members" {
 }
 
 
-# data "google_service_account" "bucket_users" {
-#   for_each = {
-#     for user in local.bucketUsers : "${user.name}.${user.user}" => user
-#   }
-#   account_id = each.value.user
-# }
+
 
 
 resource "google_storage_bucket_iam_member" "bucket_users" {
