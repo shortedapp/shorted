@@ -1,0 +1,24 @@
+global:
+  region: australia-southeast1
+  project_name: shorted
+  environment: dev
+  domain: shorted.com.au
+function:
+  name: collector
+  description: data collection and store
+  runtime: go113
+  memory: 128
+  triggerType: http
+  entrypoint: Collect
+  zipPath: ../../../index.zip
+  public: true
+  envVars:
+  - name: LOGGING_ENCODER
+    value: stackdriver
+  # iam:
+  #     serviceAccount:
+  #       name: ..
+  #       roles:
+  #       - ..
+
+  

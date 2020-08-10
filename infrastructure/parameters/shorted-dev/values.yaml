@@ -18,4 +18,16 @@ iam:
             - roles/cloudfunctions.serviceAgent
             - roles/cloudfunctions.admin
             - roles/iam.serviceAccountUser
-    
+        collector:
+            name: collector
+            roles:
+            - roles/cloudtrace.agent
+
+gcs:
+    buckets:
+        stocks:
+            name: stocks
+            users:
+                collector:
+                    name: collector
+                    members: {}
