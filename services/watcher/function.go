@@ -1,17 +1,16 @@
-package collector
+package watcher 
 
 import (
 	"net/http"
 	"os"
 
-	"github.com/shortedapp/shorted/services/collector/pkg/collector"
-	"github.com/shortedapp/shorted/services/collector/pkg/config"
-	"github.com/shortedapp/shorted/services/collector/pkg/log"
-	"go.uber.org/zap"
+	"github.com/shortedapp/shorted/services/watcher/pkg/config"
+	"github.com/shortedapp/shorted/services/watcher/pkg/log"
+	"github.com/shortedapp/shorted/services/watcher/pkg/watcher"
 )
 
 var (
-	cfg    *config.Config
+	cfg *config.Config
 )
 
 func init() {
@@ -23,12 +22,10 @@ func init() {
 }
 
 // HelloWorld writes "Hello, World!" to the HTTP response.
-func Collect(w http.ResponseWriter, r *http.Request) {
+func Watch(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	log.Request(ctx, w, r)
-	c := collector.New(ctx, cfg, r.Body)
-	c.Pull()
-	c.Process()
-	c.Push()
+	watch := watcher.New(ctx, cfg, r.Body)
+	watch.Parse()
 	// logger.Infof("successfully processed body: %v", c)
 }
