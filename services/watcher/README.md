@@ -61,9 +61,13 @@ make invoke
 
 [11] https://research.lightstep.com/reports/google-cloud-storage
 
-## ASIC
+### ASIC
 
 [a.1] https://asic.gov.au/regulatory-resources/markets/short-selling/short-selling-reports-notice/
 [a.2] https://asic.gov.au/Reports/Daily/2020/08/RR20200804-001-SSDailyAggShortPos.csv
 [a.3] https://asic.gov.au/Reports/YTD/2020/RR20200804-001-SSDailyYTD.csv
 [a.4] 
+
+### HTML 
+
+[b.1] https://github.com/PuerkitoBio/goquery
