@@ -3,10 +3,13 @@ package watcher
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
+	"path/filepath"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 )
@@ -35,13 +38,12 @@ type Result struct {
 	Status   string
 }
 
-func New(ctx context.Context, cfg *config.Config, r io.ReadCloser) *Watcher {
-	w, err := processBody(r)
+// func New(ctx context.Context, cfg *config.Config, r io.ReadCloser) *Watcher {
+func New(ctx context.Context, cfg *config.Config) *Watcher {
+	var w Watcher
+	w.Source.URL = "https://asic.gov.au/regulatory-resources/markets/short-selling/short-position-reports-table/"
 	w.Config = cfg
 	w.Context = ctx
-	if err != nil {
-		return &Watcher{}
-	}
 	return &w
 }
 
@@ -52,10 +54,26 @@ func (w *Watcher) Parse() error {
 		log.Errorf("unable to fetch contents for url %s", w.Source.URL)
 		return err
 	}
+	defer w.Result.response.Body.Close()
+	// Load the HTML document
+	doc, err := goquery.NewDocumentFromReader(w.Result.response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// Find the review items
+	doc.Find(".pulldown").Each(func(i int, s *goquery.Selection) {
+		// For each item found, get the band and title
+		s.Find("a").Each(func(i int, s *goquery.Selection) {
+			val, _ := s.Attr("href")
+			if filepath.Ext(val) == ".csv" {
+				fmt.Printf("%v\n", val)
+			}
+		})
+	})
 	log.Infof(w.Context, "pulled from %v", w.Source.URL)
 	log.Response(w.Context, w.Result.response)
-
 	w.Result.Status = "SUCCESS"
+
 	return nil
 }
 

@@ -26,6 +26,11 @@ get.credentials:
 # 	gcloud functions describe --region ${REGION} --project ${PROJECT_ID} ingestor-dev-first
 # s.deploy:
 # 	serverless deploy --region=${REGION}
+
+build.cli:
+	go build -o bin/cli ./cmd/cli
+run.cli: build.cli
+	PROJECT_ID=${PROJECT_ID} bin/cli
 run: build
 	PROJECT_ID=${PROJECT_ID} bin/watcher
 build:
