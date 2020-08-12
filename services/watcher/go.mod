@@ -1,9 +1,10 @@
-module github.com/shortedapp/shorted/services/collector
+module github.com/shortedapp/shorted/services/watcher
 
 go 1.14
 
 require (
 	cloud.google.com/go/logging v1.0.0
+	contrib.go.opencensus.io/exporter/stackdriver v0.12.1
 	github.com/GoogleCloudPlatform/functions-framework-go v1.0.1
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v0.2.2-0.20200804011553-7454a7ef9c13
 	github.com/alecthomas/assert v0.0.0-20170929043011-405dbfeb8e38

@@ -16,10 +16,10 @@ GOOGLE_PROJECT=${PROJECT_ID}
 
 get.credentials:
 	
-	gcloud iam service-accounts keys create ~/.config/gcloud/collector.json \
+	gcloud iam service-accounts keys create ~/.config/gcloud/watcher.json \
   		--iam-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
-	gcloud auth activate-service-account --key-file ~/.config/gcloud/collector.json
-	gsutil ls gs://${PROJECT_ID}-collector
+	gcloud auth activate-service-account --key-file ~/.config/gcloud/watcher.json
+	gsutil ls gs://${PROJECT_ID}-watcher
 
 # describe:
 	
@@ -27,9 +27,9 @@ get.credentials:
 # s.deploy:
 # 	serverless deploy --region=${REGION}
 run: build
-	PROJECT_ID=${PROJECT_ID} bin/collector
+	PROJECT_ID=${PROJECT_ID} bin/watcher
 build:
-	go build -o bin/collector ./cmd/collector
+	go build -o bin/watcher ./cmd/watcher
 
 deploy: zip infrastructure.create
 

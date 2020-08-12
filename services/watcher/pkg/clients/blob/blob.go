@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/shortedapp/shorted/services/collector/pkg/log"
+	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/fileblob"
 	"gocloud.dev/blob/gcsblob"

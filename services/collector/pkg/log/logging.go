@@ -25,7 +25,7 @@ var (
 	tr            trace.Tracer
 )
 
-func InitLogger(ctx context.Context, config *config.Config) {
+func InitLogger(config *config.Config) {
 	loggingConfig = config
 	logConfig := zap.NewProductionConfig()
 	// Handle different logger encodings

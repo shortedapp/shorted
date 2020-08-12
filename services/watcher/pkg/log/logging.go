@@ -9,7 +9,7 @@ import (
 
 	cloudtrace "github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace"
 	"github.com/blendle/zapdriver"
-	"github.com/shortedapp/shorted/services/collector/pkg/config"
+	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"go.opentelemetry.io/otel/api/global"
 	"go.opentelemetry.io/otel/api/trace"
 	"go.opentelemetry.io/otel/instrumentation/httptrace"
@@ -25,7 +25,7 @@ var (
 	tr            trace.Tracer
 )
 
-func InitLogger(ctx context.Context, config *config.Config) {
+func InitLogger(config *config.Config) {
 	loggingConfig = config
 	logConfig := zap.NewProductionConfig()
 	// Handle different logger encodings
@@ -33,6 +33,14 @@ func InitLogger(ctx context.Context, config *config.Config) {
 	case "stackdriver":
 		logConfig.Encoding = "json"
 		logConfig.EncoderConfig = zapdriver.NewDevelopmentEncoderConfig()
+		// Create and register a OpenCensus Stackdriver Trace exporter.
+		exporter, err := stackdriver.NewExporter(stackdriver.Options{
+			ProjectID: loggingConfig.ProjectId,
+		})
+		if err != nil {
+				log.Fatal(err)
+		}
+		octrace.RegisterExporter(exporter)
 	default:
 		logConfig.Encoding = "console"
 		logConfig.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
@@ -76,14 +84,7 @@ func InitLogger(ctx context.Context, config *config.Config) {
 	tr = global.TraceProvider().Tracer("shorted.com.au/collector")
 
 
-	// Create and register a OpenCensus Stackdriver Trace exporter.
-	exporter, err := stackdriver.NewExporter(stackdriver.Options{
-			ProjectID: loggingConfig.ProjectId,
-	})
-	if err != nil {
-			log.Fatal(err)
-	}
-	octrace.RegisterExporter(exporter)
+	
 }
 
 func Request(ctx context.Context, w http.ResponseWriter, r *http.Request) {
