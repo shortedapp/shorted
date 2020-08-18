@@ -7,7 +7,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"path/filepath"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
@@ -42,6 +41,7 @@ type Result struct {
 func New(ctx context.Context, cfg *config.Config) *Watcher {
 	var w Watcher
 	w.Source.URL = "https://asic.gov.au/regulatory-resources/markets/short-selling/short-position-reports-table/"
+	w.Source.Format = ".csv"
 	w.Config = cfg
 	w.Context = ctx
 	return &w
@@ -55,22 +55,62 @@ func (w *Watcher) Parse() error {
 		return err
 	}
 	defer w.Result.response.Body.Close()
+	var a ASIC
 	// Load the HTML document
 	doc, err := goquery.NewDocumentFromReader(w.Result.response.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
-	// Find the review items
-	doc.Find(".pulldown").Each(func(i int, s *goquery.Selection) {
-		// For each item found, get the band and title
-		s.Find("a").Each(func(i int, s *goquery.Selection) {
-			val, _ := s.Attr("href")
-			if filepath.Ext(val) == ".csv" {
-				fmt.Printf("%v\n", val)
-			}
+	count := 0
+
+	/*	the ASIC HTML structure is as follows
+		section
+			article
+				div (header) [i.e 1020]
+				div (content)
+					article
+						div (header) [i.e Jan]
+						div (content)
+							table
+								tbody
+									tr
+										td (date)
+										td (pdf)
+										td (csv)
+	*/
+	doc.Find("section.pulldowns > article.pulldown-ordered").Each(func(i int, years *goquery.Selection) {
+		years.ChildrenFiltered("div.pulldown-header").Each(func(i int, s *goquery.Selection) {
+			year := s.Find("button > h2").Text()
+			fmt.Printf("year: %s\n", year)
+			months := years.ChildrenFiltered("div.pulldown-content").Eq(i)
+			months.Find("article.pulldown-ordered").Each(func(i int, m *goquery.Selection) {
+				m.ChildrenFiltered("div.pulldown-header").Each(func(i int, s *goquery.Selection) {
+					month := s.Find("button > h2").Text()
+					fmt.Printf("month: %s\n", month)
+
+					days := m.ChildrenFiltered("div.pulldown-content").Eq(i)
+					days.Find("table tbody tr").Each(func(i int, s *goquery.Selection) {
+						row := s.Find("td")
+						day := row.Eq(0).Text()
+						csv, _ := row.Eq(2).Find("a").Attr("href")
+						fmt.Printf("day: %s\n", day)
+						d := ASICShortDocument{Year: year,
+							Month:  month,
+							Day:    day,
+							URL:    csv,
+							Format: "csv",
+						}
+						a.Documents = append(a.Documents, d)
+						count++
+					})
+				})
+
+			})
+
 		})
 	})
-	log.Infof(w.Context, "pulled from %v", w.Source.URL)
+	// fmt.Printf("asic docs: %v", a)
+	log.Infof(w.Context, "%d %s documents pulled from %v", count, w.Source.Format, w.Source.URL)
 	log.Response(w.Context, w.Result.response)
 	w.Result.Status = "SUCCESS"
 
