@@ -58,10 +58,12 @@ func New(ctx context.Context, cfg *config.Config) *Watcher {
 }
 
 func (w *Watcher) Parse() error {
-	_, err := w.Source.Handler.Parse(w.Source)
+	fileIndex, err := w.Source.Handler.Parse(w.Context, w.Source)
 	if err != nil {
+		log.Errorf("parseError: %v", err)	
 		return err
 	}
+	w.fileIndex = fileIndex
 	return err
 }
 

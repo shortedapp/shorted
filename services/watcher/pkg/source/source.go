@@ -1,5 +1,7 @@
 package source
 
+import "context"
+
 type (
 	Info struct {
 		Name        string
@@ -14,7 +16,7 @@ type (
 		Build() (Handler, error)
 	}
 	Handler interface {
-		Parse(*Source) (*FileIndex, error)
+		Parse(context.Context, *Source) (*FileIndex, error)
 	}
 	Source struct {
 		URL     string
@@ -23,6 +25,7 @@ type (
 		Handler Handler
 	}
 	FileIndex struct {
+		Count     int
 		Documents []Document
 	}
 	Document struct {
