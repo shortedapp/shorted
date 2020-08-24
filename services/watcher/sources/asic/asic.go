@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
 	"github.com/shortedapp/shorted/services/watcher/sources/metadata"
@@ -30,16 +31,16 @@ type handler struct{}
 // 										td (date)
 // 										td (pdf)
 // 										td (csv)
-// 
+//
 
-func (*handler) Parse(ctx context.Context, s *source.Source) (*source.FileIndex, error) {
+func (*handler) Parse(ctx context.Context, s *source.Source) (*index.FileIndex, error) {
 	response, err := http.Get(s.URL)
 	if err != nil {
 		log.Errorf("unable to fetch contents for url %s", s.URL)
 		return nil, err
 	}
 	defer response.Body.Close()
-	var index source.FileIndex
+	var idx index.FileIndex
 	// Load the HTML document
 	doc, err := goquery.NewDocumentFromReader(response.Body)
 	if err != nil {
@@ -47,7 +48,6 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*source.FileIndex,
 	}
 	count := 0
 
-	
 	doc.Find("section.pulldowns > article.pulldown-ordered").Each(func(i int, years *goquery.Selection) {
 		years.ChildrenFiltered("div.pulldown-header").Each(func(i int, s *goquery.Selection) {
 			year := s.Find("button > h2").Text()
@@ -64,13 +64,13 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*source.FileIndex,
 						day := row.Eq(0).Text()
 						csv, _ := row.Eq(2).Find("a").Attr("href")
 						fmt.Printf("day: %s\n", day)
-						d := source.Document{Year: year,
+						d := index.Document{Year: year,
 							Month:  month,
 							Day:    day,
 							URL:    csv,
 							Format: "csv",
 						}
-						index.Documents = append(index.Documents, d)
+						idx.Documents = append(idx.Documents, d)
 						count++
 					})
 				})
@@ -79,12 +79,11 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*source.FileIndex,
 
 		})
 	})
-	index.Count = count
-	// fmt.Printf("asic docs: %v", a)
-	log.Infof(ctx, "%d %s documents pulled from %v", index.Count, s.Format, s.URL)
+	idx.Count = count
+	log.Infof(ctx, "%d %s documents pulled from %v", idx.Count, s.Format, s.URL)
 	log.Response(ctx, response)
 
-	return &index, nil
+	return &idx, nil
 }
 
 // GetInfo returns the Info associated with this source implementation.

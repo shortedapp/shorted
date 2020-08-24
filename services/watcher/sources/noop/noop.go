@@ -4,13 +4,14 @@ import (
 	"context"
 
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
+	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/sources/metadata"
 )
 
 type handler struct{}
 
-func (*handler) Parse(ctx context.Context, s *source.Source) (*source.FileIndex, error) {
-	return &source.FileIndex{}, nil
+func (*handler) Parse(ctx context.Context, s *source.Source) (*index.FileIndex, error) {
+	return &index.FileIndex{}, nil
 }
 
 // GetInfo returns the Info associated with this source implementation.

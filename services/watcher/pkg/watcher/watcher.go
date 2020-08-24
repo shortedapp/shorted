@@ -9,6 +9,7 @@ import (
 	"net/http"
 
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
+	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
 	"github.com/shortedapp/shorted/services/watcher/sources"
@@ -23,7 +24,7 @@ type Watcher struct {
 	loggingEncoder string
 	Context        context.Context
 	Config         *config.Config
-	fileIndex      *source.FileIndex
+	fileIndex      *index.FileIndex
 }
 type Pattern struct {
 	Value string
@@ -60,7 +61,7 @@ func New(ctx context.Context, cfg *config.Config) *Watcher {
 func (w *Watcher) Parse() error {
 	fileIndex, err := w.Source.Handler.Parse(w.Context, w.Source)
 	if err != nil {
-		log.Errorf("parseError: %v", err)	
+		log.Errorf("parseError: %v", err)
 		return err
 	}
 	w.fileIndex = fileIndex

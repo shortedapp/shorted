@@ -1,6 +1,10 @@
 package source
 
-import "context"
+import (
+	"context"
+
+	"github.com/shortedapp/shorted/services/watcher/pkg/index"
+)
 
 type (
 	Info struct {
@@ -16,23 +20,12 @@ type (
 		Build() (Handler, error)
 	}
 	Handler interface {
-		Parse(context.Context, *Source) (*FileIndex, error)
+		Parse(context.Context, *Source) (*index.FileIndex, error)
 	}
 	Source struct {
 		URL     string
 		Format  string
 		Info    *Info
 		Handler Handler
-	}
-	FileIndex struct {
-		Count     int
-		Documents []Document
-	}
-	Document struct {
-		Year   string
-		Month  string
-		Day    string
-		URL    string
-		Format string
 	}
 )
