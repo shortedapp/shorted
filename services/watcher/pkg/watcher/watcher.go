@@ -12,6 +12,7 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
+	"github.com/shortedapp/shorted/services/watcher/pkg/store/gcs"
 	"github.com/shortedapp/shorted/services/watcher/sources"
 )
 
@@ -25,6 +26,7 @@ type Watcher struct {
 	Context        context.Context
 	Config         *config.Config
 	fileIndex      *index.FileIndex
+	store          *gcs.Store
 }
 type Pattern struct {
 	Value string
@@ -53,6 +55,11 @@ func New(ctx context.Context, cfg *config.Config) *Watcher {
 		Handler: handler,
 	}
 	log.Infof(ctx, "loaded source: %v", w.Source)
+	indexStore, err := gcs.NewStore(ctx, "gs://watcher-index-shorted-dev-aba5688f/index.json")
+	if err != nil {
+		panic(fmt.Errorf("failed initialising store: %v", err))
+	}
+	w.store = indexStore
 	w.Config = cfg
 	w.Context = ctx
 	return &w
@@ -66,6 +73,17 @@ func (w *Watcher) Parse() error {
 	}
 	w.fileIndex = fileIndex
 	return err
+}
+
+// Difference will attempt to resolve the difference between the given parsed source and whats been stored in the watcher index
+func (w *Watcher) Difference() error {
+	fileIndex, err := w.store.GetIndex()
+	if err != nil {
+		log.Errorf("error fetching index: %v", err)
+		return fmt.Errorf("error fetching index: %v", err)
+	}
+	fmt.Printf("fileIndex: %v", fileIndex)
+	return nil
 }
 
 func processBody(r io.ReadCloser) (Watcher, error) {

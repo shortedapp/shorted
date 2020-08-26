@@ -2,7 +2,6 @@ package asic
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	"github.com/PuerkitoBio/goquery"
@@ -51,19 +50,19 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*index.FileIndex, 
 	doc.Find("section.pulldowns > article.pulldown-ordered").Each(func(i int, years *goquery.Selection) {
 		years.ChildrenFiltered("div.pulldown-header").Each(func(i int, s *goquery.Selection) {
 			year := s.Find("button > h2").Text()
-			fmt.Printf("year: %s\n", year)
+			// fmt.Printf("year: %s\n", year)
 			months := years.ChildrenFiltered("div.pulldown-content").Eq(i)
 			months.Find("article.pulldown-ordered").Each(func(i int, m *goquery.Selection) {
 				m.ChildrenFiltered("div.pulldown-header").Each(func(i int, s *goquery.Selection) {
 					month := s.Find("button > h2").Text()
-					fmt.Printf("month: %s\n", month)
+					// fmt.Printf("month: %s\n", month)
 
 					days := m.ChildrenFiltered("div.pulldown-content").Eq(i)
 					days.Find("table tbody tr").Each(func(i int, s *goquery.Selection) {
 						row := s.Find("td")
 						day := row.Eq(0).Text()
 						csv, _ := row.Eq(2).Find("a").Attr("href")
-						fmt.Printf("day: %s\n", day)
+						// fmt.Printf("day: %s\n", day)
 						d := index.Document{Year: year,
 							Month:  month,
 							Day:    day,

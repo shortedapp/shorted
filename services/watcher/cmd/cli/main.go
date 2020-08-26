@@ -24,5 +24,6 @@ func main() {
 	ctx := context.Background()
 	w := watcher.New(ctx, cfg)
 	w.Parse()
+	w.Difference()
 	defer zap.L().Sync()
 }
