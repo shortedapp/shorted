@@ -2,6 +2,7 @@ package asic
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/PuerkitoBio/goquery"
@@ -32,14 +33,16 @@ type handler struct{}
 // 										td (csv)
 //
 
-func (*handler) Parse(ctx context.Context, s *source.Source) (*index.FileIndex, error) {
+func (*handler) Parse(ctx context.Context, s *source.Source) (*index.IndexFile, error) {
+	baseURL := s.BaseURL
 	response, err := http.Get(s.URL)
+
 	if err != nil {
 		log.Errorf("unable to fetch contents for url %s", s.URL)
 		return nil, err
 	}
 	defer response.Body.Close()
-	var idx index.FileIndex
+	idx := index.NewIndexFile()
 	// Load the HTML document
 	doc, err := goquery.NewDocumentFromReader(response.Body)
 	if err != nil {
@@ -61,15 +64,15 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*index.FileIndex, 
 					days.Find("table tbody tr").Each(func(i int, s *goquery.Selection) {
 						row := s.Find("td")
 						day := row.Eq(0).Text()
-						csv, _ := row.Eq(2).Find("a").Attr("href")
+						filename, _ := row.Eq(2).Find("a").Attr("href")
 						// fmt.Printf("day: %s\n", day)
-						d := index.Document{Year: year,
+						idx.Add(&index.Metadata{
+							Name:   filename,
+							Year:   year,
 							Month:  month,
 							Day:    day,
-							URL:    csv,
 							Format: "csv",
-						}
-						idx.Documents = append(idx.Documents, d)
+						}, filename, baseURL, "")
 						count++
 					})
 				})
@@ -78,11 +81,11 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*index.FileIndex, 
 
 		})
 	})
-	idx.Count = count
-	log.Infof(ctx, "%d %s documents pulled from %v", idx.Count, s.Format, s.URL)
+	idx.EntriesCount = count
+	log.Infof(ctx, "%d %s documents pulled from %v", idx.EntriesCount, s.Format, s.URL)
 	log.Response(ctx, response)
 
-	return &idx, nil
+	return idx, nil
 }
 
 // GetInfo returns the Info associated with this source implementation.

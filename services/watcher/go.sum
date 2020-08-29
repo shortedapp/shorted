@@ -96,6 +96,8 @@ github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v0.2.1
 github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v0.2.1/go.mod h1:UHV8fFxV8Gl7IulE+hkyE4Fj/tQNKC4KRj3sShcLWoc=
 github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v0.2.2-0.20200804011553-7454a7ef9c13 h1:AV6DzfhSa8E7qsWs59KEKoJBMy9Q4MZtu9kM/lfLX3Q=
 github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v0.2.2-0.20200804011553-7454a7ef9c13/go.mod h1:7yY/l9JApLfkd/LxmwRPwmw947fhgvUtW3uww83w/Hg=
+github.com/Masterminds/semver v1.5.0 h1:H65muMkzWKEuNDnfl9d70GUjFniHKHRbFPGBuZ3QEww=
+github.com/Masterminds/semver v1.5.0/go.mod h1:MB6lktGJrhw8PrUyiEoblNEGEQ+RzHPF078ddwwvV3Y=
 github.com/PuerkitoBio/goquery v1.5.1 h1:PSPBGne8NIUWw+/7vFBV+kG2J/5MOjbzc7154OaKCSE=
 github.com/PuerkitoBio/goquery v1.5.1/go.mod h1:GsLWisAFVj4WgDibEWF4pvYnkVQBpKBKeU+7zCJoLcc=
 github.com/Shopify/sarama v1.19.0/go.mod h1:FVkBWblsNy7DGZRfXLU0O9RCGt5g3g3yEuWXgklEdEo=

@@ -10,8 +10,8 @@ import (
 
 type handler struct{}
 
-func (*handler) Parse(ctx context.Context, s *source.Source) (*index.FileIndex, error) {
-	return &index.FileIndex{}, nil
+func (*handler) Parse(ctx context.Context, s *source.Source) (*index.IndexFile, error) {
+	return &index.IndexFile{}, nil
 }
 
 // GetInfo returns the Info associated with this source implementation.

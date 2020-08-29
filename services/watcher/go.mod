@@ -7,6 +7,7 @@ require (
 	contrib.go.opencensus.io/exporter/stackdriver v0.12.1
 	github.com/GoogleCloudPlatform/functions-framework-go v1.0.1
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v0.2.2-0.20200804011553-7454a7ef9c13
+	github.com/Masterminds/semver v1.5.0
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/alecthomas/assert v0.0.0-20170929043011-405dbfeb8e38
 	github.com/alecthomas/colour v0.1.0 // indirect

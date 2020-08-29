@@ -25,7 +25,7 @@ type Watcher struct {
 	loggingEncoder string
 	Context        context.Context
 	Config         *config.Config
-	fileIndex      *index.FileIndex
+	indexFile      *index.IndexFile
 	store          *gcs.Store
 }
 type Pattern struct {
@@ -51,11 +51,12 @@ func New(ctx context.Context, cfg *config.Config) *Watcher {
 	}
 	w.Source = &source.Source{
 		URL:     "https://asic.gov.au/regulatory-resources/markets/short-selling/short-position-reports-table/",
+		BaseURL: "https://asic.gov.au",
 		Format:  "csv",
 		Handler: handler,
 	}
 	log.Infof(ctx, "loaded source: %v", w.Source)
-	indexStore, err := gcs.NewStore(ctx, "gs://watcher-index-shorted-dev-aba5688f/index.json")
+	indexStore, err := gcs.NewStore(ctx, "gs://shorted-dev-aba5688f-watcher-index/index.json")
 	if err != nil {
 		panic(fmt.Errorf("failed initialising store: %v", err))
 	}
@@ -66,23 +67,24 @@ func New(ctx context.Context, cfg *config.Config) *Watcher {
 }
 
 func (w *Watcher) Parse() error {
-	fileIndex, err := w.Source.Handler.Parse(w.Context, w.Source)
+	indexFile, err := w.Source.Handler.Parse(w.Context, w.Source)
 	if err != nil {
 		log.Errorf("parseError: %v", err)
 		return err
 	}
-	w.fileIndex = fileIndex
+	w.indexFile = indexFile
 	return err
 }
 
 // Difference will attempt to resolve the difference between the given parsed source and whats been stored in the watcher index
 func (w *Watcher) Difference() error {
-	fileIndex, err := w.store.GetIndex()
+	indexFile, err := w.store.GetIndex()
 	if err != nil {
 		log.Errorf("error fetching index: %v", err)
 		return fmt.Errorf("error fetching index: %v", err)
 	}
-	fmt.Printf("fileIndex: %v", fileIndex)
+	fmt.Printf("indexFile.EntriesCount: %v\n", indexFile.EntriesCount)
+	w.store.PutIndex(w.indexFile)
 	return nil
 }
 
