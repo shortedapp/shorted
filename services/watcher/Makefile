@@ -31,6 +31,9 @@ build.cli:
 	go build -o bin/cli ./cmd/cli
 run.cli: build.cli
 	PROJECT_ID=${PROJECT_ID} bin/cli
+
+test:
+	go test ./...
 run: build
 	PROJECT_ID=${PROJECT_ID} bin/watcher
 build:

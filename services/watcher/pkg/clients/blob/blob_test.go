@@ -1,6 +1,7 @@
 package blob
 
 import (
+	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,6 +15,6 @@ func TestSeparatePathPath(t *testing.T) {
 }
 
 func TestBucketWrite(t *testing.T) {
-
-	assert.NoError(t, BucketWrite(t.Context, "file:///testdata/collector-bucket", []byte("test-output")))
+	b, _ := New(context.Background())
+	assert.NoError(t, b.BucketWrite("file:///testdata/collector-bucket", []byte("test-output")))
 }

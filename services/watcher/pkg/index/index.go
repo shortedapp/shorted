@@ -2,32 +2,31 @@ package index
 
 import (
 	"path"
+	"sort"
 	"time"
 
 	"github.com/Masterminds/semver"
 	"github.com/shortedapp/shorted/services/watcher/internal/urlutil"
 )
 
-type (
-	IndexFile struct {
-		APIVersion   string               `json:"apiVersion"`
-		Generated    time.Time            `json:"generated"`
-		Entries      map[string]Documents `json:"entries"`
-		EntriesCount int                  `json:"count"`
-	}
-
-	Metadata struct {
-		Name    string
-		Year    string
-		Month   string
-		Day     string
-		Format  string
-		Version string
-	}
-)
-
 // APIVersionV1 is the v1 API version for index and repository files.
 const APIVersionV1 = "v1"
+
+type IndexFile struct {
+	APIVersion   string               `json:"apiVersion"`
+	Generated    time.Time            `json:"generated"`
+	Entries      map[string]Documents `json:"entries"`
+	EntriesCount int                  `json:"count"`
+}
+
+type Metadata struct {
+	Name    string
+	Year    string
+	Month   string
+	Day     string
+	Format  string
+	Version string
+}
 
 type Document struct {
 	*Metadata `json:"metadata"`
@@ -99,8 +98,15 @@ func (i IndexFile) Add(md *Metadata, filename, baseURL, digest string) {
 	}
 	// Check if entry already exists, if so append otherwise set
 	if ee, ok := i.Entries[md.Name]; !ok {
+		d.Version = semver.MustParse("v1.0.0").String()
 		i.Entries[md.Name] = Documents{d}
 	} else {
 		i.Entries[md.Name] = append(ee, d)
+	}
+}
+
+func (i IndexFile) SortEntries() {
+	for _, versions := range i.Entries {
+		sort.Sort(sort.Reverse(versions))
 	}
 }

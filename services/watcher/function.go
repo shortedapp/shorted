@@ -1,6 +1,7 @@
-package watcher 
+package watcher
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 
@@ -25,7 +26,10 @@ func init() {
 func Watch(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	log.Request(ctx, w, r)
-	watch := watcher.New(ctx, cfg, r.Body)
+	watch, err := watcher.New(ctx, cfg)
+	if err != nil {
+		panic(fmt.Errorf("failed initialisig Watch: %v", err))
+	}
 	watch.Parse()
 	// logger.Infof("successfully processed body: %v", c)
 }

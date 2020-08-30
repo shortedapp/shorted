@@ -2,7 +2,6 @@ package asic
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	"github.com/PuerkitoBio/goquery"

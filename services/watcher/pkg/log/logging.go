@@ -41,6 +41,26 @@ func InitLogger(config *config.Config) {
 				log.Fatal(err)
 		}
 		octrace.RegisterExporter(exporter)
+		_, flush, err := cloudtrace.InstallNewPipeline(
+			[]cloudtrace.Option{
+				cloudtrace.WithProjectID(loggingConfig.ProjectId),
+				// other optional exporter options
+			},
+			// This example code uses sdktrace.AlwaysSample sampler to sample all traces.
+			// In a production environment or high QPS setup please use ProbabilitySampler
+			// set at the desired probability.
+			// Example:
+			// sdktrace.WithConfig(sdktrace.Config {
+			//        DefaultSampler: sdktrace.ProbabilitySampler(0.0001),
+			// })
+			sdktrace.WithConfig(sdktrace.Config{DefaultSampler: sdktrace.AlwaysSample()}),
+			// other optional provider options
+		)
+		if err != nil {
+			log.Fatalf("cloudtrace.InstallNewPipeline: %v", err)
+		}
+		// before ending program, wait for all enqueued spans to be exported
+		defer flush()
 	default:
 		logConfig.Encoding = "console"
 		logConfig.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
@@ -59,26 +79,7 @@ func InitLogger(config *config.Config) {
 	// Build the logger
 	globalLogger, _ := logConfig.Build()
 	zap.ReplaceGlobals(globalLogger)
-	_, flush, err := cloudtrace.InstallNewPipeline(
-		[]cloudtrace.Option{
-			cloudtrace.WithProjectID(loggingConfig.ProjectId),
-			// other optional exporter options
-		},
-		// This example code uses sdktrace.AlwaysSample sampler to sample all traces.
-		// In a production environment or high QPS setup please use ProbabilitySampler
-		// set at the desired probability.
-		// Example:
-		// sdktrace.WithConfig(sdktrace.Config {
-		//        DefaultSampler: sdktrace.ProbabilitySampler(0.0001),
-		// })
-		sdktrace.WithConfig(sdktrace.Config{DefaultSampler: sdktrace.AlwaysSample()}),
-		// other optional provider options
-	)
-	if err != nil {
-		log.Fatalf("cloudtrace.InstallNewPipeline: %v", err)
-	}
-	// before ending program, wait for all enqueued spans to be exported
-	defer flush()
+	
 
 	// Create custom span.
 	tr = global.TraceProvider().Tracer("shorted.com.au/collector")

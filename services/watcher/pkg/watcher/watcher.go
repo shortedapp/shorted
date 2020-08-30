@@ -38,16 +38,17 @@ type Result struct {
 }
 
 // func New(ctx context.Context, cfg *config.Config, r io.ReadCloser) *Watcher {
-func New(ctx context.Context, cfg *config.Config) *Watcher {
+func New(ctx context.Context, cfg *config.Config) (*Watcher, error) {
+	log.InitLogger(cfg)
 	var w Watcher
 	s, err := sources.GetSource("asic")
 	if err != nil {
-		panic(fmt.Errorf("invalid source name set: %v", err))
+		return &Watcher{}, fmt.Errorf("invalid source name set: %v", err)
 	}
 	handler, err := s.NewBuilder().Build()
 
 	if err != nil {
-		panic(fmt.Errorf("failed to build source handler: %v", err))
+		return &Watcher{}, fmt.Errorf("failed to build source handler: %v", err)
 	}
 	w.Source = &source.Source{
 		URL:     "https://asic.gov.au/regulatory-resources/markets/short-selling/short-position-reports-table/",
@@ -58,12 +59,12 @@ func New(ctx context.Context, cfg *config.Config) *Watcher {
 	log.Infof(ctx, "loaded source: %v", w.Source)
 	indexStore, err := gcs.NewStore(ctx, "gs://shorted-dev-aba5688f-watcher-index/index.json")
 	if err != nil {
-		panic(fmt.Errorf("failed initialising store: %v", err))
+		return &Watcher{}, fmt.Errorf("failed initialising store: %v", err)
 	}
 	w.store = indexStore
 	w.Config = cfg
 	w.Context = ctx
-	return &w
+	return &w, nil
 }
 
 func (w *Watcher) Parse() error {
