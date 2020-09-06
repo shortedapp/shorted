@@ -32,7 +32,7 @@ type handler struct{}
 // 										td (csv)
 //
 
-func (*handler) Parse(ctx context.Context, s *source.Source) (*index.IndexFile, error) {
+func (*handler) Parse(ctx context.Context, s *source.Source) (*index.Source, error) {
 	baseURL := s.BaseURL
 	response, err := http.Get(s.URL)
 
@@ -41,7 +41,10 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*index.IndexFile, 
 		return nil, err
 	}
 	defer response.Body.Close()
-	idx := index.NewIndexFile()
+	si := index.NewSource(
+		index.WithSourceName(s.Name),
+		index.WithSourceURL(s.URL),
+	)
 	// Load the HTML document
 	doc, err := goquery.NewDocumentFromReader(response.Body)
 	if err != nil {
@@ -65,7 +68,7 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*index.IndexFile, 
 						day := row.Eq(0).Text()
 						filename, _ := row.Eq(2).Find("a").Attr("href")
 						// fmt.Printf("day: %s\n", day)
-						idx.Add(&index.Metadata{
+						si.Add(&index.Metadata{
 							Name:   filename,
 							Year:   year,
 							Month:  month,
@@ -80,11 +83,11 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*index.IndexFile, 
 
 		})
 	})
-	idx.EntriesCount = count
-	log.Infof(ctx, "%d %s documents pulled from %v", idx.EntriesCount, s.Format, s.URL)
+	si.EntriesCount = count
+	log.Infof(ctx, "%d %s documents pulled from %v", si.EntriesCount, s.Format, s.URL)
 	log.Response(ctx, response)
 
-	return idx, nil
+	return si, nil
 }
 
 // GetInfo returns the Info associated with this source implementation.

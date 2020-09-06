@@ -12,7 +12,7 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
-	"github.com/shortedapp/shorted/services/watcher/pkg/store/gcs"
+	"github.com/shortedapp/shorted/services/watcher/pkg/storage"
 	"github.com/shortedapp/shorted/services/watcher/sources"
 )
 
@@ -25,8 +25,8 @@ type Watcher struct {
 	loggingEncoder string
 	Context        context.Context
 	Config         *config.Config
-	indexFile      *index.IndexFile
-	store          *gcs.Store
+	watch          *index.Watch
+	store          *storage.Storage
 }
 type Pattern struct {
 	Value string
@@ -51,41 +51,44 @@ func New(ctx context.Context, cfg *config.Config) (*Watcher, error) {
 		return &Watcher{}, fmt.Errorf("failed to build source handler: %v", err)
 	}
 	w.Source = &source.Source{
+		Name:    "https://asic.gov.au",
 		URL:     "https://asic.gov.au/regulatory-resources/markets/short-selling/short-position-reports-table/",
 		BaseURL: "https://asic.gov.au",
 		Format:  "csv",
 		Handler: handler,
 	}
 	log.Infof(ctx, "loaded source: %v", w.Source)
-	indexStore, err := gcs.NewStore(ctx, "gs://shorted-dev-aba5688f-watcher-index/index.json")
+
+	store, err := storage.New("gs://shorted-dev-aba5688f-watcher-index/index.json")
 	if err != nil {
 		return &Watcher{}, fmt.Errorf("failed initialising store: %v", err)
 	}
-	w.store = indexStore
+	w.store = store
 	w.Config = cfg
 	w.Context = ctx
+	w.watch = index.New()
 	return &w, nil
 }
 
 func (w *Watcher) Parse() error {
-	indexFile, err := w.Source.Handler.Parse(w.Context, w.Source)
+	sourceIndex, err := w.Source.Handler.Parse(w.Context, w.Source)
 	if err != nil {
 		log.Errorf("parseError: %v", err)
 		return err
 	}
-	w.indexFile = indexFile
+	w.watch.Add(sourceIndex)
 	return err
 }
 
 // Difference will attempt to resolve the difference between the given parsed source and whats been stored in the watcher index
 func (w *Watcher) Difference() error {
-	indexFile, err := w.store.GetIndex()
+	watch, err := w.store.Get()
 	if err != nil {
 		log.Errorf("error fetching index: %v", err)
 		return fmt.Errorf("error fetching index: %v", err)
 	}
-	fmt.Printf("indexFile.EntriesCount: %v\n", indexFile.EntriesCount)
-	w.store.PutIndex(w.indexFile)
+	fmt.Printf("watch.EntriesCount: %v\n", watch.EntriesCount())
+	w.store.Update(w.watch)
 	return nil
 }
 

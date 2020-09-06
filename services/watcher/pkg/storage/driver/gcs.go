@@ -1,4 +1,4 @@
-package gcs
+package driver
 
 import (
 	"context"
@@ -16,7 +16,13 @@ import (
 	"gocloud.dev/gcp"
 )
 
-type Store struct {
+var _ Driver = (*GCS)(nil)
+
+const (
+	GCSDriverName = "GCS"
+)
+
+type GCS struct {
 	bucket *blob.Bucket
 	attrs  *blob.Attributes
 
@@ -25,18 +31,19 @@ type Store struct {
 	Client     *gcp.HTTPClient
 }
 
-func NewStore(ctx context.Context, path string) (*Store, error) {
+func NewGCS(path string) (*GCS, error) {
 	bucketName, indexPath := separatePath(path)
-	s := Store{
+	g := GCS{
 		bucketName: bucketName,
 		indexPath:  indexPath,
 	}
 	// Your GCP credentials.
 	// See https://cloud.google.com/docs/authentication/production
 	// for more info on alternatives.
+	ctx := context.Background()
 	creds, err := gcp.DefaultCredentials(ctx)
 	if err != nil {
-		return &s, err
+		return &g, err
 	}
 
 	// Create an HTTP client.
@@ -46,43 +53,43 @@ func NewStore(ctx context.Context, path string) (*Store, error) {
 		gcp.DefaultTransport(),
 		gcp.CredentialsTokenSource(creds))
 	if err != nil {
-		return &s, err
+		return &g, err
 	}
-	s.Client = client
+	g.Client = client
 
-	return &s, nil
+	return &g, nil
 }
 
-func (s *Store) GetIndex() (index.IndexFile, error) {
+func (g *GCS) Get() (*index.Watch, error) {
 	ctx := context.Background()
-	bucket, err := blob.OpenBucket(ctx, s.bucketName)
+	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	defer bucket.Close()
 	if err != nil {
-		return index.IndexFile{}, fmt.Errorf("could not open bucket: %v", err)
+		return &index.Watch{}, fmt.Errorf("could not open bucket: %v", err)
 	}
-	s.bucket = bucket
-	attrs, err := bucket.Attributes(ctx, s.indexPath)
+	g.bucket = bucket
+	attrs, err := bucket.Attributes(ctx, g.indexPath)
 	if gcerrors.Code(err) == gcerrors.NotFound {
-		return index.IndexFile{}, nil
+		return &index.Watch{}, ErrIndexNotFound
 	}
-	s.attrs = attrs
+	g.attrs = attrs
 
 	// Open the key "foo.txt" for reading with the default options.
-	r, err := bucket.NewReader(ctx, s.indexPath, nil)
+	r, err := bucket.NewReader(ctx, g.indexPath, nil)
 	defer r.Close()
 	if err != nil {
-		return index.IndexFile{}, fmt.Errorf("could not read from filepath: %s, err: %v", s.indexPath, err)
+		return &index.Watch{}, ErrIndexNotFound
 	}
 
-	var idx index.IndexFile
+	var idx index.Watch
 	dec := json.NewDecoder(r)
 	dec.Decode(&idx)
-	return idx, nil
+	return &idx, nil
 }
 
-func (s *Store) PutIndex(idx *index.IndexFile) error {
+func (g *GCS) Update(idx *index.Watch) error {
 	ctx := context.Background()
-	bucket, err := blob.OpenBucket(ctx, s.bucketName)
+	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	if err != nil {
 		return fmt.Errorf("could not open bucket: %v", err)
 	}
@@ -91,11 +98,11 @@ func (s *Store) PutIndex(idx *index.IndexFile) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	writeErr := bucket.WriteAll(ctx, s.indexPath, idxBytes, &blob.WriterOptions{
+	writeErr := bucket.WriteAll(ctx, g.indexPath, idxBytes, &blob.WriterOptions{
 		ContentType: "application/json",
 		Metadata: map[string]string{
 			"last-updated": time.Now().String(),
-			"items":        strconv.FormatInt(int64(idx.EntriesCount), 10),
+			"items":        strconv.FormatInt(int64(idx.EntriesCount()), 10),
 		},
 	})
 	if writeErr != nil {
@@ -103,10 +110,14 @@ func (s *Store) PutIndex(idx *index.IndexFile) error {
 		return writeErr
 	}
 
-	log.Infof(ctx, "successful write to bucket [%s] at key [%s]", s.bucketName, s.indexPath)
+	log.Infof(ctx, "successful write to bucket [%s] at key [%s]", g.bucketName, g.indexPath)
 
 	defer bucket.Close()
 	return nil
+}
+
+func (g *GCS) Name() string {
+	return GCSDriverName
 }
 
 func separatePath(s string) (string, string) {

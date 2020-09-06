@@ -20,9 +20,10 @@ type (
 		Build() (Handler, error)
 	}
 	Handler interface {
-		Parse(context.Context, *Source) (*index.IndexFile, error)
+		Parse(context.Context, *Source) (*index.Source, error)
 	}
 	Source struct {
+		Name    string
 		URL     string
 		BaseURL string
 		Format  string
