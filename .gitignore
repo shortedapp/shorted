@@ -1,19 +1,9 @@
-# Project dependencies
-.cache
+bin
 node_modules
-yarn-error.log
-
-# Build directory
-/public
-.DS_Store
-*env/
-*.csv
-*env/
-env/
-*env
-
-# python
+*.zip
+*.code-workspace
+*.env
+*.terraform
 *.pyc
-
-# terraform
-.terraform
+.cache
+env/
