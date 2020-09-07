@@ -81,14 +81,15 @@ func (w *Watcher) Parse() error {
 }
 
 // Difference will attempt to resolve the difference between the given parsed source and whats been stored in the watcher index
-func (w *Watcher) Difference() error {
-	watch, err := w.store.Get()
+func (w *Watcher) Discover() error {
+	w.Parse()
+	currentIndex, err := w.store.Get()
 	if err != nil {
 		log.Errorf("error fetching index: %v", err)
 		return fmt.Errorf("error fetching index: %v", err)
 	}
-	fmt.Printf("watch.EntriesCount: %v\n", watch.EntriesCount())
-	w.store.Update(w.watch)
+	new := currentIndex.Compare(w.watch)
+	fmt.Printf("new.EntriesCount: %v\n", new.EntriesCount())
 	return nil
 }
 

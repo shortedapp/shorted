@@ -52,17 +52,25 @@ func (w *Watch) EntriesCount() int {
 }
 
 // Compare current index with a newly built index to discover additional content
-func (w Watch) Compare(latestIndex Watch) *Watch {
+func (w Watch) Compare(latestIndex *Watch) *Watch {
 	idx := New()
-	for name, _ := range w.Sources {
-		if es, ok := latestIndex.Get(name); ok {
+	for name, es := range w.Sources {
+		if _, ok := latestIndex.Get(name); ok {
+			s := NewSource(
+				WithSourceName(es.Name),
+				WithSourceURL(es.URL),
+			)
+			count := 0
 			for entry, doc := range latestIndex.Sources[name].Entries {
 				if _, ok := w.Sources[name].Entries[entry]; !ok {
-					es.AddDocument(name, doc)
+					s.AddDocument(entry, doc)
+					count++
 				}
 			}
-			idx.Add(es)
+			s.EntriesCount = count
+			idx.Add(s)
 		}
 	}
+
 	return idx
 }

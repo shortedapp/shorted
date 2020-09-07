@@ -27,7 +27,6 @@ func main() {
 	if err != nil {
 		panic(fmt.Errorf("failed initialising watch: %v", err))
 	}
-	w.Parse()
-	w.Difference()
+	w.Discover()
 	defer zap.L().Sync()
 }
