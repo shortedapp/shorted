@@ -59,8 +59,14 @@ message Source {
   string url = 2;
 }
 
+message Index {
+  //url where index is stored (i.e gs://<project-name>-index/index.json)
+  string url = 1;
+}
+
 message Watch {
   Source source = 1;
+  Index index = 2;
 }
 
 message GetWatchRequest {

@@ -1,7 +1,10 @@
+# excludes:
+#  - third_party
 protoc:
   version: 3.11.0
-  # includes:
-  # - third_party
+  includes:
+   - third_party/
+
 lint:
   group: uber2
   rules:
@@ -12,9 +15,15 @@ lint:
     path: ../LICENSE
 generate:
   go_options:
-    import_path: github.com/shortedapp/shorted/shortedapis
+    import_path: github.com/shortedapp/shorted/shortedapis/shorted
+    # Extra modifiers to include with Mfile=package.
+    # extra_modifiers:
+      # google/api/annotations.proto: google.golang.org/genproto/googleapis/api/annotations
+      # protoc-gen-swagger/options/annotations.proto: github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options/annotations.proto
+      # google/api/http.proto: google.golang.org/genproto/googleapis/api/annotations
+
   plugins:
     - name: go
       type: go
       flags: plugins=grpc
-      output: ./pkg
+      output: ./gen/go

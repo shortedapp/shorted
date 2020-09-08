@@ -92,6 +92,15 @@
         }
       }
     },
+    "v1Index": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "title": "url where index is stored (i.e gs://\u003cproject-name\u003e-index/index.json)"
+        }
+      }
+    },
     "v1Source": {
       "type": "object",
       "properties": {
@@ -110,6 +119,9 @@
       "properties": {
         "source": {
           "$ref": "#/definitions/v1Source"
+        },
+        "index": {
+          "$ref": "#/definitions/v1Index"
         }
       }
     }
