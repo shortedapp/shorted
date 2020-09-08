@@ -1,5 +1,7 @@
 protoc:
   version: 3.11.0
+  # includes:
+  # - third_party
 lint:
   group: uber2
   rules:
@@ -15,4 +17,4 @@ generate:
     - name: go
       type: go
       flags: plugins=grpc
-      output: ./gen/go
+      output: ./pkg

@@ -21,18 +21,50 @@
 syntax = "proto3";
 
 package shorted.watcher.v1;
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
 
 option csharp_namespace = "Shorted.Watcher.V1";
-option go_package = "watcherv1";
+option go_package = "watcher/v1;watcher";
 option java_multiple_files = true;
 option java_outer_classname = "WatcherProto";
 option java_package = "com.shorted.watcher.v1";
 option objc_class_prefix = "SWX";
 option php_namespace = "Shorted\\Watcher\\V1";
 
-message Source {
-  // The API version
-  string version = 1;
-  // fullname of the source (i.e asic.gov.au)
-  string name = 2;
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    version: "1.0";
+  };
+  external_docs: {
+    url: "https://github.com/shortedapp/shorted/shortedapis/watcher/v1";
+    description: "Watcher API";
+  }
+  schemes: HTTPS;
+};
+
+service WatchService {
+  rpc GetWatch(GetWatchRequest) returns (Watch) {
+    option (google.api.http) = {
+      post: "/api/v1/watch"
+      body: "*"
+  };
+  }
 }
+
+message Source {
+  // fullname of the source (i.e asic.gov.au)
+  string name = 1;
+  // URL is the base URL for the givne source
+  string url = 2;
+}
+
+message Watch {
+  Source source = 1;
+}
+
+message GetWatchRequest {
+  string name = 1;
+}
+
+

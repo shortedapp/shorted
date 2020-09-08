@@ -1,7 +1,7 @@
 
 BUF_VERSION := 0.21.0
 GRPC_GATEWAY_VERSION=v1.14.4
-GOGO_PROTOBUF_VERSION=1.3.1
+GOGO_PROTOBUF_VERSION=v1.3.1
 UNAME_OS := $(shell uname -s)
 UNAME_ARCH := $(shell uname -m)
 # Buf will be cached to ~/.cache/buf-example.
@@ -39,14 +39,23 @@ $(BUF):
 	@touch $(BUF)
 
 deps:
-	sudo cp -r ${GOPATH}/pkg/mod/github.com/grpc-ecosystem/grpc-gateway@${GRPC_GATEWAY_VERSION}/third_party/googleapis/google third_party/
-	sudo mkdir -p third_party/protoc-gen-swagger/options
-	sudo cp ${GOPATH}/pkg/mod/github.com/grpc-ecosystem/grpc-gateway@${GRPC_GATEWAY_VERSION}/protoc-gen-swagger/options/annotations.proto third_party/protoc-gen-swagger/options
-	sudo cp ${GOPATH}/pkg/mod/github.com/grpc-ecosystem/grpc-gateway@${GRPC_GATEWAY_VERSION}/protoc-gen-swagger/options/openapiv2.proto third_party/protoc-gen-swagger/options
-	sudo mkdir -p third_party/gogo 
-	sudo cp -r ${GOPATH}/pkg/mod/github.com/gogo/protobuf@$(GOGO_PROTOBUF_VERSION)/gogoproto third_party/gogo
+	GO111MODULE=on go mod download
+	mkdir -p third_party
+	mkdir -p third_party/protoc-gen-swagger/options
+	mkdir -p third_party/gogo 
+	mkdir -p third_party/googleapis/google/api
+	mkdir -p third_party/googleapis/google/api
+	mkdir -p third_party/google/api
+	mkdir -p third_party/google/rpc
+	cp -r ${GOPATH}/pkg/mod/github.com/grpc-ecosystem/grpc-gateway@${GRPC_GATEWAY_VERSION}/third_party/googleapis/google third_party/
+	cp ${GOPATH}/pkg/mod/github.com/grpc-ecosystem/grpc-gateway@${GRPC_GATEWAY_VERSION}/protoc-gen-swagger/options/annotations.proto third_party/protoc-gen-swagger/options
+	cp ${GOPATH}/pkg/mod/github.com/grpc-ecosystem/grpc-gateway@${GRPC_GATEWAY_VERSION}/protoc-gen-swagger/options/openapiv2.proto third_party/protoc-gen-swagger/options
+	cp -r ${GOPATH}/pkg/mod/github.com/gogo/protobuf@$(GOGO_PROTOBUF_VERSION)/gogoproto third_party/gogo
 
 generate:
 	docker build -t proto-builder .
-	docker run -v $(pwd):/build proto-builder
+	docker run -v ${PWD}:/build proto-builder
 	
+
+prototool:
+	prototool all
