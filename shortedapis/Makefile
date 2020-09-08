@@ -55,7 +55,3 @@ deps:
 generate:
 	docker build -t proto-builder .
 	docker run -v ${PWD}:/build proto-builder
-	
-
-prototool:
-	prototool all

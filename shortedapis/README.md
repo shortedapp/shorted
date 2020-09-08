@@ -4,18 +4,13 @@ This section contains the API surface for shorted.
 
 ## Development
 
-We use `prototool` for local management of the proto material, install with:
-
-```bash
-brew install prototool
-```
+We use a simple docker container with the required dependencies install to generate our grpc bindings, which is configured via the `build.go` file.
 
 Run generation with:
 
 ```bash
 make generate
 ```
-
 
 # References
 
