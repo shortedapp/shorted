@@ -1,4 +1,4 @@
-module github.com/shortedapp/shorted/fabricapis/builder
+module github.com/shortedapp/shorted/shortedapis
 
 go 1.14
 

@@ -57,6 +57,14 @@ make invoke
 
 [10] https://github.com/google/go-cloud/blob/master/samples/guestbook/main.go
 
+### Muxing
+
+[3] https://github.com/Gonzih/go-google-functions-demo/blob/master/function.go
+
+[4] https://github.com/MartinSahlen/go-cloud-fn
+
+[5] https://www.clarifai.com/blog/muxing-together-grpc-and-http-traffic-with-grpc-gateway
+
 ### Performance
 
 [11] https://research.lightstep.com/reports/google-cloud-storage
