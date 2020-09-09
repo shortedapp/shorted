@@ -12,7 +12,7 @@ Run generation with:
 make generate
 ```
 
-# References
+## References
 
 [1] https://github.com/gogo/grpc-example/blob/master/proto/example.proto
 [2] https://github.com/harlow/go-micro-services
