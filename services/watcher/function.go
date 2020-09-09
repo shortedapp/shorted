@@ -8,6 +8,7 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/watcher"
+	"github.com/shortedapp/shorted/shortedapis/pkg/shorted/watcher/v1"
 )
 
 var (
