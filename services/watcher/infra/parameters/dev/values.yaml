@@ -4,12 +4,12 @@ global:
   environment: dev
   domain: shorted.com.au
 function:
-  name: collector
-  description: data collection and store
+  name: watcher 
+  description: watcher sources and detect collection events
   runtime: go113
   memory: 128
   triggerType: http
-  entrypoint: Collect
+  entrypoint: Watch
   zipPath: ../../../index.zip
   public: true
   envVars:

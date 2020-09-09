@@ -1,0 +1,9 @@
+build:
+  roots:
+    - shortedapis
+lint:
+  use:
+    - DEFAULT
+breaking:
+  use:
+    - FILE

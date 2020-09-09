@@ -71,3 +71,7 @@ make invoke
 ### HTML 
 
 [b.1] https://github.com/PuerkitoBio/goquery
+
+### ASX Stock Data
+
+[c.1] https://www.alphavantage.co/documentation/

@@ -22,6 +22,10 @@ iam:
             name: collector
             roles:
             - roles/cloudtrace.agent
+        watcher:
+            name: watcher
+            roles:
+            - roles/cloudtrace.agent
 
 gcs:
     buckets:
@@ -30,4 +34,10 @@ gcs:
             users:
                 collector:
                     name: collector
+                    members: {}
+        watcher-index:
+            name: watcher-index
+            users:
+                watcher:
+                    name: watcher
                     members: {}

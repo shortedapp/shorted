@@ -1,0 +1,76 @@
+// // Copyright (c) 2020 Shorted Ltd Pty.
+// //
+// // Permission is hereby granted, free of charge, to any person obtaining a copy
+// // of this software and associated documentation files (the "Software"), to deal
+// // in the Software without restriction, including without limitation the rights
+// // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// // copies of the Software, and to permit persons to whom the Software is
+// // furnished to do so, subject to the following conditions:
+// //
+// // The above copyright notice and this permission notice shall be included in
+// // all copies or substantial portions of the Software.
+// //
+// // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// // THE SOFTWARE.
+
+syntax = "proto3";
+
+package shorted.watcher.v1;
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option csharp_namespace = "Shorted.Watcher.V1";
+option go_package = "watcher/v1;watcher";
+option java_multiple_files = true;
+option java_outer_classname = "WatcherProto";
+option java_package = "com.shorted.watcher.v1";
+option objc_class_prefix = "SWX";
+option php_namespace = "Shorted\\Watcher\\V1";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    version: "1.0";
+  };
+  external_docs: {
+    url: "https://github.com/shortedapp/shorted/shortedapis/watcher/v1";
+    description: "Watcher API";
+  }
+  schemes: HTTPS;
+};
+
+service WatchService {
+  rpc GetWatch(GetWatchRequest) returns (Watch) {
+    option (google.api.http) = {
+      post: "/api/v1/watch"
+      body: "*"
+  };
+  }
+}
+
+message Source {
+  // fullname of the source (i.e asic.gov.au)
+  string name = 1;
+  // URL is the base URL for the givne source
+  string url = 2;
+}
+
+message Index {
+  //url where index is stored (i.e gs://<project-name>-index/index.json)
+  string url = 1;
+}
+
+message Watch {
+  Source source = 1;
+  Index index = 2;
+}
+
+message GetWatchRequest {
+  string name = 1;
+}
+
+

@@ -3,28 +3,30 @@ package watcher
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
+	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
+	"github.com/shortedapp/shorted/services/watcher/pkg/source"
+	"github.com/shortedapp/shorted/services/watcher/pkg/storage"
+	"github.com/shortedapp/shorted/services/watcher/sources"
 )
 
 // Watcher - collecting arbitrary data and storing as required
 type Watcher struct {
 	// URL we will be collecting data from
-	Source         Source `json:"source"`
+	Source         *source.Source `json:"source"`
 	Pattern        Pattern
 	Result         Result
 	loggingEncoder string
 	Context        context.Context
 	Config         *config.Config
-}
-type Source struct {
-	URL string `json"url"`
-	// Format of file (will be used for parsing potential)
-	Format string `json:"format"`
+	watch          *index.Watch
+	store          *storage.Storage
 }
 type Pattern struct {
 	Value string
@@ -35,27 +37,59 @@ type Result struct {
 	Status   string
 }
 
-func New(ctx context.Context, cfg *config.Config, r io.ReadCloser) *Watcher {
-	w, err := processBody(r)
+// func New(ctx context.Context, cfg *config.Config, r io.ReadCloser) *Watcher {
+func New(ctx context.Context, cfg *config.Config) (*Watcher, error) {
+	log.InitLogger(cfg)
+	var w Watcher
+	s, err := sources.GetSource("asic")
+	if err != nil {
+		return &Watcher{}, fmt.Errorf("invalid source name set: %v", err)
+	}
+	handler, err := s.NewBuilder().Build()
+
+	if err != nil {
+		return &Watcher{}, fmt.Errorf("failed to build source handler: %v", err)
+	}
+	w.Source = &source.Source{
+		Name:    "https://asic.gov.au",
+		URL:     "https://asic.gov.au/regulatory-resources/markets/short-selling/short-position-reports-table/",
+		BaseURL: "https://asic.gov.au",
+		Format:  "csv",
+		Handler: handler,
+	}
+	log.Infof(ctx, "loaded source: %v", w.Source)
+
+	store, err := storage.New("gs://shorted-dev-aba5688f-watcher-index/index.json")
+	if err != nil {
+		return &Watcher{}, fmt.Errorf("failed initialising store: %v", err)
+	}
+	w.store = store
 	w.Config = cfg
 	w.Context = ctx
-	if err != nil {
-		return &Watcher{}
-	}
-	return &w
+	w.watch = index.New()
+	return &w, nil
 }
 
 func (w *Watcher) Parse() error {
-	var err error
-	w.Result.response, err = http.Get(w.Source.URL)
+	sourceIndex, err := w.Source.Handler.Parse(w.Context, w.Source)
 	if err != nil {
-		log.Errorf("unable to fetch contents for url %s", w.Source.URL)
+		log.Errorf("parseError: %v", err)
 		return err
 	}
-	log.Infof(w.Context, "pulled from %v", w.Source.URL)
-	log.Response(w.Context, w.Result.response)
+	w.watch.Add(sourceIndex)
+	return err
+}
 
-	w.Result.Status = "SUCCESS"
+// Difference will attempt to resolve the difference between the given parsed source and whats been stored in the watcher index
+func (w *Watcher) Discover() error {
+	w.Parse()
+	currentIndex, err := w.store.Get()
+	if err != nil {
+		log.Errorf("error fetching index: %v", err)
+		return fmt.Errorf("error fetching index: %v", err)
+	}
+	new := currentIndex.Compare(w.watch)
+	fmt.Printf("new.EntriesCount: %v\n", new.EntriesCount())
 	return nil
 }
 

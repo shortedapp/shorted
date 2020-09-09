@@ -62,7 +62,7 @@ func BucketWrite(ctx context.Context, path string, data []byte) error {
 	if err != nil {
 		return err
 	}
-	n, writeErr := io.WriteString(w, string(data))
+	_, writeErr := io.WriteString(w, string(data))
 	// Always check the return value of Close when writing.
 	closeErr := w.Close()
 	if writeErr != nil {
