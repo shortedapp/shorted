@@ -1,5 +1,5 @@
 TOPLVL=../
-SERVICE=ingestor
+SERVICE=collector
 ENVIRONMENT=dev
 WORKSPACE=${ENVIRONMENT}
 PROJECT_ID ?= shorted-dev-aba5688f

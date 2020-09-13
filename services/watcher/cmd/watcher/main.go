@@ -33,9 +33,7 @@ func main() {
 	// Register REST API
 	mux := http.NewServeMux()
 	gwmux := runtime.NewServeMux()
-	v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, ":8080", []grpc.DialOption{
-		grpc.WithInsecure(),
-	})
+	v1.RegisterWatchServiceHandlerServer(ctx, gwmux, &service.WatchService{})
 	mux.Handle("/", gwmux)
 
 	// Register gRPC API
@@ -44,11 +42,10 @@ func main() {
 	reflection.Register(gmux)
 
 	logger = zap.S().With("watcher", "cmd")
-	server := &http.Server{
-		Addr:    ":8080",
-		Handler: dispatcher(ctx, gmux, mux),
-	}
-	if err := server.ListenAndServe(); err != nil {
+
+	// use dispatch to handle REST/gRPC APIs
+	http.Handle("/d/", dispatcher(ctx, gmux, mux))
+	if err := http.ListenAndServe(":8080", dispatcher(ctx, gmux, mux)); err != nil {
 		log.Fatalf("server .ListenAndServe: %v\n", err)
 	}
 	defer zap.L().Sync()
@@ -61,9 +58,10 @@ func dispatcher(ctx context.Context, grpcHandler http.Handler, httpHandler http.
 		contentTypeHeader := r.Header.Get("content-type")
 
 		if r.ProtoMajor == 2 && strings.HasPrefix(contentTypeHeader, "application/grpc") {
-			log.Infof(ctx, "dispatching to grpc server: %v", contentTypeHeader)
+			log.Infof(ctx, "dispatching to grpc server: %s", contentTypeHeader)
 			grpcHandler.ServeHTTP(w, req)
 		} else {
+			log.Infof(ctx, "dispatching to http server: %s", contentTypeHeader)
 			httpHandler.ServeHTTP(w, req)
 		}
 	}

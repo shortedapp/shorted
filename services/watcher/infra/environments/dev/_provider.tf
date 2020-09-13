@@ -2,7 +2,7 @@ terraform {
  	required_version = ">=0.12.29"
  	backend "gcs" {
  		bucket = "tf-state-shorted-dev-aba5688f"
- 		prefix = "terraform-functions/ingestor/state"
+ 		prefix = "terraform-functions/watcher/state"
  	}
  }
  provider "google-beta" {

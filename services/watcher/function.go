@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/service"
@@ -13,6 +14,7 @@ import (
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 var (
@@ -22,15 +24,24 @@ var (
 )
 
 func init() {
+	ctx := context.Background()
 	cfg = &config.Config{
 		ProjectId:      os.Getenv("PROJECT_ID"),
 		LoggingEncoder: os.Getenv("LOGGING_ENCODER"),
 	}
 	log.InitLogger(cfg)
+
+	// Register HTTP API
 	mux = http.NewServeMux()
+	gwmux := runtime.NewServeMux()
+	v1.RegisterWatchServiceHandlerServer(ctx, gwmux, &service.WatchService{})
+	mux.Handle("/", gwmux)
+	// Register gRPC API
 	gmux = grpc.NewServer()
 	v1.RegisterWatchServiceServer(gmux, &service.WatchService{})
+	reflection.Register(gmux)
 
+	http.Handle("/d/", dispatcher(ctx, gmux, mux))
 }
 
 // Watch trigger a reconciliation of change a target source
@@ -57,6 +68,7 @@ func dispatcher(ctx context.Context, grpcHandler http.Handler, httpHandler http.
 			log.Infof(ctx, "dispatching to grpc server: %v", contentTypeHeader)
 			grpcHandler.ServeHTTP(w, req)
 		} else {
+			log.Infof(ctx, "dispatching to http server: %v", contentTypeHeader)
 			httpHandler.ServeHTTP(w, req)
 		}
 	}
