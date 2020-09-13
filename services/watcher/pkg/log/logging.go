@@ -7,17 +7,17 @@ import (
 	"net/http"
 	"strconv"
 
+	"contrib.go.opencensus.io/exporter/stackdriver"
 	cloudtrace "github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace"
 	"github.com/blendle/zapdriver"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
+	octrace "go.opencensus.io/trace"
 	"go.opentelemetry.io/otel/api/global"
 	"go.opentelemetry.io/otel/api/trace"
 	"go.opentelemetry.io/otel/instrumentation/httptrace"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"contrib.go.opencensus.io/exporter/stackdriver"
-	octrace "go.opencensus.io/trace"
 )
 
 var (
@@ -38,7 +38,7 @@ func InitLogger(config *config.Config) {
 			ProjectID: loggingConfig.ProjectId,
 		})
 		if err != nil {
-				log.Fatal(err)
+			log.Fatal(err)
 		}
 		octrace.RegisterExporter(exporter)
 		_, flush, err := cloudtrace.InstallNewPipeline(
@@ -79,13 +79,10 @@ func InitLogger(config *config.Config) {
 	// Build the logger
 	globalLogger, _ := logConfig.Build()
 	zap.ReplaceGlobals(globalLogger)
-	
 
 	// Create custom span.
 	tr = global.TraceProvider().Tracer("shorted.com.au/collector")
 
-
-	
 }
 
 func Request(ctx context.Context, w http.ResponseWriter, r *http.Request) {
@@ -224,6 +221,10 @@ func Fatalf(template string, args ...interface{}) {
 }
 
 func Errorf(template string, args ...interface{}) {
+	zap.S().Errorf(template, args...)
+}
+
+func Debugf(template string, args ...interface{}) {
 	zap.S().Errorf(template, args...)
 }
 

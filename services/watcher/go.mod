@@ -14,12 +14,16 @@ require (
 	github.com/alecthomas/repr v0.0.0-20200325044227-4184120f674c // indirect
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/blendle/zapdriver v1.3.1
+	github.com/grpc-ecosystem/grpc-gateway v1.14.5
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
+	github.com/shortedapp/shorted/shortedapis v0.0.0-20200909135456-8a2afe8f804b
 	github.com/stretchr/testify v1.6.1
 	go.opencensus.io v0.22.4
 	go.opentelemetry.io/otel v0.8.0
 	go.uber.org/zap v1.15.0
 	gocloud.dev v0.20.0
+	golang.org/x/net v0.0.0-20200707034311-ab3426394381
+	google.golang.org/grpc v1.30.0
 	gopkg.in/yaml.v2 v2.2.7 // indirect
 )

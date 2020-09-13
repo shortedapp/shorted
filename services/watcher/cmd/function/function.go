@@ -33,7 +33,7 @@ func init() {
 
 }
 
-// Watch trigger a reconciliation of change a target source
+// HelloWorld writes "Hello, World!" to the HTTP response.
 func Watch(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	log.Request(ctx, w, r)
