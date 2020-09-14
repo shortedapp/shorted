@@ -1,5 +1,5 @@
 FROM golang:1.14-buster
-ENV PROTOC_VERSION="3.11.2"
+ENV PROTOC_VERSION="3.13.0"
 ENV GRPC_WEB_VERSION="1.0.7"
 
 RUN apt-get update && apt-get install -y \

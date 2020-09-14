@@ -1,7 +1,7 @@
 PROJECT_ID ?= shorted-dev-aba5688f
 ENV ?= dev 
 REGION=australia-southeast1
-SA_NAME=collector
+SA_NAME=watcher
 TF_CREDS=~/.config/gcloud/${SA_NAME}.json
 GOOGLE_PROJECT=${PROJECT_ID}
 
@@ -64,6 +64,10 @@ get.url:
 	@make -C infra/environments/${ENV} get.url
 invoke:
 	curl -vvv $(shell make get.url) -d '{"source": { "url": "https://www.asx.com.au/asx/research/ASXListedCompanies.csv", "format": "csv"}, "sink": {"url": "gs://${PROJECT_ID}-stocks/asx/stocks.csv", "format": "csv"}}'
+
+invoke.test:
+	curl -XPOST -vvv $(shell make get.url)/api/v1/watch 
+
 
 invoke.local:
 	curl localhost:8080 -d '{"source": { "url": "https://www.asx.com.au/asx/research/ASXListedCompanies.csv", "format": "csv"}, "sink": {"url": "gs://${PROJECT_ID}-stocks/asx/stocks.csv", "format": "csv"}}'

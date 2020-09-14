@@ -11,9 +11,11 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
+	"github.com/shortedapp/shorted/services/watcher/pkg/service"
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
 	"github.com/shortedapp/shorted/services/watcher/pkg/storage"
 	"github.com/shortedapp/shorted/services/watcher/sources"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 )
 
 // Watcher - collecting arbitrary data and storing as required
@@ -27,7 +29,9 @@ type Watcher struct {
 	Config         *config.Config
 	watch          *index.Watch
 	store          *storage.Storage
+	server         *service.WatchService
 }
+
 type Pattern struct {
 	Value string
 }
@@ -67,6 +71,7 @@ func New(ctx context.Context, cfg *config.Config) (*Watcher, error) {
 	w.Config = cfg
 	w.Context = ctx
 	w.watch = index.New()
+	w.server = service.New()
 	return &w, nil
 }
 
@@ -78,6 +83,10 @@ func (w *Watcher) Parse() error {
 	}
 	w.watch.Add(sourceIndex)
 	return err
+}
+
+func (w *Watcher) Get(ctx context.Context, r *http.Request) (*v1.Watch, error) {
+	return w.server.GetWatch(ctx, &v1.GetWatchRequest{Name: "test"})
 }
 
 // Difference will attempt to resolve the difference between the given parsed source and whats been stored in the watcher index
