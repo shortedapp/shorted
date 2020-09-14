@@ -5,7 +5,7 @@ go 1.14
 require (
 	cloud.google.com/go/logging v1.0.0
 	contrib.go.opencensus.io/exporter/stackdriver v0.12.1
-	github.com/GoogleCloudPlatform/functions-framework-go v1.0.1
+	github.com/GoogleCloudPlatform/functions-framework-go v1.1.0
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v0.2.2-0.20200804011553-7454a7ef9c13
 	github.com/Masterminds/semver v1.5.0
 	github.com/PuerkitoBio/goquery v1.5.1
@@ -14,6 +14,7 @@ require (
 	github.com/alecthomas/repr v0.0.0-20200325044227-4184120f674c // indirect
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/blendle/zapdriver v1.3.1
+	github.com/cloudevents/sdk-go v1.0.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.14.5
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
@@ -24,6 +25,5 @@ require (
 	go.uber.org/zap v1.15.0
 	gocloud.dev v0.20.0
 	golang.org/x/net v0.0.0-20200707034311-ab3426394381
-	google.golang.org/grpc v1.30.0
-	gopkg.in/yaml.v2 v2.2.7 // indirect
+	google.golang.org/grpc v1.31.0
 )

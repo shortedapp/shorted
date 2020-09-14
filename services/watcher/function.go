@@ -36,12 +36,18 @@ func init() {
 	gwmux := runtime.NewServeMux()
 	v1.RegisterWatchServiceHandlerServer(ctx, gwmux, &service.WatchService{})
 	mux.Handle("/", gwmux)
+
 	// Register gRPC API
 	gmux = grpc.NewServer()
 	v1.RegisterWatchServiceServer(gmux, &service.WatchService{})
 	reflection.Register(gmux)
+	// lis, err := net.Listen("unix", "/tmp/watcher.sock")
+	// if err != nil {
+	// log.Fatalf("failed to listen: %v", err)
+	// }
+	// gmux.Serve(lis)
 
-	http.Handle("/d/", dispatcher(ctx, gmux, mux))
+	// http.Handle("/d/", dispatcher(ctx, gmux, mux))
 }
 
 // Watch trigger a reconciliation of change a target source

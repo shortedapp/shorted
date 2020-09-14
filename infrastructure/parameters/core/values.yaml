@@ -10,6 +10,7 @@ projects:
     - roles/owner
     - roles/storage.admin
     - roles/cloudfunctions.admin
+    - roles/run.admin
     services:
     - cloudresourcemanager.googleapis.com
     - deploymentmanager.googleapis.com
@@ -18,5 +19,6 @@ projects:
     - iam.googleapis.com
     - cloudbuild.googleapis.com
     - cloudtrace.googleapis.com
+    - run.googleapis.com
     admins:
     - ben

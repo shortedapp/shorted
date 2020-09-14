@@ -191,7 +191,7 @@ func Response(ctx context.Context, r *http.Response) {
 				Referer:       r.Request.Referer(),
 				Protocol:      r.Proto,
 			}),
-			zap.String("package", "collector.http"),
+			zap.String("package", "watcher.http"),
 			zap.String("Trace", trace),
 		}
 		zap.L().Info("Source - HTTP Response", fields...)

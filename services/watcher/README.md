@@ -57,6 +57,8 @@ make invoke
 
 [10] https://github.com/google/go-cloud/blob/master/samples/guestbook/main.go
 
+[10.1] https://github.com/philips/grpc-gateway-example/blob/master/cmd/serve.go
+
 ### Muxing
 
 [3] https://github.com/Gonzih/go-google-functions-demo/blob/master/function.go

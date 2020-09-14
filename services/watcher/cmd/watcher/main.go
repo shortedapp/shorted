@@ -6,7 +6,9 @@ import (
 	"os"
 	"strings"
 
+	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/shortedapp/shorted/services/watcher"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/service"
@@ -33,7 +35,7 @@ func main() {
 	// Register REST API
 	mux := http.NewServeMux()
 	gwmux := runtime.NewServeMux()
-	v1.RegisterWatchServiceHandlerServer(ctx, gwmux, &service.WatchService{})
+	v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, ":8080", nil)
 	mux.Handle("/", gwmux)
 
 	// Register gRPC API
@@ -43,10 +45,21 @@ func main() {
 
 	logger = zap.S().With("watcher", "cmd")
 
-	// use dispatch to handle REST/gRPC APIs
-	http.Handle("/d/", dispatcher(ctx, gmux, mux))
-	if err := http.ListenAndServe(":8080", dispatcher(ctx, gmux, mux)); err != nil {
-		log.Fatalf("server .ListenAndServe: %v\n", err)
+	// // use dispatch to handle REST/gRPC APIs
+	// http.Handle("/d/", dispatcher(ctx, gmux, mux))
+	// if err := http.ListenAndServe(":8080", dispatcher(ctx, gmux, mux)); err != nil {
+	// 	log.Fatalf("server .ListenAndServe: %v\n", err)
+	// }
+
+	funcframework.RegisterHTTPFunctionContext(ctx, "/", watcher.Watch)
+	// Use PORT environment variable, or default to 8080.
+	port := "8080"
+	if envPort := os.Getenv("PORT"); envPort != "" {
+		port = envPort
+	}
+
+	if err := funcframework.Start(port); err != nil {
+		log.Fatalf("funcframework.Start: %v\n", err)
 	}
 	defer zap.L().Sync()
 }
