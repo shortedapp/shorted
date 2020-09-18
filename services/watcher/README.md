@@ -71,6 +71,10 @@ make invoke
 
 [11] https://research.lightstep.com/reports/google-cloud-storage
 
+### CloudRun
+
+[12] https://ahmet.im/blog/knative-api-client/
+
 ### ASIC
 
 [a.1] https://asic.gov.au/regulatory-resources/markets/short-selling/short-selling-reports-notice/

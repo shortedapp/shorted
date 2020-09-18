@@ -2,13 +2,15 @@ package main
 
 import (
 	"context"
+	"net"
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/shortedapp/shorted/services/watcher"
+	"github.com/shortedapp/shorted/services/watcher/cmd/gcf"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/service"
@@ -35,23 +37,35 @@ func main() {
 	// Register REST API
 	mux := http.NewServeMux()
 	gwmux := runtime.NewServeMux()
-	v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, ":8080", nil)
+	// v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, ":8080", nil)
 	mux.Handle("/", gwmux)
 
 	// Register gRPC API
 	gmux := grpc.NewServer()
 	v1.RegisterWatchServiceServer(gmux, &service.WatchService{})
 	reflection.Register(gmux)
+	if err := os.RemoveAll("/tmp/watcher.sock"); err != nil {
+		log.Fatalf("failed removing socket: %v", err)
+	}
+	lis, err := net.Listen("unix", "/tmp/watcher.sock")
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	go gmux.Serve(lis)
+
+	if err != nil {
+		log.Fatalf("error listening: %v", err)
+	}
+	v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, "/tmp/watcher.sock", []grpc.DialOption{
+		grpc.WithInsecure(),
+		grpc.WithDialer(func(addr string, timeout time.Duration) (net.Conn, error) {
+			return net.DialTimeout("unix", addr, 5*time.Second)
+		}),
+	})
 
 	logger = zap.S().With("watcher", "cmd")
 
-	// // use dispatch to handle REST/gRPC APIs
-	// http.Handle("/d/", dispatcher(ctx, gmux, mux))
-	// if err := http.ListenAndServe(":8080", dispatcher(ctx, gmux, mux)); err != nil {
-	// 	log.Fatalf("server .ListenAndServe: %v\n", err)
-	// }
-
-	funcframework.RegisterHTTPFunctionContext(ctx, "/", watcher.Watch)
+	funcframework.RegisterHTTPFunctionContext(ctx, "/", gcf.Watch)
 	// Use PORT environment variable, or default to 8080.
 	port := "8080"
 	if envPort := os.Getenv("PORT"); envPort != "" {
