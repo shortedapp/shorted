@@ -21,8 +21,10 @@
 syntax = "proto3";
 
 package shorted.watcher.v1;
-import "google/api/annotations.proto";
-import "protoc-gen-swagger/options/annotations.proto";
+import "gogo/gogoproto/gogo.proto";
+import "validate/validate.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "Shorted.Watcher.V1";
 option go_package = "watcher/v1;watcher";
@@ -32,45 +34,43 @@ option java_package = "com.shorted.watcher.v1";
 option objc_class_prefix = "SWX";
 option php_namespace = "Shorted\\Watcher\\V1";
 
-option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
-  info: {
-    version: "1.0";
-  };
-  external_docs: {
-    url: "https://github.com/shortedapp/shorted/shortedapis/watcher/v1";
-    description: "Watcher API";
-  }
-  schemes: HTTPS;
-};
 
-service WatchService {
-  rpc GetWatch(GetWatchRequest) returns (Watch) {
-    option (google.api.http) = {
-      post: "/api/v1/watch"
-      body: "*"
-  };
-  }
+// WatchDetails contains the set of information for a given watch. 
+message WatchDetails {
+  string id = 1 [(validate.rules).string.uuid = true];
+  string name = 2 [(validate.rules).string = {min_len: 5, max_len: 10}];
+  Source source = 3 [(validate.rules).message.required = true];
+  Index index = 4;
+  SyncStatus status = 5 [(validate.rules).enum.defined_only = true];
 }
 
+// Source is a definition of a target that we want to "watch" and discover content from
 message Source {
-  // fullname of the source (i.e asic.gov.au)
-  string name = 1;
   // URL is the base URL for the givne source
-  string url = 2;
-}
+  string url = 1 [(validate.rules).string.uri_ref = true];
+  string adapter = 2 [(validate.rules).string ={in: ["asic"]}];
+  google.protobuf.Duration interval = 3 [(gogoproto.stdduration) = true];
 
+
+}
+// Index defines where the discovered content of a Source is stored
 message Index {
   //url where index is stored (i.e gs://<project-name>-index/index.json)
-  string url = 1;
+  string url = 1 [(validate.rules).string.uri = true];
+  int64 document_count = 2;
+  google.protobuf.Timestamp last_updated = 6 [(validate.rules).timestamp.required = true];
 }
 
-message Watch {
-  Source source = 1;
-  Index index = 2;
+message SyncDetails {
+  string id = 1 [(validate.rules).string.uuid = true];
+  string name = 2 [(validate.rules).string = {min_len: 5, max_len: 10}];
+  SyncStatus status = 3 [(validate.rules).enum.defined_only = true];
 }
-
-message GetWatchRequest {
-  string name = 1;
+// SyncStatus specifies the state of a given synchronisation request.
+// Where a synchronisation state will correspond to a specfic source
+enum SyncStatus {
+  SYNC_STATUS_UNSPECIFIED = 0;
+  SYNC_STATUS_PENDING = 1;
+  SYNC_STATUS_SUCCESS = 2;
+  SYNC_STATUS_FAILURE = 3;
 }
-
-
