@@ -43,8 +43,20 @@ run.publish: run.build
 	docker push asia.gcr.io/${PROJECT_ID}/watcher:latest
 
 run.deploy: run.publish
-	gcloud run services update watcher --image=asia.gcr.io/${PROJECT_ID}/watcher:latest
+	gcloud run services update watcher \
+	--image=asia.gcr.io/${PROJECT_ID}/watcher:latest \
+	--set-env-vars=GRPC_TRACE=all,GODEBUG=http2debug=2,GRPC_VERBOSITY=debug
 
+run.test.grpc:
+	grpcurl -v \
+	-import-path ../../shortedapis/ \
+	-import-path ../../shortedapis/third_party/ \
+	-proto ../../shortedapis/shorted/watcher/v1/watcher.proto \
+	watcher-ak2zgjnhlq-ts.a.run.app:443 \
+	shorted.watcher.v1.WatchService/GetWatch
+run.test.http:
+	curl -XPOST -vvv https://watcher-ak2zgjnhlq-ts.a.run.app/api/v1/watch
+	# curl -XPOST $(shell make get.run.url)/api/v1/watch
 test:
 	go test ./...
 run: build
