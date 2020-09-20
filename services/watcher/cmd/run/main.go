@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"net"
 	"net/http"
 	"os"
 	"strings"
@@ -13,7 +12,6 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/service"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
-	"github.com/soheilhy/cmux"
 	"go.uber.org/zap"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -36,18 +34,9 @@ func main() {
 	logger = zap.S().With("watcher", "cmd")
 	defer logger.Sync()
 
-	if err := runWithCmux(ctx); err != nil {
+	if err := runWithDispatcher(ctx); err != nil {
 		log.Errorf("error running with cmux: %v", err)
 	}
-	// if err := runWithDispatcher(ctx); err != nil {
-	// 	log.Errorf("error running with cmux: %v", err)
-	// }
-	// if err := runDUMBO(ctx); err != nil {
-	// 	log.Errorf("error running with cmux: %v", err)
-	// }
-	// if err := runGRPCServer(ctx); err != nil {
-	// 	log.Errorf("error running grpcServer: %v", err)
-	// }
 
 }
 
@@ -72,9 +61,6 @@ func runWithDispatcher(ctx context.Context) error {
 	gmux := grpc.NewServer()
 	v1.RegisterWatchServiceServer(gmux, &service.WatchService{})
 	reflection.Register(gmux)
-	// handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	// 	fmt.Fprintf(w, "Hello, %v, http: %v", r.URL.Path, r.TLS == nil)
-	// })
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%s", port),
 		Handler: dispatcher(ctx, gmux, mux),
