@@ -1,4 +1,4 @@
-package gcf 
+package gcf
 
 import (
 	"testing"

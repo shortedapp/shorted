@@ -25,10 +25,13 @@ RUN go install \
   github.com/golang/protobuf/protoc-gen-go \
   github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
   github.com/envoyproxy/protoc-gen-validate \
-  github.com/gogo/protobuf/proto \
-  github.com/gogo/protobuf/jsonpb \
-  github.com/gogo/protobuf/gogoproto \
   github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
+
+RUN go install \
+    github.com/gogo/protobuf/proto \
+    github.com/gogo/protobuf/jsonpb \
+    github.com/gogo/protobuf/protoc-gen-gogo \
+    github.com/gogo/protobuf/gogoproto
 
 RUN cat go.mod
 
