@@ -9,7 +9,15 @@ import (
 )
 
 func main() {
-	conn, err := grpc.Dial("australia-southeast1-shorted-dev-aba5688f.cloudfunctions.net:443", grpc.WithInsecure())
+	creds := credentials.NewTLS(&tls.Config{
+		InsecureSkipVerify: false,
+	})
+
+	opts := []grpc.DialOption{
+		// grpc.WithTransportCredentials(creds),
+		grpc.WithInsecure(),
+	}
+	conn, err := grpc.Dial("watcher-ak2zgjnhlq-ts.a.run.app:443", opts...)
 	if err != nil {
 		fmt.Printf("error dailing: %v", err)
 	}

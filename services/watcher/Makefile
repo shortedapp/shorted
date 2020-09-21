@@ -15,12 +15,15 @@ GOOGLE_PROJECT=${PROJECT_ID}
 # 	gcloud functions delete Hello --runtime go113 --trigger-http
 
 get.credentials:
-	
 	gcloud iam service-accounts keys create ~/.config/gcloud/watcher.json \
   		--iam-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
 	gcloud auth activate-service-account --key-file ~/.config/gcloud/watcher.json
-	gsutil ls gs://${PROJECT_ID}-watcher
 
+gcloud.activate:
+	gcloud config configurations activate shorted-dev
+	gcloud config set core/project shorted-dev-aba5688f
+	gcloud config set run/platform managed
+	gcloud auth login
 # describe:
 	
 # 	gcloud functions describe --region ${REGION} --project ${PROJECT_ID} ingestor-dev-first
@@ -31,7 +34,29 @@ build.cli:
 	go build -o bin/cli ./cmd/cli
 run.cli: build.cli
 	PROJECT_ID=${PROJECT_ID} bin/cli
+run.build:
+	docker build -t asia.gcr.io/${PROJECT_ID}/watcher:latest .
+run.run: run.build
+	docker run -p 8080:8080 asia.gcr.io/${PROJECT_ID}/watcher:latest 
 
+run.publish: run.build
+	docker push asia.gcr.io/${PROJECT_ID}/watcher:latest
+
+run.deploy: run.publish
+	gcloud run services update watcher \
+	--image=asia.gcr.io/${PROJECT_ID}/watcher:latest \
+	--set-env-vars=GRPC_TRACE=all,GODEBUG=http2debug=2,GRPC_VERBOSITY=debug
+
+run.test.grpc:
+	grpcurl -v \
+	-import-path ../../shortedapis/ \
+	-import-path ../../shortedapis/third_party/ \
+	-proto ../../shortedapis/shorted/watcher/v1/watcher.proto \
+	watcher-ak2zgjnhlq-ts.a.run.app:443 \
+	shorted.watcher.v1.WatchService/GetWatch
+run.test.http:
+	curl -XPOST -vvv https://watcher-ak2zgjnhlq-ts.a.run.app/api/v1/watch
+	# curl -XPOST $(shell make get.run.url)/api/v1/watch
 test:
 	go test ./...
 run: build
@@ -51,7 +76,9 @@ describe:
 	make -C infra/environments/${ENV} show
 zip:
 	rm -rf index.zip
-	zip	-r index.zip function.go cmd pkg go.mod go.sum
+	cp cmd/gcf/function.go function.go
+	zip	-r index.zip function.go pkg go.mod go.sum
+	rm -rf function.go
 infrastructure.create:
 	echo "creating infra for ${ENV}"
 	make -C infra/environments/${ENV} create.provider

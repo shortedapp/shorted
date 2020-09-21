@@ -1,0 +1,10 @@
+infra
+node_modules
+bin
+hack
+cmd/gcf
+cmd/watcher
+.gitignore
+Dockerfile
+Makefile
+.dockerignore

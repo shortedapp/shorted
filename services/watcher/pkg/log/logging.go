@@ -103,7 +103,7 @@ func Request(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 			zap.Int("status", http.StatusOK),
 			zap.String("path", r.RequestURI),
 			zap.String("method", r.Method),
-			zap.String("package", "collector.http"),
+			zap.String("package", "watcher.http"),
 		}
 		zap.L().Info("HTTP Request", fields...)
 
@@ -138,7 +138,7 @@ func Request(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 				Referer:       r.Referer(),
 				Protocol:      r.Proto,
 			}),
-			zap.String("package", "collector.http"),
+			zap.String("package", "watcher.http"),
 			zap.String("Trace", trace),
 		}
 		zap.L().Info("HTTP Request", fields...)

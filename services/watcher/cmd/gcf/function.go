@@ -1,10 +1,12 @@
-package watcher
+package gcf
 
 import (
 	"context"
+	"net"
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
@@ -34,20 +36,28 @@ func init() {
 	// Register HTTP API
 	mux = http.NewServeMux()
 	gwmux := runtime.NewServeMux()
-	v1.RegisterWatchServiceHandlerServer(ctx, gwmux, &service.WatchService{})
+	// v1.RegisterWatchServiceHandlerServer(ctx, gwmux, &service.WatchService{})
 	mux.Handle("/", gwmux)
 
 	// Register gRPC API
 	gmux = grpc.NewServer()
 	v1.RegisterWatchServiceServer(gmux, &service.WatchService{})
 	reflection.Register(gmux)
-	// lis, err := net.Listen("unix", "/tmp/watcher.sock")
-	// if err != nil {
-	// log.Fatalf("failed to listen: %v", err)
-	// }
-	// gmux.Serve(lis)
+	if err := os.RemoveAll("/tmp/watcher.sock"); err != nil {
+		log.Fatalf("failed removing socket: %v", err)
+	}
+	lis, err := net.Listen("unix", "/tmp/watcher.sock")
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	go gmux.Serve(lis)
+	v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, "/tmp/watcher.sock", []grpc.DialOption{
+		grpc.WithInsecure(),
+		grpc.WithDialer(func(addr string, timeout time.Duration) (net.Conn, error) {
+			return net.DialTimeout("unix", addr, 5*time.Second)
+		}),
+	})
 
-	// http.Handle("/d/", dispatcher(ctx, gmux, mux))
 }
 
 // Watch trigger a reconciliation of change a target source

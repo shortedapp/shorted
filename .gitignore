@@ -7,3 +7,4 @@ node_modules
 *.pyc
 .cache
 env/
+.vscode

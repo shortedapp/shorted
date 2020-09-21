@@ -2,15 +2,12 @@ package main
 
 import (
 	"context"
-	"net"
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
-	"time"
 
-	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/shortedapp/shorted/services/watcher/cmd/gcf"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/service"
@@ -34,59 +31,61 @@ func main() {
 	ctx := context.Background()
 	log.InitLogger(cfg)
 
+	logger = zap.S().With("watcher", "cmd")
+	defer logger.Sync()
+
+	if err := runWithDispatcher(ctx); err != nil {
+		log.Errorf("error running with cmux: %v", err)
+	}
+
+}
+
+func runWithDispatcher(ctx context.Context) error {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Infof(ctx, "Defaulting to port %s", port)
+	}
 	// Register REST API
 	mux := http.NewServeMux()
 	gwmux := runtime.NewServeMux()
-	// v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, ":8080", nil)
 	mux.Handle("/", gwmux)
-
-	// Register gRPC API
+	opts := []grpc.DialOption{
+		grpc.WithInsecure(),
+	}
+	// // dial to gRPC for handling request
+	if err := v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, ":8080", opts); err != nil {
+		return fmt.Errorf("failed registering grpc-gateway: %v", err)
+	}
+	// Register GRPC API
 	gmux := grpc.NewServer()
 	v1.RegisterWatchServiceServer(gmux, &service.WatchService{})
 	reflection.Register(gmux)
-	if err := os.RemoveAll("/tmp/watcher.sock"); err != nil {
-		log.Fatalf("failed removing socket: %v", err)
+	server := &http.Server{
+		Addr:    fmt.Sprintf(":%s", port),
+		Handler: dispatcher(ctx, gmux, mux),
 	}
-	lis, err := net.Listen("unix", "/tmp/watcher.sock")
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+	// start server
+	if err := server.ListenAndServe(); err != nil {
+		log.Fatalf("error starting server :%v", err)
+		return err
 	}
-	go gmux.Serve(lis)
-
-	if err != nil {
-		log.Fatalf("error listening: %v", err)
-	}
-	v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, "/tmp/watcher.sock", []grpc.DialOption{
-		grpc.WithInsecure(),
-		grpc.WithDialer(func(addr string, timeout time.Duration) (net.Conn, error) {
-			return net.DialTimeout("unix", addr, 5*time.Second)
-		}),
-	})
-
-	logger = zap.S().With("watcher", "cmd")
-
-	funcframework.RegisterHTTPFunctionContext(ctx, "/", gcf.Watch)
-	// Use PORT environment variable, or default to 8080.
-	port := "8080"
-	if envPort := os.Getenv("PORT"); envPort != "" {
-		port = envPort
-	}
-
-	if err := funcframework.Start(port); err != nil {
-		log.Fatalf("funcframework.Start: %v\n", err)
-	}
-	defer zap.L().Sync()
+	return nil
 }
 
 func dispatcher(ctx context.Context, grpcHandler http.Handler, httpHandler http.Handler) http.Handler {
 	hf := func(w http.ResponseWriter, r *http.Request) {
 		req := r.WithContext(ctx)
-
-		contentTypeHeader := r.Header.Get("content-type")
-
+		log.Request(ctx, w, r)
+		contentTypeHeader := r.Header.Get("Content-Type")
 		if r.ProtoMajor == 2 && strings.HasPrefix(contentTypeHeader, "application/grpc") {
 			log.Infof(ctx, "dispatching to grpc server: %s", contentTypeHeader)
 			grpcHandler.ServeHTTP(w, req)
+		} else if r.ProtoMajor == 2 {
+			// TODO(castlemilk): explore why handler for protocol http/2 doesnt work
+			log.Infof(ctx, "dispatching to http2 server: %s", contentTypeHeader)
+
+			httpHandler.ServeHTTP(w, req)
 		} else {
 			log.Infof(ctx, "dispatching to http server: %s", contentTypeHeader)
 			httpHandler.ServeHTTP(w, req)
