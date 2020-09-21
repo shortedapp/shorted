@@ -53,6 +53,7 @@ func runWithDispatcher(ctx context.Context) error {
 	opts := []grpc.DialOption{
 		grpc.WithInsecure(),
 	}
+	v1.RegisterWatchServiceServer()
 	// // dial to gRPC for handling request
 	if err := v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, ":8080", opts); err != nil {
 		return fmt.Errorf("failed registering grpc-gateway: %v", err)

@@ -36,7 +36,7 @@ option php_namespace = "Shorted\\Watcher\\V1";
 
 
 // WatchDetails contains the set of information for a given watch. 
-message WatchDetails {
+message WatcherDetails {
   string id = 1 [(validate.rules).string.uuid = true];
   string name = 2 [(validate.rules).string = {min_len: 5, max_len: 10}];
   Source source = 3 [(validate.rules).message.required = true];

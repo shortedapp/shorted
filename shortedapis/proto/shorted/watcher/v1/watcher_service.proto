@@ -24,6 +24,7 @@ package shorted.watcher.v1;
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 import "protoc-gen-swagger/options/annotations.proto";
+import "shorted/watcher/v1/watcher.proto";
 
 option csharp_namespace = "Shorted.Watcher.V1";
 option go_package = "watcher/v1;watcher";
@@ -46,7 +47,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 
 service WatchService {
   // A unary RPC used to fetch a list of existing watches
-  rpc ListWatchers(ListWatcherRequest) returns (ListWatcherResponse) {
+  rpc ListWatchers(ListWatchersRequest) returns (ListWatchersResponse) {
     option (google.api.http) = {
       get: "/api/v1/watcher"
   };
@@ -56,18 +57,18 @@ service WatchService {
     option (google.api.http) = {
       get: "/api/v1/watcher/{id}"
   };
-  }
+}
   // A unary RPC to create a new watch source. 
   rpc CreateWatcher(CreateWatcherRequest) returns (CreateWatcherResponse) {
     option (google.api.http) = {
-      post: "/api/v1/watcher/"
+      post: "/api/v1/watcher"
       body: "*"
   };
   }
   // A unary RPC to update an existing watch. 
-  rpc UpdateWatcher(CreateWatcherRequest) returns (CreateWatcherResponse) {
+  rpc UpdateWatcher(UpdateWatcherRequest) returns (UpdateWatcherResponse) {
     option (google.api.http) = {
-      post: "/api/v1/watcher/"
+      post: "/api/v1/watcher/{id}"
       body: "*"
   };
   }
@@ -80,7 +81,7 @@ service WatchService {
   // A unary RPC to update an existing watch. 
   rpc SyncWatcher(SyncWatcherRequest) returns (SyncWatcherResponse) {
     option (google.api.http) = {
-      post: "/api/v1/sync/${id}"
+      post: "/api/v1/sync/{id}"
       body: "*"
   };
   }
@@ -94,8 +95,8 @@ message ListWatchersRequest {
 
 }
 
-message ListWatcherResponse {
-  repeated WatchDetails watches = 1;
+message ListWatchersResponse {
+  repeated WatcherDetails watches = 1;
 }
 
 // ------------ GET ------------
@@ -104,7 +105,7 @@ message GetWatcherRequest {
 }
 
 message GetWatcherResponse {
-  WatchDetails watch = 1;
+  WatcherDetails watch = 1;
 }
 
 //------------ CREATE ------------
@@ -115,7 +116,7 @@ message CreateWatcherRequest {
 }
 
 message CreateWatcherResponse {
-  WatchDetails watch = 1;
+  WatcherDetails watch = 1;
 }
 
 
@@ -127,7 +128,7 @@ message UpdateWatcherRequest {
 }
 
 message UpdateWatcherResponse {
-  WatchDetails watch = 1;
+  WatcherDetails watch = 1;
 }
 
 // ------------ Sync ------------

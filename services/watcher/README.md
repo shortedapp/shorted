@@ -71,9 +71,19 @@ make invoke
 
 [11] https://research.lightstep.com/reports/google-cloud-storage
 
+### Microservice repos
+
+[12.1] https://github.com/harlow/go-micro-services
+
+[12.2] https://github.com/jaegertracing/jaeger
+
+[12.3] https://github.com/GoogleCloudPlatform/gifinator
+
+[12.4] https://github.com/mortenson/grpc-game-example
+
 ### CloudRun
 
-[12] https://ahmet.im/blog/knative-api-client/
+[13] https://ahmet.im/blog/knative-api-client/
 
 ### ASIC
 
