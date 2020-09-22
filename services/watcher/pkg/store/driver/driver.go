@@ -14,16 +14,16 @@ var (
 	ErrIndexExists = errors.New("index: already exists")
 )
 
-type StorageDriverError struct {
+type StoreDriverError struct {
 	IndexName string
 	Err       error
 }
 
-func (e *StorageDriverError) Error() string {
+func (e *StoreDriverError) Error() string {
 	return fmt.Sprintf("%q %s", e.IndexName, e.Err.Error())
 }
 
-func (e *StorageDriverError) Unwrap() error { return e.Err }
+func (e *StoreDriverError) Unwrap() error { return e.Err }
 
 // // Creator is the interface that wraps the Create method.
 // //
@@ -38,7 +38,7 @@ func (e *StorageDriverError) Unwrap() error { return e.Err }
 // Update updates an existing index or returns
 // ErrIndexNotFound if the index does not exist.
 type Updator interface {
-	Update(idx *index.Watch) error
+	Update(path string, idx *index.Watch) error
 }
 
 // Queryor is the interface that wraps the Get and List methods.
@@ -50,7 +50,7 @@ type Updator interface {
 //
 // Query returns the set of all index that match the provided label set.
 type Queryor interface {
-	Get() (*index.Watch, error)
+	Get(id string) (*index.Watch, error)
 	// Get(key string) (*index.Watch, error)
 	// List(filter func(*index.Watch) bool) ([]*index.Watch, error)
 	// Query(labels map[string]string) ([]*index.Watch, error)

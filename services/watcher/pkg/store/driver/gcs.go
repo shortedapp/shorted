@@ -27,15 +27,12 @@ type GCS struct {
 	attrs  *blob.Attributes
 
 	bucketName string
-	indexPath  string
 	Client     *gcp.HTTPClient
 }
-
-func NewGCS(path string) (*GCS, error) {
-	bucketName, indexPath := separatePath(path)
+// instantiate new GCS driver
+func NewGCS(bucket string) (*GCS, error) {
 	g := GCS{
-		bucketName: bucketName,
-		indexPath:  indexPath,
+		bucketName: bucket,
 	}
 	// Your GCP credentials.
 	// See https://cloud.google.com/docs/authentication/production
@@ -60,7 +57,7 @@ func NewGCS(path string) (*GCS, error) {
 	return &g, nil
 }
 
-func (g *GCS) Get() (*index.Watch, error) {
+func (g *GCS) Get(id string) (*index.Watch, error) {
 	ctx := context.Background()
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	defer bucket.Close()
@@ -68,14 +65,14 @@ func (g *GCS) Get() (*index.Watch, error) {
 		return &index.Watch{}, fmt.Errorf("could not open bucket: %v", err)
 	}
 	g.bucket = bucket
-	attrs, err := bucket.Attributes(ctx, g.indexPath)
+	attrs, err := bucket.Attributes(ctx, id)
 	if gcerrors.Code(err) == gcerrors.NotFound {
 		return &index.Watch{}, ErrIndexNotFound
 	}
 	g.attrs = attrs
 
 	// Open the key "foo.txt" for reading with the default options.
-	r, err := bucket.NewReader(ctx, g.indexPath, nil)
+	r, err := bucket.NewReader(ctx, id, nil)
 	defer r.Close()
 	if err != nil {
 		return &index.Watch{}, ErrIndexNotFound
@@ -87,7 +84,7 @@ func (g *GCS) Get() (*index.Watch, error) {
 	return &idx, nil
 }
 
-func (g *GCS) Update(idx *index.Watch) error {
+func (g *GCS) Update(path string, idx *index.Watch) error {
 	ctx := context.Background()
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	if err != nil {
@@ -98,7 +95,7 @@ func (g *GCS) Update(idx *index.Watch) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	writeErr := bucket.WriteAll(ctx, g.indexPath, idxBytes, &blob.WriterOptions{
+	writeErr := bucket.WriteAll(ctx, path, idxBytes, &blob.WriterOptions{
 		ContentType: "application/json",
 		Metadata: map[string]string{
 			"last-updated": time.Now().String(),
@@ -110,7 +107,7 @@ func (g *GCS) Update(idx *index.Watch) error {
 		return writeErr
 	}
 
-	log.Infof(ctx, "successful write to bucket [%s] at key [%s]", g.bucketName, g.indexPath)
+	log.Infof(ctx, "successful write to bucket [%s] at key [%s]", g.bucketName, path)
 
 	defer bucket.Close()
 	return nil
