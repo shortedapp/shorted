@@ -46,7 +46,7 @@ func (w Watch) Add(source *Source) {
 func (w *Watch) EntriesCount() int {
 	count := 0
 	for _, source := range w.Sources {
-		count += source.EntriesCount
+		count += source.entriesCount
 	}
 	return count
 }
@@ -61,13 +61,13 @@ func (w Watch) Compare(latestIndex *Watch) *Watch {
 				WithSourceURL(es.URL),
 			)
 			count := 0
-			for entry, doc := range latestIndex.Sources[name].Entries {
-				if _, ok := w.Sources[name].Entries[entry]; !ok {
+			for entry, doc := range latestIndex.Sources[name].entries {
+				if _, ok := w.Sources[name].entries[entry]; !ok {
 					s.AddDocument(entry, doc)
 					count++
 				}
 			}
-			s.EntriesCount = count
+			s.entriesCount = count
 			idx.Add(s)
 		}
 	}

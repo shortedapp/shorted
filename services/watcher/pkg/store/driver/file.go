@@ -17,12 +17,12 @@ const (
 )
 
 type File struct {
-	folder    string
+	folder string
 }
 
 func NewFile(folder string) (*File, error) {
 	f := File{
-		folder:    folder,
+		folder: folder,
 	}
 
 	return &f, nil
@@ -42,6 +42,10 @@ func (f *File) Get(p string) (*index.Watch, error) {
 }
 
 func (f *File) Update(p string, idx *index.Watch) error {
+
+	return nil
+}
+func (f *File) Create(idx *index.Watch) error {
 
 	return nil
 }

@@ -8,6 +8,27 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/store/driver"
 )
 
+
+// TODO(castlemilk):uplift to a new driver mode resembling a more generic impl pathway:
+/*
+type Store interface {
+	Open(name string) (Index, error)
+}
+
+type Index interface {
+	Stat() (index.Info, error)
+	Read(p []byte) (n int, err error)
+	Close() error
+}
+
+type ReadWriteStore interface {
+	Store
+	ReadIndex(name string) ([]byte, error)
+	WriteIndex(p []byte) (n int, err error)
+}
+*/
+
+
 // Store represents the storage engine for the watcher index
 type Index struct {
 	driver.Driver

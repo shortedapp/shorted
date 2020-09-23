@@ -29,9 +29,9 @@ func (e *StoreDriverError) Unwrap() error { return e.Err }
 // //
 // // Create stores the index or returns ErrIndexExists
 // // if an identical index already exists.
-// type Creator interface {
-// 	Create(idx *index.Watch) error
-// }
+type Creator interface {
+	Create(idx *index.Watch) error
+}
 
 // Updator is the interface that wraps the Update method.
 //
@@ -61,7 +61,7 @@ type Queryor interface {
 // the watcher index from some underlying storage mechanism,
 // e.g. gcs, local disk.
 type Driver interface {
-	// Creator
+	Creator
 	Updator
 	Queryor
 	Name() string

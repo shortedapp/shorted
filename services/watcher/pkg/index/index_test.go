@@ -13,7 +13,7 @@ const (
 func TestWatch(t *testing.T) {
 	w := New()
 	s := &Source{
-		Entries: map[string]Documents{},
+		entries: map[string]Documents{},
 	}
 	s.Add(&Metadata{
 		Name:    "/reports/test/file1.csv",
@@ -42,8 +42,8 @@ func TestWatch(t *testing.T) {
 
 	s.SortEntries()
 	assert.Equal(t, w.APIVersion, APIVersionV1)
-	assert.Equal(t, len(s.Entries), 2)
-	assert.Equal(t, s.Entries["/reports/test/file1.csv"][0].Version, "1.2.0")
+	assert.Equal(t, len(s.entries), 2)
+	assert.Equal(t, s.entries["/reports/test/file1.csv"][0].Version, "1.2.0")
 }
 
 // func TestLoadIndex(t *testing.T) {

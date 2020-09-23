@@ -29,6 +29,7 @@ type GCS struct {
 	bucketName string
 	Client     *gcp.HTTPClient
 }
+
 // instantiate new GCS driver
 func NewGCS(bucket string) (*GCS, error) {
 	g := GCS{
@@ -113,6 +114,10 @@ func (g *GCS) Update(path string, idx *index.Watch) error {
 	return nil
 }
 
+func (f *GCS) Create(idx *index.Watch) error {
+
+	return nil
+}
 func (g *GCS) Name() string {
 	return GCSDriverName
 }
