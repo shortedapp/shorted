@@ -292,6 +292,17 @@
         }
       }
     },
+    "v1Metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
     "v1Source": {
       "type": "object",
       "properties": {
@@ -307,6 +318,28 @@
         }
       },
       "title": "Source is a definition of a target that we want to \"watch\" and discover content from"
+    },
+    "v1Spec": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "$ref": "#/definitions/v1Source"
+        },
+        "index": {
+          "$ref": "#/definitions/v1Index"
+        }
+      }
+    },
+    "v1Status": {
+      "type": "string",
+      "enum": [
+        "SYNC_STATUS_UNSPECIFIED",
+        "SYNC_STATUS_PENDING",
+        "SYNC_STATUS_SUCCESS",
+        "SYNC_STATUS_FAILURE"
+      ],
+      "default": "SYNC_STATUS_UNSPECIFIED",
+      "title": "SyncStatus specifies the state of a given synchronisation request.\nWhere a synchronisation state will correspond to a specfic source"
     },
     "v1SyncAllResponse": {
       "type": "object",
@@ -329,20 +362,17 @@
           "type": "string"
         },
         "status": {
-          "$ref": "#/definitions/v1SyncStatus"
+          "$ref": "#/definitions/v1Status"
         }
       }
     },
     "v1SyncStatus": {
-      "type": "string",
-      "enum": [
-        "SYNC_STATUS_UNSPECIFIED",
-        "SYNC_STATUS_PENDING",
-        "SYNC_STATUS_SUCCESS",
-        "SYNC_STATUS_FAILURE"
-      ],
-      "default": "SYNC_STATUS_UNSPECIFIED",
-      "title": "SyncStatus specifies the state of a given synchronisation request.\nWhere a synchronisation state will correspond to a specfic source"
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/v1Status"
+        }
+      }
     },
     "v1SyncWatcherRequest": {
       "type": "object",
@@ -382,17 +412,14 @@
     "v1WatcherDetails": {
       "type": "object",
       "properties": {
-        "id": {
+        "apiVersion": {
           "type": "string"
         },
-        "name": {
-          "type": "string"
+        "metadata": {
+          "$ref": "#/definitions/v1Metadata"
         },
-        "source": {
-          "$ref": "#/definitions/v1Source"
-        },
-        "index": {
-          "$ref": "#/definitions/v1Index"
+        "spec": {
+          "$ref": "#/definitions/v1Spec"
         },
         "status": {
           "$ref": "#/definitions/v1SyncStatus"

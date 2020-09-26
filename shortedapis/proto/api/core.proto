@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package shorted.core;
+
+option csharp_namespace = "Shorted.Core";
+option go_package = "core;core";
+option java_multiple_files = true;
+option java_outer_classname = "CoreProto";
+option java_package = "com.shorted.core";
+option objc_class_prefix = "SWX";
+
+
+message ObjectReference {
+  // Kind of the referent.
+  string kind = 1;
+  string name = 3;
+  string uid = 4;
+  // API version of the referent.
+  // +optional
+  string apiVersion = 5;
+}

@@ -51,6 +51,7 @@ type Updator interface {
 // Query returns the set of all index that match the provided label set.
 type Queryor interface {
 	Get(id string) (*index.Watch, error)
+	GetInfo(id string) (*index.Info, error)
 	// Get(key string) (*index.Watch, error)
 	// List(filter func(*index.Watch) bool) ([]*index.Watch, error)
 	// Query(labels map[string]string) ([]*index.Watch, error)

@@ -37,12 +37,23 @@ option php_namespace = "Shorted\\Watcher\\V1";
 
 // WatchDetails contains the set of information for a given watch. 
 message WatcherDetails {
-  string id = 1 [(validate.rules).string.uuid = true];
-  string name = 2 [(validate.rules).string = {min_len: 5, max_len: 10}];
+  string apiVersion = 1;
+  Metadata metadata = 2 [(validate.rules).message.required = true];
+  Spec spec = 3 [(validate.rules).message.required = true];
+  SyncStatus status = 4;
+}
+
+message Metadata {
+  string id = 2 [(validate.rules).string.uuid = true];
+  string name = 3 [(validate.rules).string = {min_len: 5, max_len: 10}];
+}
+
+message Spec {
   Source source = 3 [(validate.rules).message.required = true];
   Index index = 4;
-  SyncStatus status = 5 [(validate.rules).enum.defined_only = true];
 }
+
+
 
 // Source is a definition of a target that we want to "watch" and discover content from
 message Source {
@@ -61,14 +72,18 @@ message Index {
   google.protobuf.Timestamp last_updated = 6 [(validate.rules).timestamp.required = true];
 }
 
+message SyncStatus {
+  Status status = 3 [(validate.rules).enum.defined_only = true];
+}
+
 message SyncDetails {
   string id = 1 [(validate.rules).string.uuid = true];
   string name = 2 [(validate.rules).string = {min_len: 5, max_len: 10}];
-  SyncStatus status = 3 [(validate.rules).enum.defined_only = true];
+  Status status = 3 [(validate.rules).enum.defined_only = true];
 }
 // SyncStatus specifies the state of a given synchronisation request.
 // Where a synchronisation state will correspond to a specfic source
-enum SyncStatus {
+enum Status {
   SYNC_STATUS_UNSPECIFIED = 0;
   SYNC_STATUS_PENDING = 1;
   SYNC_STATUS_SUCCESS = 2;
