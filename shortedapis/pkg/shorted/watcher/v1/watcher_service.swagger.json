@@ -255,6 +255,77 @@
         }
       }
     },
+    "v1DocumentDetails": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1DocumentMetadata"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "removed": {
+          "type": "boolean"
+        },
+        "digest": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "v1DocumentFormat": {
+      "type": "string",
+      "enum": [
+        "JSON",
+        "YAML",
+        "CSV",
+        "HTML",
+        "XML"
+      ],
+      "default": "JSON"
+    },
+    "v1DocumentMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "format": {
+          "$ref": "#/definitions/v1DocumentFormat"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Documents": {
+      "type": "object",
+      "properties": {
+        "document": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1DocumentDetails"
+          }
+        }
+      }
+    },
+    "v1Entries": {
+      "type": "object",
+      "properties": {
+        "entries": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1Documents"
+          }
+        }
+      }
+    },
     "v1GetWatcherResponse": {
       "type": "object",
       "properties": {
@@ -270,13 +341,16 @@
           "type": "string",
           "title": "url where index is stored (i.e gs://\u003cproject-name\u003e-index/index.json)"
         },
-        "document_count": {
+        "count": {
           "type": "string",
           "format": "int64"
         },
         "last_updated": {
           "type": "string",
           "format": "date-time"
+        },
+        "entries": {
+          "$ref": "#/definitions/v1Entries"
         }
       },
       "title": "Index defines where the discovered content of a Source is stored"

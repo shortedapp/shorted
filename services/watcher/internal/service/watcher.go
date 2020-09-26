@@ -32,10 +32,10 @@ func New() (*WatchService, error) {
 
 // GetWatch information about a specific configured Watch
 func (w *WatchService) GetWatch(ctx context.Context, in *v1.GetWatcherRequest) (*v1.GetWatcherResponse, error) {
-	watcher, err := w.store.Get(in.Id)
+	_, err := w.store.Get(in.Id)
 	if err != nil {
 		return nil, err
 	}
 	return &v1.GetWatcherResponse{
-		Watch: &v1.WatcherDetails{watcher}}, nil
+		Watch: &v1.WatcherDetails{}}, nil
 }

@@ -11,9 +11,9 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
-	"github.com/shortedapp/shorted/services/watcher/pkg/service"
+	"github.com/shortedapp/shorted/services/watcher/internal/service"
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
-	"github.com/shortedapp/shorted/services/watcher/pkg/storage"
+	"github.com/shortedapp/shorted/services/watcher/pkg/store"
 	"github.com/shortedapp/shorted/services/watcher/sources"
 )
 
@@ -27,7 +27,7 @@ type Watcher struct {
 	Context        context.Context
 	Config         *config.Config
 	watch          *index.Watch
-	store          *storage.Storage
+	store          *store.Index
 	server         *service.WatchService
 }
 

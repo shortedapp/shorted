@@ -1,6 +1,6 @@
 module github.com/shortedapp/shorted/shortedapis
 
-go 1.14
+go 1.15
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v0.4.1 // indirect

@@ -438,12 +438,22 @@ func (m *Index) Validate() error {
 		}
 	}
 
-	// no validation rules for DocumentCount
+	// no validation rules for Count
 
 	if m.GetLastUpdated() == nil {
 		return IndexValidationError{
 			field:  "LastUpdated",
 			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntries()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return IndexValidationError{
+				field:  "Entries",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
 		}
 	}
 
@@ -503,6 +513,341 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = IndexValidationError{}
+
+// Validate checks the field values on Entries with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Entries) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for key, val := range m.GetEntries() {
+		_ = val
+
+		// no validation rules for Entries[key]
+
+		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return EntriesValidationError{
+					field:  fmt.Sprintf("Entries[%v]", key),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// EntriesValidationError is the validation error returned by Entries.Validate
+// if the designated constraints aren't met.
+type EntriesValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e EntriesValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e EntriesValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e EntriesValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e EntriesValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e EntriesValidationError) ErrorName() string { return "EntriesValidationError" }
+
+// Error satisfies the builtin error interface
+func (e EntriesValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sEntries.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = EntriesValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = EntriesValidationError{}
+
+// Validate checks the field values on Documents with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Documents) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetDocument() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DocumentsValidationError{
+					field:  fmt.Sprintf("Document[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// DocumentsValidationError is the validation error returned by
+// Documents.Validate if the designated constraints aren't met.
+type DocumentsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DocumentsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DocumentsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DocumentsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DocumentsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DocumentsValidationError) ErrorName() string { return "DocumentsValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DocumentsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDocuments.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DocumentsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DocumentsValidationError{}
+
+// Validate checks the field values on DocumentDetails with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *DocumentDetails) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DocumentDetailsValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetCreatedAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DocumentDetailsValidationError{
+				field:  "CreatedAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Removed
+
+	// no validation rules for Digest
+
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		return DocumentDetailsValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+	} else if !uri.IsAbs() {
+		return DocumentDetailsValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+	}
+
+	return nil
+}
+
+// DocumentDetailsValidationError is the validation error returned by
+// DocumentDetails.Validate if the designated constraints aren't met.
+type DocumentDetailsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DocumentDetailsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DocumentDetailsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DocumentDetailsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DocumentDetailsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DocumentDetailsValidationError) ErrorName() string { return "DocumentDetailsValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DocumentDetailsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDocumentDetails.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DocumentDetailsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DocumentDetailsValidationError{}
+
+// Validate checks the field values on DocumentMetadata with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *DocumentMetadata) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Date
+
+	// no validation rules for Format
+
+	// no validation rules for Version
+
+	return nil
+}
+
+// DocumentMetadataValidationError is the validation error returned by
+// DocumentMetadata.Validate if the designated constraints aren't met.
+type DocumentMetadataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DocumentMetadataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DocumentMetadataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DocumentMetadataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DocumentMetadataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DocumentMetadataValidationError) ErrorName() string { return "DocumentMetadataValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DocumentMetadataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDocumentMetadata.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DocumentMetadataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DocumentMetadataValidationError{}
 
 // Validate checks the field values on SyncStatus with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
