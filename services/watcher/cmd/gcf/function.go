@@ -11,7 +11,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
-	"github.com/shortedapp/shorted/services/watcher/pkg/service"
+	"github.com/shortedapp/shorted/services/watcher/internal/service"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"

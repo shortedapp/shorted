@@ -7,11 +7,10 @@ import (
 	"github.com/shortedapp/shorted/services/collector/pkg/collector"
 	"github.com/shortedapp/shorted/services/collector/pkg/config"
 	"github.com/shortedapp/shorted/services/collector/pkg/log"
-	"go.uber.org/zap"
 )
 
 var (
-	cfg    *config.Config
+	cfg *config.Config
 )
 
 func init() {

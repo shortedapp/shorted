@@ -25,6 +25,22 @@ var (
 	tr            trace.Tracer
 )
 
+func initTracer() {
+	exporter, err := cloudtrace.NewExporter(cloudtrace.WithProjectID(loggingConfig.ProjectId))
+	if err != nil {
+		log.Fatal(err)
+	}
+	// For the demonstration, use sdktrace.AlwaysSample sampler to sample all traces.
+	// In a production application, use sdktrace.ProbabilitySampler with a desired probability.
+	tp := sdktrace.NewTracerProvider(sdktrace.WithConfig(sdktrace.Config{DefaultSampler: sdktrace.AlwaysSample()}),
+		sdktrace.WithSyncer(exporter),
+		sdktrace.WithResource(resource.New(semconv.ServiceNameKey.String("Watcher"))))
+	if err != nil {
+		log.Fatal(err)
+	}
+	global.SetTracerProvider(tp)
+}
+
 func InitLogger(config *config.Config) {
 	loggingConfig = config
 	logConfig := zap.NewProductionConfig()
