@@ -15,7 +15,6 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
 	"github.com/shortedapp/shorted/services/watcher/pkg/storage"
 	"github.com/shortedapp/shorted/services/watcher/sources"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 )
 
 // Watcher - collecting arbitrary data and storing as required
@@ -83,10 +82,6 @@ func (w *Watcher) Parse() error {
 	}
 	w.watch.Add(sourceIndex)
 	return err
-}
-
-func (w *Watcher) Get(ctx context.Context, r *http.Request) (*v1.Watch, error) {
-	return w.server.GetWatch(ctx, &v1.GetWatchRequest{Name: "test"})
 }
 
 // Difference will attempt to resolve the difference between the given parsed source and whats been stored in the watcher index

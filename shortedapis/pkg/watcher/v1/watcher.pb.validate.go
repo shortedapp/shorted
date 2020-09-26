@@ -44,61 +44,50 @@ func (m *WatcherDetails) Validate() error {
 		return nil
 	}
 
-	if err := m._validateUuid(m.GetId()); err != nil {
-		return WatcherDetailsValidationError{
-			field:  "Id",
-			reason: "value must be a valid UUID",
-			cause:  err,
-		}
-	}
+	// no validation rules for ApiVersion
 
-	if l := utf8.RuneCountInString(m.GetName()); l < 5 || l > 10 {
+	if m.GetMetadata() == nil {
 		return WatcherDetailsValidationError{
-			field:  "Name",
-			reason: "value length must be between 5 and 10 runes, inclusive",
-		}
-	}
-
-	if m.GetSource() == nil {
-		return WatcherDetailsValidationError{
-			field:  "Source",
+			field:  "Metadata",
 			reason: "value is required",
 		}
 	}
 
-	if v, ok := interface{}(m.GetSource()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return WatcherDetailsValidationError{
-				field:  "Source",
+				field:  "Metadata",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetIndex()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return WatcherDetailsValidationError{
-				field:  "Index",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if _, ok := SyncStatus_name[int32(m.GetStatus())]; !ok {
+	if m.GetSpec() == nil {
 		return WatcherDetailsValidationError{
-			field:  "Status",
-			reason: "value must be one of the defined enum values",
+			field:  "Spec",
+			reason: "value is required",
 		}
 	}
 
-	return nil
-}
+	if v, ok := interface{}(m.GetSpec()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return WatcherDetailsValidationError{
+				field:  "Spec",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
-func (m *WatcherDetails) _validateUuid(uuid string) error {
-	if matched := _watcher_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
+	if v, ok := interface{}(m.GetStatus()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return WatcherDetailsValidationError{
+				field:  "Status",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
 	}
 
 	return nil
@@ -157,6 +146,184 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = WatcherDetailsValidationError{}
+
+// Validate checks the field values on Metadata with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Metadata) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if err := m._validateUuid(m.GetId()); err != nil {
+		return MetadataValidationError{
+			field:  "Id",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+	}
+
+	if l := utf8.RuneCountInString(m.GetName()); l < 5 || l > 10 {
+		return MetadataValidationError{
+			field:  "Name",
+			reason: "value length must be between 5 and 10 runes, inclusive",
+		}
+	}
+
+	return nil
+}
+
+func (m *Metadata) _validateUuid(uuid string) error {
+	if matched := _watcher_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
+	}
+
+	return nil
+}
+
+// MetadataValidationError is the validation error returned by
+// Metadata.Validate if the designated constraints aren't met.
+type MetadataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MetadataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MetadataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MetadataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MetadataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MetadataValidationError) ErrorName() string { return "MetadataValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MetadataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMetadata.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MetadataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MetadataValidationError{}
+
+// Validate checks the field values on Spec with the rules defined in the proto
+// definition for this message. If any rules are violated, an error is returned.
+func (m *Spec) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetSource() == nil {
+		return SpecValidationError{
+			field:  "Source",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetSource()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SpecValidationError{
+				field:  "Source",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetIndex()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SpecValidationError{
+				field:  "Index",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// SpecValidationError is the validation error returned by Spec.Validate if the
+// designated constraints aren't met.
+type SpecValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SpecValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SpecValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SpecValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SpecValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SpecValidationError) ErrorName() string { return "SpecValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SpecValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSpec.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SpecValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SpecValidationError{}
 
 // Validate checks the field values on Source with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
@@ -337,6 +504,77 @@ var _ interface {
 	ErrorName() string
 } = IndexValidationError{}
 
+// Validate checks the field values on SyncStatus with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *SyncStatus) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if _, ok := Status_name[int32(m.GetStatus())]; !ok {
+		return SyncStatusValidationError{
+			field:  "Status",
+			reason: "value must be one of the defined enum values",
+		}
+	}
+
+	return nil
+}
+
+// SyncStatusValidationError is the validation error returned by
+// SyncStatus.Validate if the designated constraints aren't met.
+type SyncStatusValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SyncStatusValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SyncStatusValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SyncStatusValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SyncStatusValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SyncStatusValidationError) ErrorName() string { return "SyncStatusValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SyncStatusValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSyncStatus.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SyncStatusValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SyncStatusValidationError{}
+
 // Validate checks the field values on SyncDetails with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -360,7 +598,7 @@ func (m *SyncDetails) Validate() error {
 		}
 	}
 
-	if _, ok := SyncStatus_name[int32(m.GetStatus())]; !ok {
+	if _, ok := Status_name[int32(m.GetStatus())]; !ok {
 		return SyncDetailsValidationError{
 			field:  "Status",
 			reason: "value must be one of the defined enum values",

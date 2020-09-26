@@ -15,7 +15,7 @@ require (
 	github.com/census-instrumentation/opencensus-proto v0.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.15.0
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
-	github.com/shortedapp/shorted/shortedapis v0.0.0-20200921123906-2e5a24e5fcbe
+	github.com/shortedapp/shorted/shortedapis v0.0.0-20200921133320-92f606655d5f
 	github.com/stretchr/testify v1.6.1
 	go.opencensus.io v0.22.4
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace v0.11.0

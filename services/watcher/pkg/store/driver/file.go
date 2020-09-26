@@ -17,23 +17,20 @@ const (
 )
 
 type File struct {
-	folder    string
-	indexPath string
+	folder string
 }
 
-func NewFile(path string) (*File, error) {
-	folder, indexPath := separatePath(path)
+func NewFile(folder string) (*File, error) {
 	f := File{
-		folder:    folder,
-		indexPath: indexPath,
+		folder: folder,
 	}
 
 	return &f, nil
 }
 
-func (f *File) Get() (*index.Watch, error) {
+func (f *File) Get(p string) (*index.Watch, error) {
 	idx := &index.Watch{}
-	file, err := ioutil.ReadFile(path.Join(f.folder, f.indexPath))
+	file, err := ioutil.ReadFile(path.Join(f.folder, p))
 	if err != nil {
 		return idx, fmt.Errorf("failed reading file: %v", err)
 	}
@@ -44,7 +41,11 @@ func (f *File) Get() (*index.Watch, error) {
 	return idx, nil
 }
 
-func (f *File) Update(idx *index.Watch) error {
+func (f *File) Update(p string, idx *index.Watch) error {
+
+	return nil
+}
+func (f *File) Create(idx *index.Watch) error {
 
 	return nil
 }
