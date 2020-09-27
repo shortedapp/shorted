@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/shortedapp/shorted/services/watcher/pkg/index"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 )
 
 var (
@@ -30,7 +30,7 @@ func (e *StoreDriverError) Unwrap() error { return e.Err }
 // // Create stores the index or returns ErrIndexExists
 // // if an identical index already exists.
 type Creator interface {
-	Create(idx *index.Watch) error
+	Create(idx *v1.WatcherDetails) error
 }
 
 // Updator is the interface that wraps the Update method.
@@ -38,7 +38,7 @@ type Creator interface {
 // Update updates an existing index or returns
 // ErrIndexNotFound if the index does not exist.
 type Updator interface {
-	Update(path string, idx *index.Watch) error
+	Update(path string, idx *v1.WatcherDetails) error
 }
 
 // Queryor is the interface that wraps the Get and List methods.
@@ -50,8 +50,8 @@ type Updator interface {
 //
 // Query returns the set of all index that match the provided label set.
 type Queryor interface {
-	Get(id string) (*index.Watch, error)
-	GetInfo(id string) (*index.Info, error)
+	Get(string) (*v1.WatcherDetails, error)
+	GetInfo(string) (*v1.WatcherDetails, error)
 	// Get(key string) (*index.Watch, error)
 	// List(filter func(*index.Watch) bool) ([]*index.Watch, error)
 	// Query(labels map[string]string) ([]*index.Watch, error)

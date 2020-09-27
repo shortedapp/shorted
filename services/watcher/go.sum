@@ -289,6 +289,7 @@ github.com/rakyll/statik v0.1.7 h1:OF3QCZUuyPxuGEP7B4ypUa7sB/iHtqOTDYZXGM8KOdQ=
 github.com/rakyll/statik v0.1.7/go.mod h1:AlZONWzMtEnMs7W4e/1LURLiI49pIMmp6V9Unghqrcc=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
+github.com/shortedapp/shorted v0.1.0-rc.1 h1:QWvSSxP4S/9RWD2rGPFkbvJv3AxieIjodtzSAJbSMvY=
 github.com/shortedapp/shorted/shortedapis v0.0.0-20200926061715-70a81d5d5f30 h1:tyLnlJOo0Ge5UlL5PXBGNt9S7KOkOqtSoKIWLz68FFc=
 github.com/shortedapp/shorted/shortedapis v0.0.0-20200926061715-70a81d5d5f30/go.mod h1:Pw4nIX7Jm5NbRKZLPRX4ksMDz5Is8gcCZr4ziiVKDV0=
 github.com/shortedapp/shorted/shortedapis v0.0.0-20200926073704-5473fb39bf82 h1:5EhPM0UlBbTfBTApil5XM0WDWuthd6zEspg+yvME6Is=

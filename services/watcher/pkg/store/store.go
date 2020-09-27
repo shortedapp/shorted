@@ -4,10 +4,9 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/store/driver"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 )
-
 
 // TODO(castlemilk):uplift to a new driver mode resembling a more generic impl pathway:
 /*
@@ -28,7 +27,6 @@ type ReadWriteStore interface {
 }
 */
 
-
 // Store represents the storage engine for the watcher index
 type Index struct {
 	driver.Driver
@@ -37,7 +35,7 @@ type Index struct {
 // Get retrieves the watch index from storage. An error is returned
 // if the storage driver failed to fetch the index, or the
 // index identified by the key, version pair does not exist.
-func (s *Index) Get(id string) (*index.Watch, error) {
+func (s *Index) Get(id string) (*v1.WatcherDetails, error) {
 	return s.Driver.Get(id)
 }
 
@@ -51,7 +49,7 @@ func (s *Index) Get(id string) (*index.Watch, error) {
 // Update updates the index in storage. An error is returned if the
 // storage backend fails to update the index or if the index
 // does not exist.
-func (s *Index) Update(id string, idx *index.Watch) error {
+func (s *Index) Update(id string, idx *v1.WatcherDetails) error {
 	return s.Driver.Update(id, idx)
 }
 

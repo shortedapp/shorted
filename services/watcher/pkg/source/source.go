@@ -3,7 +3,7 @@ package source
 import (
 	"context"
 
-	"github.com/shortedapp/shorted/services/watcher/pkg/index"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 )
 
 type (
@@ -20,14 +20,6 @@ type (
 		Build() (Handler, error)
 	}
 	Handler interface {
-		Parse(context.Context, *Source) (*index.Source, error)
-	}
-	Source struct {
-		Name    string
-		URL     string
-		BaseURL string
-		Format  string
-		Info    *Info
-		Handler Handler
+		Parse(context.Context, *v1.Source) (*v1.Index, error)
 	}
 )

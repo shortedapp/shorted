@@ -2,13 +2,16 @@ package asic
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
 	"github.com/shortedapp/shorted/services/watcher/sources/metadata"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 )
 
 type handler struct{}
@@ -32,19 +35,17 @@ type handler struct{}
 // 										td (csv)
 //
 
-func (*handler) Parse(ctx context.Context, s *source.Source) (*index.Source, error) {
-	baseURL := s.BaseURL
-	response, err := http.Get(s.URL)
+func (*handler) Parse(ctx context.Context, s *v1.Source) (*v1.Index, error) {
+	u, err := url.Parse(s.GetUrl())
+	baseURL := u.Scheme + "://" + u.Host
+	response, err := http.Get(s.GetUrl())
 
 	if err != nil {
-		log.Errorf("unable to fetch contents for url %s", s.URL)
+		log.Errorf("unable to fetch contents for url %s", s.GetUrl())
 		return nil, err
 	}
 	defer response.Body.Close()
-	si := index.NewSource(
-		index.WithSourceName(s.Name),
-		index.WithSourceURL(s.URL),
-	)
+	si := index.New()
 	// Load the HTML document
 	doc, err := goquery.NewDocumentFromReader(response.Body)
 	if err != nil {
@@ -68,13 +69,14 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*index.Source, err
 						day := row.Eq(0).Text()
 						filename, _ := row.Eq(2).Find("a").Attr("href")
 						// fmt.Printf("day: %s\n", day)
-						si.Add(&index.Metadata{
-							Name:   filename,
-							Year:   year,
-							Month:  month,
-							Day:    day,
-							Format: "csv",
-						}, filename, baseURL, "")
+						si.Add(&v1.DocumentDetails{
+							Metadata: &v1.DocumentMetadata{
+								Name:   filename,
+								Date:   fmt.Sprintf("%s-%s-%s", year, month, day),
+								Format: v1.DocumentFormat_CSV,
+							},
+							Url: baseURL,
+						})
 						count++
 					})
 				})
@@ -83,8 +85,8 @@ func (*handler) Parse(ctx context.Context, s *source.Source) (*index.Source, err
 
 		})
 	})
-	si.EntriesCount = count
-	log.Infof(ctx, "%d %s documents pulled from %v", si.EntriesCount, s.Format, s.URL)
+	si.SetCount(count)
+	log.Infof(ctx, "%d %s documents pulled from %v", count, s.Format, s.URL)
 	log.Response(ctx, response)
 
 	return si, nil

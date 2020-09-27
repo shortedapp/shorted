@@ -10,7 +10,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
-	"github.com/shortedapp/shorted/services/watcher/internal/service"
+	"github.com/shortedapp/shorted/services/watcher/internal/service/watcher"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 	"go.uber.org/zap"
 	"golang.org/x/net/http2"

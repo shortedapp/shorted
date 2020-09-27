@@ -60,7 +60,8 @@ message Source {
   // URL is the base URL for the givne source
   string url = 1 [(validate.rules).string.uri_ref = true];
   string adapter = 2 [(validate.rules).string ={in: ["asic"]}];
-  google.protobuf.Duration interval = 3 [(gogoproto.stdduration) = true];
+  DocumentFormat format = 3;
+  google.protobuf.Duration interval = 4 [(gogoproto.stdduration) = true];
 
 
 }
