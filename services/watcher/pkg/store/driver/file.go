@@ -6,7 +6,8 @@ import (
 	"io/ioutil"
 	"path"
 
-	"github.com/shortedapp/shorted/services/watcher/pkg/index"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+
 	_ "gocloud.dev/blob/gcsblob"
 )
 
@@ -28,8 +29,8 @@ func NewFile(folder string) (*File, error) {
 	return &f, nil
 }
 
-func (f *File) Get(p string) (*index.Watch, error) {
-	idx := &index.Watch{}
+func (f *File) Get(p string) (*v1.WatcherDetails, error) {
+	idx := &v1.WatcherDetails{}
 	file, err := ioutil.ReadFile(path.Join(f.folder, p))
 	if err != nil {
 		return idx, fmt.Errorf("failed reading file: %v", err)
@@ -41,13 +42,17 @@ func (f *File) Get(p string) (*index.Watch, error) {
 	return idx, nil
 }
 
-func (f *File) Update(p string, idx *index.Watch) error {
+func (f *File) Update(p string, idx *v1.WatcherDetails) error {
 
 	return nil
 }
-func (f *File) Create(idx *index.Watch) error {
+func (f *File) Create(idx *v1.WatcherDetails) error {
 
 	return nil
+}
+
+func (f *File) GetInfo(p string) (*v1.WatcherDetails, error) {
+	return &v1.WatcherDetails{}, nil
 }
 
 func (f *File) Name() string {

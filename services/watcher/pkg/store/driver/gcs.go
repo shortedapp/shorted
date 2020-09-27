@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/gcsblob"
 	"gocloud.dev/gcerrors"
@@ -58,17 +58,17 @@ func NewGCS(bucket string) (*GCS, error) {
 	return &g, nil
 }
 
-func (g *GCS) Get(id string) (*index.Watch, error) {
+func (g *GCS) Get(id string) (*v1.WatcherDetails, error) {
 	ctx := context.Background()
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	defer bucket.Close()
 	if err != nil {
-		return &index.Watch{}, fmt.Errorf("could not open bucket: %v", err)
+		return &v1.WatcherDetails{}, fmt.Errorf("could not open bucket: %v", err)
 	}
 	g.bucket = bucket
 	attrs, err := bucket.Attributes(ctx, id)
 	if gcerrors.Code(err) == gcerrors.NotFound {
-		return &index.Watch{}, ErrIndexNotFound
+		return &v1.WatcherDetails{}, ErrIndexNotFound
 	}
 	g.attrs = attrs
 
@@ -76,16 +76,16 @@ func (g *GCS) Get(id string) (*index.Watch, error) {
 	r, err := bucket.NewReader(ctx, id, nil)
 	defer r.Close()
 	if err != nil {
-		return &index.Watch{}, ErrIndexNotFound
+		return &v1.WatcherDetails{}, ErrIndexNotFound
 	}
 
-	var idx index.Watch
+	var idx v1.Index
 	dec := json.NewDecoder(r)
 	dec.Decode(&idx)
-	return &idx, nil
+	return &v1.WatcherDetails{}, nil
 }
 
-func (g *GCS) Update(path string, idx *index.Watch) error {
+func (g *GCS) Update(path string, idx *v1.WatcherDetails) error {
 	ctx := context.Background()
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	if err != nil {
@@ -100,7 +100,7 @@ func (g *GCS) Update(path string, idx *index.Watch) error {
 		ContentType: "application/json",
 		Metadata: map[string]string{
 			"last-updated": time.Now().String(),
-			"items":        strconv.FormatInt(int64(idx.EntriesCount()), 10),
+			"items":        strconv.FormatInt(int64(idx.Spec.Index.Count), 10),
 		},
 	})
 	if writeErr != nil {
@@ -114,9 +114,13 @@ func (g *GCS) Update(path string, idx *index.Watch) error {
 	return nil
 }
 
-func (f *GCS) Create(idx *index.Watch) error {
+func (g *GCS) Create(idx *v1.WatcherDetails) error {
 
 	return nil
+}
+
+func (g *GCS) GetInfo(p string) (*v1.WatcherDetails, error) {
+	return &v1.WatcherDetails{}, nil
 }
 func (g *GCS) Name() string {
 	return GCSDriverName
