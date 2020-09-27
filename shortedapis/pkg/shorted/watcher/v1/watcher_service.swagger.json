@@ -387,6 +387,9 @@
         "adapter": {
           "type": "string"
         },
+        "format": {
+          "$ref": "#/definitions/v1DocumentFormat"
+        },
         "interval": {
           "type": "string"
         }
