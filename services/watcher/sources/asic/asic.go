@@ -86,10 +86,10 @@ func (*handler) Parse(ctx context.Context, s *v1.Source) (*v1.Index, error) {
 		})
 	})
 	si.SetCount(count)
-	log.Infof(ctx, "%d %s documents pulled from %v", count, s.Format, s.URL)
+	log.Infof(ctx, "%d %s documents pulled from %v", count, s.Format, s.Url)
 	log.Response(ctx, response)
 
-	return si, nil
+	return si.ToIndex(), nil
 }
 
 // GetInfo returns the Info associated with this source implementation.

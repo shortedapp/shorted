@@ -11,7 +11,6 @@ import (
 	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/shortedapp/shorted/services/watcher/cmd/gcf"
-	"github.com/shortedapp/shorted/services/watcher/internal/service"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"

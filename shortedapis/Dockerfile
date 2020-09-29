@@ -33,6 +33,9 @@ RUN go install \
     github.com/gogo/protobuf/protoc-gen-gogo \
     github.com/gogo/protobuf/gogoproto
 
+RUN go get github.com/gogo/protobuf/protoc-gen-gofast
+    
+
 RUN cat go.mod
 
 CMD ["go","generate"]

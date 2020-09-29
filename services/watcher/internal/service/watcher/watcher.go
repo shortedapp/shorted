@@ -45,11 +45,11 @@ func New(ctx context.Context, cfg *config.Config) (*Watcher, error) {
 	// }
 	// log.Infof(ctx, "loaded source: %v", w.Source)
 
-	store, err := store.New("gs://shorted-dev-aba5688f-watcher-index")
+	s, err := store.New("gs://shorted-dev-aba5688f-watcher-index")
 	if err != nil {
 		return &Watcher{}, fmt.Errorf("failed initialising store: %v", err)
 	}
-	w.store = store
+	w.store = s
 	w.Config = cfg
 	w.Context = ctx
 	return &w, nil
