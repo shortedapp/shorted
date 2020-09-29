@@ -8,9 +8,9 @@ import (
 	"strings"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/shortedapp/shorted/services/watcher/internal/service/watcher"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
-	"github.com/shortedapp/shorted/services/watcher/internal/service/watcher"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 	"go.uber.org/zap"
 	"golang.org/x/net/http2"
@@ -53,14 +53,13 @@ func runWithDispatcher(ctx context.Context) error {
 	opts := []grpc.DialOption{
 		grpc.WithInsecure(),
 	}
-	v1.RegisterWatchServiceServer()
 	// // dial to gRPC for handling request
 	if err := v1.RegisterWatchServiceHandlerFromEndpoint(ctx, gwmux, ":8080", opts); err != nil {
 		return fmt.Errorf("failed registering grpc-gateway: %v", err)
 	}
 	// Register GRPC API
 	gmux := grpc.NewServer()
-	v1.RegisterWatchServiceServer(gmux, &service.WatchService{})
+	v1.RegisterWatchServiceServer(gmux, &watcher.Watcher{})
 	reflection.Register(gmux)
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%s", port),
