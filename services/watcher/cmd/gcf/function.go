@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/shortedapp/shorted/services/watcher/internal/service/watcher"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
-	"github.com/shortedapp/shorted/services/watcher/internal/service"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -41,7 +41,7 @@ func init() {
 
 	// Register gRPC API
 	gmux = grpc.NewServer()
-	v1.RegisterWatchServiceServer(gmux, &service.WatchService{})
+	v1.RegisterWatchServiceServer(gmux, &watcher.Watcher{})
 	reflection.Register(gmux)
 	if err := os.RemoveAll("/tmp/watcher.sock"); err != nil {
 		log.Fatalf("failed removing socket: %v", err)

@@ -70,7 +70,7 @@ message Index {
   //url where index is stored (i.e gs://<project-name>-index/index.json)
   string url = 1 [(validate.rules).string.uri = true];
   int64 count = 2;
-  google.protobuf.Timestamp last_updated = 3 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp last_updated = 3 [(gogoproto.stdtime) = true, (validate.rules).timestamp.required = true];
   Entries entries = 4;
 }
 
