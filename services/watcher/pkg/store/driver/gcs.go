@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"path"
 	"strconv"
 	"time"
 
@@ -91,6 +92,7 @@ func (g *GCS) Update(path string, idx *v1.WatcherDetails) error {
 	if err != nil {
 		return fmt.Errorf("could not open bucket: %v", err)
 	}
+	defer bucket.Close()
 	// Open the key "foo.txt" for writing with the default options.
 	idxBytes, err := json.Marshal(idx)
 	if err != nil {
@@ -110,12 +112,35 @@ func (g *GCS) Update(path string, idx *v1.WatcherDetails) error {
 
 	log.Infof(ctx, "successful write to bucket [%s] at key [%s]", g.bucketName, path)
 
-	defer bucket.Close()
 	return nil
 }
 
 func (g *GCS) Create(idx *v1.WatcherDetails) error {
+	ctx := context.Background()
+	indexPath := path.Join(idx.Metadata.Id, "index.json")
+	bucket, err := blob.OpenBucket(ctx, g.bucketName)
+	if err != nil {
+		return fmt.Errorf("could not open bucket: %v", err)
+	}
+	defer bucket.Close()
+	// Open the key "foo.txt" for writing with the default options.
+	idxBytes, err := json.Marshal(idx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	writeErr := bucket.WriteAll(ctx, indexPath, idxBytes, &blob.WriterOptions{
+		ContentType: "application/json",
+		Metadata: map[string]string{
+			"last-updated": time.Now().String(),
+			"items":        strconv.FormatInt(int64(idx.Spec.Index.Count), 10),
+		},
+	})
+	if writeErr != nil {
+		log.Fatal(writeErr)
+		return writeErr
+	}
 
+	log.Infof(ctx, "successful write to bucket [%s] at key [%s]", g.bucketName, indexPath)
 	return nil
 }
 

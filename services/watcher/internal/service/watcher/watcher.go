@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/store"
@@ -99,4 +100,23 @@ func (w *Watcher) GetWatch(ctx context.Context, in *v1.GetWatcherRequest) (*v1.G
 	}
 	return &v1.GetWatcherResponse{
 		Watch: &v1.WatcherDetails{}}, nil
+}
+
+func (w *Watcher) CreateWatcher(ctx context.Context, in *v1.CreateWatcherRequest) (*v1.CreateWatcherResponse, error) {
+	id := uuid.New().String()
+	watcher := v1.WatcherDetails{
+		Metadata: &v1.Metadata{
+			Id:   id,
+			Name: in.Name,
+		},
+		Spec: &v1.Spec{
+			Source: in.Source,
+		},
+	}
+	err := w.store.Create(&watcher)
+
+	if err != nil {
+		return nil, err
+	}
+	return &v1.CreateWatcherResponse{Watch: &watcher}, nil
 }
