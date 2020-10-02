@@ -374,6 +374,9 @@
         },
         "name": {
           "type": "string"
+        },
+        "creationTimestamp": {
+          "type": "string"
         }
       }
     },

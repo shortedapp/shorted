@@ -289,6 +289,8 @@ github.com/shortedapp/shorted/shortedapis v0.0.0-20200927141851-06fded6c3942 h1:
 github.com/shortedapp/shorted/shortedapis v0.0.0-20200927141851-06fded6c3942/go.mod h1:h9OBYQjwQ+u+CKHMbJLmLBDrP8AqmkI/y88l16VHkrA=
 github.com/shortedapp/shorted/shortedapis v0.0.0-20200929122102-5fd3972aaa5a h1:QG43bIa6OFPbfzUUV81DWmgUitT3sxuCSfLeDr3xmEs=
 github.com/shortedapp/shorted/shortedapis v0.0.0-20200929122102-5fd3972aaa5a/go.mod h1:h9OBYQjwQ+u+CKHMbJLmLBDrP8AqmkI/y88l16VHkrA=
+github.com/shortedapp/shorted/shortedapis v0.0.0-20200930140932-f7eb3971f265 h1:XuJ2tCAp7sV0c2EWnNqDJG5AoBZLKd+P/3Xpxql08Wg=
+github.com/shortedapp/shorted/shortedapis v0.0.0-20200930140932-f7eb3971f265/go.mod h1:h9OBYQjwQ+u+CKHMbJLmLBDrP8AqmkI/y88l16VHkrA=
 github.com/spf13/afero v1.3.3/go.mod h1:5KUK8ByomD5Ti5Artl0RtHeI5pTF7MIDuXL3yY520V4=
 github.com/spf13/afero v1.3.4/go.mod h1:Ai8FlHk4v/PARR026UzYexafAt9roJ7LcLMAmO6Z93I=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

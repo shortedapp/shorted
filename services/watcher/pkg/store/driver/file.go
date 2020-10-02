@@ -55,6 +55,15 @@ func (f *File) GetInfo(p string) (*v1.WatcherDetails, error) {
 	return &v1.WatcherDetails{}, nil
 }
 
+// func (f *File) List(filter func (*v1.WatcherDetails) bool) ([]*v1.WatcherDetails, error) {
+// 	return nil, nil
+// }
+func (f *File) List() ([]*v1.WatcherDetails, error) {
+	return nil, nil
+}
+
+
+
 func (f *File) Name() string {
 	return FileDriverName
 }

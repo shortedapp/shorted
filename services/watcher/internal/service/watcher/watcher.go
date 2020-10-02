@@ -120,3 +120,11 @@ func (w *Watcher) CreateWatcher(ctx context.Context, in *v1.CreateWatcherRequest
 	}
 	return &v1.CreateWatcherResponse{Watch: &watcher}, nil
 }
+
+func (w *Watcher) ListWatchers(ctx context.Context, in *v1.ListWatchersRequest) (*v1.ListWatchersResponse, error) {
+	watcherList, err := w.store.List()
+	if err != nil {
+		return nil, err
+	}
+	return &v1.ListWatchersResponse{Watches: watcherList}, nil
+}
