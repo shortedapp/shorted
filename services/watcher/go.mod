@@ -13,7 +13,7 @@ require (
 	github.com/census-instrumentation/opencensus-proto v0.3.0 // indirect
 	github.com/google/uuid v1.1.1
 	github.com/grpc-ecosystem/grpc-gateway v1.15.0
-	github.com/shortedapp/shorted/shortedapis v0.0.0-20200929122102-5fd3972aaa5a
+	github.com/shortedapp/shorted/shortedapis v0.0.0-20200930140932-f7eb3971f265
 	github.com/stretchr/testify v1.6.1
 	go.opencensus.io v0.22.4
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace v0.11.0

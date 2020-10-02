@@ -53,7 +53,7 @@ type Queryor interface {
 	Get(string) (*v1.WatcherDetails, error)
 	GetInfo(string) (*v1.WatcherDetails, error)
 	// Get(key string) (*index.Watch, error)
-	// List(filter func(*index.Watch) bool) ([]*index.Watch, error)
+	List() ([]*v1.WatcherDetails, error)
 	// Query(labels map[string]string) ([]*index.Watch, error)
 }
 

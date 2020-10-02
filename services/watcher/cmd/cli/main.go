@@ -38,5 +38,6 @@ func main() {
 			Interval: &interval,
 		},
 	})
+	w.ListWatchers(ctx, &v1.ListWatchersRequest{})
 	defer zap.L().Sync()
 }

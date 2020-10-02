@@ -44,8 +44,9 @@ message WatcherDetails {
 }
 
 message Metadata {
-  string id = 2 [(validate.rules).string.uuid = true];
-  string name = 3 [(validate.rules).string = {min_len: 5, max_len: 10}];
+  string id = 1 [(validate.rules).string.uuid = true];
+  string name = 2 [(validate.rules).string = {min_len: 5, max_len: 10}];
+  string creationTimestamp = 3;
 }
 
 message Spec {
