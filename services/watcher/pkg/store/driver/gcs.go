@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/mitchellh/mapstructure"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 	"gocloud.dev/blob"
@@ -62,29 +63,21 @@ func NewGCS(bucket string) (*GCS, error) {
 
 func (g *GCS) Get(id string) (*v1.WatcherDetails, error) {
 	ctx := context.Background()
+	var watcher v1.WatcherDetails
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	defer bucket.Close()
 	if err != nil {
-		return &v1.WatcherDetails{}, fmt.Errorf("could not open bucket: %v", err)
+		return &watcher, fmt.Errorf("could not open bucket: %v", err)
 	}
-	g.bucket = bucket
-	attrs, err := bucket.Attributes(ctx, id)
-	if gcerrors.Code(err) == gcerrors.NotFound {
-		return &v1.WatcherDetails{}, ErrIndexNotFound
-	}
-	g.attrs = attrs
-
 	// Open the key "foo.txt" for reading with the default options.
 	r, err := bucket.NewReader(ctx, id, nil)
 	defer r.Close()
 	if err != nil {
-		return &v1.WatcherDetails{}, ErrIndexNotFound
+		return &watcher, ErrIndexNotFound
 	}
-
-	var idx v1.Index
 	dec := json.NewDecoder(r)
-	dec.Decode(&idx)
-	return &v1.WatcherDetails{}, nil
+	dec.Decode(&watcher)
+	return &watcher, nil
 }
 
 func (g *GCS) Update(path string, idx *v1.WatcherDetails) error {
@@ -137,10 +130,10 @@ func (g *GCS) Create(idx *v1.WatcherDetails) error {
 	writeErr := bucket.WriteAll(ctx, indexPath, idxBytes, &blob.WriterOptions{
 		ContentType: "application/json",
 		Metadata: map[string]string{
-			"last-updated": time.Now().String(),
-			"id":           idx.Metadata.Id,
-			"name":         idx.Metadata.Name,
-			"items":        strconv.FormatInt(int64(idx.Spec.GetIndex().GetCount()), 10),
+			"creationTimestamp": time.Now().String(),
+			"id":                idx.Metadata.Id,
+			"name":              idx.Metadata.Name,
+			"items":             strconv.FormatInt(int64(idx.Spec.GetIndex().GetCount()), 10),
 		},
 	})
 	if writeErr != nil {
@@ -154,7 +147,8 @@ func (g *GCS) Create(idx *v1.WatcherDetails) error {
 
 func (g *GCS) List() ([]*v1.WatcherDetails, error) {
 	ctx := context.Background()
-	// watcherList := make([]*v1.WatcherDetails)
+	
+	var watcherList []*v1.WatcherDetails
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	if err != nil {
 		return nil, fmt.Errorf("could not open bucket: %v", err)
@@ -162,6 +156,7 @@ func (g *GCS) List() ([]*v1.WatcherDetails, error) {
 	defer bucket.Close()
 	iter := bucket.List(nil)
 	for {
+		var metadata v1.Metadata
 		obj, err := iter.Next(ctx)
 		if err == io.EOF {
 			break
@@ -169,14 +164,30 @@ func (g *GCS) List() ([]*v1.WatcherDetails, error) {
 		if err != nil {
 			return nil, fmt.Errorf("error reading objects: %v", err)
 		}
-		
-		fmt.Printf("key: %v, dir: %v", obj.Key, obj.IsDir)
-		// obj.IsDir
-		// watcher, err := g.Get(obj.Key)
-		// watcherList = append(watcherList, obj)
+		m, err := getMetadata(ctx, bucket, obj.Key)
+		if err != nil {
+			return nil, err
+		}
+		fmt.Printf("metadata: %v", m)
+		mapstructure.Decode(m, &metadata)
+		count, _ := strconv.ParseInt(m["items"], 10, 64)
+		watcherList = append(watcherList, &v1.WatcherDetails{
+			Metadata: &metadata,
+			Spec: &v1.Spec{
+				Index: &v1.Index{
+					Count: count,
+				},
+			},
+		})
+		if err != nil {
+			return nil, fmt.Errorf("failed fetching object metadata: %v", err)
+		}
+
+		fmt.Printf("key: %v, dir: %v, metadata: %v", obj.Key, obj.IsDir, metadata)
 	}
 
-	return nil, nil
+
+	return watcherList, nil
 }
 
 func (g *GCS) GetInfo(p string) (*v1.WatcherDetails, error) {
@@ -196,6 +207,7 @@ func getMetadata(ctx context.Context, bucket *blob.Bucket, id string) (map[strin
 	if gcerrors.Code(err) == gcerrors.NotFound {
 		return nil, ErrIndexNotFound
 	}
+
 	return attrs.Metadata, nil
 
 }
