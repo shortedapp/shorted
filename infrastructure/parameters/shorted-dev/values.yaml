@@ -26,6 +26,7 @@ iam:
             name: watcher
             roles:
             - roles/cloudtrace.agent
+            - roles/storage.objectAdmin
 
 gcs:
     buckets:

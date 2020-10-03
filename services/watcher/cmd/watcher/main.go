@@ -33,7 +33,10 @@ func main() {
 	}
 	ctx := context.Background()
 	log.InitLogger(cfg)
-
+	watcher, err := watcher.New(ctx, cfg)
+	if err != nil {
+		log.Fatal("error initialising watcher")
+	}
 	// Register REST API
 	mux := http.NewServeMux()
 	gwmux := runtime.NewServeMux()
@@ -42,7 +45,7 @@ func main() {
 
 	// Register gRPC API
 	gmux := grpc.NewServer()
-	v1.RegisterWatchServiceServer(gmux, &watcher.Watcher{})
+	v1.RegisterWatchServiceServer(gmux, watcher)
 	reflection.Register(gmux)
 	if err := os.RemoveAll("/tmp/watcher.sock"); err != nil {
 		log.Fatalf("failed removing socket: %v", err)

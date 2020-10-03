@@ -45,7 +45,7 @@ run.publish: run.build
 run.deploy: run.publish
 	gcloud run services update watcher \
 	--image=asia.gcr.io/${PROJECT_ID}/watcher:latest \
-	--set-env-vars=GRPC_TRACE=all,GODEBUG=http2debug=2,GRPC_VERBOSITY=debug
+	--service-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
 
 run.test.grpc:
 	grpcurl -v \

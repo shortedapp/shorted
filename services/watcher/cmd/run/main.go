@@ -30,21 +30,25 @@ func main() {
 	}
 	ctx := context.Background()
 	log.InitLogger(cfg)
-
+	
 	logger = zap.S().With("watcher", "cmd")
 	defer logger.Sync()
 
-	if err := runWithDispatcher(ctx); err != nil {
+	if err := runWithDispatcher(ctx, cfg); err != nil {
 		log.Errorf("error running with cmux: %v", err)
 	}
 
 }
 
-func runWithDispatcher(ctx context.Context) error {
+func runWithDispatcher(ctx context.Context, cfg *config.Config) error {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 		log.Infof(ctx, "Defaulting to port %s", port)
+	}
+	watcher, err := watcher.New(ctx, cfg)
+	if err != nil {
+		log.Fatalf("error initialising watcher: %v", err)
 	}
 	// Register REST API
 	mux := http.NewServeMux()
@@ -59,7 +63,7 @@ func runWithDispatcher(ctx context.Context) error {
 	}
 	// Register GRPC API
 	gmux := grpc.NewServer()
-	v1.RegisterWatchServiceServer(gmux, &watcher.Watcher{})
+	v1.RegisterWatchServiceServer(gmux, watcher)
 	reflection.Register(gmux)
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%s", port),

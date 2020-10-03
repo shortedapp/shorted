@@ -1,9 +1,16 @@
 package shortedctl
 
 import (
+	"context"
+	"fmt"
 	"os"
 	"path/filepath"
 
+	"log"
+
+	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/get"
+	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/version"
+	"github.com/shortedapp/shorted/shortedctl/internal/config"
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +27,20 @@ func NewCommand(name string) *cobra.Command {
 	}
 	c.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file path")
 	c.PersistentFlags().StringVarP(&logLevel, "loglevel", "v", "warn", "log level (error|warn|info|debug)")
+	c.AddCommand(
+		version.NewCommand(),
+		get.NewCommand(),
+	)
+	cobra.OnInitialize(load)
 	return c
+}
+
+func load() {
+	err := config.Load(context.Background(), cfgFile)
+	if err != nil {
+		log.Fatalf("error loading config: %v", err)
+	}
+	fmt.Println("\nloaded config")
 }
 
 func Execute() {
