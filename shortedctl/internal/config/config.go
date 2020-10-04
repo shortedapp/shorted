@@ -86,7 +86,6 @@ func load(configPath string) (err error) {
 	viper.AutomaticEnv()
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	viper.SetDefault("env", getMap(Default().Env))
-	fmt.Printf("config file used: %v", viper.ConfigFileUsed())
 	err = viper.ReadInConfig()
 	if err != nil {
 		return fmt.Errorf("error reading in config: %v", err)

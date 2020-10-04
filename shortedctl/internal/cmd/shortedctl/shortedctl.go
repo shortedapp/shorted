@@ -2,7 +2,6 @@ package shortedctl
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -40,7 +39,6 @@ func load() {
 	if err != nil {
 		log.Fatalf("error loading config: %v", err)
 	}
-	fmt.Println("\nloaded config")
 }
 
 func Execute() {

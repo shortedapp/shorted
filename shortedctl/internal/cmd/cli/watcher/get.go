@@ -2,9 +2,11 @@ package watcher
 
 import (
 	"fmt"
+	"os"
 
 	watcherV1 "github.com/shortedapp/shorted/shortedctl/internal/client/watcher/v1"
 	"github.com/shortedapp/shorted/shortedctl/internal/config"
+	"github.com/shortedapp/shorted/shortedctl/internal/output"
 	"github.com/spf13/cobra"
 )
 
@@ -19,14 +21,18 @@ func ListCommand() *cobra.Command {
 			}
 			client, err := watcherV1.NewForConfig(&cfg)
 			if len(args) == 0 {
-				fmt.Printf("listing watchers: %v, config: %v", client, cfg)
 				resp, err := client.Watchers().List()
 				if err != nil {
 					fmt.Printf("client error: %v", err)
 				}
-				fmt.Printf("resp: %v", resp)
+				printer := output.NewTablePrinter()
+				if err := printer.PrintObj(resp, os.Stdout); err != nil {
+					return fmt.Errorf("error printing output: %v", err)
+				}
+
 			} else {
-				fmt.Printf("getting specific watcher if found")
+				//TODO(castlemilk): add get call here and necessary print logic
+				fmt.Printf("getting specific watcher if found\n")
 			}
 			return nil
 		},
