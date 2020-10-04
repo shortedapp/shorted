@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/shortedapp/shorted/services/watcher/internal/service/watcher"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
@@ -27,16 +28,16 @@ func main() {
 	if err != nil {
 		panic(fmt.Errorf("failed initialising watch: %v", err))
 	}
-	// interval := 60 * time.Minute
-	// w.CreateWatcher(ctx, &v1.CreateWatcherRequest{
-	// 	Name: "test",
-	// 	Source: &v1.Source{
-	// 		Url:      "https://asic.gov.au",
-	// 		Adapter:  "asic",
-	// 		Format:   v1.DocumentFormat_CSV,
-	// 		Interval: &interval,
-	// 	},
-	// })
+	interval := 60 * time.Minute
+	w.CreateWatcher(ctx, &v1.CreateWatcherRequest{
+		Name: "test",
+		Source: &v1.Source{
+			Url:      "https://asic.gov.au",
+			Adapter:  "asic",
+			Format:   v1.DocumentFormat_CSV,
+			Interval: &interval,
+		},
+	})
 	w.ListWatchers(ctx, &v1.ListWatchersRequest{})
 	defer zap.L().Sync()
 }

@@ -3,6 +3,7 @@ package watcher
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
@@ -108,6 +109,7 @@ func (w *Watcher) CreateWatcher(ctx context.Context, in *v1.CreateWatcherRequest
 		Metadata: &v1.Metadata{
 			Id:   id,
 			Name: in.Name,
+			CreationTimestamp: time.Now().Format(time.RFC3339),
 		},
 		Spec: &v1.Spec{
 			Source: in.Source,
