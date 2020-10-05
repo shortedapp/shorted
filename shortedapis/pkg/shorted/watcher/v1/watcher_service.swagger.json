@@ -239,11 +239,8 @@
     "v1CreateWatcherRequest": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string"
-        },
-        "source": {
-          "$ref": "#/definitions/v1Source"
+        "watch": {
+          "$ref": "#/definitions/v1WatcherDetails"
         }
       }
     },
@@ -476,8 +473,8 @@
         "id": {
           "type": "string"
         },
-        "source": {
-          "$ref": "#/definitions/v1Source"
+        "watch": {
+          "$ref": "#/definitions/v1WatcherDetails"
         }
       }
     },
