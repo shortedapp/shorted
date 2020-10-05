@@ -2,12 +2,12 @@ package shortedctl
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"path/filepath"
 
 	"log"
 
+	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/create"
 	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/get"
 	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/version"
 	"github.com/shortedapp/shorted/shortedctl/internal/config"
@@ -30,6 +30,7 @@ func NewCommand(name string) *cobra.Command {
 	c.AddCommand(
 		version.NewCommand(),
 		get.NewCommand(),
+		create.NewCommand(),
 	)
 	cobra.OnInitialize(load)
 	return c
@@ -40,7 +41,6 @@ func load() {
 	if err != nil {
 		log.Fatalf("error loading config: %v", err)
 	}
-	fmt.Println("\nloaded config")
 }
 
 func Execute() {

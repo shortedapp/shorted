@@ -2,5 +2,8 @@
 build:
 	go build -o ./bin/shortedctl ./cmd/shortedctl/main.go
 
-run: build
+run.get: build
 	./bin/shortedctl get watcher
+
+run.create: build
+	./bin/shortedctl create watcher -f go.sum

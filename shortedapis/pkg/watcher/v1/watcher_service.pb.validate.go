@@ -339,12 +339,10 @@ func (m *CreateWatcherRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
-
-	if v, ok := interface{}(m.GetSource()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetWatch()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return CreateWatcherRequestValidationError{
-				field:  "Source",
+				field:  "Watch",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -495,37 +493,16 @@ func (m *UpdateWatcherRequest) Validate() error {
 		return nil
 	}
 
-	if err := m._validateUuid(m.GetId()); err != nil {
-		return UpdateWatcherRequestValidationError{
-			field:  "Id",
-			reason: "value must be a valid UUID",
-			cause:  err,
-		}
-	}
+	// no validation rules for Id
 
-	if m.GetSource() == nil {
-		return UpdateWatcherRequestValidationError{
-			field:  "Source",
-			reason: "value is required",
-		}
-	}
-
-	if v, ok := interface{}(m.GetSource()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetWatch()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return UpdateWatcherRequestValidationError{
-				field:  "Source",
+				field:  "Watch",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
 		}
-	}
-
-	return nil
-}
-
-func (m *UpdateWatcherRequest) _validateUuid(uuid string) error {
-	if matched := _watcher_service_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
 	}
 
 	return nil

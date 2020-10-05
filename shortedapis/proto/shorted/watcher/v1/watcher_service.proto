@@ -111,8 +111,7 @@ message GetWatcherResponse {
 //------------ CREATE ------------
 
 message CreateWatcherRequest {
-  string name = 1;
-  Source source = 2;
+  WatcherDetails watch = 1;
 }
 
 message CreateWatcherResponse {
@@ -123,8 +122,8 @@ message CreateWatcherResponse {
 //------------ UPDATE ------------
 
 message UpdateWatcherRequest {
-  string id = 1 [(validate.rules).string.uuid = true];
-  Source source = 2 [(validate.rules).message.required = true];
+  string id = 1;
+  WatcherDetails watch = 2;
 }
 
 message UpdateWatcherResponse {

@@ -71,10 +71,11 @@ func (g *GCS) Get(id string) (*v1.WatcherDetails, error) {
 	}
 	// Open the key "foo.txt" for reading with the default options.
 	r, err := bucket.NewReader(ctx, id, nil)
-	defer r.Close()
 	if err != nil {
 		return &watcher, ErrIndexNotFound
 	}
+	defer r.Close()
+	
 	dec := json.NewDecoder(r)
 	dec.Decode(&watcher)
 	return &watcher, nil
@@ -127,14 +128,14 @@ func (g *GCS) Create(idx *v1.WatcherDetails) error {
 	if err != nil {
 		log.Fatal(err)
 	}
+	metadata, err := convertMetadata(idx.Metadata)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("metadata; %v", metadata)
 	writeErr := bucket.WriteAll(ctx, indexPath, idxBytes, &blob.WriterOptions{
 		ContentType: "application/json",
-		Metadata: map[string]string{
-			"creationTimestamp": time.Now().String(),
-			"id":                idx.Metadata.Id,
-			"name":              idx.Metadata.Name,
-			"items":             strconv.FormatInt(int64(idx.Spec.GetIndex().GetCount()), 10),
-		},
+		Metadata:    metadata,
 	})
 	if writeErr != nil {
 		log.Fatal(writeErr)
@@ -147,7 +148,7 @@ func (g *GCS) Create(idx *v1.WatcherDetails) error {
 
 func (g *GCS) List() ([]*v1.WatcherDetails, error) {
 	ctx := context.Background()
-	
+
 	var watcherList []*v1.WatcherDetails
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	if err != nil {
@@ -186,7 +187,6 @@ func (g *GCS) List() ([]*v1.WatcherDetails, error) {
 		fmt.Printf("key: %v, dir: %v, metadata: %v", obj.Key, obj.IsDir, metadata)
 	}
 
-
 	return watcherList, nil
 }
 
@@ -210,4 +210,11 @@ func getMetadata(ctx context.Context, bucket *blob.Bucket, id string) (map[strin
 
 	return attrs.Metadata, nil
 
+}
+
+func convertMetadata(metadata *v1.Metadata) (result map[string]string, err error) {
+	resultBytes, err := json.Marshal(metadata)
+	json.Unmarshal(resultBytes, &result)
+	fmt.Printf("result: %v", result)
+	return
 }

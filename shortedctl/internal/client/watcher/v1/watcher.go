@@ -18,6 +18,7 @@ type WatchersGetter interface {
 
 type WatchersInferface interface {
 	List() ([]*v1.WatcherDetails, error)
+	Create(*v1.WatcherDetails) error
 }
 type watchers struct {
 	gc grpc.Interface
@@ -43,3 +44,17 @@ func (w *watchers) List() ([]*v1.WatcherDetails, error) {
 	}
 	return watcherList.Watches, nil
 }
+
+func (w *watchers) Create() ([]*v1.WatcherDetails, error) {
+	cc, err := w.gc.Dial(context.TODO(), serviceName)
+	if err != nil {
+		return nil, err
+	}
+	wc := v1.NewWatchServiceClient(cc)
+	watcherList, err := wc.CreateWatcher(context.TODO(), &v1.CreateWatcherRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return watcherList.Watches, nil
+}
+
