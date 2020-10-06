@@ -160,6 +160,35 @@
           "WatchService"
         ]
       },
+      "delete": {
+        "summary": "A unary RPC to delete a watch source.",
+        "operationId": "WatchService_DeleteWatcher",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteWatcherResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "WatchService"
+        ]
+      },
       "post": {
         "summary": "A unary RPC to update an existing watch.",
         "operationId": "WatchService_UpdateWatcher",
@@ -245,6 +274,14 @@
       }
     },
     "v1CreateWatcherResponse": {
+      "type": "object",
+      "properties": {
+        "watch": {
+          "$ref": "#/definitions/v1WatcherDetails"
+        }
+      }
+    },
+    "v1DeleteWatcherResponse": {
       "type": "object",
       "properties": {
         "watch": {

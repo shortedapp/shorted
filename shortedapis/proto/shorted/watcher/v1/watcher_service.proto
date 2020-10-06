@@ -57,12 +57,18 @@ service WatchService {
     option (google.api.http) = {
       get: "/api/v1/watcher/{id}"
   };
-}
+  }
   // A unary RPC to create a new watch source. 
   rpc CreateWatcher(CreateWatcherRequest) returns (CreateWatcherResponse) {
     option (google.api.http) = {
       post: "/api/v1/watcher"
       body: "*"
+  };
+  }
+  // A unary RPC to delete a watch source. 
+  rpc DeleteWatcher(DeleteWatcherRequest) returns (DeleteWatcherResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/watcher/{id}"
   };
   }
   // A unary RPC to update an existing watch. 
@@ -127,6 +133,16 @@ message UpdateWatcherRequest {
 }
 
 message UpdateWatcherResponse {
+  WatcherDetails watch = 1;
+}
+
+//------------ DELETE ------------
+
+message DeleteWatcherRequest {
+  string id = 1;
+}
+
+message DeleteWatcherResponse {
   WatcherDetails watch = 1;
 }
 
