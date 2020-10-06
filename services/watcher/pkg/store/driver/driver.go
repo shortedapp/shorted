@@ -12,6 +12,8 @@ var (
 	ErrIndexNotFound = errors.New("index: not found")
 	// ErrIndexExists indicates that a release already exists.
 	ErrIndexExists = errors.New("index: already exists")
+	// ErrDeletingIndex indicates that a release already exists.
+	ErrDeletingIndex = errors.New("index: failed to delete")
 )
 
 type StoreDriverError struct {
@@ -33,12 +35,20 @@ type Creator interface {
 	Create(idx *v1.WatcherDetails) error
 }
 
+// // Delete is the interface that wraps the Delete method.
+// //
+// // Delete remove the index or returns ErrIndexNotFound
+// // if
+type Deletor interface {
+	Delete(string) (*v1.WatcherDetails, error)
+}
+
 // Updator is the interface that wraps the Update method.
 //
 // Update updates an existing index or returns
 // ErrIndexNotFound if the index does not exist.
 type Updator interface {
-	Update(path string, idx *v1.WatcherDetails) error
+	Update(idx *v1.WatcherDetails) error
 }
 
 // Queryor is the interface that wraps the Get and List methods.
@@ -63,6 +73,7 @@ type Queryor interface {
 // e.g. gcs, local disk.
 type Driver interface {
 	Creator
+	Deletor
 	Updator
 	Queryor
 	Name() string

@@ -108,11 +108,11 @@ func (w *Watcher) CreateWatcher(ctx context.Context, in *v1.CreateWatcherRequest
 	watcher := v1.WatcherDetails{
 		Metadata: &v1.Metadata{
 			Id:   id,
-			Name: in.Name,
+			Name: in.GetWatch().GetMetadata().Name,
 			CreationTimestamp: time.Now().Format(time.RFC3339),
 		},
 		Spec: &v1.Spec{
-			Source: in.Source,
+			Source: in.Watch.GetSpec().GetSource(),
 		},
 	}
 	err := w.store.Create(&watcher)
@@ -129,4 +129,15 @@ func (w *Watcher) ListWatchers(ctx context.Context, in *v1.ListWatchersRequest) 
 		return nil, err
 	}
 	return &v1.ListWatchersResponse{Watches: watcherList}, nil
+}
+
+func (w *Watcher) DeleteWatcher(ctx context.Context, in *v1.DeleteWatcherRequest) (*v1.DeleteWatcherResponse, error) {
+	id := in.GetId()
+	watcher, err := w.store.Get(id)
+	if err != nil {
+		return nil, err
+	}
+	w.store.Delete(id)
+
+	return &v1.DeleteWatcherResponse{Watch: watcher}, nil
 }

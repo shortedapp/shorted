@@ -42,13 +42,18 @@ func (f *File) Get(p string) (*v1.WatcherDetails, error) {
 	return idx, nil
 }
 
-func (f *File) Update(p string, idx *v1.WatcherDetails) error {
+func (f *File) Update(idx *v1.WatcherDetails) error {
 
 	return nil
 }
 func (f *File) Create(idx *v1.WatcherDetails) error {
 
 	return nil
+}
+
+func (f *File) Delete(id string) (*v1.WatcherDetails, error) {
+
+	return &v1.WatcherDetails{}, nil
 }
 
 func (f *File) GetInfo(p string) (*v1.WatcherDetails, error) {
@@ -61,8 +66,6 @@ func (f *File) GetInfo(p string) (*v1.WatcherDetails, error) {
 func (f *File) List() ([]*v1.WatcherDetails, error) {
 	return nil, nil
 }
-
-
 
 func (f *File) Name() string {
 	return FileDriverName

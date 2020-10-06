@@ -81,8 +81,9 @@ func (g *GCS) Get(id string) (*v1.WatcherDetails, error) {
 	return &watcher, nil
 }
 
-func (g *GCS) Update(path string, idx *v1.WatcherDetails) error {
+func (g *GCS) Update(idx *v1.WatcherDetails) error {
 	ctx := context.Background()
+	path := getIndexKey(idx.Metadata.Id)
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	if err != nil {
 		return fmt.Errorf("could not open bucket: %v", err)
@@ -190,6 +191,25 @@ func (g *GCS) List() ([]*v1.WatcherDetails, error) {
 	return watcherList, nil
 }
 
+func (g *GCS) Delete(id string) (watcher *v1.WatcherDetails, err error) {
+	ctx := context.Background()
+	watcher, err = g.Get(id)
+	if err != nil {
+		return watcher, ErrIndexNotFound
+	}
+	//TODO(castlemilk): optimise bucket opening process to allow reusable bucket object between multiple calls like get + delete combo
+	bucket, err := blob.OpenBucket(ctx, g.bucketName)
+	defer bucket.Close()
+	if err != nil {
+		return watcher, fmt.Errorf("could not open bucket: %v", err)
+	}
+	err = bucket.Delete(ctx, getIndexKey(id))
+	if err != nil {
+		return watcher, ErrDeletingIndex
+	}
+	return watcher, nil
+}
+
 func (g *GCS) GetInfo(p string) (*v1.WatcherDetails, error) {
 	return &v1.WatcherDetails{}, nil
 }
@@ -217,4 +237,8 @@ func convertMetadata(metadata *v1.Metadata) (result map[string]string, err error
 	json.Unmarshal(resultBytes, &result)
 	fmt.Printf("result: %v", result)
 	return
+}
+
+func getIndexKey(id string) string {
+	return path.Join(id, "index.json")
 }
