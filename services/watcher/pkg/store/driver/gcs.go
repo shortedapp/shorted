@@ -63,6 +63,7 @@ func NewGCS(bucket string) (*GCS, error) {
 
 func (g *GCS) Get(id string) (*v1.WatcherDetails, error) {
 	ctx := context.Background()
+	objectKey := getIndexKey(id)
 	var watcher v1.WatcherDetails
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	defer bucket.Close()
@@ -70,8 +71,10 @@ func (g *GCS) Get(id string) (*v1.WatcherDetails, error) {
 		return &watcher, fmt.Errorf("could not open bucket: %v", err)
 	}
 	// Open the key "foo.txt" for reading with the default options.
-	r, err := bucket.NewReader(ctx, id, nil)
+	fmt.Printf("looking for object: %v", objectKey)
+	r, err := bucket.NewReader(ctx, objectKey, nil)
 	if err != nil {
+		fmt.Printf("error: %v", err)
 		return &watcher, ErrIndexNotFound
 	}
 	defer r.Close()
@@ -118,7 +121,7 @@ func (g *GCS) Create(idx *v1.WatcherDetails) error {
 	if err == nil {
 		return fmt.Errorf("watcher already exists")
 	}
-	indexPath := path.Join(idx.Metadata.Id, "index.json")
+	indexPath := getIndexKey(idx.Metadata.Id)
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	if err != nil {
 		return fmt.Errorf("could not open bucket: %v", err)

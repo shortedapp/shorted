@@ -8,7 +8,7 @@ require (
 	github.com/GoogleCloudPlatform/functions-framework-go v1.1.0
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v0.11.0
 	github.com/PuerkitoBio/goquery v1.5.1
-	github.com/aws/aws-sdk-go v1.34.32 // indirect
+	github.com/aws/aws-sdk-go v1.35.3 // indirect
 	github.com/blendle/zapdriver v1.3.1
 	github.com/census-instrumentation/opencensus-proto v0.3.0 // indirect
 	github.com/google/uuid v1.1.1
@@ -24,7 +24,5 @@ require (
 	go.uber.org/zap v1.16.0
 	gocloud.dev v0.20.0
 	golang.org/x/net v0.0.0-20201002202402-0a1ea396d57c
-	google.golang.org/api v0.32.0 // indirect
 	google.golang.org/grpc v1.32.0
-	gopkg.in/yaml.v2 v2.3.0 // indirect
 )

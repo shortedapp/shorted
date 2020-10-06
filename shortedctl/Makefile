@@ -7,3 +7,6 @@ run.get: build
 
 run.create: build
 	./bin/shortedctl create watcher -f hack/test/watcher.yaml
+
+run.delete: build
+	./bin/shortedctl delete watcher ${ID}

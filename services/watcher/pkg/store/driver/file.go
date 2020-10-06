@@ -29,9 +29,9 @@ func NewFile(folder string) (*File, error) {
 	return &f, nil
 }
 
-func (f *File) Get(p string) (*v1.WatcherDetails, error) {
+func (f *File) Get(id string) (*v1.WatcherDetails, error) {
 	idx := &v1.WatcherDetails{}
-	file, err := ioutil.ReadFile(path.Join(f.folder, p))
+	file, err := ioutil.ReadFile(path.Join(f.folder, getIndexKey(id)))
 	if err != nil {
 		return idx, fmt.Errorf("failed reading file: %v", err)
 	}
