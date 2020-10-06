@@ -17,8 +17,10 @@ type WatchersGetter interface {
 }
 
 type WatchersInferface interface {
+	Get(id string) (*v1.WatcherDetails, error)
 	List() ([]*v1.WatcherDetails, error)
-	Create(*v1.WatcherDetails) error
+	Create(*v1.WatcherDetails) (*v1.WatcherDetails, error)
+	Delete(id string)(*v1.WatcherDetails, error)
 }
 type watchers struct {
 	gc grpc.Interface
@@ -45,16 +47,43 @@ func (w *watchers) List() ([]*v1.WatcherDetails, error) {
 	return watcherList.Watches, nil
 }
 
-func (w *watchers) Create() ([]*v1.WatcherDetails, error) {
+func (w *watchers) Get(id string) (*v1.WatcherDetails, error) {
 	cc, err := w.gc.Dial(context.TODO(), serviceName)
 	if err != nil {
 		return nil, err
 	}
 	wc := v1.NewWatchServiceClient(cc)
-	watcherList, err := wc.CreateWatcher(context.TODO(), &v1.CreateWatcherRequest{})
+	watcher, err := wc.GetWatcher(context.TODO(), &v1.GetWatcherRequest{Id: id})
 	if err != nil {
 		return nil, err
 	}
-	return watcherList.Watches, nil
+	return watcher.Watch, nil	
 }
 
+func (w *watchers) Delete(id string) (*v1.WatcherDetails, error) {
+	cc, err := w.gc.Dial(context.TODO(), serviceName)
+	if err != nil {
+		return nil, err
+	}
+	wc := v1.NewWatchServiceClient(cc)
+	watcher, err := wc.(context.TODO(), &v1.GetWatcherRequest{Id: id})
+	if err != nil {
+		return nil, err
+	}
+	return watcher.Watch, nil	
+}
+
+func (w *watchers) Create(watch *v1.WatcherDetails) (*v1.WatcherDetails, error) {
+	cc, err := w.gc.Dial(context.TODO(), serviceName)
+	if err != nil {
+		return nil, err
+	}
+	wc := v1.NewWatchServiceClient(cc)
+	resp, err := wc.CreateWatcher(context.TODO(), &v1.CreateWatcherRequest{
+		Watch: watch,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return resp.Watch, nil
+}

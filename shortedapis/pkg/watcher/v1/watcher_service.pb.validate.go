@@ -641,6 +641,152 @@ var _ interface {
 	ErrorName() string
 } = UpdateWatcherResponseValidationError{}
 
+// Validate checks the field values on DeleteWatcherRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DeleteWatcherRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Id
+
+	return nil
+}
+
+// DeleteWatcherRequestValidationError is the validation error returned by
+// DeleteWatcherRequest.Validate if the designated constraints aren't met.
+type DeleteWatcherRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteWatcherRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteWatcherRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteWatcherRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteWatcherRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteWatcherRequestValidationError) ErrorName() string {
+	return "DeleteWatcherRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteWatcherRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteWatcherRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteWatcherRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteWatcherRequestValidationError{}
+
+// Validate checks the field values on DeleteWatcherResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DeleteWatcherResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetWatch()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DeleteWatcherResponseValidationError{
+				field:  "Watch",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// DeleteWatcherResponseValidationError is the validation error returned by
+// DeleteWatcherResponse.Validate if the designated constraints aren't met.
+type DeleteWatcherResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteWatcherResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteWatcherResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteWatcherResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteWatcherResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteWatcherResponseValidationError) ErrorName() string {
+	return "DeleteWatcherResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteWatcherResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteWatcherResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteWatcherResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteWatcherResponseValidationError{}
+
 // Validate checks the field values on SyncAllRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
