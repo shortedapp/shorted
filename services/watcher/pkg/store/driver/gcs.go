@@ -74,11 +74,10 @@ func (g *GCS) Get(id string) (*v1.WatcherDetails, error) {
 	fmt.Printf("looking for object: %v", objectKey)
 	r, err := bucket.NewReader(ctx, objectKey, nil)
 	if err != nil {
-		fmt.Printf("error: %v", err)
-		return &watcher, ErrIndexNotFound
+		return &watcher, err
 	}
 	defer r.Close()
-	
+
 	dec := json.NewDecoder(r)
 	dec.Decode(&watcher)
 	return &watcher, nil
@@ -196,10 +195,6 @@ func (g *GCS) List() ([]*v1.WatcherDetails, error) {
 
 func (g *GCS) Delete(id string) (watcher *v1.WatcherDetails, err error) {
 	ctx := context.Background()
-	watcher, err = g.Get(id)
-	if err != nil {
-		return watcher, ErrIndexNotFound
-	}
 	//TODO(castlemilk): optimise bucket opening process to allow reusable bucket object between multiple calls like get + delete combo
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	defer bucket.Close()
@@ -208,7 +203,7 @@ func (g *GCS) Delete(id string) (watcher *v1.WatcherDetails, err error) {
 	}
 	err = bucket.Delete(ctx, getIndexKey(id))
 	if err != nil {
-		return watcher, ErrDeletingIndex
+		return watcher, err
 	}
 	return watcher, nil
 }

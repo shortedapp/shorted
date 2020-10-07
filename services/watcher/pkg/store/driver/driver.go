@@ -14,6 +14,8 @@ var (
 	ErrIndexExists = errors.New("index: already exists")
 	// ErrDeletingIndex indicates that a release already exists.
 	ErrDeletingIndex = errors.New("index: failed to delete")
+	// ErrDeletingIndex indicates that a release already exists.
+	ErrUnknown = errors.New("unknown failure")
 )
 
 type StoreDriverError struct {
