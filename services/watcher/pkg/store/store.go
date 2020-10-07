@@ -38,6 +38,13 @@ type Index struct {
 func (s *Index) Get(id string) (*v1.WatcherDetails, error) {
 	return s.Driver.Get(id)
 }
+// Get retrieves the watch index from storage. An error is returned
+// if the storage driver failed to fetch the index, or the
+// index identified by the key, version pair does not exist.
+func (s *Index) Delete(id string) (*v1.WatcherDetails, error) {
+	return s.Driver.Delete(id)
+}
+
 
 // Create creates a new storage entry holding the index. An
 // error is returned if the storage driver failed to store the
@@ -49,8 +56,8 @@ func (s *Index) Get(id string) (*v1.WatcherDetails, error) {
 // Update updates the index in storage. An error is returned if the
 // storage backend fails to update the index or if the index
 // does not exist.
-func (s *Index) Update(id string, idx *v1.WatcherDetails) error {
-	return s.Driver.Update(id, idx)
+func (s *Index) Update(idx *v1.WatcherDetails) error {
+	return s.Driver.Update(idx)
 }
 
 func NewGCS(bucket string) (*Index, error) {

@@ -63,6 +63,7 @@ func NewGCS(bucket string) (*GCS, error) {
 
 func (g *GCS) Get(id string) (*v1.WatcherDetails, error) {
 	ctx := context.Background()
+	objectKey := getIndexKey(id)
 	var watcher v1.WatcherDetails
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	defer bucket.Close()
@@ -70,19 +71,21 @@ func (g *GCS) Get(id string) (*v1.WatcherDetails, error) {
 		return &watcher, fmt.Errorf("could not open bucket: %v", err)
 	}
 	// Open the key "foo.txt" for reading with the default options.
-	r, err := bucket.NewReader(ctx, id, nil)
+	fmt.Printf("looking for object: %v", objectKey)
+	r, err := bucket.NewReader(ctx, objectKey, nil)
 	if err != nil {
-		return &watcher, ErrIndexNotFound
+		return &watcher, err
 	}
 	defer r.Close()
-	
+
 	dec := json.NewDecoder(r)
 	dec.Decode(&watcher)
 	return &watcher, nil
 }
 
-func (g *GCS) Update(path string, idx *v1.WatcherDetails) error {
+func (g *GCS) Update(idx *v1.WatcherDetails) error {
 	ctx := context.Background()
+	path := getIndexKey(idx.Metadata.Id)
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	if err != nil {
 		return fmt.Errorf("could not open bucket: %v", err)
@@ -117,7 +120,7 @@ func (g *GCS) Create(idx *v1.WatcherDetails) error {
 	if err == nil {
 		return fmt.Errorf("watcher already exists")
 	}
-	indexPath := path.Join(idx.Metadata.Id, "index.json")
+	indexPath := getIndexKey(idx.Metadata.Id)
 	bucket, err := blob.OpenBucket(ctx, g.bucketName)
 	if err != nil {
 		return fmt.Errorf("could not open bucket: %v", err)
@@ -190,6 +193,21 @@ func (g *GCS) List() ([]*v1.WatcherDetails, error) {
 	return watcherList, nil
 }
 
+func (g *GCS) Delete(id string) (watcher *v1.WatcherDetails, err error) {
+	ctx := context.Background()
+	//TODO(castlemilk): optimise bucket opening process to allow reusable bucket object between multiple calls like get + delete combo
+	bucket, err := blob.OpenBucket(ctx, g.bucketName)
+	defer bucket.Close()
+	if err != nil {
+		return watcher, fmt.Errorf("could not open bucket: %v", err)
+	}
+	err = bucket.Delete(ctx, getIndexKey(id))
+	if err != nil {
+		return watcher, err
+	}
+	return watcher, nil
+}
+
 func (g *GCS) GetInfo(p string) (*v1.WatcherDetails, error) {
 	return &v1.WatcherDetails{}, nil
 }
@@ -217,4 +235,8 @@ func convertMetadata(metadata *v1.Metadata) (result map[string]string, err error
 	json.Unmarshal(resultBytes, &result)
 	fmt.Printf("result: %v", result)
 	return
+}
+
+func getIndexKey(id string) string {
+	return path.Join(id, "index.json")
 }

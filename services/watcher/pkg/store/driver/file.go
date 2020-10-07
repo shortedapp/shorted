@@ -29,9 +29,9 @@ func NewFile(folder string) (*File, error) {
 	return &f, nil
 }
 
-func (f *File) Get(p string) (*v1.WatcherDetails, error) {
+func (f *File) Get(id string) (*v1.WatcherDetails, error) {
 	idx := &v1.WatcherDetails{}
-	file, err := ioutil.ReadFile(path.Join(f.folder, p))
+	file, err := ioutil.ReadFile(path.Join(f.folder, getIndexKey(id)))
 	if err != nil {
 		return idx, fmt.Errorf("failed reading file: %v", err)
 	}
@@ -42,13 +42,18 @@ func (f *File) Get(p string) (*v1.WatcherDetails, error) {
 	return idx, nil
 }
 
-func (f *File) Update(p string, idx *v1.WatcherDetails) error {
+func (f *File) Update(idx *v1.WatcherDetails) error {
 
 	return nil
 }
 func (f *File) Create(idx *v1.WatcherDetails) error {
 
 	return nil
+}
+
+func (f *File) Delete(id string) (*v1.WatcherDetails, error) {
+
+	return &v1.WatcherDetails{}, nil
 }
 
 func (f *File) GetInfo(p string) (*v1.WatcherDetails, error) {
@@ -61,8 +66,6 @@ func (f *File) GetInfo(p string) (*v1.WatcherDetails, error) {
 func (f *File) List() ([]*v1.WatcherDetails, error) {
 	return nil, nil
 }
-
-
 
 func (f *File) Name() string {
 	return FileDriverName

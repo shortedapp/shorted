@@ -66,7 +66,7 @@ func (w *watchers) Delete(id string) (*v1.WatcherDetails, error) {
 		return nil, err
 	}
 	wc := v1.NewWatchServiceClient(cc)
-	watcher, err := wc.Delete(context.TODO(), &v1.DeleteWatcherRequest{Id: id})
+	watcher, err := wc.DeleteWatcher(context.TODO(), &v1.DeleteWatcherRequest{Id: id})
 	if err != nil {
 		return nil, err
 	}

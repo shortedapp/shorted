@@ -7,6 +7,7 @@ import (
 
 	"log"
 
+	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/delete"
 	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/create"
 	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/get"
 	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/version"
@@ -31,6 +32,7 @@ func NewCommand(name string) *cobra.Command {
 		version.NewCommand(),
 		get.NewCommand(),
 		create.NewCommand(),
+		delete.NewCommand(),
 	)
 	cobra.OnInitialize(load)
 	return c

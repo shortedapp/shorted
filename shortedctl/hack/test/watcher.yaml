@@ -1,0 +1,9 @@
+apiVersion: v1
+metadata:
+  name: new
+spec:
+  source:
+    url: example.com
+    adapter: example
+    format: JSON
+    interval: 24h
