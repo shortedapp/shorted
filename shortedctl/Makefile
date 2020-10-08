@@ -5,6 +5,9 @@ build:
 run.get: build
 	./bin/shortedctl get watcher
 
+run.describe: build
+	./bin/shortedctl describe watcher ${ID}
+
 run.create: build
 	./bin/shortedctl create watcher -f hack/test/watcher.yaml
 

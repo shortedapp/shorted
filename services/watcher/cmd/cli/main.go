@@ -44,8 +44,11 @@ func main() {
 	// 	},
 	// })
 	// w.ListWatchers(ctx, &v1.ListWatchersRequest{})
-	watcher, err := w.DeleteWatcher(ctx, &v1.DeleteWatcherRequest{
-		Id: "dbfef2e7-8648-42d3-98cc-9adcae8b43d6",
+	// watcher, err := w.DeleteWatcher(ctx, &v1.DeleteWatcherRequest{
+	// 	Id: "dbfef2e7-8648-42d3-98cc-9adcae8b43d6",
+	// })
+	watcher, err := w.GetWatcher(ctx, &v1.GetWatcherRequest{
+		Id: "108cd613-ed20-4536-af62-0aa162193c72",
 	})
 	if err != nil {
 		panic(err)

@@ -94,13 +94,13 @@ func New(ctx context.Context, cfg *config.Config) (*Watcher, error) {
 // }
 
 // GetWatch information about a specific configured Watch
-func (w *Watcher) GetWatch(ctx context.Context, in *v1.GetWatcherRequest) (*v1.GetWatcherResponse, error) {
-	_, err := w.store.Get(in.Id)
+func (w *Watcher) GetWatcher(ctx context.Context, in *v1.GetWatcherRequest) (*v1.GetWatcherResponse, error) {
+	watcher, err := w.store.Get(in.Id)
 	if err != nil {
 		return nil, err
 	}
 	return &v1.GetWatcherResponse{
-		Watch: &v1.WatcherDetails{}}, nil
+		Watch: watcher}, nil
 }
 
 func (w *Watcher) CreateWatcher(ctx context.Context, in *v1.CreateWatcherRequest) (*v1.CreateWatcherResponse, error) {

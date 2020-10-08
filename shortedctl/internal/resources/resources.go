@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"io/ioutil"
 
+	"github.com/ghodss/yaml"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 	"github.com/spf13/cobra"
-	"gopkg.in/yaml.v2"
 )
 
 func WatcherFromPath(file string) (*v1.WatcherDetails, error) {

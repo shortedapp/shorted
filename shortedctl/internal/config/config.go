@@ -7,6 +7,7 @@ import (
 	"path"
 	"strings"
 
+	"github.com/google/uuid"
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
 )
@@ -101,4 +102,11 @@ func getMap(config interface{}) map[string]interface{} {
 	var inInterface map[string]interface{}
 	_ = mapstructure.Decode(config, &inInterface)
 	return inInterface
+}
+
+func ValidateId(id string) error {
+	if _, err := uuid.Parse(id); err != nil {
+		return fmt.Errorf("invalid id: %v, err: %v", id, err)
+	}
+	return nil
 }
