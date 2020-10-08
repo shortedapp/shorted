@@ -10,3 +10,6 @@ run.create: build
 
 run.delete: build
 	./bin/shortedctl delete watcher ${ID}
+
+run.cd: build
+	./bin/shortedctl create watcher -f hack/test/watcher.yaml

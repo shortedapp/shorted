@@ -141,3 +141,14 @@ func (w *Watcher) DeleteWatcher(ctx context.Context, in *v1.DeleteWatcherRequest
 
 	return &v1.DeleteWatcherResponse{Watch: watcher}, nil
 }
+
+func (w *Watcher) SyncWatcher(ctx context.Context, in *v1.SyncWatcherRequest) (*v1.SyncWatcherResponse, error) {
+	id := in.Id
+	fmt.Printf("syncing watcher: %v", id)
+	return nil, nil
+}
+
+func (w *Watcher) SyncAll(ctx context.Context, in *v1.SyncAllRequest) (*v1.SyncAllResponse, error) {
+	fmt.Print("syncing all watcher")
+	return nil, nil	
+}
