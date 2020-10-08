@@ -9,6 +9,7 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/store"
+	"github.com/shortedapp/shorted/services/watcher/sources"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 )
 
@@ -107,8 +108,8 @@ func (w *Watcher) CreateWatcher(ctx context.Context, in *v1.CreateWatcherRequest
 	id := uuid.New().String()
 	watcher := v1.WatcherDetails{
 		Metadata: &v1.Metadata{
-			Id:   id,
-			Name: in.GetWatch().GetMetadata().Name,
+			Id:                id,
+			Name:              in.GetWatch().GetMetadata().Name,
 			CreationTimestamp: time.Now().Format(time.RFC3339),
 		},
 		Spec: &v1.Spec{
@@ -145,10 +146,28 @@ func (w *Watcher) DeleteWatcher(ctx context.Context, in *v1.DeleteWatcherRequest
 func (w *Watcher) SyncWatcher(ctx context.Context, in *v1.SyncWatcherRequest) (*v1.SyncWatcherResponse, error) {
 	id := in.Id
 	fmt.Printf("syncing watcher: %v", id)
+	watcher, err := w.store.Get(id)
+	if err != nil {
+		return nil, fmt.Errorf("error synchronising watcher %v, error: %v", id, err)
+	}
+	source, err := sources.GetSource(watcher.Spec.Source.Adapter)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get source %v, error: %v", watcher.Spec.Source.Adapter, err)
+	}
+	handler, err := source.NewBuilder().Build()
+	if err != nil {
+		return nil, fmt.Errorf("failed to build handler, error: %v", err)
+	}
+	manager, err := handler.Parse(ctx, watcher.Spec.Source)
+
+	difference := manager.Difference(watcher.Spec.Index)
+
+	log.Infof(ctx, "[Source:%v]: found %v new documents", watcher.Spec.Source.Url, difference.GetIndex().Count)
+
 	return nil, nil
 }
 
 func (w *Watcher) SyncAll(ctx context.Context, in *v1.SyncAllRequest) (*v1.SyncAllResponse, error) {
 	fmt.Print("syncing all watcher")
-	return nil, nil	
+	return nil, nil
 }

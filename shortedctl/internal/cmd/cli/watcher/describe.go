@@ -3,10 +3,10 @@ package watcher
 import (
 	"fmt"
 
+	"github.com/ghodss/yaml"
 	watcherV1 "github.com/shortedapp/shorted/shortedctl/internal/client/watcher/v1"
 	"github.com/shortedapp/shorted/shortedctl/internal/config"
 	"github.com/spf13/cobra"
-	"github.com/ghodss/yaml"
 )
 
 func DescribeCommand() *cobra.Command {
@@ -37,14 +37,11 @@ func DescribeCommand() *cobra.Command {
 					return fmt.Errorf("error fetching watcher: %v, error: %v", id, err)
 				}
 				d, err := yaml.Marshal(watcher)
-				fmt.Printf("\n---\n%s\n---\n", string(d))
+				fmt.Printf("\n%s\n", string(d))
+				return nil
+			default:
+				return fmt.Errorf("invalid input, must specify a specific ID to describe")
 			}
-			if len(args) == 0 {
-
-			} else {
-
-			}
-			return nil
 		},
 	}
 	return c

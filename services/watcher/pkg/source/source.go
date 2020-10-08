@@ -20,6 +20,6 @@ type (
 		Build() (Handler, error)
 	}
 	Handler interface {
-		Parse(context.Context, *v1.Source) (*v1.Index, error)
+		Parse(context.Context, *v1.Source) (*Manager, error)
 	}
 )
