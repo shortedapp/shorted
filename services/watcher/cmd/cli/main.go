@@ -47,12 +47,19 @@ func main() {
 	// watcher, err := w.DeleteWatcher(ctx, &v1.DeleteWatcherRequest{
 	// 	Id: "dbfef2e7-8648-42d3-98cc-9adcae8b43d6",
 	// })
-	watcher, err := w.GetWatcher(ctx, &v1.GetWatcherRequest{
-		Id: "108cd613-ed20-4536-af62-0aa162193c72",
+	id := "28f6edfc-7361-4b37-9e36-65814667e9b4"
+	_, err = w.GetWatcher(ctx, &v1.GetWatcherRequest{
+		Id: id,
 	})
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("watcher: %v", watcher)
+	resp, err := w.SyncWatcher(ctx, &v1.SyncWatcherRequest{
+		Id: id,
+	})
+	if err != nil {
+		panic(fmt.Errorf("error syncing watcher %v, error: %v", id, err))
+	}
+	fmt.Printf("resp: %v", resp)
 	defer zap.L().Sync()
 }

@@ -40,13 +40,13 @@ func (m *Manager) GetIndex() *v1.Index {
 	return m.index
 }
 
-func (m *Manager) Difference(latest *v1.Index) *Manager {
+func (m *Manager) Difference(current *v1.Index) *Manager {
 	new := NewManager()
 	count := 0
-	for entry, docs := range latest.Entries.GetEntries() {
+	for entry, docs := range m.index.GetEntries().GetEntries() {
 		// check if the entry in the latest index exists in current index,
 		// if not then we add it to the new index
-		if _, ok := m.index.Entries.Entries[entry]; !ok {
+		if _, ok := current.GetEntries().GetEntries()[entry]; !ok {
 			new.index.Entries.Entries[entry] = docs
 			count++
 		}

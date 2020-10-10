@@ -1,0 +1,9 @@
+apiVersion: v1
+metadata:
+  name: asic
+spec:
+  source:
+    url: https://asic.gov.au/regulatory-resources/markets/short-selling/short-position-reports-table/
+    adapter: asic
+    format: JSON
+    interval: 24h

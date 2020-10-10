@@ -97,7 +97,7 @@ func InitLogger(config *config.Config) {
 	zap.ReplaceGlobals(globalLogger)
 
 	// Create custom span.
-	tr = global.TraceProvider().Tracer("shorted.com.au/collector")
+	tr = global.TraceProvider().Tracer("shorted.com.au/watcher")
 
 }
 
@@ -135,7 +135,7 @@ func Request(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 				Referer:       r.Referer(),
 				Protocol:      r.Proto,
 			}),
-			zap.String("package", "collector.http"),
+			zap.String("package", "watcher.http"),
 		}
 		zap.L().Info("HTTP Request", fields...)
 
@@ -190,7 +190,7 @@ func Response(ctx context.Context, r *http.Response) {
 				Referer:       r.Request.Referer(),
 				Protocol:      r.Proto,
 			}),
-			zap.String("package", "collector.http"),
+			zap.String("package", "watcher.http"),
 		}
 		zap.L().Info("Source - HTTP Response", fields...)
 	} else {
