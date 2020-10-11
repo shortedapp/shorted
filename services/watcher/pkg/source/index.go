@@ -16,7 +16,7 @@ func NewManager() *Manager {
 	return &Manager{
 		index: &v1.Index{
 			Entries: &v1.Entries{
-				Entries: make(map[string]*v1.Documents),
+				Documents: make(map[string]*v1.Documents),
 			},
 		},
 	}
@@ -24,11 +24,11 @@ func NewManager() *Manager {
 
 func (m *Manager) AddDocumentDetails(d *v1.DocumentDetails) {
 	name := d.Metadata.Name
-	if ee, ok := m.index.Entries.Entries[name]; !ok {
+	if ee, ok := m.index.Entries.Documents[name]; !ok {
 		d.Metadata.Version = semver.MustParse("v1.0.0").String()
-		m.index.Entries.Entries[name] = &v1.Documents{Document: []*v1.DocumentDetails{d}}
+		m.index.Entries.Documents[name] = &v1.Documents{Document: []*v1.DocumentDetails{d}}
 	} else {
-		m.index.Entries.Entries[name].Document = append(m.index.Entries.Entries[name].Document, ee.Document...)
+		m.index.Entries.Documents[name].Document = append(m.index.Entries.Documents[name].Document, ee.Document...)
 	}
 }
 
@@ -43,11 +43,11 @@ func (m *Manager) GetIndex() *v1.Index {
 func (m *Manager) Difference(current *v1.Index) *Manager {
 	new := NewManager()
 	count := 0
-	for entry, docs := range m.index.GetEntries().GetEntries() {
+	for entry, docs := range m.index.GetEntries().GetDocuments() {
 		// check if the entry in the latest index exists in current index,
 		// if not then we add it to the new index
-		if _, ok := current.GetEntries().GetEntries()[entry]; !ok {
-			new.index.Entries.Entries[entry] = docs
+		if _, ok := current.GetEntries().GetDocuments()[entry]; !ok {
+			new.index.Entries.Documents[entry] = docs
 			count++
 		}
 	}
