@@ -77,7 +77,7 @@ message Index {
 
 
 message Entries {
-  map<string, Documents> entries = 1;
+  map<string, Documents> documents = 1;
 }
 
 message Documents {

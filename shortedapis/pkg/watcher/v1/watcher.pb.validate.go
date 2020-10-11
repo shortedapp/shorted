@@ -525,15 +525,15 @@ func (m *Entries) Validate() error {
 		return nil
 	}
 
-	for key, val := range m.GetEntries() {
+	for key, val := range m.GetDocuments() {
 		_ = val
 
-		// no validation rules for Entries[key]
+		// no validation rules for Documents[key]
 
 		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return EntriesValidationError{
-					field:  fmt.Sprintf("Entries[%v]", key),
+					field:  fmt.Sprintf("Documents[%v]", key),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}

@@ -162,6 +162,9 @@ func (w *Watcher) SyncWatcher(ctx context.Context, in *v1.SyncWatcherRequest) (*
 
 	difference := manager.Difference(watcher.Spec.Index)
 
+	// start collecting new documents - async go routine?
+	// once completed we update index with successfully collected documents - needs to do with with a mutex
+
 	log.Infof(ctx, "[Source:%v]: found %v new documents", watcher.Spec.Source.Url, difference.GetIndex().Count)
 
 	return nil, nil
