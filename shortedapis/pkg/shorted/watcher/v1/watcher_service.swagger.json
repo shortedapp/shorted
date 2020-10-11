@@ -352,7 +352,7 @@
     "v1Entries": {
       "type": "object",
       "properties": {
-        "entries": {
+        "documents": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/v1Documents"

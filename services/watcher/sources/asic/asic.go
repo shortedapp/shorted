@@ -7,7 +7,6 @@ import (
 	"net/url"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/shortedapp/shorted/services/watcher/pkg/index"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
 	"github.com/shortedapp/shorted/services/watcher/sources/metadata"
@@ -35,7 +34,7 @@ type handler struct{}
 // 										td (csv)
 //
 
-func (*handler) Parse(ctx context.Context, s *v1.Source) (*v1.Index, error) {
+func (*handler) Parse(ctx context.Context, s *v1.Source) (*source.Manager, error) {
 	u, err := url.Parse(s.GetUrl())
 	baseURL := u.Scheme + "://" + u.Host
 	response, err := http.Get(s.GetUrl())
@@ -45,7 +44,7 @@ func (*handler) Parse(ctx context.Context, s *v1.Source) (*v1.Index, error) {
 		return nil, err
 	}
 	defer response.Body.Close()
-	si := index.New()
+	manager := source.NewManager()
 	// Load the HTML document
 	doc, err := goquery.NewDocumentFromReader(response.Body)
 	if err != nil {
@@ -69,7 +68,7 @@ func (*handler) Parse(ctx context.Context, s *v1.Source) (*v1.Index, error) {
 						day := row.Eq(0).Text()
 						filename, _ := row.Eq(2).Find("a").Attr("href")
 						// fmt.Printf("day: %s\n", day)
-						si.Add(&v1.DocumentDetails{
+						manager.AddDocumentDetails(&v1.DocumentDetails{
 							Metadata: &v1.DocumentMetadata{
 								Name:   filename,
 								Date:   fmt.Sprintf("%s-%s-%s", year, month, day),
@@ -85,11 +84,11 @@ func (*handler) Parse(ctx context.Context, s *v1.Source) (*v1.Index, error) {
 
 		})
 	})
-	si.SetCount(count)
+	manager.SetCount(count)
 	log.Infof(ctx, "%d %s documents pulled from %v", count, s.Format, s.Url)
 	log.Response(ctx, response)
 
-	return si.ToIndex(), nil
+	return manager, nil
 }
 
 // GetInfo returns the Info associated with this source implementation.

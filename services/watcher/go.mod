@@ -7,8 +7,10 @@ require (
 	contrib.go.opencensus.io/exporter/stackdriver v0.13.4
 	github.com/GoogleCloudPlatform/functions-framework-go v1.1.0
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v0.11.0
+	github.com/Masterminds/semver v1.5.0
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/aws/aws-sdk-go v1.35.3 // indirect
+	github.com/blang/semver v3.5.1+incompatible
 	github.com/blendle/zapdriver v1.3.1
 	github.com/census-instrumentation/opencensus-proto v0.3.0 // indirect
 	github.com/google/uuid v1.1.1
