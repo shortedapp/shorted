@@ -31,6 +31,9 @@ run: build
 build:
 	go build -o bin/collector ./cmd/collector
 
+run.cli:
+	go run ./cmd/cli/main.go
+
 deploy: zip infrastructure.create
 
 redeploy: destroy deploy

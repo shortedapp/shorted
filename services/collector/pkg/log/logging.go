@@ -7,23 +7,39 @@ import (
 	"net/http"
 	"strconv"
 
+	"contrib.go.opencensus.io/exporter/stackdriver"
 	cloudtrace "github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace"
 	"github.com/blendle/zapdriver"
 	"github.com/shortedapp/shorted/services/collector/pkg/config"
+	octrace "go.opencensus.io/trace"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace"
 	"go.opentelemetry.io/otel/api/global"
 	"go.opentelemetry.io/otel/api/trace"
-	"go.opentelemetry.io/otel/instrumentation/httptrace"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"contrib.go.opencensus.io/exporter/stackdriver"
-	octrace "go.opencensus.io/trace"
 )
 
 var (
 	loggingConfig *config.Config
 	tr            trace.Tracer
 )
+
+// func initTracer() {
+// 	exporter, err := cloudtrace.NewExporter(cloudtrace.WithProjectID(loggingConfig.ProjectId))
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	// For the demonstration, use sdktrace.AlwaysSample sampler to sample all traces.
+// 	// In a production application, use sdktrace.ProbabilitySampler with a desired probability.
+// 	tp := sdktrace.NewProvider(sdktrace.WithConfig(sdktrace.Config{DefaultSampler: sdktrace.AlwaysSample()}),
+// 		sdktrace.WithSyncer(exporter),
+// 		sdktrace.WithResource(resource.New(semconv.ServiceNameKey.String("Watcher"))))
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	global.SetTracerProvider(tp)
+// }
 
 func InitLogger(config *config.Config) {
 	loggingConfig = config
@@ -33,6 +49,34 @@ func InitLogger(config *config.Config) {
 	case "stackdriver":
 		logConfig.Encoding = "json"
 		logConfig.EncoderConfig = zapdriver.NewDevelopmentEncoderConfig()
+		// Create and register a OpenCensus Stackdriver Trace exporter.
+		exporter, err := stackdriver.NewExporter(stackdriver.Options{
+			ProjectID: loggingConfig.ProjectId,
+		})
+		if err != nil {
+			log.Fatal(err)
+		}
+		octrace.RegisterExporter(exporter)
+		_, flush, err := cloudtrace.InstallNewPipeline(
+			[]cloudtrace.Option{
+				cloudtrace.WithProjectID(loggingConfig.ProjectId),
+				// other optional exporter options
+			},
+			// This example code uses sdktrace.AlwaysSample sampler to sample all traces.
+			// In a production environment or high QPS setup please use ProbabilitySampler
+			// set at the desired probability.
+			// Example:
+			// sdktrace.WithConfig(sdktrace.Config {
+			//        DefaultSampler: sdktrace.ProbabilitySampler(0.0001),
+			// })
+			sdktrace.WithConfig(sdktrace.Config{DefaultSampler: sdktrace.AlwaysSample()}),
+			// other optional provider options
+		)
+		if err != nil {
+			log.Fatalf("cloudtrace.InstallNewPipeline: %v", err)
+		}
+		// before ending program, wait for all enqueued spans to be exported
+		defer flush()
 	default:
 		logConfig.Encoding = "console"
 		logConfig.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
@@ -51,39 +95,10 @@ func InitLogger(config *config.Config) {
 	// Build the logger
 	globalLogger, _ := logConfig.Build()
 	zap.ReplaceGlobals(globalLogger)
-	_, flush, err := cloudtrace.InstallNewPipeline(
-		[]cloudtrace.Option{
-			cloudtrace.WithProjectID(loggingConfig.ProjectId),
-			// other optional exporter options
-		},
-		// This example code uses sdktrace.AlwaysSample sampler to sample all traces.
-		// In a production environment or high QPS setup please use ProbabilitySampler
-		// set at the desired probability.
-		// Example:
-		// sdktrace.WithConfig(sdktrace.Config {
-		//        DefaultSampler: sdktrace.ProbabilitySampler(0.0001),
-		// })
-		sdktrace.WithConfig(sdktrace.Config{DefaultSampler: sdktrace.AlwaysSample()}),
-		// other optional provider options
-	)
-	if err != nil {
-		log.Fatalf("cloudtrace.InstallNewPipeline: %v", err)
-	}
-	// before ending program, wait for all enqueued spans to be exported
-	defer flush()
 
 	// Create custom span.
-	tr = global.TraceProvider().Tracer("shorted.com.au/collector")
+	tr = global.TraceProvider().Tracer("shorted.com.au/watcher")
 
-
-	// Create and register a OpenCensus Stackdriver Trace exporter.
-	exporter, err := stackdriver.NewExporter(stackdriver.Options{
-			ProjectID: loggingConfig.ProjectId,
-	})
-	if err != nil {
-			log.Fatal(err)
-	}
-	octrace.RegisterExporter(exporter)
 }
 
 func Request(ctx context.Context, w http.ResponseWriter, r *http.Request) {
@@ -104,7 +119,7 @@ func Request(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 			zap.Int("status", http.StatusOK),
 			zap.String("path", r.RequestURI),
 			zap.String("method", r.Method),
-			zap.String("package", "collector.http"),
+			zap.String("package", "watcher.http"),
 		}
 		zap.L().Info("HTTP Request", fields...)
 
@@ -120,7 +135,7 @@ func Request(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 				Referer:       r.Referer(),
 				Protocol:      r.Proto,
 			}),
-			zap.String("package", "collector.http"),
+			zap.String("package", "watcher.http"),
 		}
 		zap.L().Info("HTTP Request", fields...)
 
@@ -139,7 +154,7 @@ func Request(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 				Referer:       r.Referer(),
 				Protocol:      r.Proto,
 			}),
-			zap.String("package", "collector.http"),
+			zap.String("package", "watcher.http"),
 			zap.String("Trace", trace),
 		}
 		zap.L().Info("HTTP Request", fields...)
@@ -175,7 +190,7 @@ func Response(ctx context.Context, r *http.Response) {
 				Referer:       r.Request.Referer(),
 				Protocol:      r.Proto,
 			}),
-			zap.String("package", "collector.http"),
+			zap.String("package", "watcher.http"),
 		}
 		zap.L().Info("Source - HTTP Response", fields...)
 	} else {
@@ -192,7 +207,7 @@ func Response(ctx context.Context, r *http.Response) {
 				Referer:       r.Request.Referer(),
 				Protocol:      r.Proto,
 			}),
-			zap.String("package", "collector.http"),
+			zap.String("package", "watcher.http"),
 			zap.String("Trace", trace),
 		}
 		zap.L().Info("Source - HTTP Response", fields...)
@@ -222,6 +237,10 @@ func Fatalf(template string, args ...interface{}) {
 }
 
 func Errorf(template string, args ...interface{}) {
+	zap.S().Errorf(template, args...)
+}
+
+func Debugf(template string, args ...interface{}) {
 	zap.S().Errorf(template, args...)
 }
 
