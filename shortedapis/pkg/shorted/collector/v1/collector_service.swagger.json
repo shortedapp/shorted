@@ -117,6 +117,15 @@
         }
       }
     },
+    "v1Parser": {
+      "type": "string",
+      "enum": [
+        "PARSER_CSV",
+        "PARSER_SHORTS",
+        "PARSER_JSON_DEFAULT"
+      ],
+      "default": "PARSER_CSV"
+    },
     "v1Source": {
       "type": "object",
       "properties": {
@@ -126,6 +135,9 @@
         },
         "format": {
           "$ref": "#/definitions/v1Format"
+        },
+        "parser": {
+          "$ref": "#/definitions/v1Parser"
         }
       },
       "title": "Source is a definition of a url that we can to collect/sync to our given index"
