@@ -29,7 +29,7 @@ func New(ctx context.Context, cfg *config.Config) (*Service, error) {
 
 // GetSource information about a specific configured Watch
 func (s *Service) GetSource(ctx context.Context, in *v1.GetSourceRequest) (*v1.GetSourceResponse, error) {
-	result, err := getSource(ctx, in.Url, in.Format)
+	result, err := getSource(ctx, in.Url, in.Format, )
 	if err != nil {
 		return &v1.GetSourceResponse{}, fmt.Errorf("unable to fetch source %s, error: %v", in.Url, err)
 	}

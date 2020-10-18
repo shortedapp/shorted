@@ -61,6 +61,7 @@ message GetSourceRequest {
   string url = 1 [(validate.rules).string.uri_ref = true];
   // if not provided we can attempt to discover the format from the given URL
   Format format = 2;
+  Parser parser = 3;
 }
 
 message  GetSourceResponse {

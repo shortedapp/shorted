@@ -54,6 +54,8 @@ func (m *GetSourceRequest) Validate() error {
 
 	// no validation rules for Format
 
+	// no validation rules for Parser
+
 	return nil
 }
 

@@ -105,6 +105,9 @@
         "format": {
           "$ref": "#/definitions/v1Format",
           "title": "if not provided we can attempt to discover the format from the given URL"
+        },
+        "parser": {
+          "$ref": "#/definitions/v1Parser"
         }
       },
       "title": "------------ GET ------------"
