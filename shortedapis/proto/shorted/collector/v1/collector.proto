@@ -55,6 +55,7 @@ message Source {
   // URL is the base URL for the givne source
   string url = 1 [(validate.rules).string.uri_ref = true];
   Format format = 2;
+  Parser parser = 3;
 }
 
 message SourceDetails {
@@ -94,4 +95,10 @@ enum Format {
   CSV = 2;
   HTML = 3;
   XML = 4;
+}
+
+enum Parser {
+  PARSER_CSV = 0;
+  PARSER_SHORTS = 1;
+  PARSER_JSON_DEFAULT = 2;
 }

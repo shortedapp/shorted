@@ -36,7 +36,9 @@ func (s *Service) GetSource(ctx context.Context, in *v1.GetSourceRequest) (*v1.G
 	return &v1.GetSourceResponse{Result: result}, nil
 }
 
-func getSource(ctx context.Context, url string, format v1.Format) (*v1.SourceDetails, error) {
+func getSource(ctx context.Context, url string, format v1.Format, parser v1.Parser) (*v1.SourceDetails, error) {
+	
+	
 	response, err := http.Get(url)
 	if err != nil {
 		log.Errorf("unable to fetch contents for url %s", url)
