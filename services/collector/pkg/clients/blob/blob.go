@@ -9,16 +9,16 @@ import (
 	"github.com/shortedapp/shorted/services/collector/pkg/log"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/fileblob"
-	"gocloud.dev/blob/gcsblob"
 	_ "gocloud.dev/blob/gcsblob"
 	"gocloud.dev/gcp"
 )
 
 type Blob struct {
-	Client *gcp.HTTPClient
+	Client     *gcp.HTTPClient
+	bucketName string
 }
 
-func New(ctx context.Context) (*Blob, error) {
+func New(ctx context.Context, bucketName string) (*Blob, error) {
 	var blob Blob
 	// Your GCP credentials.
 	// See https://cloud.google.com/docs/authentication/production
@@ -38,27 +38,17 @@ func New(ctx context.Context) (*Blob, error) {
 		return &blob, err
 	}
 	blob.Client = client
+	blob.bucketName = bucketName
 	return &blob, nil
 }
 
-func (b *Blob) BucketWrite(path string, data []byte) error {
-	bucketName, _ := separatePath(path)
-	bucket, err := gcsblob.OpenBucket(context.Background(), b.Client, bucketName, nil)
-	if err != nil {
-		return fmt.Errorf("could not open bucket: %v", err)
-	}
-	defer bucket.Close()
-	return nil
-}
-
-func BucketWrite(ctx context.Context, path string, data []byte) error {
-	bucketName, filePath := separatePath(path)
-	bucket, err := blob.OpenBucket(ctx, bucketName)
+func (b *Blob) BucketWrite(ctx context.Context, path string, data []byte) error {
+	bucket, err := blob.OpenBucket(ctx, b.bucketName)
 	if err != nil {
 		return fmt.Errorf("could not open bucket: %v", err)
 	}
 	// Open the key "foo.txt" for writing with the default options.
-	w, err := bucket.NewWriter(ctx, filePath, nil)
+	w, err := bucket.NewWriter(ctx, path, nil)
 	if err != nil {
 		return err
 	}
@@ -71,7 +61,7 @@ func BucketWrite(ctx context.Context, path string, data []byte) error {
 	if closeErr != nil {
 		log.Fatal(closeErr)
 	}
-	log.Infof(ctx, "successful write to bucket [%s] at key [%s]", bucketName, filePath)
+	log.Infof(ctx, "successful write to bucket [%s] at key [%s]", b.bucketName, path)
 
 	defer bucket.Close()
 	return nil

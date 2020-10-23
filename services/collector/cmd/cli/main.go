@@ -19,6 +19,7 @@ func main() {
 	cfg := &config.Config{
 		ProjectId:      os.Getenv("PROJECT_ID"),
 		LoggingEncoder: os.Getenv("LOGGING_ENCODER"),
+		Bucket: "gs://collector-8cceed34",
 	}
 
 	logger = zap.S().With("watcher", "cmd")
@@ -31,6 +32,7 @@ func main() {
 	resp, err := c.GetSource(ctx, &v1.GetSourceRequest{
 		Url:    source,
 		Format: v1.Format_CSV,
+		Parser: v1.Parser_PARSER_SHORTS,
 	})
 	if err != nil {
 		panic(fmt.Errorf("error fetching from source: %v, error: %v", source, err))

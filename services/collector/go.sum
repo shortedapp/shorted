@@ -346,6 +346,8 @@ github.com/shortedapp/shorted/shortedapis v0.0.0-20201011061620-f87c79f3f937 h1:
 github.com/shortedapp/shorted/shortedapis v0.0.0-20201011061620-f87c79f3f937/go.mod h1:JU/CXtKGDzIIs4LcFcrbzRS4Ys+jqPOxaCXVT8bSlm8=
 github.com/shortedapp/shorted/shortedapis v0.0.0-20201018115743-4a107a867f03 h1:tImHS0Umh3bUiqIF5sd0rcpmbJbAAeMPvTzAsdJMfV4=
 github.com/shortedapp/shorted/shortedapis v0.0.0-20201018115743-4a107a867f03/go.mod h1:JU/CXtKGDzIIs4LcFcrbzRS4Ys+jqPOxaCXVT8bSlm8=
+github.com/shortedapp/shorted/shortedapis v0.0.0-20201018120224-fdc3d1588f58 h1:A8N84NPlYgTpRKWMv5ODU6qdvW4fmK8E8FoJAid30Rg=
+github.com/shortedapp/shorted/shortedapis v0.0.0-20201018120224-fdc3d1588f58/go.mod h1:JU/CXtKGDzIIs4LcFcrbzRS4Ys+jqPOxaCXVT8bSlm8=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
 github.com/spf13/afero v1.3.3/go.mod h1:5KUK8ByomD5Ti5Artl0RtHeI5pTF7MIDuXL3yY520V4=
 github.com/spf13/afero v1.3.4/go.mod h1:Ai8FlHk4v/PARR026UzYexafAt9roJ7LcLMAmO6Z93I=

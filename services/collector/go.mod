@@ -17,7 +17,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/shortedapp/shorted/services/watcher v0.0.0-20201011123239-d36cb55eebbe
-	github.com/shortedapp/shorted/shortedapis v0.0.0-20201018115743-4a107a867f03
+	github.com/shortedapp/shorted/shortedapis v0.0.0-20201018120224-fdc3d1588f58
 	github.com/stretchr/testify v1.6.1
 	go.opencensus.io v0.22.4
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace v0.11.0

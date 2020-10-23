@@ -23,6 +23,6 @@ type (
 	}
 	Option  func(cfg *Config)
 	Handler interface {
-		Parse(context.Context, io.ReadCloser, ...Option) ([]byte, error)
+		Parse(context.Context, io.ReadCloser, ...Option) (int, []byte, error)
 	}
 )
