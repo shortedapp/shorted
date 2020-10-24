@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"crypto/sha1"
+	"crypto/sha256"
 
 	"github.com/shortedapp/shorted/services/collector/parsers"
 	"github.com/shortedapp/shorted/services/collector/pkg/clients/blob"
@@ -40,7 +40,7 @@ func (s *Service) GetSource(ctx context.Context, in *v1.GetSourceRequest) (*v1.G
 }
 
 func (s *Service) getSource(ctx context.Context, uri string, format v1.Format, name v1.Parser) (*v1.SourceDetails, error) {
-	h := sha1.New()
+	h := sha256.New()
 	response, err := http.Get(uri)
 	if err != nil {
 		log.Errorf("unable to fetch contents for url %s", uri)
@@ -70,7 +70,7 @@ func (s *Service) getSource(ctx context.Context, uri string, format v1.Format, n
 		return nil, fmt.Errorf("failed to parse uri: %v, error: %v", uri, err)
 	}
 	h.Write(data)
-	err = s.blob.BucketWrite(ctx, u.Path, data)
+	err = s.blob.BucketWrite(ctx, u.Path, data, metadata)
 	if err != nil {
 		return nil, fmt.Errorf("failed to write to bucket: %v", err)
 	}

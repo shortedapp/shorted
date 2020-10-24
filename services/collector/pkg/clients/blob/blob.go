@@ -3,10 +3,12 @@ package blob
 import (
 	"context"
 	"fmt"
-	"io"
 	"net/url"
+	"strconv"
+	"time"
 
 	"github.com/shortedapp/shorted/services/collector/pkg/log"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/collector/v1"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/gcsblob"
@@ -42,24 +44,22 @@ func New(ctx context.Context, bucketName string) (*Blob, error) {
 	return &blob, nil
 }
 
-func (b *Blob) BucketWrite(ctx context.Context, path string, data []byte) error {
+func (b *Blob) BucketWrite(ctx context.Context, path string, data []byte, metadata *v1.SourceMetadata) error {
 	bucket, err := blob.OpenBucket(ctx, b.bucketName)
 	if err != nil {
 		return fmt.Errorf("could not open bucket: %v", err)
 	}
 	// Open the key "foo.txt" for writing with the default options.
-	w, err := bucket.NewWriter(ctx, path, nil)
-	if err != nil {
-		return err
-	}
-	_, writeErr := io.WriteString(w, string(data))
-	// Always check the return value of Close when writing.
-	closeErr := w.Close()
+	writeErr := bucket.WriteAll(ctx, path, data, &blob.WriterOptions{
+		ContentType: "application/csv",
+		Metadata:    translateMetadata(metadata),
+	})
 	if writeErr != nil {
 		log.Fatal(writeErr)
+		return writeErr
 	}
-	if closeErr != nil {
-		log.Fatal(closeErr)
+	if writeErr != nil {
+		log.Fatal(writeErr)
 	}
 	log.Infof(ctx, "successful write to bucket [%s] at key [%s]", b.bucketName, path)
 
@@ -70,4 +70,19 @@ func (b *Blob) BucketWrite(ctx context.Context, path string, data []byte) error 
 func separatePath(s string) (string, string) {
 	u, _ := url.Parse(s)
 	return fmt.Sprintf("%s://%s", u.Scheme, u.Host), u.Path
+}
+
+func translateMetadata(metadata *v1.SourceMetadata) (m map[string]string) {
+	m = make(map[string]string)
+	timeNow := time.Now().String()
+	m["created-at"], m["last-modified"] = timeNow, timeNow
+	m["items"] = strconv.FormatInt(metadata.Size_, 10)
+	m["digest"] = metadata.Digest
+	if lm, found := metadata.Headers["Last-Modified"]; found {
+		m["last-modified"] = lm
+	}
+	if cl, found := metadata.Headers["Content-Length"]; found {
+		m["content-length"] = cl
+	}
+	return m
 }

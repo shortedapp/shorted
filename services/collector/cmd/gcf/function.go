@@ -1,10 +1,10 @@
-package collector
+package gcf
 
 import (
 	"net/http"
 	"os"
 
-	"github.com/shortedapp/shorted/services/collector/pkg/collector"
+	"github.com/shortedapp/shorted/services/collector/internal/service/collector"
 	"github.com/shortedapp/shorted/services/collector/pkg/config"
 	"github.com/shortedapp/shorted/services/collector/pkg/log"
 )
@@ -25,9 +25,8 @@ func init() {
 func Collect(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	log.Request(ctx, w, r)
-	c := collector.New(ctx, cfg, r.Body)
-	c.Pull()
-	c.Process()
-	c.Push()
-	// logger.Infof("successfully processed body: %v", c)
+	_, err := collector.New(ctx, cfg)
+	if err != nil {
+		log.Errorf("error creating collector instance")
+	}
 }
