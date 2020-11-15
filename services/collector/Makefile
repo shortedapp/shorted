@@ -15,11 +15,9 @@ GOOGLE_PROJECT=${PROJECT_ID}
 # 	gcloud functions delete Hello --runtime go113 --trigger-http
 
 get.credentials:
-	
 	gcloud iam service-accounts keys create ~/.config/gcloud/collector.json \
   		--iam-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
 	gcloud auth activate-service-account --key-file ~/.config/gcloud/collector.json
-	gsutil ls gs://${PROJECT_ID}-collector
 
 # describe:
 	
@@ -28,6 +26,33 @@ get.credentials:
 # 	serverless deploy --region=${REGION}
 run: build
 	PROJECT_ID=${PROJECT_ID} bin/collector
+
+run.cli: build.cli
+	PROJECT_ID=${PROJECT_ID} bin/cli
+run.build:
+	docker build -t asia.gcr.io/${PROJECT_ID}/collector:latest .
+run.run: run.build
+	docker run \
+		-p 8080:8080 \
+		-e GOOGLE_APPLICATION_CREDENTIALS=/src/.config/gcloud/watcher.json \
+		-v ~/.config/gcloud/watcher.json:/src/.config/gcloud/watcher.json \
+		asia.gcr.io/${PROJECT_ID}/collector:latest 
+
+run.publish: run.build
+	docker push asia.gcr.io/${PROJECT_ID}/collector:latest
+
+run.deploy: run.publish
+	gcloud run services update collector \
+	--image=asia.gcr.io/${PROJECT_ID}/collector:latest \
+	--service-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+
+run.test.grpc:
+	grpcurl -v \
+	-import-path ../../shortedapis/ \
+	-import-path ../../shortedapis/third_party/ \
+	-proto ../../shortedapis/shorted/collector/v1/collector.proto \
+	watcher-ak2zgjnhlq-ts.a.run.app:443 \
+	shorted.collector.v1.CollectorService/GetSource
 build:
 	go build -o bin/collector ./cmd/collector
 

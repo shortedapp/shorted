@@ -22,6 +22,7 @@ iam:
             name: collector
             roles:
             - roles/cloudtrace.agent
+            - roles/storage.objectAdmin
         watcher:
             name: watcher
             roles:

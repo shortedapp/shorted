@@ -37,7 +37,11 @@ run.cli: build.cli
 run.build:
 	docker build -t asia.gcr.io/${PROJECT_ID}/watcher:latest .
 run.run: run.build
-	docker run -p 8080:8080 asia.gcr.io/${PROJECT_ID}/watcher:latest 
+	docker run \
+		-p 8080:8080 \
+		-e GOOGLE_APPLICATION_CREDENTIALS=/src/.config/gcloud/watcher.json \
+		-v ~/.config/gcloud/watcher.json:/src/.config/gcloud/watcher.json \
+		asia.gcr.io/${PROJECT_ID}/watcher:latest 
 
 run.publish: run.build
 	docker push asia.gcr.io/${PROJECT_ID}/watcher:latest
