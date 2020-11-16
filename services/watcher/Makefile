@@ -49,7 +49,8 @@ run.publish: run.build
 run.deploy: run.publish
 	gcloud run services update watcher \
 	--image=asia.gcr.io/${PROJECT_ID}/watcher:latest \
-	--service-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+	--service-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com \
+	--allow-unauthenticated
 
 run.test.grpc:
 	grpcurl -v \
