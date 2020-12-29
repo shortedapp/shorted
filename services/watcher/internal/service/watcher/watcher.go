@@ -142,10 +142,17 @@ func (w *Watcher) DeleteWatcher(ctx context.Context, in *v1.DeleteWatcherRequest
 
 	return &v1.DeleteWatcherResponse{Watch: watcher}, nil
 }
-
+// SyncWatcher is responsible for discovering outstanding documents available for collection and managing the
+// collection process. General workflow is as follows:
+// 1. fetch current index
+// 2. discover latest context from given source
+// 3. compare difference between current and latest documents
+// 4. synchronise/collect new documents via the collector service
+// 5. update index with new state based on results of synchronisation status
 func (w *Watcher) SyncWatcher(ctx context.Context, in *v1.SyncWatcherRequest) (*v1.SyncWatcherResponse, error) {
 	id := in.Id
 	fmt.Printf("syncing watcher: %v", id)
+	// fetch watcher index
 	watcher, err := w.store.Get(id)
 	if err != nil {
 		return nil, fmt.Errorf("error synchronising watcher %v, error: %v", id, err)

@@ -51,7 +51,7 @@ run.test.grpc:
 	grpcurl -v \
 	-import-path ../../shortedapis/ \
 	-import-path ../../shortedapis/third_party/ \
-	-proto ../../shortedapis/shorted/collector/v1/collector.proto \
+	-proto ../../shortedapis/proto/shorted/collector/v1/collector.proto \
 	collector-ak2zgjnhlq-ts.a.run.app:443 \
 	shorted.collector.v1.CollectorService/GetSource
 build:
