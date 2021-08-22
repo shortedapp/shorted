@@ -1858,10 +1858,7 @@ func (m *ListWatchersRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -1946,10 +1943,7 @@ func (m *ListWatchersResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2032,10 +2026,7 @@ func (m *GetWatcherRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2122,10 +2113,7 @@ func (m *GetWatcherResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2212,10 +2200,7 @@ func (m *CreateWatcherRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2302,10 +2287,7 @@ func (m *CreateWatcherResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2424,10 +2406,7 @@ func (m *UpdateWatcherRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2514,10 +2493,7 @@ func (m *UpdateWatcherResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2600,10 +2576,7 @@ func (m *DeleteWatcherRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2690,10 +2663,7 @@ func (m *DeleteWatcherResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2744,10 +2714,7 @@ func (m *SyncAllRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2832,10 +2799,7 @@ func (m *SyncAllResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -2918,10 +2882,7 @@ func (m *SyncWatcherRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {
@@ -3008,10 +2969,7 @@ func (m *SyncWatcherResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthWatcherService
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthWatcherService
 			}
 			if (iNdEx + skippy) > l {

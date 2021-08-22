@@ -19,7 +19,7 @@ var (
 			Description: "parsing generic csv data source",
 		},
 		{
-			Name:        "shorts",
+			Name:        "PARSER_SHORTS",
 			Impl:        "github.com/shortedapp/shorted/services/collector/parsers/shorts",
 			Description: "parsing ASIC short positions",
 		},

@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/collector/v1"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -15,6 +16,6 @@ func TestSeparatePathPath(t *testing.T) {
 }
 
 func TestBucketWrite(t *testing.T) {
-
-	assert.NoError(t, BucketWrite(context.Background(), "file:///testdata/collector-bucket", []byte("test-output")))
+	b, _ := New(context.Background(), "file:///testdata")
+	assert.NoError(t, b.BucketWrite(context.Background(), "collector-bucket", []byte("test-output"), &v1.SourceMetadata{}))
 }

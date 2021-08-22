@@ -5,7 +5,7 @@ import (
 	"crypto/tls"
 	"fmt"
 
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/collector/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
@@ -19,15 +19,19 @@ func main() {
 		grpc.WithTransportCredentials(creds),
 		// grpc.WithInsecure(),
 	}
-	conn, err := grpc.Dial("watcher-ak2zgjnhlq-ts.a.run.app:443", opts...)
+	conn, err := grpc.Dial("collector-ak2zgjnhlq-ts.a.run.app:443", opts...)
 	if err != nil {
 		fmt.Printf("error dailing: %v", err)
 	}
 	defer conn.Close()
 	fmt.Printf("connection state: %v\n", conn.GetState().String())
-	client := v1.NewWatchServiceClient(conn)
-
-	watch, err := client.SyncWatcher(context.Background(), &v1.SyncWatcherRequest{Id: "28f6edfc-7361-4b37-9e36-65814667e9b4"})
+	client := v1.NewCollectorServiceClient(conn)
+	source := "https://asic.gov.au/Reports/Daily/2010/06/RR20100616-001-SSDailyAggShortPos.csv"
+	watch, err := client.GetSource(context.Background(), &v1.GetSourceRequest{
+		Url:    source,
+		Format: v1.Format_CSV,
+		Parser: v1.Parser_PARSER_SHORTS,
+	})
 	if err != nil {
 		panic(fmt.Errorf("error fetching watch from client: %v", err))
 	}

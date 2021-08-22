@@ -18,7 +18,7 @@ type handler struct {
 	cfg *parser.Config
 }
 
-func (h *handler) Parse(ctx context.Context, reader io.ReadCloser, opts ...parser.Option) ([]byte, error) {
+func (h *handler) Parse(ctx context.Context, reader io.ReadCloser, opts ...parser.Option) (int, []byte, error) {
 	for _, opt := range opts {
 		opt(h.cfg)
 	}
@@ -46,7 +46,7 @@ func (h *handler) Parse(ctx context.Context, reader io.ReadCloser, opts ...parse
 		count++
 	}
 	log.Infof(ctx, "processed %d rows", count)
-	return data, nil
+	return count, data, nil
 }
 
 // GetInfo returns the Info associated with this source implementation.

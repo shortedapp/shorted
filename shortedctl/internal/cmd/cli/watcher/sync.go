@@ -1,24 +1,18 @@
 package watcher
 
 import (
-	// "encoding/json"
-	// "bytes"
 	"fmt"
 
+	"github.com/ghodss/yaml"
 	watcherV1 "github.com/shortedapp/shorted/shortedctl/internal/client/watcher/v1"
 	"github.com/shortedapp/shorted/shortedctl/internal/config"
 	"github.com/spf13/cobra"
-
-	"gopkg.in/yaml.v3"
-	// "github.com/ghodss/yaml"
-	// "github.com/goccy/go-yaml"
-	// "github.com/golang/protobuf/jsonpb"
 )
 
-func DescribeCommand() *cobra.Command {
+func SyncCommand() *cobra.Command {
 	c := &cobra.Command{
-		Use:   "watcher",
-		Short: "show details of a specific watcher",
+		Use:   "sync <id>",
+		Short: "synchronise a specific watcher",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cfg, err := config.Get()
 			if err != nil {
@@ -26,7 +20,7 @@ func DescribeCommand() *cobra.Command {
 			}
 			switch len(args) {
 			case 0:
-				return fmt.Errorf("must specific id of resource to describe")
+				return fmt.Errorf("must specific id of watcher to synchronise")
 			case 1:
 				client, err := watcherV1.NewForConfig(&cfg)
 				if err != nil {
@@ -38,19 +32,11 @@ func DescribeCommand() *cobra.Command {
 					return fmt.Errorf("invalid id provided: %v", err)
 				}
 				client, err = watcherV1.NewForConfig(&cfg)
-				watcher, err := client.Watchers().Get(id)
+				syncDetails, err := client.Watchers().Sync(id)
 				if err != nil {
-					return fmt.Errorf("error fetching watcher: %v, error: %v", id, err)
+					return fmt.Errorf("error syncing watcher: %v, error: %v", id, err)
 				}
-				// var j *bytes.Buffer
-				// marshaler := &jsonpb.Marshaler{}
-				// marshaler.Marshal(j, watcher)
-				d, err := yaml.Marshal(watcher);
-
-
-				if err != nil {
-					return fmt.Errorf("error marshaling yaml: %v", err)
-				}
+				d, err := yaml.Marshal(syncDetails)
 				fmt.Printf("\n%s\n", string(d))
 				return nil
 			default:
@@ -60,5 +46,3 @@ func DescribeCommand() *cobra.Command {
 	}
 	return c
 }
-
-

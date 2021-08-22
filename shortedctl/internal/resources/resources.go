@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
+	// "gopkg.in/yaml.v3"
 	"github.com/ghodss/yaml"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 	"github.com/spf13/cobra"
@@ -33,5 +34,10 @@ func WatcherFromCmd(cmd *cobra.Command) (*v1.WatcherDetails, error) {
 		return nil, fmt.Errorf("failed loading provided file: %v, err: %v", file, err)
 	}
 	err = yaml.Unmarshal(yamlFile, &watcher)
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal yaml: %v", err)
+	}
+
 	return &watcher, nil
 }
