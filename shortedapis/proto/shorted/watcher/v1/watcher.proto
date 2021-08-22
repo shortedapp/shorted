@@ -62,7 +62,7 @@ message Source {
   string url = 1 [(validate.rules).string.uri_ref = true];
   string adapter = 2 [(validate.rules).string = {in: ["asic"]}];
   DocumentFormat format = 3;
-  google.protobuf.Duration interval = 4 [(gogoproto.stdduration) = true];
+  string interval = 4;
 
 
 }

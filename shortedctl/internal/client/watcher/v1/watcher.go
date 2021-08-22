@@ -21,6 +21,8 @@ type WatchersInferface interface {
 	List() ([]*v1.WatcherDetails, error)
 	Create(*v1.WatcherDetails) (*v1.WatcherDetails, error)
 	Delete(id string)(*v1.WatcherDetails, error)
+	Sync(id string) (*v1.SyncDetails, error)
+	// SyncAll() (*v1.SyncDetails, error)
 }
 type watchers struct {
 	gc grpc.Interface
@@ -86,4 +88,19 @@ func (w *watchers) Create(watch *v1.WatcherDetails) (*v1.WatcherDetails, error) 
 		return nil, err
 	}
 	return resp.Watch, nil
+}
+
+func (w *watchers) Sync(id string) (*v1.SyncDetails, error) {
+	cc, err := w.gc.Dial(context.TODO(), serviceName)
+	if err != nil {
+		return nil, err
+	}
+	wc := v1.NewWatchServiceClient(cc)
+	resp, err := wc.SyncWatcher(context.TODO(), &v1.SyncWatcherRequest{
+		Id: id,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return resp.Sync, nil
 }

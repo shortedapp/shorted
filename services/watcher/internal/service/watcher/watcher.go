@@ -142,6 +142,7 @@ func (w *Watcher) DeleteWatcher(ctx context.Context, in *v1.DeleteWatcherRequest
 
 	return &v1.DeleteWatcherResponse{Watch: watcher}, nil
 }
+
 // SyncWatcher is responsible for discovering outstanding documents available for collection and managing the
 // collection process. General workflow is as follows:
 // 1. fetch current index
@@ -174,7 +175,11 @@ func (w *Watcher) SyncWatcher(ctx context.Context, in *v1.SyncWatcherRequest) (*
 
 	log.Infof(ctx, "[Source:%v]: found %v new documents", watcher.Spec.Source.Url, difference.GetIndex().Count)
 
-	return nil, nil
+	return &v1.SyncWatcherResponse{Sync: &v1.SyncDetails{
+		Id:     id,
+		Name:   watcher.Metadata.Name,
+		Status: v1.Status_SYNC_STATUS_SUCCESS,
+	}}, nil
 }
 
 func (w *Watcher) SyncAll(ctx context.Context, in *v1.SyncAllRequest) (*v1.SyncAllResponse, error) {

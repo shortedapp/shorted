@@ -7,11 +7,12 @@ import (
 
 	"log"
 
-	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/describe"
-	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/delete"
 	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/create"
+	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/delete"
+	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/describe"
 	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/get"
 	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/version"
+	"github.com/shortedapp/shorted/shortedctl/internal/cmd/cli/watcher"
 	"github.com/shortedapp/shorted/shortedctl/internal/config"
 	"github.com/spf13/cobra"
 )
@@ -35,6 +36,7 @@ func NewCommand(name string) *cobra.Command {
 		create.NewCommand(),
 		delete.NewCommand(),
 		describe.NewCommand(),
+		watcher.NewCommand(),
 	)
 	cobra.OnInitialize(load)
 	return c

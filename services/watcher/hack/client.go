@@ -27,7 +27,7 @@ func main() {
 	fmt.Printf("connection state: %v\n", conn.GetState().String())
 	client := v1.NewWatchServiceClient(conn)
 
-	watch, err := client.ListWatchers(context.Background(), &v1.ListWatchersRequest{})
+	watch, err := client.SyncWatcher(context.Background(), &v1.SyncWatcherRequest{Id: "28f6edfc-7361-4b37-9e36-65814667e9b4"})
 	if err != nil {
 		panic(fmt.Errorf("error fetching watch from client: %v", err))
 	}
