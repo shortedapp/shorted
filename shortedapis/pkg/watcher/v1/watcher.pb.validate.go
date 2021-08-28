@@ -351,7 +351,15 @@ func (m *Source) Validate() error {
 
 	// no validation rules for Format
 
-	// no validation rules for Interval
+	if v, ok := interface{}(m.GetInterval()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SourceValidationError{
+				field:  "Interval",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	return nil
 }
