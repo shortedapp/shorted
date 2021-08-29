@@ -9,10 +9,11 @@ import (
 	"github.com/shortedapp/shorted/shortedctl/internal/config"
 	"github.com/spf13/cobra"
 
-	"gopkg.in/yaml.v3"
-	// "github.com/ghodss/yaml"
+	// "gopkg.in/yaml.v3"
+	"github.com/ghodss/yaml"
 	// "github.com/goccy/go-yaml"
 	// "github.com/golang/protobuf/jsonpb"
+	jsonpb "google.golang.org/protobuf/encoding/protojson"
 )
 
 func DescribeCommand() *cobra.Command {
@@ -45,13 +46,22 @@ func DescribeCommand() *cobra.Command {
 				// var j *bytes.Buffer
 				// marshaler := &jsonpb.Marshaler{}
 				// marshaler.Marshal(j, watcher)
-				d, err := yaml.Marshal(watcher);
+				// d, err := yaml.Marshal(watcher);
+				jsonbytes, err := jsonpb.Marshal(watcher)
 
 
 				if err != nil {
-					return fmt.Errorf("error marshaling yaml: %v", err)
+					return fmt.Errorf("error marshaling json: %v", err)
 				}
-				fmt.Printf("\n%s\n", string(d))
+
+				yamlbytes, err := yaml.JSONToYAML(jsonbytes)
+
+				if err != nil {
+					return fmt.Errorf("error converting json to yaml: %v", err)
+				}
+				
+				fmt.Printf("\n%s\n", string(yamlbytes))
+
 				return nil
 			default:
 				return fmt.Errorf("invalid input, must specify a specific ID to describe")
