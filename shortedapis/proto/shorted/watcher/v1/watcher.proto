@@ -21,7 +21,6 @@
 syntax = "proto3";
 
 package shorted.watcher.v1;
-import "gogo/gogoproto/gogo.proto";
 import "validate/validate.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
@@ -71,7 +70,7 @@ message Index {
   //url where index is stored (i.e gs://<project-name>-index/index.json)
   string url = 1 [(validate.rules).string.uri = true];
   int64 count = 2;
-  google.protobuf.Timestamp last_updated = 3 [(gogoproto.stdtime) = true, (validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp last_updated = 3 [(validate.rules).timestamp.required = true];
   Entries entries = 4;
 }
 
@@ -86,7 +85,7 @@ message Documents {
 
 message DocumentDetails {
   DocumentMetadata metadata =1;
-  google.protobuf.Timestamp created_at = 2 [(gogoproto.stdtime) = true];
+  google.protobuf.Timestamp created_at = 2;
   bool removed = 3;
   string digest = 4;
   string url = 5 [(validate.rules).string.uri = true];
