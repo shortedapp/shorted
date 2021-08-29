@@ -120,9 +120,10 @@ enum Status {
 }
 
 enum DocumentFormat {
-  JSON = 0;
-  YAML = 1;
-  CSV = 2;
-  HTML = 3;
-  XML = 4;
+  UNSPECIFIED = 0;
+  JSON = 1;
+  YAML = 2;
+  CSV = 3;
+  HTML = 4;
+  XML = 5;
 }
