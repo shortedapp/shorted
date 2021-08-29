@@ -8,6 +8,9 @@ import (
 	"github.com/ghodss/yaml"
 	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
 	"github.com/spf13/cobra"
+
+	jsonpb "google.golang.org/protobuf/encoding/protojson"
+	// "github.com/golang/protobuf/jsonpb"
 )
 
 func WatcherFromPath(file string) (*v1.WatcherDetails, error) {
@@ -29,14 +32,20 @@ func WatcherFromCmd(cmd *cobra.Command) (*v1.WatcherDetails, error) {
 	if file == "" {
 		return nil, fmt.Errorf("no file path specified")
 	}
-	yamlFile, err := ioutil.ReadFile(file)
+	yamlBytes, err := ioutil.ReadFile(file)
 	if err != nil {
 		return nil, fmt.Errorf("failed loading provided file: %v, err: %v", file, err)
 	}
-	err = yaml.Unmarshal(yamlFile, &watcher)
+
+	jsonBytes, err := yaml.YAMLToJSON(yamlBytes)
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal yaml: %v", err)
+		return nil, fmt.Errorf("error converting yaml to JSON")
+	}
+	err = jsonpb.Unmarshal(jsonBytes, &watcher)
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal json: %v", err)
 	}
 
 	return &watcher, nil

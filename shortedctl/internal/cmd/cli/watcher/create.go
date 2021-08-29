@@ -20,9 +20,14 @@ func CreateCommand() *cobra.Command {
 			}
 
 			watcherConfig, err := resources.WatcherFromCmd(cmd)
+
+			if err != nil || watcherConfig == nil {
+				fmt.Errorf("error parsing watcher config from file")
+				return err
+			}
 			client, err := watcherV1Client.NewForConfig(&cfg)
 
-			fmt.Printf("client: %v", client)
+			fmt.Printf("client: %v, watcherConfig: %v", client, watcherConfig)
 
 			_, err = client.Watchers().Create(watcherConfig)
 

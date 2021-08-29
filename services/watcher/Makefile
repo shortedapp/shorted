@@ -47,9 +47,10 @@ run.publish: run.build
 	docker push asia.gcr.io/${PROJECT_ID}/watcher:latest
 
 run.deploy: run.publish
-	gcloud run services update watcher \
+	gcloud beta run deploy watcher \
 	--image=asia.gcr.io/${PROJECT_ID}/watcher:latest \
 	--service-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com \
+	--use-http2 \
 	--allow-unauthenticated
 
 run.test.grpc:

@@ -313,13 +313,14 @@
     "v1DocumentFormat": {
       "type": "string",
       "enum": [
+        "UNSPECIFIED",
         "JSON",
         "YAML",
         "CSV",
         "HTML",
         "XML"
       ],
-      "default": "JSON"
+      "default": "UNSPECIFIED"
     },
     "v1DocumentMetadata": {
       "type": "object",

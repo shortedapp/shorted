@@ -10,7 +10,7 @@ require (
 	github.com/magiconair/properties v1.8.4 // indirect
 	github.com/mitchellh/mapstructure v1.3.3
 	github.com/pelletier/go-toml v1.8.1 // indirect
-	github.com/shortedapp/shorted/shortedapis v0.0.0-20210828234454-50ce601fca38
+	github.com/shortedapp/shorted/shortedapis v0.0.0-20210829003854-7220d2609617
 	github.com/spf13/afero v1.4.1 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/cobra v1.0.0
@@ -26,7 +26,6 @@ require (
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v0.4.1 // indirect
-	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
