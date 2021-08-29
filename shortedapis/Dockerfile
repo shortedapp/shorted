@@ -1,6 +1,6 @@
-FROM golang:1.14-buster
-ENV PROTOC_VERSION="3.13.0"
-ENV GRPC_WEB_VERSION="1.0.7"
+FROM golang:1.17-buster
+ENV PROTOC_VERSION="3.17.3"
+ENV GRPC_WEB_VERSION="1.2.1"
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -28,12 +28,9 @@ RUN go install \
   github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 
 RUN go install \
-    github.com/gogo/protobuf/proto \
-    github.com/gogo/protobuf/jsonpb \
-    github.com/gogo/protobuf/protoc-gen-gogo \
-    github.com/gogo/protobuf/gogoproto
+    google.golang.org/protobuf \
+    google.golang.org/protobuf/encoding/protojson \
 
-RUN go get github.com/gogo/protobuf/protoc-gen-gofast
     
 
 RUN cat go.mod
