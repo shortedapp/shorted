@@ -6,4 +6,4 @@ spec:
     url: https://asic.gov.au/regulatory-resources/markets/short-selling/short-position-reports-table/
     adapter: asic
     format: JSON
-    interval: 24h
+    interval: 86400s

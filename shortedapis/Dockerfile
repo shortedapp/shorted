@@ -2,6 +2,8 @@ FROM golang:1.17-buster
 ENV PROTOC_VERSION="3.17.3"
 ENV GRPC_WEB_VERSION="1.2.1"
 
+ENV PATH=$PATH:/$GO_PATH/bin
+
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -21,18 +23,13 @@ RUN mkdir /build
 WORKDIR /build
 ADD go.mod .
 ADD go.sum .
-RUN go install \
-  github.com/golang/protobuf/protoc-gen-go \
-  github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
-  github.com/envoyproxy/protoc-gen-validate \
-  github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
+RUN go mod download
 
-RUN go install \
-    google.golang.org/protobuf \
-    google.golang.org/protobuf/encoding/protojson \
-
-    
-
-RUN cat go.mod
+# required to ensure protoc plugin binaries are found
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go \
+            google.golang.org/grpc/cmd/protoc-gen-go-grpc \
+            github.com/envoyproxy/protoc-gen-validate \
+            github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
+            github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 
 CMD ["go","generate"]

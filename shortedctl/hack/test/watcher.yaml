@@ -6,4 +6,4 @@ spec:
     url: example.com
     adapter: example
     format: JSON
-    interval: 86400s 
+    interval: 86400s
