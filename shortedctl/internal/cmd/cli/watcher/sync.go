@@ -3,10 +3,12 @@ package watcher
 import (
 	"fmt"
 
-	"github.com/ghodss/yaml"
 	watcherV1 "github.com/shortedapp/shorted/shortedctl/internal/client/watcher/v1"
 	"github.com/shortedapp/shorted/shortedctl/internal/config"
+	"github.com/shortedapp/shorted/shortedctl/internal/output"
 	"github.com/spf13/cobra"
+
+	jsonpb "google.golang.org/protobuf/encoding/protojson"
 )
 
 func SyncCommand() *cobra.Command {
@@ -36,9 +38,9 @@ func SyncCommand() *cobra.Command {
 				if err != nil {
 					return fmt.Errorf("error syncing watcher: %v, error: %v", id, err)
 				}
-				d, err := yaml.Marshal(syncDetails)
-				fmt.Printf("\n%s\n", string(d))
-				return nil
+
+				jsonbytes, err := jsonpb.Marshal(syncDetails)
+				return output.PrintYAML(jsonbytes)
 			default:
 				return fmt.Errorf("invalid input, must specify a specific ID to describe")
 			}

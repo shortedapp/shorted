@@ -27,8 +27,6 @@ func CreateCommand() *cobra.Command {
 			}
 			client, err := watcherV1Client.NewForConfig(&cfg)
 
-			fmt.Printf("client: %v, watcherConfig: %v", client, watcherConfig)
-
 			_, err = client.Watchers().Create(watcherConfig)
 
 			return err

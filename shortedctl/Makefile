@@ -16,3 +16,6 @@ run.delete: build
 
 run.cd: build
 	./bin/shortedctl create watcher -f hack/test/watcher.yaml
+
+run.sync: build
+	./bin/shortedctl watcher sync ${ID}
