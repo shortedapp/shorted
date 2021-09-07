@@ -2,27 +2,31 @@ package source
 
 import (
 	"context"
-
+	"google.golang.org/grpc"
 	"github.com/Masterminds/semver"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	watcherpb "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	collectorpb "github.com/shortedapp/shorted/shortedapis/pkg/collector/v1"
 )
 
 type Manager struct {
-	index *v1.Index
+	index *watcherpb.Index
 }
 
 func NewManager() *Manager {
+
 	return &Manager{
-		index: &v1.Index{
-			Entries: &v1.Entries{
-				Documents: make(map[string]*v1.Documents),
+		index: &watcherpb.Index{
+			Entries: &watcherpb.Entries{
+				Documents: make(map[string]*watcherpb.Documents),
 			},
 		},
 	}
 }
 
-func (m *Manager) AddDocumentDetails(d *v1.DocumentDetails) {
+
+
+func (m *Manager) AddDocumentDetails(d *watcherpb.DocumentDetails) {
 	name := d.Metadata.Name
 	if ee, ok := m.index.Entries.Documents[name]; !ok {
 		d.Metadata.Version = semver.MustParse("v1.0.0").String()
@@ -36,11 +40,11 @@ func (m *Manager) SetCount(n int) {
 	m.index.Count = int64(n)
 }
 
-func (m *Manager) GetIndex() *v1.Index {
+func (m *Manager) GetIndex() *watcherpb.Index {
 	return m.index
 }
 
-func (m *Manager) Difference(current *v1.Index) *Manager {
+func (m *Manager) Difference(current *watcherpb.Index) *Manager {
 	new := NewManager()
 	count := 0
 	for entry, docs := range m.index.GetEntries().GetDocuments() {
@@ -54,4 +58,22 @@ func (m *Manager) Difference(current *v1.Index) *Manager {
 	new.SetCount(count)
 	log.Infof(context.TODO(), "found %v new documents", count)
 	return new
+}
+
+// Collect will fetch all documents found missing for the given syncronisation process
+func(m *Manager) Collect(s *watcherpb.WatcherDetails) (bool, error) {
+	conn, err := grpc.Dial("collector-ak2zgjnhlq-ts.a.run.app:443")
+	if err != nil {
+		log.Errorf("error dailing: %v", err)
+	}
+	defer conn.Close()
+	c := collectorpb.NewCollectorServiceClient(conn)
+	
+	for entry, docs := range m.index.GetEntries().GetDocuments() {
+		document := docs.GetDocument()[0]
+		c.GetSource(context.TODO(), &collectorpb.GetSourceRequest{
+			Url: document.Url,
+			Format: collectorpb.Format(document.Metadata.Format),
+			Parser: collectorpb.Parser(collectorpb.Parser_value[s.Spec.Source.Adapter])})
+	}
 }

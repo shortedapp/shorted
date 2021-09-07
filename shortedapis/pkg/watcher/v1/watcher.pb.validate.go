@@ -16,6 +16,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	core "core/v1"
 )
 
 // ensure the imports are used
@@ -31,6 +33,8 @@ var (
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
+
+	_ = core.Format(0)
 )
 
 // define the regex for a UUID once up-front
@@ -326,101 +330,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SpecValidationError{}
-
-// Validate checks the field values on Source with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *Source) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if _, err := url.Parse(m.GetUrl()); err != nil {
-		return SourceValidationError{
-			field:  "Url",
-			reason: "value must be a valid URI",
-			cause:  err,
-		}
-	}
-
-	if _, ok := _Source_Adapter_InLookup[m.GetAdapter()]; !ok {
-		return SourceValidationError{
-			field:  "Adapter",
-			reason: "value must be in list [asic]",
-		}
-	}
-
-	// no validation rules for Format
-
-	if v, ok := interface{}(m.GetInterval()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SourceValidationError{
-				field:  "Interval",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	return nil
-}
-
-// SourceValidationError is the validation error returned by Source.Validate if
-// the designated constraints aren't met.
-type SourceValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e SourceValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e SourceValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e SourceValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e SourceValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e SourceValidationError) ErrorName() string { return "SourceValidationError" }
-
-// Error satisfies the builtin error interface
-func (e SourceValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sSource.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = SourceValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = SourceValidationError{}
-
-var _Source_Adapter_InLookup = map[string]struct{}{
-	"asic": {},
-}
 
 // Validate checks the field values on Index with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.

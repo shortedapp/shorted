@@ -22,8 +22,8 @@ syntax = "proto3";
 
 package shorted.watcher.v1;
 import "validate/validate.proto";
-import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+import "api/core.proto";
 
 option csharp_namespace = "Shorted.Watcher.V1";
 option go_package = "watcher/v1;watcher";
@@ -49,22 +49,13 @@ message Metadata {
 }
 
 message Spec {
-  Source source = 3 [(validate.rules).message.required = true];
+  shorted.core.Source source = 3 [(validate.rules).message.required = true];
   Index index = 4;
 }
 
 
 
-// Source is a definition of a target that we want to "watch" and discover content from
-message Source {
-  // URL is the base URL for the givne source
-  string url = 1 [(validate.rules).string.uri_ref = true];
-  string adapter = 2 [(validate.rules).string = {in: ["asic"]}];
-  DocumentFormat format = 3;
-  google.protobuf.Duration interval = 4;
 
-
-}
 // Index defines where the discovered content of a Source is stored
 message Index {
   //url where index is stored (i.e gs://<project-name>-index/index.json)
@@ -95,7 +86,7 @@ message DocumentDetails {
 message DocumentMetadata {
   string name = 1;
   string date = 2;
-  DocumentFormat format = 3;
+  shorted.core.Format format = 3;
   string version = 4;
  
   
@@ -113,17 +104,9 @@ message SyncDetails {
 // SyncStatus specifies the state of a given synchronisation request.
 // Where a synchronisation state will correspond to a specfic source
 enum Status {
-  SYNC_STATUS_UNSPECIFIED = 0;
-  SYNC_STATUS_PENDING = 1;
-  SYNC_STATUS_SUCCESS = 2;
-  SYNC_STATUS_FAILURE = 3;
+  UNSPECIFIED = 0;
+  PENDING = 1;
+  SUCCESS = 2;
+  FAILURE = 3;
 }
 
-enum DocumentFormat {
-  UNSPECIFIED = 0;
-  JSON = 1;
-  YAML = 2;
-  CSV = 3;
-  HTML = 4;
-  XML = 5;
-}

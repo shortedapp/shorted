@@ -16,6 +16,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	core "core/v1"
 )
 
 // ensure the imports are used
@@ -31,6 +33,10 @@ var (
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
+
+	_ = core.Format(0)
+
+	_ = core.Parser(0)
 )
 
 // Validate checks the field values on GetSourceRequest with the rules defined

@@ -16,6 +16,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	core "core/v1"
 )
 
 // ensure the imports are used
@@ -31,10 +33,9 @@ var (
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
-)
 
-// define the regex for a UUID once up-front
-var _collector_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+	_ = core.Format(0)
+)
 
 // Validate checks the field values on CollectDetails with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -147,88 +148,6 @@ var _ interface {
 	ErrorName() string
 } = CollectDetailsValidationError{}
 
-// Validate checks the field values on Metadata with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *Metadata) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if err := m._validateUuid(m.GetId()); err != nil {
-		return MetadataValidationError{
-			field:  "Id",
-			reason: "value must be a valid UUID",
-			cause:  err,
-		}
-	}
-
-	// no validation rules for CreationTimestamp
-
-	return nil
-}
-
-func (m *Metadata) _validateUuid(uuid string) error {
-	if matched := _collector_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
-	}
-
-	return nil
-}
-
-// MetadataValidationError is the validation error returned by
-// Metadata.Validate if the designated constraints aren't met.
-type MetadataValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e MetadataValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e MetadataValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e MetadataValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e MetadataValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e MetadataValidationError) ErrorName() string { return "MetadataValidationError" }
-
-// Error satisfies the builtin error interface
-func (e MetadataValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sMetadata.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = MetadataValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = MetadataValidationError{}
-
 // Validate checks the field values on Spec with the rules defined in the proto
 // definition for this message. If any rules are violated, an error is returned.
 func (m *Spec) Validate() error {
@@ -319,82 +238,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SpecValidationError{}
-
-// Validate checks the field values on Source with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *Source) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if _, err := url.Parse(m.GetUrl()); err != nil {
-		return SourceValidationError{
-			field:  "Url",
-			reason: "value must be a valid URI",
-			cause:  err,
-		}
-	}
-
-	// no validation rules for Format
-
-	// no validation rules for Parser
-
-	return nil
-}
-
-// SourceValidationError is the validation error returned by Source.Validate if
-// the designated constraints aren't met.
-type SourceValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e SourceValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e SourceValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e SourceValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e SourceValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e SourceValidationError) ErrorName() string { return "SourceValidationError" }
-
-// Error satisfies the builtin error interface
-func (e SourceValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sSource.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = SourceValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = SourceValidationError{}
 
 // Validate checks the field values on SourceDetails with the rules defined in
 // the proto definition for this message. If any rules are violated, an error

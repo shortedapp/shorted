@@ -49,6 +49,45 @@
     }
   },
   "definitions": {
+    "coreFormat": {
+      "type": "string",
+      "enum": [
+        "FORMAT_UNSPECIFIED",
+        "JSON",
+        "YAML",
+        "CSV",
+        "HTML",
+        "XML"
+      ],
+      "default": "FORMAT_UNSPECIFIED"
+    },
+    "coreParser": {
+      "type": "string",
+      "enum": [
+        "PARSER_UNSPECIFIED",
+        "ASIC"
+      ],
+      "default": "PARSER_UNSPECIFIED"
+    },
+    "coreSource": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "title": "URL is the base URL for the givne source"
+        },
+        "parser": {
+          "$ref": "#/definitions/coreParser"
+        },
+        "format": {
+          "$ref": "#/definitions/coreFormat"
+        },
+        "interval": {
+          "type": "string"
+        }
+      },
+      "title": "Source is a definition of a target that we want to \"watch\" and discover content from"
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -85,17 +124,6 @@
         }
       }
     },
-    "v1Format": {
-      "type": "string",
-      "enum": [
-        "JSON",
-        "YAML",
-        "CSV",
-        "HTML",
-        "XML"
-      ],
-      "default": "JSON"
-    },
     "v1GetSourceRequest": {
       "type": "object",
       "properties": {
@@ -103,11 +131,11 @@
           "type": "string"
         },
         "format": {
-          "$ref": "#/definitions/v1Format",
+          "$ref": "#/definitions/coreFormat",
           "title": "if not provided we can attempt to discover the format from the given URL"
         },
         "parser": {
-          "$ref": "#/definitions/v1Parser"
+          "$ref": "#/definitions/coreParser"
         }
       },
       "title": "------------ GET ------------"
@@ -120,36 +148,11 @@
         }
       }
     },
-    "v1Parser": {
-      "type": "string",
-      "enum": [
-        "PARSER_CSV",
-        "PARSER_SHORTS",
-        "PARSER_JSON_DEFAULT"
-      ],
-      "default": "PARSER_CSV"
-    },
-    "v1Source": {
-      "type": "object",
-      "properties": {
-        "url": {
-          "type": "string",
-          "title": "URL is the base URL for the givne source"
-        },
-        "format": {
-          "$ref": "#/definitions/v1Format"
-        },
-        "parser": {
-          "$ref": "#/definitions/v1Parser"
-        }
-      },
-      "title": "Source is a definition of a url that we can to collect/sync to our given index"
-    },
     "v1SourceDetails": {
       "type": "object",
       "properties": {
         "source": {
-          "$ref": "#/definitions/v1Source"
+          "$ref": "#/definitions/coreSource"
         },
         "metadata": {
           "$ref": "#/definitions/v1SourceMetadata"

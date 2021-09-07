@@ -229,6 +229,45 @@
     }
   },
   "definitions": {
+    "coreFormat": {
+      "type": "string",
+      "enum": [
+        "FORMAT_UNSPECIFIED",
+        "JSON",
+        "YAML",
+        "CSV",
+        "HTML",
+        "XML"
+      ],
+      "default": "FORMAT_UNSPECIFIED"
+    },
+    "coreParser": {
+      "type": "string",
+      "enum": [
+        "PARSER_UNSPECIFIED",
+        "ASIC"
+      ],
+      "default": "PARSER_UNSPECIFIED"
+    },
+    "coreSource": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "title": "URL is the base URL for the givne source"
+        },
+        "parser": {
+          "$ref": "#/definitions/coreParser"
+        },
+        "format": {
+          "$ref": "#/definitions/coreFormat"
+        },
+        "interval": {
+          "type": "string"
+        }
+      },
+      "title": "Source is a definition of a target that we want to \"watch\" and discover content from"
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -310,18 +349,6 @@
         }
       }
     },
-    "v1DocumentFormat": {
-      "type": "string",
-      "enum": [
-        "UNSPECIFIED",
-        "JSON",
-        "YAML",
-        "CSV",
-        "HTML",
-        "XML"
-      ],
-      "default": "UNSPECIFIED"
-    },
     "v1DocumentMetadata": {
       "type": "object",
       "properties": {
@@ -332,7 +359,7 @@
           "type": "string"
         },
         "format": {
-          "$ref": "#/definitions/v1DocumentFormat"
+          "$ref": "#/definitions/coreFormat"
         },
         "version": {
           "type": "string"
@@ -401,44 +428,11 @@
         }
       }
     },
-    "v1Metadata": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "creationTimestamp": {
-          "type": "string"
-        }
-      }
-    },
-    "v1Source": {
-      "type": "object",
-      "properties": {
-        "url": {
-          "type": "string",
-          "title": "URL is the base URL for the givne source"
-        },
-        "adapter": {
-          "type": "string"
-        },
-        "format": {
-          "$ref": "#/definitions/v1DocumentFormat"
-        },
-        "interval": {
-          "type": "string"
-        }
-      },
-      "title": "Source is a definition of a target that we want to \"watch\" and discover content from"
-    },
     "v1Spec": {
       "type": "object",
       "properties": {
         "source": {
-          "$ref": "#/definitions/v1Source"
+          "$ref": "#/definitions/coreSource"
         },
         "index": {
           "$ref": "#/definitions/v1Index"
@@ -448,12 +442,12 @@
     "v1Status": {
       "type": "string",
       "enum": [
-        "SYNC_STATUS_UNSPECIFIED",
-        "SYNC_STATUS_PENDING",
-        "SYNC_STATUS_SUCCESS",
-        "SYNC_STATUS_FAILURE"
+        "UNSPECIFIED",
+        "PENDING",
+        "SUCCESS",
+        "FAILURE"
       ],
-      "default": "SYNC_STATUS_UNSPECIFIED",
+      "default": "UNSPECIFIED",
       "title": "SyncStatus specifies the state of a given synchronisation request.\nWhere a synchronisation state will correspond to a specfic source"
     },
     "v1SyncAllResponse": {
@@ -531,7 +525,7 @@
           "type": "string"
         },
         "metadata": {
-          "$ref": "#/definitions/v1Metadata"
+          "$ref": "#/definitions/watcherv1Metadata"
         },
         "spec": {
           "$ref": "#/definitions/v1Spec"
@@ -541,6 +535,20 @@
         }
       },
       "description": "WatchDetails contains the set of information for a given watch."
+    },
+    "watcherv1Metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "creationTimestamp": {
+          "type": "string"
+        }
+      }
     }
   },
   "externalDocs": {

@@ -42,16 +42,14 @@ run.publish: run.build
 	docker push asia.gcr.io/${PROJECT_ID}/collector:latest
 
 run.deploy: run.publish
-	gcloud run deploy collector \
+	gcloud beta run deploy collector \
 	--image=asia.gcr.io/${PROJECT_ID}/collector:latest \
 	--service-account ${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com \
+	--use-http2 \
 	--allow-unauthenticated
 
 run.test.grpc:
 	grpcurl -v \
-	-import-path ../../shortedapis/ \
-	-import-path ../../shortedapis/third_party/ \
-	-proto ../../shortedapis/proto/shorted/collector/v1/collector.proto \
 	collector-ak2zgjnhlq-ts.a.run.app:443 \
 	shorted.collector.v1.CollectorService/GetSource
 build:

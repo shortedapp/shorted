@@ -15,7 +15,7 @@ require (
 	github.com/google/uuid v1.1.2
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/mitchellh/mapstructure v1.3.3
-	github.com/shortedapp/shorted/shortedapis v0.0.0-20210829003854-7220d2609617
+	github.com/shortedapp/shorted/shortedapis v0.0.0-20210905075512-3d2846b8fe21
 	github.com/stretchr/testify v1.6.1
 	go.opencensus.io v0.22.4
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace v0.11.0
@@ -25,9 +25,9 @@ require (
 	go.uber.org/zap v1.16.0
 	gocloud.dev v0.20.0
 	golang.org/x/mod v0.5.0 // indirect
-	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
-	golang.org/x/sys v0.0.0-20210823070655-63515b42dcdf // indirect
-	google.golang.org/genproto v0.0.0-20210828152312-66f60bf46e71 // indirect
+	golang.org/x/net v0.0.0-20210903162142-ad29c8ab022f
+	golang.org/x/sys v0.0.0-20210903071746-97244b99971b // indirect
+	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/grpc v1.40.0
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
