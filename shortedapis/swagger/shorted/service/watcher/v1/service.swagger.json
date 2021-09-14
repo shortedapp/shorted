@@ -1,0 +1,558 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "shorted/service/watcher/v1/service.proto",
+    "version": "1.0"
+  },
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/sync/all": {
+      "post": {
+        "summary": "A unary RPC to update an existing watch.",
+        "operationId": "WatchService_SyncAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SyncAllResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "WatchService"
+        ]
+      }
+    },
+    "/api/v1/sync/{id}": {
+      "post": {
+        "summary": "A unary RPC to update an existing watch.",
+        "operationId": "WatchService_SyncWatcher",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SyncWatcherResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SyncWatcherRequest"
+            }
+          }
+        ],
+        "tags": [
+          "WatchService"
+        ]
+      }
+    },
+    "/api/v1/watcher": {
+      "get": {
+        "summary": "A unary RPC used to fetch a list of existing watches",
+        "operationId": "WatchService_ListWatchers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListWatchersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "WatchService"
+        ]
+      },
+      "post": {
+        "summary": "A unary RPC to create a new watch source.",
+        "operationId": "WatchService_CreateWatcher",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateWatcherResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateWatcherRequest"
+            }
+          }
+        ],
+        "tags": [
+          "WatchService"
+        ]
+      }
+    },
+    "/api/v1/watcher/{id}": {
+      "get": {
+        "summary": "A unary RPC used to fetch a specific watcherby watch ID",
+        "operationId": "WatchService_GetWatcher",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetWatcherResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "WatchService"
+        ]
+      },
+      "delete": {
+        "summary": "A unary RPC to delete a watch source.",
+        "operationId": "WatchService_DeleteWatcher",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteWatcherResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "WatchService"
+        ]
+      },
+      "post": {
+        "summary": "A unary RPC to update an existing watch.",
+        "operationId": "WatchService_UpdateWatcher",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateWatcherResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateWatcherRequest"
+            }
+          }
+        ],
+        "tags": [
+          "WatchService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "apiFormat": {
+      "type": "string",
+      "enum": [
+        "FORMAT_UNSPECIFIED",
+        "JSON",
+        "YAML",
+        "CSV",
+        "HTML",
+        "XML"
+      ],
+      "default": "FORMAT_UNSPECIFIED"
+    },
+    "apiParser": {
+      "type": "string",
+      "enum": [
+        "PARSER_UNSPECIFIED",
+        "ASIC"
+      ],
+      "default": "PARSER_UNSPECIFIED"
+    },
+    "apiSource": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "title": "URL is the base URL for the givne source"
+        },
+        "parser": {
+          "$ref": "#/definitions/apiParser"
+        },
+        "format": {
+          "$ref": "#/definitions/apiFormat"
+        },
+        "interval": {
+          "type": "string"
+        }
+      },
+      "title": "Source is a definition of a target that we want to \"watch\" and discover content from"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string",
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+        },
+        "value": {
+          "type": "string",
+          "format": "byte",
+          "description": "Must be a valid serialized protocol buffer of the above specified type."
+        }
+      },
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1CreateWatcherRequest": {
+      "type": "object",
+      "properties": {
+        "watch": {
+          "$ref": "#/definitions/v1WatcherDetails"
+        }
+      }
+    },
+    "v1CreateWatcherResponse": {
+      "type": "object",
+      "properties": {
+        "watch": {
+          "$ref": "#/definitions/v1WatcherDetails"
+        }
+      }
+    },
+    "v1DeleteWatcherResponse": {
+      "type": "object",
+      "properties": {
+        "watch": {
+          "$ref": "#/definitions/v1WatcherDetails"
+        }
+      }
+    },
+    "v1DocumentDetails": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/v1DocumentMetadata"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "removed": {
+          "type": "boolean"
+        },
+        "digest": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "v1DocumentMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "format": {
+          "$ref": "#/definitions/apiFormat"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Documents": {
+      "type": "object",
+      "properties": {
+        "document": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1DocumentDetails"
+          }
+        }
+      }
+    },
+    "v1Entries": {
+      "type": "object",
+      "properties": {
+        "documents": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1Documents"
+          }
+        }
+      }
+    },
+    "v1GetWatcherResponse": {
+      "type": "object",
+      "properties": {
+        "watch": {
+          "$ref": "#/definitions/v1WatcherDetails"
+        }
+      }
+    },
+    "v1Index": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "title": "url where index is stored (i.e gs://\u003cproject-name\u003e-index/index.json)"
+        },
+        "count": {
+          "type": "string",
+          "format": "int64"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "entries": {
+          "$ref": "#/definitions/v1Entries"
+        }
+      },
+      "title": "Index defines where the discovered content of a Source is stored"
+    },
+    "v1ListWatchersResponse": {
+      "type": "object",
+      "properties": {
+        "watches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1WatcherDetails"
+          }
+        }
+      }
+    },
+    "v1Spec": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "$ref": "#/definitions/apiSource"
+        },
+        "index": {
+          "$ref": "#/definitions/v1Index"
+        }
+      }
+    },
+    "v1Status": {
+      "type": "string",
+      "enum": [
+        "UNSPECIFIED",
+        "PENDING",
+        "SUCCESS",
+        "FAILURE"
+      ],
+      "default": "UNSPECIFIED",
+      "title": "SyncStatus specifies the state of a given synchronisation request.\nWhere a synchronisation state will correspond to a specfic source"
+    },
+    "v1SyncAllResponse": {
+      "type": "object",
+      "properties": {
+        "sync": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SyncDetails"
+          }
+        }
+      }
+    },
+    "v1SyncDetails": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/v1Status"
+        }
+      }
+    },
+    "v1SyncStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/v1Status"
+        }
+      }
+    },
+    "v1SyncWatcherRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "v1SyncWatcherResponse": {
+      "type": "object",
+      "properties": {
+        "sync": {
+          "$ref": "#/definitions/v1SyncDetails"
+        }
+      }
+    },
+    "v1UpdateWatcherRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "watch": {
+          "$ref": "#/definitions/v1WatcherDetails"
+        }
+      }
+    },
+    "v1UpdateWatcherResponse": {
+      "type": "object",
+      "properties": {
+        "watch": {
+          "$ref": "#/definitions/v1WatcherDetails"
+        }
+      }
+    },
+    "v1WatcherDetails": {
+      "type": "object",
+      "properties": {
+        "apiVersion": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/definitions/watcherv1Metadata"
+        },
+        "spec": {
+          "$ref": "#/definitions/v1Spec"
+        },
+        "status": {
+          "$ref": "#/definitions/v1SyncStatus"
+        }
+      },
+      "description": "WatchDetails contains the set of information for a given watch."
+    },
+    "watcherv1Metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "creationTimestamp": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Watcher API",
+    "url": "https://github.com/shortedapp/shorted/shortedapis/watcher/v1"
+  }
+}
