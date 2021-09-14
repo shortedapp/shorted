@@ -1,0 +1,76 @@
+// // Copyright (c) 2020 Shorted Ltd Pty.
+// //
+// // Permission is hereby granted, free of charge, to any person obtaining a copy
+// // of this software and associated documentation files (the "Software"), to deal
+// // in the Software without restriction, including without limitation the rights
+// // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// // copies of the Software, and to permit persons to whom the Software is
+// // furnished to do so, subject to the following conditions:
+// //
+// // The above copyright notice and this permission notice shall be included in
+// // all copies or substantial portions of the Software.
+// //
+// // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// // THE SOFTWARE.
+
+syntax = "proto3";
+
+package shorted.service.collector.v1;
+
+option go_package = "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/collector/v1;collector";
+
+import "validate/validate.proto";
+import "shorted/api/v1/core.proto";
+
+
+
+// CollectDetails contains the set of information for a given collected source. 
+message CollectDetails {
+  string apiVersion = 1;
+  shorted.api.Metadata metadata = 2 [(validate.rules).message.required = true];
+  Spec spec = 3 [(validate.rules).message.required = true];
+  CollectStatus status = 4;
+}
+
+
+
+message Spec {
+  shorted.api.Source source = 1 [(validate.rules).message.required = true];
+  Sink sink = 2;
+}
+
+message SourceDetails {
+  shorted.api.Source source = 1;
+  SourceMetadata metadata = 2;
+}
+
+message SourceMetadata {
+  string digest = 1;
+  int64 size = 2;
+  map<string, string> headers = 3;
+
+}
+// Sink defines where the collected source is stored and in which format
+message Sink {
+  //url where index is stored (i.e gs://<project-name>-index/index.json)
+  string url = 1 [(validate.rules).string.uri = true];
+  shorted.api.Format format = 2;
+}
+
+
+message CollectStatus {
+  Status status = 3 [(validate.rules).enum.defined_only = true];
+}
+// SyncStatus specifies the state of a given synchronisation request.
+// Where a synchronisation state will correspond to a specfic source
+enum Status {
+  UNSPECIFIED = 0;
+  PENDING = 1;
+  SUCCESS = 2;
+  FAILURE = 3;
+}
