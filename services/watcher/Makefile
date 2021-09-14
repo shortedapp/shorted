@@ -29,7 +29,9 @@ gcloud.activate:
 # 	gcloud functions describe --region ${REGION} --project ${PROJECT_ID} ingestor-dev-first
 # s.deploy:
 # 	serverless deploy --region=${REGION}
-
+update.proto:
+	go get -u github.com/shortedapp/shorted/shortedapis
+	go mod tidy
 build.cli:
 	go build -o bin/cli ./cmd/cli
 run.cli: build.cli
