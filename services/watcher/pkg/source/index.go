@@ -69,11 +69,11 @@ func(m *Manager) Collect(s *watcherpb.WatcherDetails) (bool, error) {
 	defer conn.Close()
 	c := collectorpb.NewCollectorServiceClient(conn)
 	
-	for entry, docs := range m.index.GetEntries().GetDocuments() {
+	for _, docs := range m.index.GetEntries().GetDocuments() {
 		document := docs.GetDocument()[0]
 		c.GetSource(context.TODO(), &collectorpb.GetSourceRequest{
 			Url: document.Url,
-			Format: collectorpb.Format(document.Metadata.Format),
-			Parser: collectorpb.Parser(collectorpb.Parser_value[s.Spec.Source.Adapter])})
+			Format: document.Metadata.Format,
+			Parser: s.Spec.Source.Adapter})
 	}
 }
