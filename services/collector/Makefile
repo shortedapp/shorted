@@ -54,7 +54,8 @@ run.test.grpc:
 	shorted.collector.v1.CollectorService/GetSource
 build:
 	go build -o bin/collector ./cmd/collector
-
+test:
+	go test ./...
 run.cli:
 	go run ./cmd/cli/main.go
 

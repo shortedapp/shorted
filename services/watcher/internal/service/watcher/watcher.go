@@ -10,7 +10,7 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/store"
 	"github.com/shortedapp/shorted/services/watcher/sources"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 )
 
 // Watcher - collecting arbitrary data and storing as required
@@ -158,9 +158,9 @@ func (w *Watcher) SyncWatcher(ctx context.Context, in *v1.SyncWatcherRequest) (*
 	if err != nil {
 		return nil, fmt.Errorf("error synchronising watcher %v, error: %v", id, err)
 	}
-	source, err := sources.GetSource(watcher.Spec.Source.Adapter)
+	source, err := sources.GetSource(watcher.Spec.Source.Parser.String())
 	if err != nil {
-		return nil, fmt.Errorf("failed to get source %v, error: %v", watcher.Spec.Source.Adapter, err)
+		return nil, fmt.Errorf("failed to get source %v, error: %v", watcher.Spec.Source.Parser, err)
 	}
 	handler, err := source.NewBuilder().Build()
 	if err != nil {
@@ -174,13 +174,13 @@ func (w *Watcher) SyncWatcher(ctx context.Context, in *v1.SyncWatcherRequest) (*
 	// 2. once completed we update index with successfully collected documents - needs to do ith a mutex
 
 	log.Infof(ctx, "[Source:%v]: found %v new documents", watcher.Spec.Source.Url, difference.GetIndex().Count)
-	
+
 	difference.Collect(watcher)
 
 	return &v1.SyncWatcherResponse{Sync: &v1.SyncDetails{
 		Id:     id,
 		Name:   watcher.Metadata.Name,
-		Status: v1.Status_SYNC_STATUS_SUCCESS,
+		Status: v1.Status_SUCCESS,
 	}}, nil
 }
 

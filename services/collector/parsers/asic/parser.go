@@ -1,4 +1,4 @@
-package shorts
+package asic
 
 import (
 	"bufio"
@@ -51,7 +51,7 @@ func (h *handler) Parse(ctx context.Context, reader io.ReadCloser, opts ...parse
 
 // GetInfo returns the Info associated with this source implementation.
 func GetInfo() parser.Info {
-	info := metadata.GetInfo("PARSER_SHORTS")
+	info := metadata.GetInfo("asic")
 	info.NewBuilder = func() parser.HandlerBuilder { return &builder{} }
 	return info
 }

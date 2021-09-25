@@ -12,7 +12,7 @@ import (
 
 	"github.com/mitchellh/mapstructure"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/gcsblob"
 	"gocloud.dev/gcerrors"

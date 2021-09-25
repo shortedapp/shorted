@@ -22,7 +22,7 @@ syntax = "proto3";
 
 package shorted.service.watcher.v1;
 
-option go_package = "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1;watcher";
+option go_package = "github.com/shortedapp/shorted/sshortedapis/pkg/shorted/service/watcher/v1;watcher";
 
 import "google/api/annotations.proto";
 import "validate/validate.proto";

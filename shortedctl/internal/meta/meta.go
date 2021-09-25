@@ -3,7 +3,7 @@ package meta
 import (
 	"fmt"
 
-	"github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	"github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 )
 
 func WatcherAccessor(obj interface{}) (*watcher.WatcherDetails, error) {

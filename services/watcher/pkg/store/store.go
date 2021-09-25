@@ -5,7 +5,7 @@ import (
 	"net/url"
 
 	"github.com/shortedapp/shorted/services/watcher/pkg/store/driver"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 )
 
 // TODO(castlemilk):uplift to a new driver mode resembling a more generic impl pathway:

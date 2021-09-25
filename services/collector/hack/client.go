@@ -5,7 +5,8 @@ import (
 	"crypto/tls"
 	"fmt"
 
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/collector/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/collector/v1"
+	shortedpb "github.com/shortedapp/shorted/shortedapis/pkg/shorted/api/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
@@ -29,8 +30,8 @@ func main() {
 	source := "https://asic.gov.au/Reports/Daily/2010/06/RR20100616-001-SSDailyAggShortPos.csv"
 	watch, err := client.GetSource(context.Background(), &v1.GetSourceRequest{
 		Url:    source,
-		Format: v1.Format_CSV,
-		Parser: v1.Parser_PARSER_SHORTS,
+		Format: shortedpb.Format_CSV,
+		Parser: shortedpb.Parser_ASIC,
 	})
 	if err != nil {
 		panic(fmt.Errorf("error fetching watch from client: %v", err))

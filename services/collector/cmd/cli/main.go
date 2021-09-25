@@ -7,7 +7,8 @@ import (
 
 	"github.com/shortedapp/shorted/services/collector/internal/service/collector"
 	"github.com/shortedapp/shorted/services/collector/pkg/config"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/collector/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/collector/v1"
+	shortedpb "github.com/shortedapp/shorted/shortedapis/pkg/shorted/api/v1"
 	"go.uber.org/zap"
 )
 
@@ -19,7 +20,7 @@ func main() {
 	cfg := &config.Config{
 		ProjectId:      os.Getenv("PROJECT_ID"),
 		LoggingEncoder: os.Getenv("LOGGING_ENCODER"),
-		Bucket: "gs://collector-8cceed34",
+		Bucket:         "gs://collector-8cceed34",
 	}
 
 	logger = zap.S().With("watcher", "cmd")
@@ -31,8 +32,8 @@ func main() {
 	source := "https://asic.gov.au/Reports/Daily/2010/06/RR20100616-001-SSDailyAggShortPos.csv"
 	resp, err := c.GetSource(ctx, &v1.GetSourceRequest{
 		Url:    source,
-		Format: v1.Format_CSV,
-		Parser: v1.Parser_PARSER_SHORTS,
+		Format: shortedpb.Format_CSV,
+		Parser: shortedpb.Parser_ASIC,
 	})
 	if err != nil {
 		panic(fmt.Errorf("error fetching from source: %v, error: %v", source, err))

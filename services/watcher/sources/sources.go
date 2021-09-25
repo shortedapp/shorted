@@ -2,7 +2,7 @@ package sources
 
 import (
 	"fmt"
-
+	"strings"
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
 	"github.com/shortedapp/shorted/services/watcher/sources/asic"
 	"github.com/shortedapp/shorted/services/watcher/sources/noop"
@@ -22,7 +22,7 @@ func GetSource(name string) (*source.Info, error) {
 	for _, source := range Inventory() {
 		s := source()
 		availableSources = append(availableSources, s.Name)
-		if s.Name == name {
+		if strings.EqualFold(s.Name, name) {
 			return &s, nil
 		}
 	}

@@ -2,7 +2,7 @@ package metadata
 
 import (
 	"fmt"
-
+	"strings"
 	"github.com/shortedapp/shorted/services/collector/pkg/parser"
 )
 
@@ -19,8 +19,8 @@ var (
 			Description: "parsing generic csv data source",
 		},
 		{
-			Name:        "PARSER_SHORTS",
-			Impl:        "github.com/shortedapp/shorted/services/collector/parsers/shorts",
+			Name:        "asic",
+			Impl:        "github.com/shortedapp/shorted/services/collector/parsers/asic",
 			Description: "parsing ASIC short positions",
 		},
 	}
@@ -29,7 +29,7 @@ var (
 // GetInfo looks up an adapter info from the declaration list by name
 func GetInfo(name string) parser.Info {
 	for _, info := range Infos {
-		if info.Name == name {
+		if strings.EqualFold(info.Name,name) {
 			return info
 		}
 	}

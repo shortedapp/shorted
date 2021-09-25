@@ -9,7 +9,7 @@ import (
 
 	"github.com/liggitt/tabwriter"
 
-	"github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	"github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 	"github.com/shortedapp/shorted/shortedctl/internal/meta"
 )
 
