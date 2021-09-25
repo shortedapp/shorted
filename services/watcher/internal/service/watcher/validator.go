@@ -1,14 +1,14 @@
-package watcher 
+package watcher
 
 import (
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 )
+
 type Validator interface {
 	ValidateCreateWatcherRequest(req *v1.CreateWatcherRequest) error
 }
 
-type watcherValidator struct {}
-
+type watcherValidator struct{}
 
 func newValidator() Validator {
 	return &watcherValidator{}

@@ -4,6 +4,6 @@ metadata:
 spec:
   source:
     url: https://asic.gov.au/regulatory-resources/markets/short-selling/short-position-reports-table/
-    adapter: asic
+    parser: ASIC
     format: JSON
     interval: 86400s

@@ -6,7 +6,7 @@ import (
 
 	// "gopkg.in/yaml.v3"
 	"github.com/ghodss/yaml"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 	"github.com/spf13/cobra"
 
 	jsonpb "google.golang.org/protobuf/encoding/protojson"

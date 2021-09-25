@@ -10,7 +10,8 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
 	"github.com/shortedapp/shorted/services/watcher/pkg/source"
 	"github.com/shortedapp/shorted/services/watcher/sources/metadata"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/api/v1"
+	watcherpb "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 )
 
 type handler struct{}
@@ -68,11 +69,11 @@ func (*handler) Parse(ctx context.Context, s *v1.Source) (*source.Manager, error
 						day := row.Eq(0).Text()
 						filename, _ := row.Eq(2).Find("a").Attr("href")
 						// fmt.Printf("day: %s\n", day)
-						manager.AddDocumentDetails(&v1.DocumentDetails{
-							Metadata: &v1.DocumentMetadata{
+						manager.AddDocumentDetails(&watcherpb.DocumentDetails{
+							Metadata: &watcherpb.DocumentMetadata{
 								Name:   filename,
 								Date:   fmt.Sprintf("%s-%s-%s", year, month, day),
-								Format: v1.DocumentFormat_CSV,
+								Format: v1.Format_CSV,
 							},
 							Url: baseURL,
 						})

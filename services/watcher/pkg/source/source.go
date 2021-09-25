@@ -3,7 +3,7 @@ package source
 import (
 	"context"
 
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/api/v1"
 )
 
 type (

@@ -22,7 +22,7 @@ syntax = "proto3";
 
 package shorted.service.collector.v1;
 
-option go_package = "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/collector/v1;collector";
+option go_package = "github.com/shortedapp/shorted/sshortedapis/pkg/shorted/service/collector/v1;collector";
 
 import "validate/validate.proto";
 import "shorted/api/v1/core.proto";

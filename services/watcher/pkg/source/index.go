@@ -2,11 +2,16 @@ package source
 
 import (
 	"context"
-	"google.golang.org/grpc"
+	"crypto/tls"
+	"fmt"
+	"net/url"
+
 	"github.com/Masterminds/semver"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
-	watcherpb "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
-	collectorpb "github.com/shortedapp/shorted/shortedapis/pkg/collector/v1"
+	collectorpb "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/collector/v1"
+	watcherpb "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 type Manager struct {
@@ -24,13 +29,11 @@ func NewManager() *Manager {
 	}
 }
 
-
-
 func (m *Manager) AddDocumentDetails(d *watcherpb.DocumentDetails) {
 	name := d.Metadata.Name
 	if ee, ok := m.index.Entries.Documents[name]; !ok {
 		d.Metadata.Version = semver.MustParse("v1.0.0").String()
-		m.index.Entries.Documents[name] = &v1.Documents{Document: []*v1.DocumentDetails{d}}
+		m.index.Entries.Documents[name] = &watcherpb.Documents{Document: []*watcherpb.DocumentDetails{d}}
 	} else {
 		m.index.Entries.Documents[name].Document = append(m.index.Entries.Documents[name].Document, ee.Document...)
 	}
@@ -61,19 +64,47 @@ func (m *Manager) Difference(current *watcherpb.Index) *Manager {
 }
 
 // Collect will fetch all documents found missing for the given syncronisation process
-func(m *Manager) Collect(s *watcherpb.WatcherDetails) (bool, error) {
-	conn, err := grpc.Dial("collector-ak2zgjnhlq-ts.a.run.app:443")
+func (m *Manager) Collect(s *watcherpb.WatcherDetails) (bool, error) {
+
+	// Client
+	config := &tls.Config{}
+	conn, err := grpc.Dial("collector-ak2zgjnhlq-ts.a.run.app:443", grpc.WithTransportCredentials(credentials.NewTLS(config)))
 	if err != nil {
-		log.Errorf("error dailing: %v", err)
+		log.Errorf("error dialing: %v", err)
 	}
 	defer conn.Close()
 	c := collectorpb.NewCollectorServiceClient(conn)
-	
+
 	for _, docs := range m.index.GetEntries().GetDocuments() {
 		document := docs.GetDocument()[0]
-		c.GetSource(context.TODO(), &collectorpb.GetSourceRequest{
-			Url: document.Url,
+		collectUrl, err := getUrl(document)
+		if err != nil {
+			return false, err
+		}
+		log.Infof(context.TODO(), "collecting source: %s", collectUrl)
+		resourceCollected, err := c.GetSource(context.TODO(), &collectorpb.GetSourceRequest{
+			Url:    collectUrl,
 			Format: document.Metadata.Format,
-			Parser: s.Spec.Source.Adapter})
+			Parser: s.Spec.Source.Parser})
+		if err != nil {
+			log.Errorf("error collecting source, error: %v", err)
+		}
+		log.Infof(context.TODO(), "resourceCollected:info:%+v", resourceCollected)
+		break
 	}
+	return true, nil
+}
+
+func getUrl(document *watcherpb.DocumentDetails) (string, error) {
+	baseUrl, err := url.Parse(document.Url)
+	if err != nil {
+		return "", fmt.Errorf("error parsing base url: %v", document.Url)
+	}
+
+	collectUrl, err := baseUrl.Parse(document.Metadata.Name)
+	if err != nil {
+		return "", fmt.Errorf("error parsing document url: %v", document.Metadata.Name)
+	}
+	return collectUrl.String(), nil
+
 }

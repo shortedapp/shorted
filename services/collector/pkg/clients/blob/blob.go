@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/shortedapp/shorted/services/collector/pkg/log"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/collector/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/collector/v1"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/gcsblob"
@@ -76,7 +76,7 @@ func translateMetadata(metadata *v1.SourceMetadata) (m map[string]string) {
 	m = make(map[string]string)
 	timeNow := time.Now().String()
 	m["created-at"], m["last-modified"] = timeNow, timeNow
-	m["items"] = strconv.FormatInt(metadata.Size_, 10)
+	m["items"] = strconv.FormatInt(metadata.Size, 10)
 	m["digest"] = metadata.Digest
 	if lm, found := metadata.Headers["Last-Modified"]; found {
 		m["last-modified"] = lm

@@ -11,7 +11,7 @@ import (
 	"github.com/shortedapp/shorted/services/collector/internal/service/collector"
 	"github.com/shortedapp/shorted/services/collector/pkg/config"
 	"github.com/shortedapp/shorted/services/collector/pkg/log"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/collector/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/collector/v1"
 	"go.uber.org/zap"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -27,11 +27,11 @@ func main() {
 	cfg := &config.Config{
 		ProjectId:      os.Getenv("PROJECT_ID"),
 		LoggingEncoder: os.Getenv("LOGGING_ENCODER"),
-		Bucket: "gs://collector-8cceed34",
+		Bucket:         "gs://collector-8cceed34",
 	}
 	ctx := context.Background()
 	log.InitLogger(cfg)
-	
+
 	logger = zap.S().With("watcher", "cmd")
 	defer logger.Sync()
 

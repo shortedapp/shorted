@@ -11,7 +11,7 @@ import (
 	"github.com/shortedapp/shorted/services/watcher/internal/service/watcher"
 	"github.com/shortedapp/shorted/services/watcher/pkg/config"
 	"github.com/shortedapp/shorted/services/watcher/pkg/log"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/watcher/v1"
+	v1 "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 	"go.uber.org/zap"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -30,7 +30,7 @@ func main() {
 	}
 	ctx := context.Background()
 	log.InitLogger(cfg)
-	
+
 	logger = zap.S().With("watcher", "cmd")
 	defer logger.Sync()
 

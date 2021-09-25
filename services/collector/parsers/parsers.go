@@ -2,17 +2,18 @@ package parsers
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/shortedapp/shorted/services/collector/parsers/noop"
+	"github.com/shortedapp/shorted/services/collector/parsers/asic"
 	"github.com/shortedapp/shorted/services/collector/parsers/csv"
-	"github.com/shortedapp/shorted/services/collector/parsers/shorts"
+	"github.com/shortedapp/shorted/services/collector/parsers/noop"
 	"github.com/shortedapp/shorted/services/collector/pkg/parser"
 )
 
 // Inventory - fetch list of available strategies
 func Inventory() []parser.InfoFn {
 	return []parser.InfoFn{
-		shorts.GetInfo,
+		asic.GetInfo,
 		csv.GetInfo,
 		noop.GetInfo,
 	}
@@ -24,7 +25,7 @@ func GetParser(name string) (*parser.Info, error) {
 	for _, parser := range Inventory() {
 		s := parser()
 		availableParsers = append(availableParsers, s.Name)
-		if s.Name == name {
+		if strings.EqualFold(s.Name,name) {
 			return &s, nil
 		}
 	}

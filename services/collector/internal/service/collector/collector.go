@@ -2,21 +2,24 @@ package collector
 
 import (
 	"context"
+	"crypto/sha256"
 	"fmt"
 	"net/http"
 	"net/url"
-	"crypto/sha256"
 
 	"github.com/shortedapp/shorted/services/collector/parsers"
 	"github.com/shortedapp/shorted/services/collector/pkg/clients/blob"
 	"github.com/shortedapp/shorted/services/collector/pkg/config"
 	"github.com/shortedapp/shorted/services/collector/pkg/log"
-	v1 "github.com/shortedapp/shorted/shortedapis/pkg/collector/v1"
+	collectorpb "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/collector/v1"
+	shortedpb "github.com/shortedapp/shorted/shortedapis/pkg/shorted/api/v1"
 )
 
 type Service struct {
 	Config *config.Config
 	blob   *blob.Blob
+	// Embed the unimplemented server
+	collectorpb.UnimplementedCollectorServiceServer
 }
 
 func New(ctx context.Context, cfg *config.Config) (svc *Service, err error) {
@@ -31,15 +34,15 @@ func New(ctx context.Context, cfg *config.Config) (svc *Service, err error) {
 }
 
 // GetSource information about a specific configured Watch
-func (s *Service) GetSource(ctx context.Context, in *v1.GetSourceRequest) (*v1.GetSourceResponse, error) {
+func (s *Service) GetSource(ctx context.Context, in *collectorpb.GetSourceRequest) (*collectorpb.GetSourceResponse, error) {
 	result, err := s.getSource(ctx, in.Url, in.Format, in.Parser)
 	if err != nil {
-		return &v1.GetSourceResponse{}, fmt.Errorf("unable to fetch source %s, error: %v", in.Url, err)
+		return &collectorpb.GetSourceResponse{}, fmt.Errorf("unable to fetch source %s, error: %v", in.Url, err)
 	}
-	return &v1.GetSourceResponse{Result: result}, nil
+	return &collectorpb.GetSourceResponse{Result: result}, nil
 }
 
-func (s *Service) getSource(ctx context.Context, uri string, format v1.Format, name v1.Parser) (*v1.SourceDetails, error) {
+func (s *Service) getSource(ctx context.Context, uri string, format shortedpb.Format, name shortedpb.Parser) (*collectorpb.SourceDetails, error) {
 	h := sha256.New()
 	response, err := http.Get(uri)
 	if err != nil {
@@ -60,9 +63,9 @@ func (s *Service) getSource(ctx context.Context, uri string, format v1.Format, n
 		return nil, fmt.Errorf("failed to parse data: %v", err)
 	}
 	digest := fmt.Sprintf("%x", h.Sum(nil))
-	metadata := &v1.SourceMetadata{
+	metadata := &collectorpb.SourceMetadata{
 		Digest: digest,
-		Size_: int64(count),
+		Size: int64(count),
 		Headers: getHeaders(response),
 	}
 	u, err := url.Parse(uri)
@@ -75,8 +78,8 @@ func (s *Service) getSource(ctx context.Context, uri string, format v1.Format, n
 		return nil, fmt.Errorf("failed to write to bucket: %v", err)
 	}
 	
-	return &v1.SourceDetails{
-		Source: &v1.Source{
+	return &collectorpb.SourceDetails{
+		Source: &shortedpb.Source{
 			Url: uri,
 			Format: format,
 			Parser: name,

@@ -215,6 +215,11 @@ func Response(ctx context.Context, r *http.Response) {
 }
 
 func Infof(ctx context.Context, template string, args ...interface{}) {
+	
+	if loggingConfig == nil {
+		zap.S().Infof(template, args...)
+		return
+	}
 	span := trace.SpanFromContext(ctx)
 	if loggingConfig.LoggingEncoder != "stackdriver" {
 		zap.S().Infof(template, args...)
