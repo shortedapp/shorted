@@ -12,7 +12,7 @@ import (
 	watcherpb "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
-)
+) 
 
 type Manager struct {
 	index *watcherpb.Index
@@ -36,6 +36,16 @@ func (m *Manager) AddDocumentDetails(d *watcherpb.DocumentDetails) {
 		m.index.Entries.Documents[name] = &watcherpb.Documents{Document: []*watcherpb.DocumentDetails{d}}
 	} else {
 		m.index.Entries.Documents[name].Document = append(m.index.Entries.Documents[name].Document, ee.Document...)
+	}
+}
+
+func (m *Manager) setLastUpdated(d *watcherpb.DocumentDetails) error {
+	name := d.Metadata.Name	
+	if _, ok := m.index.Entries.Documents[name]; !ok {
+		return fmt.Errorf("no document found with name: %s", name)
+	} else {
+		// m.index.Entries.Documents[name].
+		return nil
 	}
 }
 
