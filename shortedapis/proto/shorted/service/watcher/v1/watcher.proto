@@ -68,6 +68,7 @@ message Entries {
 
 message Documents {
   repeated DocumentDetails document = 1;
+  google.protobuf.Timestamp last_updated = 2 [(validate.rules).timestamp.required = true];
 }
 
 message DocumentDetails {
