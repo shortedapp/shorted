@@ -374,6 +374,10 @@
           "items": {
             "$ref": "#/definitions/v1DocumentDetails"
           }
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
