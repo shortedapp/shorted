@@ -530,6 +530,13 @@ func (m *Documents) Validate() error {
 
 	}
 
+	if m.GetLastUpdated() == nil {
+		return DocumentsValidationError{
+			field:  "LastUpdated",
+			reason: "value is required",
+		}
+	}
+
 	return nil
 }
 
