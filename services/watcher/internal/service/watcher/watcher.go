@@ -180,7 +180,11 @@ func (w *Watcher) SyncWatcher(ctx context.Context, in *v1.SyncWatcherRequest) (*
 
 	log.Infof(ctx, "[Source:%v]: found %v new documents", watcher.Spec.Source.Url, difference.GetIndex().Count)
 
-	difference.Collect(watcher)
+	newDocs, err := difference.Collect(watcher)
+	if err != nil {
+		return nil, err 
+	}
+	manager.MergeIndex(newDocs)
 
 	return &v1.SyncWatcherResponse{Sync: &v1.SyncDetails{
 		Id:     id,
