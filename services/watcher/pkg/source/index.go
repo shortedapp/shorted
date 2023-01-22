@@ -12,7 +12,8 @@ import (
 	watcherpb "github.com/shortedapp/shorted/shortedapis/pkg/shorted/service/watcher/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
-) 
+	"google.golang.org/protobuf/types/known/timestamppb"
+)
 
 type Manager struct {
 	index *watcherpb.Index
@@ -39,14 +40,15 @@ func (m *Manager) AddDocumentDetails(d *watcherpb.DocumentDetails) {
 	}
 }
 
-func (m *Manager) setLastUpdated(d *watcherpb.DocumentDetails) error {
-	name := d.Metadata.Name	
-	if _, ok := m.index.Entries.Documents[name]; !ok {
-		return fmt.Errorf("no document found with name: %s", name)
+func (m *Manager) addDocumentDetailsWithUpdatedAt(d *watcherpb.DocumentDetails) {
+	name := d.Metadata.Name
+	if ee, ok := m.index.Entries.Documents[name]; !ok {
+		d.Metadata.Version = semver.MustParse("v1.0.0").String()
+		m.index.Entries.Documents[name] = &watcherpb.Documents{Document: []*watcherpb.DocumentDetails{d}}
 	} else {
-		// m.index.Entries.Documents[name].
-		return nil
+		m.index.Entries.Documents[name].Document = append(m.index.Entries.Documents[name].Document, ee.Document...)	
 	}
+	m.index.Entries.Documents[name].LastUpdated = timestamppb.Now()
 }
 
 func (m *Manager) SetCount(n int) {
@@ -74,8 +76,8 @@ func (m *Manager) Difference(current *watcherpb.Index) *Manager {
 }
 
 // Collect will fetch all documents found missing for the given syncronisation process
-func (m *Manager) Collect(s *watcherpb.WatcherDetails) (bool, error) {
-
+func (m *Manager) Collect(s *watcherpb.WatcherDetails) (*Manager, error) {
+	collectedIndex := NewManager()
 	// Client
 	config := &tls.Config{}
 	conn, err := grpc.Dial("collector-ak2zgjnhlq-ts.a.run.app:443", grpc.WithTransportCredentials(credentials.NewTLS(config)))
@@ -89,7 +91,7 @@ func (m *Manager) Collect(s *watcherpb.WatcherDetails) (bool, error) {
 		document := docs.GetDocument()[0]
 		collectUrl, err := getUrl(document)
 		if err != nil {
-			return false, err
+			return nil, err
 		}
 		log.Infof(context.TODO(), "collecting source: %s", collectUrl)
 		resourceCollected, err := c.GetSource(context.TODO(), &collectorpb.GetSourceRequest{
@@ -100,9 +102,31 @@ func (m *Manager) Collect(s *watcherpb.WatcherDetails) (bool, error) {
 			log.Errorf("error collecting source, error: %v", err)
 		}
 		log.Infof(context.TODO(), "resourceCollected:info:%+v", resourceCollected)
+		collectedIndex.addDocumentDetailsWithUpdatedAt(document)
 		break
 	}
-	return true, nil
+	return collectedIndex, nil
+}
+// UpdateIndex
+// reconcile and update two index with newly discovered contents
+func (m *Manager) MergeIndex(newIndex *Manager) error {
+	// TODO: update index accordingly
+	for key, docs := range newIndex.index.GetEntries().GetDocuments() {
+		if _, ok := m.getLatestDocument(key); !ok {
+			m.AddDocumentDetails(docs.Document[0])
+		}
+
+	}
+	return nil
+}
+
+func (m *Manager) getLatestDocument(name string) (*watcherpb.DocumentDetails, bool) {
+	ee, ok := m.index.Entries.Documents[name]
+
+	if !ok {
+		return nil, false
+	}
+	return ee.Document[len(ee.Document)-1], true
 }
 
 func getUrl(document *watcherpb.DocumentDetails) (string, error) {
