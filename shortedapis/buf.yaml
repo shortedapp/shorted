@@ -1,9 +1,12 @@
-build:
-  roots:
-    - shortedapis
+version: v1
+name: buf.build/shortedapp/shortedapis
 lint:
   use:
     - DEFAULT
 breaking:
   use:
     - FILE
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/envoyproxy/protoc-gen-validate
+  - buf.build/grpc-ecosystem/grpc-gateway

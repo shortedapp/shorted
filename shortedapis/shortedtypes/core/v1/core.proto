@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package core.v1;
+
+import "google/protobuf/duration.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/shortedapp/shorted/shortedapis/pkg/shorted/core/v1;core";
+
+
+message ObjectReference {
+  // Kind of the referent.
+  string kind = 1;
+  string name = 3;
+  string uid = 4;
+  // API version of the referent.
+  // +optional
+  string apiVersion = 5;
+}
+
+// Source is a definition of a target that we want to "watch" and discover content from
+message Source {
+  // URL is the base URL for the givne source
+  string url = 1 [(validate.rules).string.uri_ref = true];
+  Parser parser = 2;
+  Format format = 3;
+  google.protobuf.Duration interval = 4;
+
+}
+
+message Metadata {
+  string id = 1 [(validate.rules).string.uuid = true];
+  string creationTimestamp = 3;
+}
+
+enum Format {
+  FORMAT_UNSPECIFIED = 0;
+  JSON = 1;
+  YAML = 2;
+  CSV = 3;
+  HTML = 4;
+  XML = 5;
+}
+
+enum Parser {
+  PARSER_UNSPECIFIED = 0;
+  ASIC = 1;
+}
