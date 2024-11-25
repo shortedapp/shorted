@@ -5,7 +5,7 @@ cffi==1.12.2
 chardet==3.0.4
 cryptography==2.6.1
 idna==2.8
-paramiko==2.4.2
+paramiko==2.10.1
 pyasn1==0.4.5
 pycparser==2.19
 pymongo==3.7.2
